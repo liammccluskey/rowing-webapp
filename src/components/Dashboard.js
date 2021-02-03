@@ -63,9 +63,9 @@ export default function Dashboard() {
         <div>
             <MainHeader />
             <div className='main-container'>
-                <h2>Create a Session</h2>
+                <h2 style={{fontWeight: '500'}}>Create a Session</h2>
                 <form onSubmit={handleCreateSession}>
-                    <label style={{margin: '0px 30px'}}>
+                    <label style={{margin: '0px 0px'}}>
                         Your Name:
                         <input type="text" ref={sessionHostNameRef} required/>
                     </label>
@@ -75,7 +75,8 @@ export default function Dashboard() {
                     </label>
                     <input style={{margin: '0px 30px'}} type='submit' />
                 </form>
-                <h2>Join a Session</h2>
+                <br /><br />
+                <h2 style={{fontWeight: '500'}}>Join a Session</h2>
                 {loading ? (<h3>Loading</h3>) : (
                 <div>
                     <div>
