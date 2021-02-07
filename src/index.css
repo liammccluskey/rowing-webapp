@@ -7,8 +7,11 @@ body {
 }
 
 :root {
-  --bgc: rgb(0,0,0);
-  --abc: rgba(64,73,77, 0.9);
+  --tint-color: rgb(63, 132, 229);
+
+  --ps-main: 170px;
+  --bgc: black;
+  --custom_bc: rgba(64,73,77, 0.9);
   --bc: #3b4754;
   --bgc-light: rgba(30,33,36, 0.95);
   --max-container-width: 1100px;
@@ -36,8 +39,36 @@ input.btn{
 .main-header {
   background-color:var(--bgc);
   height: 70px;
-  color: rgb(63, 132, 229);
+  color: var(--tint-color);
+  padding: 0px 40px;
 }
+.sub-header {
+  text-align: left;
+  padding-right: var(--ps-main);
+  padding-left: var(--ps-main);
+  padding-bottom: 16px;
+  color: whitesmoke;
+  border-bottom: 1px solid var(--bc);
+}
+.sub-link-active {
+  border-bottom: 3px solid var(--tint-color);
+}
+.header-link {
+  color: whitesmoke;
+  margin-right: 30px;
+  margin-left: none;
+  margin-top: none;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  padding-bottom: 15px;
+}
+.header-link:hover,
+.link-active {
+  color: var(--tint-color);
+}
+
+
 .main-container {
   text-align: left;
   margin: 50px auto;
@@ -84,16 +115,18 @@ input.btn{
 .jc-space-between {
   justify-content: space-between;
 }
+.ai-center {
+  align-items: center;
+}
 
 
 .ls-none {
   list-style: none;
 }
-
-.d-inline,
-.d-inline li{
-  display: inline;
+.td-none {
+  text-decoration: none;
 }
-.m-20 li {
-  margin: 20px 20px;
+
+.d-inline{
+  display: inline;
 }

@@ -10,6 +10,12 @@ import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './components/Dashboard'
 import Session from "./components/Session"
 
+import Clubs from './components/explore/Clubs'
+import Sessions from './components/explore/Sessions'
+
+import Account from './components/account/Account'
+import Settings from './components/account/Settings'
+
 function App() {
   return (
     <div className="App">
@@ -21,6 +27,13 @@ function App() {
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
+
+                <PrivateRoute exact path='/account' component={Account} />
+                <PrivateRoute path='/account/settings' component={Settings} />
+
+                <PrivateRoute path='/explore/clubs' component={Clubs} />
+                <PrivateRoute path='/explore/sessions' component={Sessions} />
+
                 <PrivateRoute path='/session/:sessionID' component={Session} />
               </Switch>
             </ThemeProvider>
