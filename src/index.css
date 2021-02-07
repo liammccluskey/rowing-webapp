@@ -6,6 +6,11 @@ body {
   background-color: var(--bgc);
 }
 
+* {
+  margin: none;
+  padding: none;
+}
+
 :root {
   --tint-color: rgb(63, 132, 229);
 
@@ -71,8 +76,9 @@ input.btn{
 
 .main-container {
   text-align: left;
-  margin: 50px auto;
-  max-width: var(--max-container-width)
+  margin: 40px auto;
+  padding-right: var(--ps-main);
+  padding-left: var(--ps-main);
 }
 .main-subcontainer {
   border-top: 1px solid var(--bc);
@@ -129,4 +135,13 @@ input.btn{
 
 .d-inline{
   display: inline;
+}
+
+.solid-btn {
+  padding: 15px 25px;
+  background-color: var(--tint-color);
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  border-radius: 5px;
 }
