@@ -34,9 +34,11 @@ export default function Sessions() {
                     <div>
                         {sessions.map(session => 
                             <div key={session._id} className='main-subcontainer' onClick={()=>console.log('clicked session')}>
-                                <h4>{session.title}</h4>
+                                <div className='d-flex jc-space-between ai-center'>
+                                    <h4>{session.title}</h4>
+                                    <p>{`${session.members.length}  Members`}</p>
+                                </div>
                                 <p>{`Host Name: ${session.hostName}`}</p>
-                                <p>{`Members: ${session.members.map(m=>m.name).join(', ')}`}</p>
                             </div>
                         )}
                     </div>

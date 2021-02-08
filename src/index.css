@@ -12,10 +12,14 @@ body {
 }
 
 :root {
+  --tint-color: #736ced;
   --tint-color: rgb(63, 132, 229);
+  --tint-color: #1ccc04;
+  --tint-color: #ffb700;
+  --tint-color: #964edd;
 
-  --ps-main: 170px;
-  --bgc: black;
+  --ps-main: 200px;
+  --bgc: rgb(0,0,0);
   --custom_bc: rgba(64,73,77, 0.9);
   --bc: #3b4754;
   --bgc-light: rgba(30,33,36, 0.95);

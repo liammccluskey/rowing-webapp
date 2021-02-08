@@ -12,14 +12,20 @@ export default function MainHeader(props) {
     useEffect(() => {
         setPath(window.location.pathname.split('/')[1])
     }, [])
-
+// <h2 onClick={() => history.push('/dashboard')}className='d-inline'>{companyName}</h2>
     return (
         <div className="d-flex jc-space-between ai-center main-header">
             <div>
-                <h2 onClick={() => history.push('/dashboard')}className='d-inline'>{companyName}</h2>
-                <input placeholder='Search' style={{width: '300px', marginLeft: '60px'}} type='text'/>
+                <div className='d-flex jc-flex-start ai-center'>
+                    <img className='d-inline'
+                        style={{}}
+                        src='https://storage.pixteller.com/editor_icons/fishing/0804109543.svg' 
+                        height='30px' width='30px' alt='logo'    
+                    />
+                   <h3 style={{color: 'white',marginLeft:'15px'}}onClick={() => history.push('/dashboard')}className='d-inline'>{companyName}</h3>
+                    <input placeholder='Search' style={{width: '300px', marginLeft: '60px'}} type='text'/>
+                </div>
             </div>
-            
             <div>
                 <ul className='ls-none'>
                     <li className='d-inline'>
