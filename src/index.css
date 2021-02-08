@@ -13,26 +13,25 @@ body {
 :root {
   --tint-color: #ffb700;
   --tint-color: #964edd;
-  --tint-color: rgb(63, 132, 229);
-  --tint-color: #00a6fb;
   --tint-color: #1ccc04;
   --tint-color: #fec601;
-
   --tint-color: #4d4dff;
+  --tint-color: #00a6fb;
 
   --ps-main: 200px;
+
+  /*dark mode*/
   --bgc: black;
   --bc: #3b4754;
   --bgc-light: rgba(30,33,36, 0.95);
   --color: whitesmoke;
-
-
 
   /*light mode*/
   --bgc: white;
   --bc: lightgray;
   --bgc-light: rgb(240,240,240);
   --color: black;
+
 }
 
 input,
