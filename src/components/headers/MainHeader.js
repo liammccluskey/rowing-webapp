@@ -3,7 +3,7 @@ import {useTheme} from "../../contexts/ThemeContext"
 import {Link, location, useHistory} from 'react-router-dom'
 
 export default function MainHeader(props) {
-    const {companyName} = useTheme()
+    const {companyName, companyImgURL} = useTheme()
     const [path, setPath] = useState('')
     const history = useHistory()
     const activeClass = (pathname) => {
@@ -12,17 +12,17 @@ export default function MainHeader(props) {
     useEffect(() => {
         setPath(window.location.pathname.split('/')[1])
     }, [])
-// <h2 onClick={() => history.push('/dashboard')}className='d-inline'>{companyName}</h2>
+
     return (
         <div className="d-flex jc-space-between ai-center main-header">
             <div>
                 <div className='d-flex jc-flex-start ai-center'>
                     <img className='d-inline'
-                        style={{}}
-                        src='https://storage.pixteller.com/editor_icons/fishing/0804109543.svg' 
-                        height='30px' width='30px' alt='logo'    
+                        src={companyImgURL}
+                        height='30px' width='30px' alt='logo'
+                        style={{color: 'black'}}    
                     />
-                   <h3 style={{color: 'white',marginLeft:'15px'}}onClick={() => history.push('/dashboard')}className='d-inline'>{companyName}</h3>
+                   <h3 style={{marginLeft:'15px'}} onClick={() => history.push('/dashboard')}className='d-inline'>{companyName}</h3>
                     <input placeholder='Search' style={{width: '300px', marginLeft: '60px'}} type='text'/>
                 </div>
             </div>

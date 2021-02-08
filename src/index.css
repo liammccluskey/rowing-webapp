@@ -2,7 +2,6 @@
 body {
   margin: 0 0;
   font-family: "Avenir Next";
-  color: lightgray;
   background-color: var(--bgc);
 }
 
@@ -12,25 +11,35 @@ body {
 }
 
 :root {
-  --tint-color: #736ced;
-  --tint-color: rgb(63, 132, 229);
-  --tint-color: #1ccc04;
   --tint-color: #ffb700;
   --tint-color: #964edd;
+  --tint-color: rgb(63, 132, 229);
+  --tint-color: #00a6fb;
+  --tint-color: #1ccc04;
+  --tint-color: #fec601;
+
+  --tint-color: #4d4dff;
 
   --ps-main: 200px;
-  --bgc: rgb(0,0,0);
-  --custom_bc: rgba(64,73,77, 0.9);
+  --bgc: black;
   --bc: #3b4754;
   --bgc-light: rgba(30,33,36, 0.95);
-  --max-container-width: 1100px;
+  --color: whitesmoke;
+
+
+
+  /*light mode*/
+  --bgc: white;
+  --bc: lightgray;
+  --bgc-light: rgb(240,240,240);
+  --color: black;
 }
 
 input,
 input:active,
 input:focus {
   background-color: transparent;
-  color: white;
+  color: var(--color);
   border: 1px solid var(--bc);
   border-radius: 3px;
   padding: 10px 10px;
@@ -39,16 +48,15 @@ input:focus {
 }
 input:hover,
 input:focus,
-input:active,
-input.btn{
+input:active{
   background-color: var(--bgc-light);
 }
 
 
 .main-header {
-  background-color:var(--bgc);
+  background-color: transparent;
   height: 70px;
-  color: var(--tint-color);
+  color: var(--color);
   padding: 0px 40px;
 }
 .sub-header {
@@ -56,19 +64,19 @@ input.btn{
   padding-right: var(--ps-main);
   padding-left: var(--ps-main);
   padding-bottom: 16px;
-  color: whitesmoke;
+  color: var(--color);
   border-bottom: 1px solid var(--bc);
 }
 .sub-link-active {
   border-bottom: 3px solid var(--tint-color);
 }
 .header-link {
-  color: whitesmoke;
+  color: var(--color);
   margin-right: 30px;
   margin-left: none;
   margin-top: none;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   text-decoration: none;
   padding-bottom: 15px;
 }
@@ -83,16 +91,18 @@ input.btn{
   margin: 40px auto;
   padding-right: var(--ps-main);
   padding-left: var(--ps-main);
+  color: var(--color);
 }
 .main-subcontainer {
   border-top: 1px solid var(--bc);
   padding: 10px 10px;
+  color: var(--color);
 }
 .main-subcontainer:hover{
   background-color: var(--bgc-light);
   border-top: 1px solid var(--bgc-light);
+  color: var(--color);
 }
-
 
 .ml-default {
   margin-left: 40px;
@@ -144,8 +154,13 @@ input.btn{
 .solid-btn {
   padding: 15px 25px;
   background-color: var(--tint-color);
+  color: var(--bgc);
   font-weight: 600;
   font-size: 15px;
   border: none;
   border-radius: 5px;
+}
+.solid-btn:hover {
+  background-color: var(--tint-color);
+  box-shadow: 0px 0px 30px 5px lightgray;
 }

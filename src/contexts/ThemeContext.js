@@ -16,9 +16,12 @@ export function useTheme() {
 export function ThemeProvider({children}) {
     const [isDarkMode, setIsDarkMode] = useState(false)
     const companyName = "Rowe"
+    //const companyImgURL = 'https://storage.pixteller.com/editor_icons/fishing/0804109543.svg'
+    //const companyImgURL = 'https://storage.pixteller.com/editor_icons/outdoor-activities/5126958994.svg'
+    const companyImgURL = 'https://storage.pixteller.com/designs/designs-images/2021-02-08/08/boat-bloack-1-60217f6dd4f72.png'
     const value = {
         isDarkMode, setIsDarkMode,
-        companyName
+        companyName, companyImgURL
     }
 
     useEffect(() => {

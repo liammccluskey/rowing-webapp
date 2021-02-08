@@ -73,7 +73,7 @@ export default function Dashboard() {
                         Session Title:
                         <input type='text' ref={sessionTitleRef} required/>
                     </label>
-                    <input className='btn' style={{margin: '0px 30px'}} type='submit' />
+                    <input className='solid-btn' style={{margin: '0px 30px'}} type='submit' />
                 </form>
                 <br /><br />
                 <h2 style={{fontWeight: '500'}}>Join a Session</h2>
