@@ -16,6 +16,8 @@ import Sessions from './components/explore/Sessions'
 import Account from './components/account/Account'
 import Settings from './components/account/Settings'
 
+import CreateClub from './components/CreateClub'
+
 function App() {
   return (
     <div className="App">
@@ -33,6 +35,8 @@ function App() {
 
                 <PrivateRoute path='/explore/clubs' component={Clubs} />
                 <PrivateRoute path='/explore/sessions' component={Sessions} />
+
+                <PrivateRoute path='/club-create' component={CreateClub} />
 
                 <PrivateRoute path='/session/:sessionID' component={Session} />
               </Switch>

@@ -19,9 +19,10 @@ export function ThemeProvider({children}) {
     //const companyImgURL = 'https://storage.pixteller.com/editor_icons/fishing/0804109543.svg'
     //const companyImgURL = 'https://storage.pixteller.com/editor_icons/outdoor-activities/5126958994.svg'
     const companyImgURL = 'https://storage.pixteller.com/designs/designs-images/2021-02-08/08/boat-bloack-1-60217f6dd4f72.png'
+    const domainURL = 'https://rowe.com/clubs/'
     const value = {
         isDarkMode, setIsDarkMode,
-        companyName, companyImgURL
+        companyName, companyImgURL, domainURL
     }
 
     useEffect(() => {

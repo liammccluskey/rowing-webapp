@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from "react"
 import MainHeader from "./headers/MainHeader"
+import SubHeader from './headers/SubHeader'
 import { useAuth } from "../contexts/AuthContext"
-import { useHistory } from "react-router-dom"
+import { useHistory, useLocation } from "react-router-dom"
 import { useTheme } from "../contexts/ThemeContext"
+import Loading from './misc/Loading'
 import axios from "axios"
 
 const api = axios.create({
@@ -11,6 +13,7 @@ const api = axios.create({
 export default function Dashboard() {
     const { currentUser, signOut } = useAuth()
     const history = useHistory()
+    const location = useLocation()
     const { isDarkMode, setIsDarkMode, companyName } = useTheme()
     const [loading, setLoading] = useState(true)
     const [sessions, setSessions] = useState([])
@@ -62,22 +65,26 @@ export default function Dashboard() {
     return (
         <div>
             <MainHeader />
+            <SubHeader 
+                path={location.pathname} 
+                items={[
+                    {title: 'Activity', path: '/'},
+                    {title: 'History', path: ''}
+                ]}
+                subPath='/'
+            />
             <div className='main-container'>
-                <h2 style={{fontWeight: '500'}}>Create a Session</h2>
-                <form onSubmit={handleCreateSession}>
-                    <label style={{margin: '0px 0px'}}>
-                        Your Name:
-                        <input type="text" ref={sessionHostNameRef} required/>
-                    </label>
-                    <label>
-                        Session Title:
-                        <input type='text' ref={sessionTitleRef} required/>
-                    </label>
-                    <input className='solid-btn' style={{margin: '0px 30px'}} type='submit' />
-                </form>
+                <div className='d-flex jc-space-between ai-center'>
+                    <h2 style={{fontWeight: '500'}}>Today</h2>
+                    <button className='solid-btn'>+ New Session</button>
+
+                </div>
+                
+                <h2 style={{fontWeight: '500'}}>Upcoming</h2>
+                
                 <br /><br />
                 <h2 style={{fontWeight: '500'}}>Join a Session</h2>
-                {loading ? (<h3>Loading</h3>) : (
+                {loading ? <Loading /> : (
                 <div>
                     <div>
                         {sessions.map(session => 
@@ -97,6 +104,19 @@ export default function Dashboard() {
                     </button>
                     <button onClick={handleSignOut}>Log Out</button>
                 </div>)}
+
+                <h2 style={{fontWeight: '500'}}>Create a Session</h2>
+                <form onSubmit={handleCreateSession}>
+                    <label style={{margin: '0px 0px'}}>
+                        Your Name:
+                        <input type="text" ref={sessionHostNameRef} required/>
+                    </label>
+                    <label>
+                        Session Title:
+                        <input type='text' ref={sessionTitleRef} required/>
+                    </label>
+                    <input className='solid-btn' style={{margin: '0px 30px'}} type='submit' />
+                </form>
                 
             </div>
         </div>
