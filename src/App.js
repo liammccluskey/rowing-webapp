@@ -17,6 +17,7 @@ import Account from './components/account/Account'
 import Settings from './components/account/Settings'
 
 import CreateClub from './components/CreateClub'
+import Club from './components/Club'
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                 <PrivateRoute path='/explore/sessions' component={Sessions} />
 
                 <PrivateRoute path='/club-create' component={CreateClub} />
+                <PrivateRoute path='/clubs/:clubURL' component={Club} />
 
                 <PrivateRoute path='/session/:sessionID' component={Session} />
               </Switch>

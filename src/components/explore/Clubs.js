@@ -3,6 +3,7 @@ import ExploreHeader from './ExploreHeader'
 import MainHeader from '../headers/MainHeader'
 import {useHistory} from 'react-router-dom'
 import {storage} from '../../firebase'
+import {useAuth} from '../../contexts/AuthContext'
 import axios from 'axios'
 import Loading from '../misc/Loading'
 
@@ -11,6 +12,7 @@ const api = axios.create({
 })
 
 export default function Clubs() {
+    const {currentUser} = useAuth()
     const [clubs, setClubs] = useState([])
     const [clubIconURLs, setClubIconURLs] = useState([])
     const [loading, setLoading] = useState(true)
@@ -40,6 +42,19 @@ export default function Clubs() {
         history.push('/club-create')
     }
 
+    function handleClickClub(club) {
+        history.push(`/clubs/${club.customURL}`)
+    }
+
+    async function handleJoinClub(club) {
+        try {
+            await api.post(`/clubs/${club._id}/join`, {uid: currentUser.photoURL})
+            history.push(`/clubs/${club.customURL}`)
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
     return (
     <div>
         <MainHeader />
@@ -52,7 +67,7 @@ export default function Clubs() {
             {loading ?  <Loading />: 
                 <div>
                     {clubs.map((club, index) => 
-                        <div key={club._id} className='main-subcontainer' onClick={()=>console.log('clicked club')}>
+                        <div key={club._id} className='main-subcontainer' onClick={()=>handleClickClub(club)}>
                             <div className='d-flex jc-space-between ai-center'>
                                 <div className='d-flex jc-flex-start'>
                                     <img 

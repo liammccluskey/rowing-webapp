@@ -5,6 +5,7 @@ import {useTheme} from '../contexts/ThemeContext'
 import {storage} from '../firebase'
 import {useAuth} from '../contexts/AuthContext'
 import axios from 'axios'
+import {useHistory} from 'react-router-dom'
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
@@ -13,6 +14,7 @@ const api = axios.create({
 export default function CreateClub() {
     const {currentUser} = useAuth()
     const {domainURL} = useTheme()
+    const history = useHistory()
 
     const [name, setName] = useState('')
     const [customURL, setCustomURL] = useState('')
@@ -45,7 +47,7 @@ export default function CreateClub() {
 
         try {
             const res = await api.post('/clubs', clubData)
-            console.log('did create club')
+            history.push(`/clubs/${customURL}`)
         } catch (error) {
             console.log(error)
         }
@@ -56,8 +58,6 @@ export default function CreateClub() {
         console.log()
         if (validRegex.test(e.target.value)) {
             setCustomURL(e.target.value)
-        } else{
-            console.log('invalid url')
         }
     }
 
