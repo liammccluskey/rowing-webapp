@@ -14,22 +14,15 @@ const api = axios.create({
 export default function Clubs() {
     const {currentUser} = useAuth()
     const [clubs, setClubs] = useState([])
-    const [clubIconURLs, setClubIconURLs] = useState([])
     const [loading, setLoading] = useState(true)
     const history = useHistory()
 
 
     useEffect(() => {
-        
         async function fetchData() {
             try {
                 const res = await api.get('/clubs/search')
                 setClubs(res.data)
-                setClubIconURLs(
-                    await Promise.all(res.data.map(async club => {
-                        return await storage.ref('clubs').child(club.customURL).getDownloadURL()
-                    }))
-                )
                 setLoading(false)
             } catch (error) {
                 console.log(error)
@@ -71,7 +64,7 @@ export default function Clubs() {
                             <div className='d-flex jc-space-between ai-center'>
                                 <div className='d-flex jc-flex-start'>
                                     <img 
-                                        src={clubIconURLs[index] ? clubIconURLs[index] : process.env.REACT_APP_DEFAULT_CLUB_ICON_URL}
+                                        src={club.iconURL}
                                         height='70px' width='70px' 
                                         style={{ borderRadius: '5px'}}
                                     />

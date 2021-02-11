@@ -10,38 +10,39 @@ body {
   margin: none;
   padding: none;
 }
+button {
+  outline: none;
+}
 
 :root {
+  /*
   --tint-color: #fec601;
   --tint-color: #4d4dff;
   --tint-color: #1ccc04;
   --tint-color: #ffb700;
-  --tint-color: #1c74e4; /*good*/
-
+*/
   /*twitter*/
   --tint-color: rgb(28, 148, 220); 
   --tint-color-translucent: rgba(28, 148, 220, 0.2);
 
   /*purple
-  --tint-color: rgb(150, 78, 221);
+  --tint-color: #964edd;
   --tint-color-translucent: rgba(150, 78, 221, 0.2); 
 */
-
   --ps-main: 200px;
 
   /*dark mode*/
   --bgc: black;
+  --bgc-light: #15181c;
   --bc: #30363a;
-  --bgc-light: rgba(30,33,36, 0.95);
   --color: whitesmoke;
 
   /*light mode
-  --bgc: white;
+  --bgc: #f6f7f9;
+  --bgc-light: white;
   --bc: #e3e9ed;
-  --bgc-light: #f5f8fa;
   --color: black;
-*/
-
+  */
 }
 
 input, input:active, input:focus,
@@ -58,7 +59,6 @@ input:focus, input:active,
 textarea:active, textarea:focus
 {
   border-color: var(--tint-color);
-  box-shadow: 0px 0px 10px 5px var(--bgc-light);
   transition: 0.2s;
 }
 form label {
@@ -100,7 +100,6 @@ form label {
   transition: 0.2s;
 }
 
-
 .main-container {
   text-align: left;
   margin: 30px auto;
@@ -108,6 +107,7 @@ form label {
   padding-left: var(--ps-main);
   color: var(--color);
 }
+
 .main-subcontainer {
   border-top: 1px solid var(--bc);
   padding: 20px 10px;
@@ -173,7 +173,8 @@ form label {
 .solid-btn,
 .clear-btn,
 .solid-btn-secondary,
-.clear-btn-secondary {
+.clear-btn-secondary,
+.clear-btn-cancel {
   padding: 15px 25px;
   background-color: var(--tint-color);
   color: white;
@@ -204,3 +205,15 @@ form label {
   background-color: var(--tint-color-translucent);
   transition: 0.3s;
 }
+
+.clear-btn-cancel {
+  background-color: transparent;
+  color: var(--tint-color);
+  border: none;
+}
+.clear-btn-cancel:hover {
+  background-color: var(--tint-color-translucent);
+  transition: 0.3s
+}
+
+

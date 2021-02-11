@@ -17,8 +17,9 @@ export default function Dashboard() {
     const { isDarkMode, setIsDarkMode, companyName } = useTheme()
     const [loading, setLoading] = useState(true)
     const [sessions, setSessions] = useState([])
-    const sessionHostNameRef = useRef()
     const sessionTitleRef = useRef()
+
+    const [showSessionForm, setShowSessionForm] = useState(false)
 
     useEffect(async () => {
         async function fetchData() {
@@ -46,11 +47,11 @@ export default function Dashboard() {
     async function handleCreateSession(e) {
         e.preventDefault()
         console.log("Did create session")
-        console.log(`Session Host Name: ${sessionHostNameRef.current.value} \n Session Title: ${sessionTitleRef.current.value}`)
+        console.log(`Session Host Name: ${currentUser.displayName} \n Session Title: ${sessionTitleRef.current.value}`)
         try {
             const res = await api.post('/sessions', {
                 title: sessionTitleRef.current.value,
-                hostName: sessionHostNameRef.current.value
+                hostName: currentUser.displayName
             })
             routeToSessionWithID(res.data._id)
         } catch(err) {
@@ -76,47 +77,34 @@ export default function Dashboard() {
             <div className='main-container'>
                 <div className='d-flex jc-space-between ai-center'>
                     <h2 style={{fontWeight: '500'}}>Today</h2>
-                    <button className='solid-btn'>+ New Session</button>
-
+                    <button onClick={() => setShowSessionForm(true)}className='solid-btn'>+ New Session</button>
+                </div>
+                <div 
+                    style={{
+                        opacity: showSessionForm ? '100%':'0%',
+                        padding: '0px 20px',
+                        borderRadius: '10px',
+                        border: '1px solid var(--bc)',
+                        backgroundColor: 'var(--bgc-light)',
+                        height: showSessionForm ? '175px': '0px',
+                        transition: '0.2s',
+                        overflow: 'hidden'
+                        }}
+                >
+                    <br />
+                    <label>
+                        Session Title <br />
+                        <input style={{width: '300px'}} type='text' ref={sessionTitleRef} required/>
+                    </label>
+                    <br /><br />
+                    <div className='d-flex jc-space-between'>
+                        <button onClick={handleCreateSession} className='clear-btn-secondary'>Create</button>
+                        <button onClick={()=>setShowSessionForm(false)} className='clear-btn-cancel'>Close</button>
+                    </div>
                 </div>
                 
                 <h2 style={{fontWeight: '500'}}>Upcoming</h2>
                 
-                <br /><br />
-                <h2 style={{fontWeight: '500'}}>Join a Session</h2>
-                {loading ? <Loading /> : (
-                <div>
-                    <div>
-                        {sessions.map(session => 
-                            <div key={session._id} className='main-subcontainer' onClick={()=>routeToSessionWithID(session._id)}>
-                                <h4>{session.title}</h4>
-                                <p>{`Host Name: ${session.hostName}`}</p>
-                                <p>{`Members: ${session.members.map(m=>m.name).join(', ')}`}</p>
-                            </div>
-                        )}
-                    </div>
-                    {console.log(currentUser ? "mounting dashboard : with user" : "mounting dashboard : NULL user")}
-                    <p>Welcome to the dashboard
-                        {currentUser ? currentUser.displayName : "(Error: no currentUser)"}
-                    </p>
-                    <button onClick={handleToggleMode}>
-                        {isDarkMode ? "Dark Mode" : "Light Mode" }
-                    </button>
-                    <button onClick={handleSignOut}>Log Out</button>
-                </div>)}
-
-                <h2 style={{fontWeight: '500'}}>Create a Session</h2>
-                <form onSubmit={handleCreateSession}>
-                    <label style={{margin: '0px 0px'}}>
-                        Your Name:
-                        <input type="text" ref={sessionHostNameRef} required/>
-                    </label>
-                    <label>
-                        Session Title:
-                        <input type='text' ref={sessionTitleRef} required/>
-                    </label>
-                    <input className='solid-btn' style={{margin: '0px 30px'}} type='submit' />
-                </form>
                 
             </div>
         </div>

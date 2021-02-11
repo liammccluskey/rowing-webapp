@@ -11,7 +11,7 @@ export default function SubHeader(props) {
     return (
         <div className='sub-header'>
             
-            <div className='d-flex jc-space-between ai-center'>
+            <div style={{lineHeight:'0px'}}className='d-flex jc-space-between ai-center'>
                 <p style={{fontSize: '28px', fontWeight: '500', margin: 'none'}}>{props.title}</p>
                 {props.imgURL && 
                         <img height='125px' width='125px' style={{marginRight: '10px', borderRadius: '5px'}} src={props.imgURL} />
