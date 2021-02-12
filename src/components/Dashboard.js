@@ -95,17 +95,12 @@ export default function Dashboard() {
                     <h2 style={{fontWeight: '500'}}>Today's Workouts</h2>
                     <button onClick={() => setShowSessionForm(true)}className='solid-btn'>New Workout</button>
                 </div>
-                <div 
+                <div className='float-container'
                     style={{
                         opacity: showSessionForm ? '100%':'0%',
                         height: showSessionForm ? '375px': '0px',
-                        padding: '0px 20px',
                         marginBottom: '30px',
-                        borderRadius: '10px',
-                        border: '1px solid var(--bc)',
-                        backgroundColor: 'var(--bgc-light)',
-                        transition: '0.2s',
-                        overflow: 'hidden'
+                        transition: '0.3s',
                         }}
                 >
                     <br />
@@ -142,7 +137,7 @@ export default function Dashboard() {
                     </form>
                 </div>
                 {loading ? <Loading /> :
-                    <div >
+                    <div className='float-container'>
                         {mySessions.map(session => (
                             <div key={session._id} className='main-subcontainer' onClick={()=>routeToSessionWithID(session._id)}>
                                 <div className='d-flex jc-space-between ai-center'>

@@ -121,13 +121,18 @@ form label {
 }
 */
 .main-subcontainer {
-  border: none;
-  border-radius: 5px;
+  border-bottom: 1px solid var(--bc);
   padding: 20px 10px;
   color: var(--color);
 }
-.main-subcontainer:hover{
+
+.float-container {
+  margin: 20px 0px;
+  padding: 0px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--bc);
   background-color: var(--bgc-light);
+  overflow: hidden;
 }
 
 

@@ -57,7 +57,7 @@ export default function Clubs() {
                 <button onClick={handleCreateClub}className='solid-btn'>Create a Club</button>
             </div>
             {loading ?  <Loading />: 
-                <div>
+                <div className='float-container'>
                     {clubs.map((club, index) => 
                         <div key={club._id} className='main-subcontainer' onClick={()=>handleClickClub(club)}>
                             <div className='d-flex jc-space-between ai-center'>
