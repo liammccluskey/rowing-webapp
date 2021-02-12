@@ -99,7 +99,7 @@ export default function Dashboard() {
                     style={{
                         opacity: showSessionForm ? '100%':'0%',
                         height: showSessionForm ? '375px': '0px',
-                        marginBottom: '30px',
+                        marginBottom: showSessionForm ? '30px' : '0px',
                         transition: '0.3s',
                         }}
                 >

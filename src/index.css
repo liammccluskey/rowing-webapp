@@ -35,7 +35,7 @@ button {
   --bgc: black;
   --bgc-light: #15181c;
   --bc: #30363a;
-  --color: whitesmoke;
+  --color: rgb(225,225,225);
 
   /*light mode
   --bgc: #f6f7f9;
@@ -127,7 +127,6 @@ form label {
 }
 
 .float-container {
-  margin: 20px 0px;
   padding: 0px 20px;
   border-radius: 10px;
   border: 1px solid var(--bc);
