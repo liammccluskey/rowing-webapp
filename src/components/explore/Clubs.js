@@ -17,7 +17,6 @@ export default function Clubs() {
     const [loading, setLoading] = useState(true)
     const history = useHistory()
 
-
     useEffect(() => {
         async function fetchData() {
             try {
@@ -73,7 +72,7 @@ export default function Clubs() {
                                         <p style={{margin: '0px 10px'}}>{`${club.memberUIDs.length} Member${club.memberUIDs.length != 1 ? 's':''}`}</p>
                                     </div>
                                 </div>
-                                <button className='clear-btn-secondary'>Join</button>
+                                <button onClick={() => handleJoinClub(club)} className='clear-btn-secondary'>Join</button>
                                 
                             </div>
                             

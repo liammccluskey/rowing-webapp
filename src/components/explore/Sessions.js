@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import MainHeader from '../headers/MainHeader'
 import ExploreHeader from './ExploreHeader'
 import axios from 'axios'
+import {useHistory} from 'react-router-dom'
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
@@ -9,6 +10,7 @@ const api = axios.create({
 
 export default function Sessions() {
     const [sessions, setSessions] = useState([])
+    const history = useHistory()
 
     useEffect(() => {
         async function fetchData() {
@@ -20,7 +22,12 @@ export default function Sessions() {
             }
         }
         fetchData()
-    })
+    }, [])
+
+    async function handleJoinSessionWithID(sessionID) {
+        await api.patch(`/${sessionID}/join`)
+        history.push(`/sessions/${sessionID}`)
+    }
     return (
         <div>
             <MainHeader />
@@ -28,7 +35,7 @@ export default function Sessions() {
             <div className='main-container'>
                 <div style={{margin: '40px 0px'}} className='d-flex jc-space-between ai-center'>
                     <input type='text' placeholder='Find a Session' />
-                    <button className='solid-btn'>Create a Session</button>
+                    <button onClickclassName='solid-btn'>Create a Session</button>
                 </div>
                 {!sessions ? <p>Loading...</p> : 
                     <div>

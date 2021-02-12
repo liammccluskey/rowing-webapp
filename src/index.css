@@ -1,11 +1,11 @@
 
+/*global config/reset*/
 body {
   margin: 0 0;
   font-family: "Avenir Next";
   background-color: var(--bgc);
   color: var(--color);
 }
-
 * {
   margin: none;
   padding: none;
@@ -46,7 +46,8 @@ button {
 }
 
 input, input:active, input:focus,
-textarea, textarea:active, textarea:focus
+textarea, textarea:active, textarea:focus,
+select, select:active, select:focus
  {
   background-color: transparent;
   color: var(--color);
@@ -56,7 +57,8 @@ textarea, textarea:active, textarea:focus
   outline: none;
 }
 input:focus, input:active,
-textarea:active, textarea:focus
+textarea:active, textarea:focus,
+select:active, select:focus
 {
   border-color: var(--tint-color);
   transition: 0.2s;
@@ -107,7 +109,7 @@ form label {
   padding-left: var(--ps-main);
   color: var(--color);
 }
-
+/*
 .main-subcontainer {
   border-top: 1px solid var(--bc);
   padding: 20px 10px;
@@ -116,8 +118,18 @@ form label {
 .main-subcontainer:hover{
   background-color: var(--bgc-light);
   border-top: 1px solid var(--bgc-light);
+}
+*/
+.main-subcontainer {
+  border: none;
+  border-radius: 5px;
+  padding: 20px 10px;
   color: var(--color);
 }
+.main-subcontainer:hover{
+  background-color: var(--bgc-light);
+}
+
 
 .ml-default {
   margin-left: 40px;

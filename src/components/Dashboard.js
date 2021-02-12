@@ -11,32 +11,39 @@ const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
 })
 export default function Dashboard() {
-    const { currentUser, signOut } = useAuth()
+    const { currentUser } = useAuth()
+    const { isDarkMode, setIsDarkMode, companyName } = useTheme()
     const history = useHistory()
     const location = useLocation()
-    const { isDarkMode, setIsDarkMode, companyName } = useTheme()
+
+    const [myClubs, setMyClubs] = useState([])
+    const [mySessions, setMySessions] = useState([])
     const [loading, setLoading] = useState(true)
-    const [sessions, setSessions] = useState([])
-    const sessionTitleRef = useRef()
 
     const [showSessionForm, setShowSessionForm] = useState(false)
+    const sessionTitleRef = useRef()
+    const sessionDateRef = useRef()
+    const sessionTimeRef = useRef()
+    const sessionPrivacyRef = useRef()
 
-    useEffect(async () => {
+    useEffect(() => {
         async function fetchData() {
-            const res = await api.get('/sessions')
-            setSessions(res.data)
+            await fetchClubs()
+            await fetchSessions()
             setLoading(false)
         }
         fetchData()
     }, [])
 
-    function handleSignOut() {
-        signOut()
-            .then(() => {
-                console.log("did sign out")
-                history.push("/")
-            })
-            .catch((e) => window.alert(e.message))
+    async function fetchClubs() {
+        const url = `/clubs/uid/${currentUser.photoURL}`
+        const res = await api.get(url)
+        setMyClubs(res.data)
+    }
+
+    async function fetchSessions() {
+        const res = await api.get(`/sessions/active/uid/${currentUser.photoURL}`)
+        setMySessions(res.data)
     }
 
     function handleToggleMode() {
@@ -46,21 +53,30 @@ export default function Dashboard() {
 
     async function handleCreateSession(e) {
         e.preventDefault()
-        console.log("Did create session")
-        console.log(`Session Host Name: ${currentUser.displayName} \n Session Title: ${sessionTitleRef.current.value}`)
+        console.log('did create session')
+        const startAt = new Date(`${sessionDateRef.current.value}T${sessionTimeRef.current.value}`)
+        const sessionData = {
+            title: sessionTitleRef.current.value,
+            hostName: currentUser.displayName,
+            hostUID: currentUser.photoURL,
+            startAt: startAt,
+            isAccessibleByLink: sessionPrivacyRef.current.value === 'link',
+            associatedClubID: ['link', 'self'].includes(sessionPrivacyRef.current.value) ? 'none' : sessionPrivacyRef.current.value
+        }
         try {
-            const res = await api.post('/sessions', {
-                title: sessionTitleRef.current.value,
-                hostName: currentUser.displayName
-            })
-            routeToSessionWithID(res.data._id)
+            const res = await api.post('/sessions', sessionData)
+            setTimeout(() => {
+                setShowSessionForm(false)
+                fetchSessions()
+            }, 1000);
+            
         } catch(err) {
             console.log(err)
         }
     }
 
     function routeToSessionWithID(sessionID) {
-        history.push(`/session/${sessionID}`)
+        history.push(`/sessions/${sessionID}`)
     }
 
     return (
@@ -76,36 +92,84 @@ export default function Dashboard() {
             />
             <div className='main-container'>
                 <div className='d-flex jc-space-between ai-center'>
-                    <h2 style={{fontWeight: '500'}}>Today</h2>
-                    <button onClick={() => setShowSessionForm(true)}className='solid-btn'>+ New Session</button>
+                    <h2 style={{fontWeight: '500'}}>Today's Workouts</h2>
+                    <button onClick={() => setShowSessionForm(true)}className='solid-btn'>New Workout</button>
                 </div>
                 <div 
                     style={{
                         opacity: showSessionForm ? '100%':'0%',
+                        height: showSessionForm ? '375px': '0px',
                         padding: '0px 20px',
+                        marginBottom: '30px',
                         borderRadius: '10px',
                         border: '1px solid var(--bc)',
                         backgroundColor: 'var(--bgc-light)',
-                        height: showSessionForm ? '175px': '0px',
                         transition: '0.2s',
                         overflow: 'hidden'
                         }}
                 >
                     <br />
-                    <label>
-                        Session Title <br />
-                        <input style={{width: '300px'}} type='text' ref={sessionTitleRef} required/>
-                    </label>
-                    <br /><br />
-                    <div className='d-flex jc-space-between'>
-                        <button onClick={handleCreateSession} className='clear-btn-secondary'>Create</button>
-                        <button onClick={()=>setShowSessionForm(false)} className='clear-btn-cancel'>Close</button>
-                    </div>
+                    <form onSubmit={handleCreateSession}>
+                        <label>
+                            Title <br />
+                            <input style={{width: '300px'}} type='text' ref={sessionTitleRef} required/>
+                        </label> <br /><br />
+
+                        <div className='d-flex jc-flex-start ai-center'>
+                            <label style={{marginRight:'30px'}}>
+                                Date <br />
+                                <input ref={sessionDateRef} type='date' required/>
+                            </label>
+                            <label>
+                                Start Time <br />
+                                <input ref={sessionTimeRef} type='time' required/>
+                            </label>
+                        </div> <br />
+                        <label >
+                            Who can join <br />
+                            <select ref={sessionPrivacyRef}>
+                                <option value="self">Only Me</option>
+                                <option value="link">Anyone with link</option>
+                                {myClubs.map(club => (
+                                    <option value={club._id}>{club.name}</option>
+                                ))}
+                            </select>
+                        </label><br /><br /><br />
+                        <div className='d-flex jc-space-between'>
+                            <button  className='clear-btn-secondary' type='submit'>Create</button>
+                            <button type='button' onClick={()=>setShowSessionForm(false)} className='clear-btn-cancel'>Close</button>
+                        </div>
+                    </form>
                 </div>
-                
+                {loading ? <Loading /> :
+                    <div >
+                        {mySessions.map(session => (
+                            <div key={session._id} className='main-subcontainer' onClick={()=>routeToSessionWithID(session._id)}>
+                                <div className='d-flex jc-space-between ai-center'>
+                                    <div className='d-flex jc-flex-start'>
+                                        {session.associatedClubID !== 'none' &&
+                                            <img 
+                                                style={{borderRadius: '5px'}}
+                                                height='70px' width='70px' 
+                                                src={myClubs.find(club=>club._id===session.associatedClubID).iconURL}
+                                            />
+                                        }
+                                        <div style={{margin: '0px 10px'}}>
+                                            <p style={{fontWeight: '600',margin: '0px 10px'}}>{session.title}</p>
+                                            <p style={{margin: '0px 10px'}}>
+                                                {`Host: ${session.hostName}`}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p style={{fontWeight: 500}}>
+                                        { new Date(session.startAt).toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'})}
+                                    </p>
+                                </div>
+                            </div>  
+                        ))}
+                    </div>
+                }
                 <h2 style={{fontWeight: '500'}}>Upcoming</h2>
-                
-                
             </div>
         </div>
         

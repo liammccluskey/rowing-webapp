@@ -27,7 +27,7 @@ export default function Club(props) {
             setLoading(false)
         }
         fetchData()
-    },[])
+    },[clubURL])
 
     return (
         <div>

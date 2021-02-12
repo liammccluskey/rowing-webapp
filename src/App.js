@@ -40,7 +40,7 @@ function App() {
                 <PrivateRoute path='/club-create' component={CreateClub} />
                 <PrivateRoute path='/clubs/:clubURL' component={Club} />
 
-                <PrivateRoute path='/session/:sessionID' component={Session} />
+                <PrivateRoute path='/sessions/:sessionID' component={Session} />
               </Switch>
             </ThemeProvider>
         </AuthProvider>

@@ -46,7 +46,7 @@ export default function CreateClub() {
         }
 
         try {
-            const res = await api.post('/clubs', clubData)
+            await api.post('/clubs', clubData)
             history.push(`/clubs/${customURL}`)
         } catch (error) {
             console.log(error)

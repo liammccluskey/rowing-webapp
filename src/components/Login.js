@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import SignHeader from "./headers/SignHeader";
 import { useAuth } from "../contexts/AuthContext"
 import { auth } from "../firebase"

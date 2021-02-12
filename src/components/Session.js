@@ -14,7 +14,6 @@ export default function Session(props) {
         async function fetchSession() {
             const res = await api.get(`/sessions/${params.sessionID}`)
             console.log(res.data)
-            console.log(api.baseURL)
             setSessionData(res.data)
         }
         fetchSession()

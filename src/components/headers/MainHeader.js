@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {useTheme} from "../../contexts/ThemeContext"
-import {Link, location, useHistory} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 
 export default function MainHeader(props) {
     const {companyName, companyImgURL} = useTheme()
