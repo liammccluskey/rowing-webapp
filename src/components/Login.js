@@ -72,6 +72,7 @@ export default function Login() {
             <img 
                 style={{ flex: '1', objectFit: 'cover', objectPosition: 'left'}} height='100%'
                 src='https://firebasestorage.googleapis.com/v0/b/rowing-a06ba.appspot.com/o/Misc%2Frow-draw.png?alt=media&token=c58a9412-27ba-4aa3-b68b-2b07fe9e630c'
+                src="https://i.ibb.co/N16NbtX/row-draw-fx.png"
             />
             
             <br />

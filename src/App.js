@@ -19,9 +19,6 @@ import Settings from './components/account/Settings'
 import CreateClub from './components/CreateClub'
 import Club from './components/Club'
 
-
-import Dashboard1 from './components/Dashboard1'
-
 function App() {
   return (
     <div className="App">
@@ -32,7 +29,7 @@ function App() {
                 <Route exact path="/" component={Landing} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
-                <PrivateRoute path="/dashboard" component={Dashboard1} />
+                <PrivateRoute path="/dashboard" component={Dashboard} />
 
                 <PrivateRoute exact path='/account' component={Account} />
                 <PrivateRoute path='/account/settings' component={Settings} />

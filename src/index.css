@@ -17,21 +17,20 @@ button {
   outline: none;
 }
 h1, h2, h3, h4, h5 {
-  font-weight: 470;
+  font-weight: 500;
+}
+h4 {
+  font-weight: 800
+}
+h3 {
+  font-size: 17px;
 }
 p {
-  font-weight: 400;
+  font-weight: 375;
   font-size: 15px;
 }
 
 :root {
-  /*
-  --tint-color: #fec601;
-  --tint-color: #4d4dff;
-  --tint-color: #1ccc04;
-  --tint-color: #ffb700;
-*/
-  
  /* robinhood */
  --tint-color: rgb(24, 200, 6);
  --tint-color-translucent: rgba(24, 200, 6, 0.2);
@@ -46,24 +45,14 @@ p {
 
   --ps-main: 200px;
 
-  
-
-  /*dark mode updated */
-  --bgc: #1a1d22;
-  --bgc-hover: #15181c;
-  --bgc-light: #202429;;
-  --bc: #30363a;
-  --color: rgb(225,225,225);
-  --box-shadow: none;
-
-  /*dark mode
+  /*dark mode*/
   --bgc: black;
   --bgc-hover: #15181c;
   --bgc-light: #0d1116;
   --bc: #30363a;
   --color: rgb(215,215,215);
   --box-shadow: none;
-*/
+
 
   /*light mode*/
   --bgc: #f6f7f9;

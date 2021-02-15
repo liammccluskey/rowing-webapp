@@ -40,7 +40,7 @@ export default function Clubs() {
 
     async function handleJoinClub(club) {
         try {
-            await api.post(`/clubs/${club._id}/join`, {uid: currentUser.photoURL})
+            await api.post(`/clubs/${club._id}/join`, {uid: currentUser.uid})
             history.push(`/clubs/${club.customURL}`)
         } catch(error) {
             console.log(error)
@@ -68,7 +68,7 @@ export default function Clubs() {
                                         style={{ borderRadius: '5px'}}
                                     />
                                     <div style={{margin: '0px 10px'}}>
-                                        <h4 style={{margin: '0px 10px'}}>{club.name}</h4>
+                                        <h4 style={{margin: '0px 10px', marginBottom: '5px'}}>{club.name}</h4>
                                         <p style={{margin: '0px 10px'}}>{`${club.memberUIDs.length} Member${club.memberUIDs.length != 1 ? 's':''}`}</p>
                                     </div>
                                 </div>

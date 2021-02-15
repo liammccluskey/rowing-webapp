@@ -42,7 +42,7 @@ export default function CreateClub() {
             customURL: customURL,
             description: description,
             iconURL: iconURL,
-            uid: currentUser.photoURL
+            uid: currentUser.uid
         }
 
         try {
@@ -82,11 +82,11 @@ export default function CreateClub() {
                         Club Icon <br />
                         <img 
                             src={tempIconURL ? tempIconURL : process.env.REACT_APP_DEFAULT_CLUB_ICON_URL}
-                            height='150px' width='150px' 
+                            height='250px' width='250px' 
                             style={{ borderRadius: '5px'}}
                         />
                         <input onChange={handleIconChange} type='file' accept='image/*' required 
-                            style={{display: 'block'}}
+                            style={{display: 'block', width:'250px'}}
                         />
                     </label>
                     <label>

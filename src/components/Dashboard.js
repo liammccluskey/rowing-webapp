@@ -36,13 +36,13 @@ export default function Dashboard() {
     }, [])
 
     async function fetchClubs() {
-        const url = `/clubs/uid/${currentUser.photoURL}`
+        const url = `/clubs/uid/${currentUser.uid}`
         const res = await api.get(url)
         setMyClubs(res.data)
     }
 
     async function fetchSessions() {
-        const res = await api.get(`/sessions/active/uid/${currentUser.photoURL}`)
+        const res = await api.get(`/sessions/active/uid/${currentUser.uid}`)
         setMySessions(res.data)
     }
 
@@ -58,7 +58,7 @@ export default function Dashboard() {
         const sessionData = {
             title: sessionTitleRef.current.value,
             hostName: currentUser.displayName,
-            hostUID: currentUser.photoURL,
+            hostUID: currentUser.uid,
             startAt: startAt,
             isAccessibleByLink: sessionPrivacyRef.current.value === 'link',
             associatedClubID: ['link', 'self'].includes(sessionPrivacyRef.current.value) ? 'none' : sessionPrivacyRef.current.value
@@ -90,82 +90,93 @@ export default function Dashboard() {
                 ]}
                 subPath='/'
             />
-            <div className='main-container'>
-                <div className='d-flex jc-space-between ai-center'>
-                    <h2 style={{fontWeight: '500'}}>Today's Workouts</h2>
-                    <button onClick={() => setShowSessionForm(true)} className='solid-btn'>New Workout</button>
-                </div>
-                <br />
-                <div className='float-container'
-                    style={{
-                        opacity: showSessionForm ? '100%':'0%',
-                        height: showSessionForm ? '375px': '0px',
-                        marginBottom: showSessionForm ? '30px' : '0px',
-                        transition: '0.3s',
-                        }}
-                >
-                    <br />
-                    <form onSubmit={handleCreateSession}>
-                        <label>
-                            Title <br />
-                            <input style={{width: '300px'}} type='text' ref={sessionTitleRef} required/>
-                        </label> <br /><br />
-
-                        <div className='d-flex jc-flex-start ai-center'>
-                            <label style={{marginRight:'30px'}}>
-                                Date <br />
-                                <input ref={sessionDateRef} type='date' required/>
-                            </label>
-                            <label>
-                                Start Time <br />
-                                <input ref={sessionTimeRef} type='time' required/>
-                            </label>
-                        </div> <br />
-                        <label >
-                            Who can join <br />
-                            <select ref={sessionPrivacyRef}>
-                                <option value="self">Only Me</option>
-                                <option value="link">Anyone with link</option>
-                                {myClubs.map(club => (
-                                    <option value={club._id}>{club.name}</option>
-                                ))}
-                            </select>
-                        </label><br /><br /><br />
-                        <div className='d-flex jc-space-between'>
-                            <button  className='clear-btn-secondary' type='submit'>Create</button>
-                            <button type='button' onClick={()=>setShowSessionForm(false)} className='clear-btn-cancel'>Close</button>
-                        </div>
-                    </form>
-                </div>
-                {loading ? <Loading /> :
-                    <div className='float-container'>
-                        {mySessions.map(session => (
-                            <div key={session._id} className='main-subcontainer' onClick={()=>routeToSessionWithID(session._id)}>
-                                <div className='d-flex jc-space-between ai-center'>
-                                    <div className='d-flex jc-flex-start'>
-                                        {session.associatedClubID !== 'none' &&
-                                            <img 
-                                                style={{borderRadius: '5px'}}
-                                                height='70px' width='70px' 
-                                                src={myClubs.find(club=>club._id===session.associatedClubID).iconURL}
-                                            />
-                                        }
-                                        <div style={{margin: '0px 10px'}}>
-                                            <p style={{fontWeight: '600',margin: '0px 10px'}}>{session.title}</p>
-                                            <p style={{margin: '0px 10px'}}>
-                                                {`Host: ${session.hostName}`}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <p style={{fontWeight: 500}}>
-                                        { new Date(session.startAt).toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'})}
-                                    </p>
-                                </div>
-                            </div>  
-                        ))}
+            <div className='main-container d-flex jc-flex-start'>
+                <div style={{ flex: 1, marginRight: '50px'}}>
+                    <div className='d-flex jc-space-between ai-center'>
+                        <h2 >Today's Workouts</h2>
+                        <button onClick={() => setShowSessionForm(true)} className='solid-btn'>New Workout</button>
                     </div>
-                }
-                <h2 style={{fontWeight: '500'}}>Upcoming</h2>
+                    <br />
+                    <div className='float-container'
+                        style={{
+                            opacity: showSessionForm ? '100%':'0%',
+                            height: showSessionForm ? '410px': '0px',
+                            marginBottom: showSessionForm ? '30px' : '0px',
+                            transition: '0.3s',
+                            padding: '0px 20px'
+                            }}
+                    >
+                        <br />
+                        <h3 style={{ textAlign: 'center'}}>Create a Workout</h3>
+                        <br />
+                        <form onSubmit={handleCreateSession}>
+                            <label>
+                                Title <br />
+                                <input style={{width: '300px'}} type='text' ref={sessionTitleRef} required/>
+                            </label> <br /><br />
+
+                            <div className='d-flex jc-flex-start ai-center'>
+                                <label style={{marginRight:'30px'}}>
+                                    Date <br />
+                                    <input ref={sessionDateRef} type='date' required/>
+                                </label>
+                                <label>
+                                    Start Time <br />
+                                    <input ref={sessionTimeRef} type='time' required/>
+                                </label>
+                            </div> <br />
+                            <label >
+                                Who can join <br />
+                                <select ref={sessionPrivacyRef}>
+                                    <option value="self">Only Me</option>
+                                    <option value="link">Anyone with link</option>
+                                    {myClubs.map(club => (
+                                        <option value={club._id}>{club.name}</option>
+                                    ))}
+                                </select>
+                            </label><br /><br /><br />
+                            <div className='d-flex jc-space-between'>
+                                <button  className='clear-btn-secondary' type='submit'>Create</button>
+                                <button type='button' onClick={()=>setShowSessionForm(false)} className='clear-btn-cancel'>Close</button>
+                            </div>
+                        </form>
+                        <br />
+                    </div>
+                    {loading ? <Loading /> :
+                        <div className='float-container'>
+                            {mySessions.map(session => (
+                                <div key={session._id} className='main-subcontainer' onClick={()=>routeToSessionWithID(session._id)}>
+                                    <div className='d-flex jc-space-between ai-center'>
+                                        <div className='d-flex jc-flex-start'>
+                                            {session.associatedClubID !== 'none' &&
+                                                <img 
+                                                    style={{borderRadius: '5px'}}
+                                                    height='50px' width='50px' 
+                                                    src={myClubs.find(club=>club._id===session.associatedClubID).iconURL}
+                                                />
+                                            }
+                                            <div style={{margin: '0px 10px'}}>
+                                                <h4 style={{margin: '0px 10px', marginBottom: '5px'}}>{session.title}</h4>
+                                                <p style={{margin: '0px 10px'}}>
+                                                    {`Host: ${session.hostName}`}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <p >
+                                            { new Date(session.startAt).toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'})}
+                                        </p>
+                                    </div>
+                                </div>  
+                            ))}
+                        </div>
+                    }
+                    <br />
+                    <h2 >Upcoming</h2>
+                </div>
+                <div style={{width: '250px', height: '550px'}} className='float-container'>
+                    <h4 style={{padding: '12px 15px', borderBottom: '1px solid var(--bc)'}}>Weekly Goals</h4>
+                </div>
+               
             </div>
         </div>
         
