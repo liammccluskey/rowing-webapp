@@ -93,8 +93,9 @@ export default function Dashboard() {
             <div className='main-container'>
                 <div className='d-flex jc-space-between ai-center'>
                     <h2 style={{fontWeight: '500'}}>Today's Workouts</h2>
-                    <button onClick={() => setShowSessionForm(true)}className='solid-btn'>New Workout</button>
+                    <button onClick={() => setShowSessionForm(true)} className='solid-btn'>New Workout</button>
                 </div>
+                <br />
                 <div className='float-container'
                     style={{
                         opacity: showSessionForm ? '100%':'0%',

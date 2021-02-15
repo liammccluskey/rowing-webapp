@@ -64,11 +64,11 @@ export default function Clubs() {
                                 <div className='d-flex jc-flex-start'>
                                     <img 
                                         src={club.iconURL}
-                                        height='70px' width='70px' 
+                                        height='50px' width='50px' 
                                         style={{ borderRadius: '5px'}}
                                     />
                                     <div style={{margin: '0px 10px'}}>
-                                        <p style={{fontWeight: '600',margin: '0px 10px'}}>{club.name}</p>
+                                        <h4 style={{margin: '0px 10px'}}>{club.name}</h4>
                                         <p style={{margin: '0px 10px'}}>{`${club.memberUIDs.length} Member${club.memberUIDs.length != 1 ? 's':''}`}</p>
                                     </div>
                                 </div>

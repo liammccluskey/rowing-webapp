@@ -78,6 +78,17 @@ export default function CreateClub() {
             <SubHeader title='Create a Club' />
             <div className='main-container'>
                 <form className='create-club' id='form-create-club' onSubmit={handleSubmit}>
+                    <label style={{float: 'right'}} >
+                        Club Icon <br />
+                        <img 
+                            src={tempIconURL ? tempIconURL : process.env.REACT_APP_DEFAULT_CLUB_ICON_URL}
+                            height='150px' width='150px' 
+                            style={{ borderRadius: '5px'}}
+                        />
+                        <input onChange={handleIconChange} type='file' accept='image/*' required 
+                            style={{display: 'block'}}
+                        />
+                    </label>
                     <label>
                         Club Name <br />
                         <input style={inputStyle} type='text' value={name} onChange={e => setName(e.target.value)} required/>
@@ -98,17 +109,6 @@ export default function CreateClub() {
                         <input value={customURL} onChange={handleCustomURLChange} required/>
                     </label>
                     <br /><br />
-                    <label >
-                        Club Icon <br />
-                        <img 
-                            src={tempIconURL ? tempIconURL : process.env.REACT_APP_DEFAULT_CLUB_ICON_URL}
-                            height='150px' width='150px' 
-                            style={{ borderRadius: '5px'}}
-                        />
-                        <input onChange={handleIconChange} type='file' accept='image/*' required 
-                            style={{display: 'block'}}
-                        />
-                    </label>
                 </form>
                 <br />
                 <div className='d-flex jc-center ai-center'>

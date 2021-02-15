@@ -1,17 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
 
-/*global config/reset*/
+/*global config & reset*/
+* {
+  margin: 0px 0px;
+  padding: none;
+  font-family: "DM Sans", sans-serif;
+}
+
 body {
-  margin: 0 0;
-  font-family: "Avenir Next";
+  margin: 0px 0px;
   background-color: var(--bgc);
   color: var(--color);
 }
-* {
-  margin: none;
-  padding: none;
-}
+
 button {
   outline: none;
+}
+h1, h2, h3, h4, h5 {
+  font-weight: 470;
+}
+p {
+  font-weight: 400;
+  font-size: 15px;
 }
 
 :root {
@@ -21,28 +31,48 @@ button {
   --tint-color: #1ccc04;
   --tint-color: #ffb700;
 */
+  
+ /* robinhood */
+ --tint-color: rgb(24, 200, 6);
+ --tint-color-translucent: rgba(24, 200, 6, 0.2);
+
   /*twitter*/
   --tint-color: rgb(28, 148, 220); 
   --tint-color-translucent: rgba(28, 148, 220, 0.2);
 
-  /*purple
-  --tint-color: #964edd;
-  --tint-color-translucent: rgba(150, 78, 221, 0.2); 
-*/
+  /* discord */
+  --tint-color: rgb(114, 137, 218);
+  --tint-color-translucent: rgb(114, 137, 218, 0.2);
+
   --ps-main: 200px;
 
-  /*dark mode*/
-  --bgc: black;
-  --bgc-light: #15181c;
+  
+
+  /*dark mode updated */
+  --bgc: #1a1d22;
+  --bgc-hover: #15181c;
+  --bgc-light: #202429;;
   --bc: #30363a;
   --color: rgb(225,225,225);
+  --box-shadow: none;
 
-  /*light mode
+  /*dark mode
+  --bgc: black;
+  --bgc-hover: #15181c;
+  --bgc-light: #0d1116;
+  --bc: #30363a;
+  --color: rgb(215,215,215);
+  --box-shadow: none;
+*/
+
+  /*light mode*/
   --bgc: #f6f7f9;
   --bgc-light: white;
-  --bc: #e3e9ed;
-  --color: black;
-  */
+  --bgc-hover: rgba(0,0,0,0.03);
+  --bc: #cad3da;
+  --color: rgb(40,40,40);
+  --box-shadow: 0 1px 3px rgba(0,0,0,0.3)
+  
 }
 
 input, input:active, input:focus,
@@ -64,7 +94,7 @@ select:active, select:focus
   transition: 0.2s;
 }
 form label {
-  font-weight: 500;
+  font-weight: 450;
 }
 
 .main-header {
@@ -91,7 +121,7 @@ form label {
   margin-right: 30px;
   margin-left: none;
   margin-top: none;
-  font-weight: 600;
+  font-weight: 475;
   font-size: 15px;
   text-decoration: none;
   padding-bottom: 15px;
@@ -109,38 +139,31 @@ form label {
   padding-left: var(--ps-main);
   color: var(--color);
 }
-/*
-.main-subcontainer {
-  border-top: 1px solid var(--bc);
-  padding: 20px 10px;
-  color: var(--color);
-}
-.main-subcontainer:hover{
-  background-color: var(--bgc-light);
-  border-top: 1px solid var(--bgc-light);
-}
-*/
+
 .main-subcontainer {
   border-bottom: 1px solid var(--bc);
-  padding: 20px 10px;
+  padding: 20px 20px;
   color: var(--color);
+}
+.main-subcontainer:hover {
+  background-color: var(--bgc-hover);
+}
+.main-subcontainer:last-child {
+  border-bottom: none;
 }
 
 .float-container {
-  padding: 0px 20px;
   border-radius: 10px;
-  border: 1px solid var(--bc);
+  /*border: 1px solid var(--bc);*/
+  border: none;
   background-color: var(--bgc-light);
+  box-shadow: var(--box-shadow);
+  padding: none;
   overflow: hidden;
 }
 
 
-.ml-default {
-  margin-left: 40px;
-}
-
-
-
+/* display flex */
 .d-flex {
   display: flex;
 }
@@ -185,6 +208,14 @@ form label {
   display: inline;
 }
 
+/*  Colors  */
+.bgc-light {
+  background-color: var(--bgc-light);
+}
+.bgc {
+  background-color: var(--bgc);
+}
+
 /*  Buttons: 4 main types */
 .solid-btn,
 .clear-btn,
@@ -193,7 +224,7 @@ form label {
 .clear-btn-cancel {
   padding: 15px 25px;
   background-color: var(--tint-color);
-  color: white;
+  color: whitesmoke;
   font-weight: 600;
   font-size: 15px;
   border: none;
@@ -208,12 +239,11 @@ form label {
 .solid-btn-secondary,
 .clear-btn-secondary {
   padding: 10px 20px;
-  font-weight: 700;
   font-size: 14px;
 }
 .solid-btn:hover,
 .solid-btn-secondary:hover {
-  filter: opacity(90%);
+  filter: brightness(90%);
   transition: 0.4s;
 }
 .clear-btn:hover,
