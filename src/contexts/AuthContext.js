@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
     async function createUser(authResult, displayName) {
         // Init user data in MongoDB after created in firebase
         const res = await api.get(`/users/${authResult.user.uid}`)
-        console.log(res.data)
+        if (res.data) { return }
         try {
             await api.post('/users', {
                 displayName: displayName,
