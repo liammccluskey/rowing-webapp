@@ -42,7 +42,7 @@ export default function Dashboard() {
     }
 
     async function fetchSessions() {
-        const res = await api.get(`/sessions/active/uid/${currentUser.uid}`)
+        const res = await api.get(`/sessions/incomplete/uid/${currentUser.uid}`)
         setMySessions(res.data)
     }
 

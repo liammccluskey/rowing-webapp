@@ -58,8 +58,8 @@ p {
   --bgc-hover: rgb(52,56,59);
   --bgc-light:rgb(47, 51, 54);
   --bc: rgb(60,64,66);
-  --color: rgb(215,215,215);
-  --box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --color: rgb(220,220,220);
+  --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
 
   /*light mode
