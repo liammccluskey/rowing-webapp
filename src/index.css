@@ -48,20 +48,28 @@ p {
   /*dark mode*/
   --bgc: black;
   --bgc-hover: #15181c;
-  --bgc-light: #0d1116;
+  --bgc-light: rgb(13, 17, 22);
   --bc: #30363a;
-  --color: rgb(215,215,215);
+  --color: rgb(195,195,195);
   --box-shadow: none;
 
+  /*dark mode updated*/
+  --bgc: rgb(35, 39, 42);
+  --bgc-hover: rgb(52,56,59);
+  --bgc-light:rgb(47, 51, 54);
+  --bc: rgb(60,64,66);
+  --color: rgb(215,215,215);
+  --box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 
-  /*light mode*/
+
+  /*light mode
   --bgc: #f6f7f9;
   --bgc-light: white;
   --bgc-hover: rgba(0,0,0,0.03);
   --bc: #cad3da;
   --color: rgb(40,40,40);
   --box-shadow: 0 1px 3px rgba(0,0,0,0.3)
-  
+  */
 }
 
 input, input:active, input:focus,

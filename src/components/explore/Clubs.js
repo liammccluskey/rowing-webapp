@@ -39,8 +39,9 @@ export default function Clubs() {
     }
 
     async function handleJoinClub(club) {
+        console.log(`Trying to join club with UID: ${currentUser.uid}`)
         try {
-            await api.post(`/clubs/${club._id}/join`, {uid: currentUser.uid})
+            await api.patch(`/clubs/${club._id}/join`, {uid: currentUser.uid})
             history.push(`/clubs/${club.customURL}`)
         } catch(error) {
             console.log(error)
