@@ -27,10 +27,11 @@ export default function Session(props) {
         fetchData()
     }, [])
 
-    useEffect(() => {
-        setTimeout(() => {
-            updateMyActivity()
-        }, 3000)
+    useEffect(async () => {
+        await updateMyActivity()
+        setTimeout(async () => {
+            await fetchActivities()
+        }, 5000)
     }, [myActivity])
 
     async function fetchSession() {
@@ -46,21 +47,14 @@ export default function Session(props) {
         try {
             const res = await api.get(`/sessions/${sessionID}/activities`)
             setActivities(res.data)
-            console.log('my index')
-            console.log(res.data.findIndex(ac => ac.uid === currentUser.uid))
-            
             setMyActivity(res.data[res.data.findIndex(ac => ac.uid === currentUser.uid)])
-            
         } catch (error) {
             console.log(error)
         }
     }
 
     async function updateMyActivity() {
-        console.log('Trying to update your activity. Current status: \n')
-        console.log(myActivity)
-        if (!myActivity) { console.log('no activity'); return }
-        console.log('did update activity')
+        if (!myActivity) { return }
         const random = () => {
             return Math.floor(Math.random()*100) % 100 + 50
         }
@@ -73,8 +67,6 @@ export default function Session(props) {
         } catch (error) {
             console.log(error)
         }
-        fetchActivities()
-
     }
 
     async function handleClickJoin() {
@@ -108,14 +100,25 @@ export default function Session(props) {
                     </div>
                     <br />
                     <div className='float-container'>
-                        {activities.map((ac, index) => (
-                            <div key={index} className='main-subcontainer  d-flex jc-space-between'>
-                                <h4>Name: {ac.name}</h4>
-                                <p>Current Pace: {ac.currentPace}</p>
-                                <p>Average Pace: {ac.averagePace}</p>
-                                <p>Total Meters: {ac.totalDistance}</p>
-                            </div>
-                        ))}
+                        <table style={{width: '100%'}} >
+                            <tr>
+                                <th>Name</th>
+                                <th>Current Pace</th>
+                                <th>Average Pace</th>
+                                <th>Total Distance</th>
+                            </tr>
+                        
+                            {activities.map((ac, index) => (
+                                <tr key={index} style={{borderLeft: index == 1 ? '5px solid var(--tint-color)' : 'none'}}>
+                                    <td>{ac.name}</td>
+                                    <td>{ac.currentPace}</td>
+                                    <td>{ac.averagePace}</td>
+                                    <td>{ac.totalDistance}</td>
+                                </tr>
+                            ))}
+                        
+                        </table>
+                        
                     </div>
                 </div>
             </div>

@@ -25,9 +25,12 @@ h4 {
 h3 {
   font-size: 17px;
 }
-p {
+p, td, th {
   font-weight: 375;
   font-size: 15px;
+}
+th {
+  font-size: 14px;
 }
 
 :root {
@@ -46,11 +49,11 @@ p {
   --ps-main: 200px;
 
   /*dark mode*/
-  --bgc: black;
-  --bgc-hover: #15181c;
-  --bgc-light: rgb(13, 17, 22);
+  --bgc: rgb(18, 18, 19);
+  --bgc-hover: rgb(32,32,33);
+  --bgc-light: rgb(26,26,27);
   --bc: #30363a;
-  --color: rgb(195,195,195);
+  --color: rgb(190,190,190);
   --box-shadow: none;
 
   /*dark mode updated*/
@@ -59,6 +62,7 @@ p {
   --bgc-light:rgb(47, 51, 54);
   --bc: rgb(60,64,66);
   --color: rgb(220,220,220);
+  --color-secondary: rgb(125,125,125);
   --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
 
@@ -159,6 +163,21 @@ form label {
   overflow: hidden;
 }
 
+/* tables */
+table {
+  border-collapse: collapse;
+}
+th,td {
+  padding: 15px;
+}
+th {
+  background-color: var(--tint-color-translucent);
+  color: var(--tint-color);
+}
+tr:hover{
+  background-color: var(--bgc-hover);
+}
+
 
 /* display flex */
 .d-flex {
@@ -248,7 +267,6 @@ form label {
   background-color: var(--tint-color-translucent);
   transition: 0.3s;
 }
-
 .clear-btn-cancel {
   background-color: transparent;
   color: var(--tint-color);
