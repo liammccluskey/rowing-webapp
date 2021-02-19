@@ -20,7 +20,8 @@ h1, h2, h3, h4, h5 {
   font-weight: 500;
 }
 h4 {
-  font-weight: 800
+  font-weight: 800;
+  font-size: 15px;
 }
 h3 {
   font-size: 17px;
@@ -44,34 +45,37 @@ th {
 
   /* discord */
   --tint-color: rgb(114, 137, 218);
-  --tint-color-translucent: rgb(114, 137, 218, 0.2);
+  --tint-color-translucent: rgb(114, 137, 218, 0.25);
 
+  /* rando */
+  --tint-color: rgb(0, 115, 207);
+  --tint-color-translucent: rgb(0, 115, 207, 0.2);
   --ps-main: 200px;
 
-  /*dark mode*/
-  --bgc: rgb(18, 18, 19);
-  --bgc-hover: rgb(32,32,33);
-  --bgc-light: rgb(26,26,27);
-  --bc: #30363a;
-  --color: rgb(190,190,190);
-  --box-shadow: none;
+  /* dark mode */
+  --bgc: black;
+  --bgc-hover: rgb(24,27,31);
+  --bgc-light:  rgb(21, 24, 28);
+  --bc: rgb(40,42,44);
+  --color: rgb(200,200,200);
+  --color-secondary: rgb(125,125,125);
+  --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
-  /*dark mode updated*/
-  --bgc: rgb(35, 39, 42);
-  --bgc-hover: rgb(52,56,59);
-  --bgc-light:rgb(47, 51, 54);
+  /* discord   
+  --bgc:  #2e3136;
+  --bgc-hover: #32353a;
+  --bgc-light:#36393e;
   --bc: rgb(60,64,66);
   --color: rgb(220,220,220);
   --color-secondary: rgb(125,125,125);
   --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-
-
+*/
   /*light mode
   --bgc: #f6f7f9;
   --bgc-light: white;
   --bgc-hover: rgba(0,0,0,0.03);
   --bc: #cad3da;
-  --color: rgb(40,40,40);
+  --color: rgb(51,51,51);
   --box-shadow: 0 1px 3px rgba(0,0,0,0.3)
   */
 }
@@ -155,8 +159,6 @@ form label {
 
 .float-container {
   border-radius: 10px;
-  /*border: 1px solid var(--bc);*/
-  border: none;
   background-color: var(--bgc-light);
   box-shadow: var(--box-shadow);
   padding: none;
@@ -171,10 +173,11 @@ th,td {
   padding: 15px;
 }
 th {
-  background-color: var(--tint-color-translucent);
+  background-color: var(--bgc-light);
+  border-bottom: thin solid var(--bc);
   color: var(--tint-color);
 }
-tr:hover{
+tbody tr:hover{
   background-color: var(--bgc-hover);
 }
 
@@ -182,6 +185,9 @@ tr:hover{
 /* display flex */
 .d-flex {
   display: flex;
+}
+.d-inline-flex {
+  display: inline-flex;
 }
 .d-inline {
   display: inline;
@@ -240,7 +246,7 @@ tr:hover{
 .clear-btn-cancel {
   padding: 15px 25px;
   background-color: var(--tint-color);
-  color: whitesmoke;
+  color: white;
   font-weight: 600;
   font-size: 15px;
   border: none;

@@ -131,7 +131,9 @@ export default function Dashboard() {
                                     <option value="self">Only Me</option>
                                     <option value="link">Anyone with link</option>
                                     {myClubs.map(club => (
-                                        <option value={club._id}>{club.name}</option>
+                                        <option value={club._id}>
+                                            {club.name}
+                                        </option>
                                     ))}
                                 </select>
                             </label><br /><br /><br />
@@ -174,7 +176,15 @@ export default function Dashboard() {
                     <h2 >Upcoming</h2>
                 </div>
                 <div style={{width: '250px', height: '550px'}} className='float-container'>
-                    <h4 style={{padding: '12px 15px', borderBottom: '1px solid var(--bc)'}}>Weekly Goals</h4>
+                    <table style={{width: '100%'}}>
+                        <thead>
+                            <tr>
+                                <th  style={{fontSize: '15px'}}>
+                                    Goals
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
                
             </div>

@@ -94,33 +94,38 @@ export default function Session(props) {
             <div>
                 <SubHeader title={session.title} />
                 <div className='main-container'>
-                    <div className='d-flex jc-space-between ai-center'>
-                        <h3>Workout: 4 x 2k</h3>
-                        <button onClick={handleClickJoin} className='solid-btn'>Join</button>
+                        <div className='d-flex jc-space-between ai-center'>
+                            <h3>Workout: 4 x 2k</h3>
+                            {myActivity ? <button className='clear-btn-cancel'>Leave</button>:
+                                <button onClick={handleClickJoin} className='solid-btn'>Join</button>
+                            }
+                            
+                        </div>
+                        <br />
+                        <div className='float-container'>
+                            <table style={{width: '100%'}} >
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Current Pace</th>
+                                        <th>Average Pace</th>
+                                        <th>Total Distance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {activities.map((ac, index) => (
+                                        <tr key={index} style={{borderLeft: index == 1 ? '5px solid var(--tint-color)' : 'none'}}>
+                                            <td>{ac.name}</td>
+                                            <td>{ac.currentPace}</td>
+                                            <td>{ac.averagePace}</td>
+                                            <td>{ac.totalDistance}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            
+                        </div>
                     </div>
-                    <br />
-                    <div className='float-container'>
-                        <table style={{width: '100%'}} >
-                            <tr>
-                                <th>Name</th>
-                                <th>Current Pace</th>
-                                <th>Average Pace</th>
-                                <th>Total Distance</th>
-                            </tr>
-                        
-                            {activities.map((ac, index) => (
-                                <tr key={index} style={{borderLeft: index == 1 ? '5px solid var(--tint-color)' : 'none'}}>
-                                    <td>{ac.name}</td>
-                                    <td>{ac.currentPace}</td>
-                                    <td>{ac.averagePace}</td>
-                                    <td>{ac.totalDistance}</td>
-                                </tr>
-                            ))}
-                        
-                        </table>
-                        
-                    </div>
-                </div>
             </div>
             }
             
