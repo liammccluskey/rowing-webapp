@@ -114,7 +114,10 @@ export default function Session(props) {
                                 </thead>
                                 <tbody>
                                     {activities.map((ac, index) => (
-                                        <tr key={index} style={{borderLeft: index == 1 ? '5px solid var(--tint-color)' : 'none'}}>
+                                        <tr 
+                                            key={index} 
+                                            style={{borderLeft: ac.uid == currentUser.uid ? '5px solid var(--tint-color)' : 'none'}}
+                                        >
                                             <td>{ac.name}</td>
                                             <td>{ac.currentPace}</td>
                                             <td>{ac.averagePace}</td>
