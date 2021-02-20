@@ -25,6 +25,7 @@ h4 {
 }
 h3 {
   font-size: 17px;
+  font-weight: 800;
 }
 p, td, th {
   font-weight: 375;
@@ -56,28 +57,29 @@ th {
   --bgc-hover: rgb(24,27,31);
   --bgc-light:  rgb(21, 24, 28);
   --bc: rgb(40,42,44);
-  --color: rgb(220,220,220);
-  --color: rgb(240,240,240);
+  --color: rgb(210,210,210);
+  --header-color: rgb(210,210,210);
   --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
-  /* discord   */
+  /* discord   
   --bgc:  #2e3136;
   --bgc-hover: #323539;
   --bgc-light:rgb(57, 60, 65);
-  --bc: rgb(60,64,66);
-  --color: rgb(220,220,220);
-  --color-header: rgb(240,240,240);
+  --bc: rgb(70,74,76);
+  --color: rgb(210,210,210);
+  --color-header: rgb(220,220,220);
   --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-
-  /*light mode */
+*/
+  /*light mode 
   --bgc: #f6f7f9;
   --bgc-light: white;
   --bgc-hover: rgba(0,0,0,0.03);
   --bc: #cad3da;
   --color: rgb(51,51,51);
   --color-header: rgb(25,25,25);
-  --box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-  
+  --box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  */
+
   --ps-nav: 200px;
   --ps-main: 150px;
 }

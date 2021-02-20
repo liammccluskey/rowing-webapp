@@ -91,12 +91,32 @@ export default function Dashboard() {
                 subPath='/'
             />
             <div className='main-container d-flex jc-flex-start' >
-                <div style={{marginRight: '50px'}}>
+                <div style={{marginRight: '60px'}}>
                     <div className='d-flex jc-space-between ai-center'>
                         <h2 >Goals</h2>
-                        <button className='clear-btn-secondary'>New Goal</button>
+                        <button className='solid-btn-secondary'>New Goal</button>
                     </div><br />
-                    <div style={{width: '250px', height: '550px'}} className='float-container'>
+                    <div style={{width: '250px', height: '550px', padding: '15px 15px'}} className='float-container'>
+                        <div className='d-flex jc-flex-start ai-center'>
+                            <img 
+                                height='50px' width='50px' 
+                                src={currentUser.photoURL} 
+                                style={{borderRadius: '5px', marginRight: '10px'}}
+                            />
+                            <h3>{currentUser.displayName}</h3>
+                        </div>
+                        <div className='main-subcontainer' style={{textAlign: 'center'}}>
+                            <h5>This Week</h5><br />
+                            <h4 style={{color: 'var(--tint-color)'}}>10k meters</h4>
+                        </div>
+                        <div className='main-subcontainer' style={{textAlign: 'center'}}>
+                            <h5>This Month</h5><br />
+                            <h4 style={{color: 'var(--tint-color)'}}>100k meters</h4>
+                        </div>
+                        <div className='main-subcontainer' style={{textAlign: 'center'}}>
+                            <h5>This Year</h5><br />
+                            <h4 style={{color: 'var(--tint-color)'}}>1 million meters</h4>
+                        </div>
                     </div>
                 </div>
                 <div style={{ flex: 1}}>
