@@ -1,15 +1,17 @@
 import React, { useEffect, useState, useRef } from "react"
-import MainHeader from "./headers/MainHeader"
-import SubHeader from './headers/SubHeader'
-import { useAuth } from "../contexts/AuthContext"
+import MainHeader from "../headers/MainHeader"
+import SubHeader from '../headers/SubHeader'
+import Calendar from './Calendar'
+import { useAuth } from "../../contexts/AuthContext"
 import { useHistory, useLocation } from "react-router-dom"
-import { useTheme } from "../contexts/ThemeContext"
-import Loading from './misc/Loading'
+import { useTheme } from "../../contexts/ThemeContext"
+import Loading from '../misc/Loading'
 import axios from "axios"
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
 })
+
 export default function Dashboard() {
     const { currentUser } = useAuth()
     const { isDarkMode, setIsDarkMode, companyName } = useTheme()
@@ -92,7 +94,7 @@ export default function Dashboard() {
             />
             <div className='main-container d-flex jc-flex-start' >
                 <div style={{marginRight: '60px'}}>
-                    <div style={{width: '250px', height: '550px', padding: '15px 15px'}} className='float-container'>
+                    <div style={{width: '250px', height: 'auto', padding: '15px 15px'}} className='float-container'>
                         <div className='d-flex jc-flex-start ai-center'>
                             <img 
                                 height='50px' width='50px' 
@@ -101,23 +103,57 @@ export default function Dashboard() {
                             />
                             <h3>{currentUser.displayName}</h3>
                         </div>
-                        <div className='main-subcontainer' style={{textAlign: 'center'}}>
-                            <h5>This Week</h5><br />
-                            <h4 style={{color: 'var(--tint-color)'}}>10k meters</h4>
-                        </div>
-                        <div className='main-subcontainer' style={{textAlign: 'center'}}>
-                            <h5>This Month</h5><br />
-                            <h4 style={{color: 'var(--tint-color)'}}>100k meters</h4>
-                        </div>
-                        <div className='main-subcontainer' style={{textAlign: 'center'}}>
-                            <h5>This Year</h5><br />
-                            <h4 style={{color: 'var(--tint-color)'}}>1 million meters</h4>
-                        </div>
+                        <br />
+                        <table style={{width: '100%'}}>
+                            <thead>
+                                <tr>
+                                    <th style={{color: 'var(--color-secondary)'}}>Period</th>
+                                    <th style={{color: 'var(--color-secondary)'}}>Meters Rowed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>This Week</td>
+                                    <td style={{color: 'var(--tint-color)'}}>10k</td>
+                                </tr>
+                                <tr>
+                                    <td>This Month</td>
+                                    <td style={{color: 'var(--tint-color)'}}>100k</td>
+                                </tr>
+                                <tr>
+                                    <td>This Year</td>
+                                    <td style={{color: 'var(--tint-color)'}}>1 million</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <table style={{width: '100%'}}>
+                            <thead>
+                                <tr>
+                                    <th style={{color: 'var(--color-secondary)'}}>Event</th>
+                                    <th style={{color: 'var(--color-secondary)'}}>Personal Record</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2k</td>
+                                    <td style={{color: 'var(--tint-color)'}}>7:01</td>
+                                </tr>
+                                <tr>
+                                    <td>5k</td>
+                                    <td style={{color: 'var(--tint-color)'}}>19:36</td>
+                                </tr>
+                                <tr>
+                                    <td>10k</td>
+                                    <td style={{color: 'var(--tint-color)'}}>35:30</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div style={{ flex: 1}}>
                     <div className='d-flex jc-space-between ai-center'>
-                        <h2 >Today's Workouts</h2>
+                        <h3 >Today's Workouts</h3>
                         <button onClick={() => setShowSessionForm(true)} className='solid-btn-secondary'>New Workout</button>
                     </div><br />
                     <div className='float-container'
@@ -168,21 +204,22 @@ export default function Dashboard() {
                         <br />
                     </div>
                     {loading ? <Loading /> :
-                        <div className='float-container'>
+                        <div className='float-container' >
                             {mySessions.map(session => (
                                 <div key={session._id} className='main-subcontainer' onClick={()=>routeToSessionWithID(session._id)}>
                                     <div className='d-flex jc-space-between ai-center'>
                                         <div className='d-flex jc-flex-start'>
-                                            {session.associatedClubID !== 'none' &&
-                                                <img 
-                                                    style={{borderRadius: '5px'}}
-                                                    height='50px' width='50px' 
-                                                    src={myClubs.find(club=>club._id===session.associatedClubID).iconURL}
-                                                />
-                                            }
+                                            <img 
+                                                style={{borderRadius: '5px'}}
+                                                height='50px' width='50px' 
+                                                src={session.associatedClubID === 'none' ?
+                                                    currentUser.photoURL : 
+                                                    myClubs.find(club=>club._id===session.associatedClubID).iconURL
+                                                }
+                                            />
                                             <div style={{margin: '0px 10px'}}>
                                                 <h4 style={{margin: '0px 10px', marginBottom: '5px'}}>{session.title}</h4>
-                                                <p style={{margin: '0px 10px'}}>
+                                                <p style={{margin: '0px 10px', color: 'var(--color-secondary)'}}>
                                                     {`Host: ${session.hostName}`}
                                                 </p>
                                             </div>
@@ -195,8 +232,11 @@ export default function Dashboard() {
                             ))}
                         </div>
                     }
+                    <br /><br />
+                    <h3 >Upcoming</h3>
                     <br />
-                    <h2 >Upcoming</h2>
+                    <Calendar />
+                    <br /><br />
                 </div>
             </div>
         </div>

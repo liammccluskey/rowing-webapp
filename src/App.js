@@ -7,7 +7,7 @@ import Register from "./components/Register";
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext'
 import PrivateRoute from './components/PrivateRoute'
-import Dashboard from './components/Dashboard'
+import Dashboard from './components/dashboard/Dashboard'
 import Session from "./components/Session"
 
 import Clubs from './components/explore/Clubs'
