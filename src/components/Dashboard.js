@@ -90,13 +90,20 @@ export default function Dashboard() {
                 ]}
                 subPath='/'
             />
-            <div className='main-container d-flex jc-flex-start'>
-                <div style={{ flex: 1, marginRight: '50px'}}>
+            <div className='main-container d-flex jc-flex-start' >
+                <div style={{marginRight: '50px'}}>
+                    <div className='d-flex jc-space-between ai-center'>
+                        <h2 >Goals</h2>
+                        <button className='clear-btn-secondary'>New Goal</button>
+                    </div><br />
+                    <div style={{width: '250px', height: '550px'}} className='float-container'>
+                    </div>
+                </div>
+                <div style={{ flex: 1}}>
                     <div className='d-flex jc-space-between ai-center'>
                         <h2 >Today's Workouts</h2>
-                        <button onClick={() => setShowSessionForm(true)} className='solid-btn'>New Workout</button>
-                    </div>
-                    <br />
+                        <button onClick={() => setShowSessionForm(true)} className='clear-btn-secondary'>New Workout</button>
+                    </div><br />
                     <div className='float-container'
                         style={{
                             opacity: showSessionForm ? '100%':'0%',
@@ -175,18 +182,6 @@ export default function Dashboard() {
                     <br />
                     <h2 >Upcoming</h2>
                 </div>
-                <div style={{width: '250px', height: '550px'}} className='float-container'>
-                    <table style={{width: '100%'}}>
-                        <thead>
-                            <tr>
-                                <th  style={{fontSize: '15px'}}>
-                                    Goals
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-               
             </div>
         </div>
         

@@ -12,12 +12,12 @@ body {
   background-color: var(--bgc);
   color: var(--color);
 }
-
 button {
   outline: none;
 }
 h1, h2, h3, h4, h5 {
   font-weight: 500;
+  color: var(--color-header);
 }
 h4 {
   font-weight: 800;
@@ -47,37 +47,39 @@ th {
   --tint-color: rgb(114, 137, 218);
   --tint-color-translucent: rgb(114, 137, 218, 0.25);
 
-  /* rando */
+  /* rando 
   --tint-color: rgb(0, 115, 207);
   --tint-color-translucent: rgb(0, 115, 207, 0.2);
-  --ps-main: 200px;
-
+*/
   /* dark mode */
   --bgc: black;
   --bgc-hover: rgb(24,27,31);
   --bgc-light:  rgb(21, 24, 28);
   --bc: rgb(40,42,44);
   --color: rgb(220,220,220);
-  --color-secondary: rgb(125,125,125);
+  --color: rgb(240,240,240);
   --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
-  /* discord   
+  /* discord   */
   --bgc:  #2e3136;
-  --bgc-hover: #32353a;
-  --bgc-light:#36393e;
+  --bgc-hover: #323539;
+  --bgc-light:rgb(57, 60, 65);
   --bc: rgb(60,64,66);
   --color: rgb(220,220,220);
-  --color-secondary: rgb(125,125,125);
+  --color-header: rgb(240,240,240);
   --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-*/
+
   /*light mode */
   --bgc: #f6f7f9;
   --bgc-light: white;
   --bgc-hover: rgba(0,0,0,0.03);
   --bc: #cad3da;
   --color: rgb(51,51,51);
-  --box-shadow: 0 1px 4px rgba(0,0,0,0.3)
+  --color-header: rgb(25,25,25);
+  --box-shadow: 0 1px 4px rgba(0,0,0,0.3);
   
+  --ps-nav: 200px;
+  --ps-main: 150px;
 }
 
 input, input:active, input:focus,
@@ -112,8 +114,8 @@ form label {
 }
 .sub-header {
   text-align: left;
-  padding-right: var(--ps-main);
-  padding-left: var(--ps-main);
+  padding-right: var(--ps-nav);
+  padding-left: var(--ps-nav);
   padding-bottom: 16px;
   color: var(--color);
   border-bottom: 1px solid var(--bc);
@@ -249,7 +251,7 @@ tbody tr:hover{
   color: white;
   font-weight: 600;
   font-size: 15px;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 5px;
 }
 .clear-btn,
