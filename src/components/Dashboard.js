@@ -92,10 +92,6 @@ export default function Dashboard() {
             />
             <div className='main-container d-flex jc-flex-start' >
                 <div style={{marginRight: '60px'}}>
-                    <div className='d-flex jc-space-between ai-center'>
-                        <h2 >Goals</h2>
-                        <button className='solid-btn-secondary'>New Goal</button>
-                    </div><br />
                     <div style={{width: '250px', height: '550px', padding: '15px 15px'}} className='float-container'>
                         <div className='d-flex jc-flex-start ai-center'>
                             <img 
@@ -122,7 +118,7 @@ export default function Dashboard() {
                 <div style={{ flex: 1}}>
                     <div className='d-flex jc-space-between ai-center'>
                         <h2 >Today's Workouts</h2>
-                        <button onClick={() => setShowSessionForm(true)} className='clear-btn-secondary'>New Workout</button>
+                        <button onClick={() => setShowSessionForm(true)} className='solid-btn-secondary'>New Workout</button>
                     </div><br />
                     <div className='float-container'
                         style={{

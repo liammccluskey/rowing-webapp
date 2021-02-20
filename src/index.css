@@ -48,10 +48,10 @@ th {
   --tint-color: rgb(114, 137, 218);
   --tint-color-translucent: rgb(114, 137, 218, 0.25);
 
-  /* rando 
+  /* rando  */
   --tint-color: rgb(0, 115, 207);
   --tint-color-translucent: rgb(0, 115, 207, 0.2);
-*/
+
   /* dark mode */
   --bgc: black;
   --bgc-hover: rgb(24,27,31);
@@ -61,7 +61,7 @@ th {
   --header-color: rgb(210,210,210);
   --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
-  /* discord   
+  /* discord   */
   --bgc:  #2e3136;
   --bgc-hover: #323539;
   --bgc-light:rgb(57, 60, 65);
@@ -69,7 +69,7 @@ th {
   --color: rgb(210,210,210);
   --color-header: rgb(220,220,220);
   --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-*/
+
   /*light mode 
   --bgc: #f6f7f9;
   --bgc-light: white;
