@@ -6,8 +6,6 @@ export default function Calendar(props) {
     const [calendarDays, setCalendarDays] = useState([])
 
     useEffect( () => {
-        const today = new Date()
-        console.log(moment().isSame(today, 'day'))
         const val = currMoment.clone()
         const startDay = val.clone().startOf('month').startOf('week')
         const endDay = val.clone().endOf('month').endOf('week')
@@ -18,11 +16,25 @@ export default function Calendar(props) {
         }
         setCalendarDays(days)
     }, [currMoment] )
-    
 
     return (
         <div>
-            <h4 style={{textAlign: 'center'}}>{currMoment.format('YYYY MMMM')}</h4>
+            <div className='d-flex jc-center ai-space-between' style={{gap: '5px'}}>
+                <h4>{currMoment.format('YYYY')}</h4>
+                <button 
+                    onClick={() => setCurrMoment(currMoment.subtract(1, 'month').clone())}
+                    className='clear-btn-cancel'
+                >
+                    {'<'}
+                </button>
+                <h4 style={{width: '100px', textAlign: 'center'}}>{currMoment.format('MMMM')}</h4>
+                <button 
+                    onClick={() => setCurrMoment(currMoment.add(1, 'month').clone())}
+                    className='clear-btn-cancel'
+                >
+                    {'>'}
+                </button>
+            </div>
             <div style={{
                 display: 'grid',
                 gap: '0px',
@@ -49,7 +61,7 @@ export default function Calendar(props) {
                 }}
                 className='calendar'
             >
-                {calendarDays && calendarDays.map((day, index) => (
+                {calendarDays.map((day, index) => (
                     <div key={index} className='calendar-card'>
                         <p style={{
                             color: 'var(--color-secondary)', backgroundColor: 'transparent',
