@@ -3,7 +3,7 @@ import {useTheme} from "../../contexts/ThemeContext"
 import {Link, useHistory} from 'react-router-dom'
 
 export default function MainHeader(props) {
-    const {companyName, companyImgURL} = useTheme()
+    const {companyName} = useTheme()
     const [path, setPath] = useState('')
     const history = useHistory()
     const activeClass = (pathname) => {
@@ -18,11 +18,13 @@ export default function MainHeader(props) {
             <div>
                 <div className='d-flex jc-flex-start ai-center'>
                     <img className='d-inline'
-                        src={companyImgURL}
-                        height='30px' width='30px' alt='logo'
-                        style={{color: 'black'}}    
+                        onClick={() => history.push('/dashboard')}
+                        src={process.env.REACT_APP_COMPANY_ICON_DARK_URL}
+                        src='https://storage.pixteller.com/designs/designs-images/2021-02-22/01/company-icon-1-6032f1de12615.png'
+                        height='50px' width='50px' alt='logo'
+                        style={{color: 'black', borderRadius: '10px'}}    
                     />
-                   <h3 style={{marginLeft:'15px'}} onClick={() => history.push('/dashboard')}className='d-inline'>{companyName}</h3>
+                   <h3 style={{marginLeft:'15px'}} onClick={() => history.push('/dashboard')}className='d-inline'></h3>
                     <input placeholder='Search' style={{width: '300px', marginLeft: '60px'}} type='text'/>
                 </div>
             </div>

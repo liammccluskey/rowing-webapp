@@ -1,11 +1,13 @@
 import React from 'react'
+import {useHistory} from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
 
 export default function UserInfoCard(props) {
     const {currentUser} = useAuth()
+    const history = useHistory()
 
     return (
-        <div style={{...props.style, padding: '15px 15px'}}className='float-container'>
+        <div style={{...props.style, padding: '15px 15px'}} className='float-container'>
             <div className='d-flex jc-flex-start ai-center'>
                 <img 
                     height='50px' width='50px' 
@@ -60,6 +62,8 @@ export default function UserInfoCard(props) {
                     </tr>
                 </tbody>
             </table>
+            <br />
+            <button style={{display: 'block', margin: '0px auto'}} className='clear-btn-secondary'>View Full Stats</button>
         </div>
     )
 }

@@ -38,18 +38,18 @@ export default function NewSessionForm(props) {
     }
 
     return (
-        <div className='float-container'
+        <div
             style={{
                 opacity: props.showSessionForm ? '100%':'0%',
-                height: props.showSessionForm ? '410px': '0px',
+                height: props.showSessionForm ? '400px': '0px',
                 marginBottom: props.showSessionForm ? '30px' : '0px',
                 transition: '0.3s',
-                padding: '0px 20px'
+                padding: '0px 20px',
+                border: '1px solid var(--bc)',
+                borderRadius: '5px'
                 }}
         >
-            <br />
-            <h3 style={{ textAlign: 'center'}}>Create a Workout</h3>
-            <br />
+            <h4 style={{ textAlign: 'center'}}>Create a Workout</h4>
             <form onSubmit={handleCreateSession}>
                 <label>
                     Title <br />

@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from "react"
 import MainHeader from "../headers/MainHeader"
-import SubHeader from '../headers/SubHeader'
+import Sidebar from '../headers/Sidebar'
 import Calendar from './Calendar'
 import UserInfoCard from './UserInfoCard'
+import ClubsInfoCard from './ClubsInfoCard'
 import NewSessionForm from './NewSessionForm'
 import { useAuth } from "../../contexts/AuthContext"
 import { useHistory, useLocation } from "react-router-dom"
@@ -56,63 +57,66 @@ export default function Dashboard() {
     }
 
     return (
-        <div>
+        <div style={{height: '100vh'}}>
             <MainHeader />
-            <SubHeader 
-                path={location.pathname} 
-                items={[
-                    {title: 'Activity', path: '/'},
-                    {title: 'History', path: ''}
-                ]}
-                subPath='/'
-            />
-            <div className='main-container d-flex jc-flex-start ai-flex-start' >
-                <UserInfoCard style={{marginRight: '50px', width:'250px', height: 'auto'}}/>
-                <div style={{ flex: 1}}>
-                    <div className='d-flex jc-space-between ai-center'>
-                        <h3 >Today's Workouts</h3>
-                        <button onClick={() => setShowSessionForm(true)} className='solid-btn-secondary'>New Workout</button>
-                    </div><br />
-                    <NewSessionForm 
-                        setShowSessionForm={setShowSessionForm}
-                        showSessionForm={showSessionForm}
-                        fetchSessions={fetchSessions}
-                        myClubs={myClubs}
-                    />
-                    {loading ? <Loading /> :
-                        <div className='float-container' >
-                            {mySessions.map(session => (
-                                <div key={session._id} className='main-subcontainer' onClick={()=>routeToSessionWithID(session._id)}>
-                                    <div className='d-flex jc-space-between ai-center'>
-                                        <div className='d-flex jc-flex-start'>
-                                            <img 
-                                                style={{borderRadius: '5px'}}
-                                                height='50px' width='50px' 
-                                                src={session.associatedClubID === 'none' ?
-                                                    currentUser.photoURL : 
-                                                    myClubs.find(club=>club._id===session.associatedClubID).iconURL
-                                                }
-                                            />
-                                            <div style={{margin: '0px 10px'}}>
-                                                <h4 style={{margin: '0px 10px', marginBottom: '5px'}}>{session.title}</h4>
-                                                <p style={{margin: '0px 10px', color: 'var(--color-secondary)'}}>
-                                                    {`Host: ${session.hostName}`}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <p >
-                                            { new Date(session.startAt).toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'})}
-                                        </p>
-                                    </div>
-                                </div>  
-                            ))}
-                        </div>
-                    }
-                    <br /><br />
-                    <h3 >Upcoming</h3>
+            <div className='main-container d-flex jc-flex-start ai-flex-start' style={{gap: '25px', padding: '0px 25px'}}>
+                <div>
                     <br />
-                    <Calendar />
-                    <br /><br />
+                    <UserInfoCard style={{width:'225px', height: 'auto'}}/>
+                </div>
+                
+                <div style={{ flex: 1, height: '90vh', overflow: 'scroll'}}>
+                    <br />
+                    <div className='float-container' style={{padding: '15px 20px'}}>
+                        <div className='d-flex jc-space-between ai-center'>
+                            <h3 >Today's Workouts</h3>
+                            <button onClick={() => setShowSessionForm(true)} className='solid-btn-secondary'>New Workout</button>
+                        </div><br />
+                        <NewSessionForm 
+                            setShowSessionForm={setShowSessionForm}
+                            showSessionForm={showSessionForm}
+                            fetchSessions={fetchSessions}
+                            myClubs={myClubs}
+                        />
+                        {loading ? <Loading /> :
+                            <div style={{ borderRadius: '5px', border: '1px solid var(--bc)'}} >
+                                {mySessions.map(session => (
+                                    <div key={session._id} className='main-subcontainer' onClick={()=>routeToSessionWithID(session._id)}>
+                                        <div className='d-flex jc-space-between ai-center'>
+                                            <div className='d-flex jc-flex-start'>
+                                                <img 
+                                                    style={{borderRadius: '5px'}}
+                                                    height='50px' width='50px' 
+                                                    src={session.associatedClubID === 'none' ?
+                                                        currentUser.photoURL : 
+                                                        myClubs.find(club=>club._id===session.associatedClubID).iconURL
+                                                    }
+                                                />
+                                                <div style={{margin: '0px 10px'}}>
+                                                    <h4 style={{margin: '0px 10px', marginBottom: '5px'}}>{session.title}</h4>
+                                                    <p style={{margin: '0px 10px', color: 'var(--color-secondary)'}}>
+                                                        {`Host: ${session.hostName}`}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p >
+                                                { new Date(session.startAt).toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'})}
+                                            </p>
+                                        </div>
+                                    </div>  
+                                ))}
+                            </div>
+                        }
+                    </div>
+                    <br />
+                    <div className='float-container' style={{padding: '15px 20px', marginBottom: '100px'}}>
+                        <h3 >Training Calendar</h3>
+                        <Calendar />
+                    </div>
+                </div>
+                <div>
+                    <br />
+                    <ClubsInfoCard clubs={myClubs} style={{width:'250px', height: 'auto'}}/>
                 </div>
             </div>
         </div>

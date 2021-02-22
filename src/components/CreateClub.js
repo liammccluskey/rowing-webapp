@@ -76,44 +76,48 @@ export default function CreateClub() {
         <div>
             <MainHeader />
             <SubHeader title='Create a Club' />
+            <br />
             <div className='main-container'>
-                <form className='create-club' id='form-create-club' onSubmit={handleSubmit}>
-                    <label style={{float: 'right'}} >
-                        Club Icon <br />
-                        <img 
-                            src={tempIconURL ? tempIconURL : process.env.REACT_APP_DEFAULT_CLUB_ICON_URL}
-                            height='250px' width='250px' 
-                            style={{ borderRadius: '5px'}}
-                        />
-                        <input onChange={handleIconChange} type='file' accept='image/*' required 
-                            style={{display: 'block', width:'250px'}}
-                        />
-                    </label>
-                    <label>
-                        Club Name <br />
-                        <input style={inputStyle} type='text' value={name} onChange={e => setName(e.target.value)} required/>
-                    </label>
-                    <br /><br />
-                    <label>
-                        Description <br />
-                        <textarea 
-                            style={{width: '400px', resize: 'none'}} maxLength='200' value={description} 
-                            onChange={e => setDescription(e.target.value)} 
-                            rows='5'
-                        />
-                    </label>
-                    <br /><br />
-                    <label>
-                        Custom URL <br />
-                        {domainURL}
-                        <input value={customURL} onChange={handleCustomURLChange} required/>
-                    </label>
-                    <br /><br />
-                </form>
-                <br />
-                <div className='d-flex jc-center ai-center'>
-                    <button form='form-create-club' className='solid-btn' type='submit'>Create Club</button>
+                <div className='float-container' style={{padding: '20px 20px'}}>
+                    <form className='create-club' id='form-create-club' onSubmit={handleSubmit}>
+                        <label style={{float: 'right'}} >
+                            Club Icon <br />
+                            <img 
+                                src={tempIconURL ? tempIconURL : process.env.REACT_APP_DEFAULT_CLUB_ICON_URL}
+                                height='250px' width='250px' 
+                                style={{ borderRadius: '5px'}}
+                            />
+                            <input onChange={handleIconChange} type='file' accept='image/*' required 
+                                style={{display: 'block', width:'250px'}}
+                            />
+                        </label>
+                        <label>
+                            Club Name <br />
+                            <input style={inputStyle} type='text' value={name} onChange={e => setName(e.target.value)} required/>
+                        </label>
+                        <br /><br />
+                        <label>
+                            Description <br />
+                            <textarea 
+                                style={{width: '400px', resize: 'none'}} maxLength='200' value={description} 
+                                onChange={e => setDescription(e.target.value)} 
+                                rows='5'
+                            />
+                        </label>
+                        <br /><br />
+                        <label>
+                            Custom URL <br />
+                            {domainURL}
+                            <input value={customURL} onChange={handleCustomURLChange} required/>
+                        </label>
+                        <br /><br />
+                    </form>
+                    <br />
+                    <div className='d-flex jc-center ai-center'>
+                        <button form='form-create-club' className='solid-btn' type='submit'>Create Club</button>
+                    </div>
                 </div>
+                
             </div>
         </div>
         

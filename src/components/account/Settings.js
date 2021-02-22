@@ -10,7 +10,6 @@ export default function Settings() {
         <div>
             <MainHeader />
             <AccountHeader subPath='/settings'/>
-            
         </div>
     )
 }
