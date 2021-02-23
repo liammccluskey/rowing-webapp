@@ -91,6 +91,7 @@ th {
   --color-secondary: rgb(73,73,79);
   --box-shadow: 0 0 15px rgba(0,0,0,0.07);
   
+  --page-link-color: rgb(0, 115, 207);
   --ps-nav: 200px;
   --ps-main: 200px;
   --ps-small: 50px;
@@ -157,6 +158,16 @@ form label {
   transition: 0.2s;
 }
 
+.page-link {
+  text-decoration: none;
+
+}
+.page-link:hover {
+  color: var(--page-link-color);
+  text-decoration:underline;
+  transition: 0.2s;
+}
+
 .main-container {
   text-align: left;
   margin: 0px auto;
@@ -210,9 +221,8 @@ tbody tr:hover{
   overflow: hidden;
 }
 .calendar-card:hover{
-  border-color: var(--tint-color);
-  border-radius: 2px;
-  transition: 0.5s;
+  border-bottom: 1px solid var(--tint-color);
+  transition: 0.2s;
   
 }
 

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import {Link} from 'react-router-dom'
 import moment from 'moment'
 
 export default function Calendar(props) {
@@ -102,13 +103,17 @@ export default function Calendar(props) {
                             {day.format('D')}
                         </p>
                         {sessions[index] && sessions[index].map( (session, i) => (
-                            <h5 style={{
-                                borderLeft: '5px solid var(--tint-color)',
-                                paddingLeft: '2px',
-                                marginTop: '4px'
-                            }}>
-                                {session.title}
-                            </h5>
+                            <Link to={`/sessions/${session._id}`} style={{textDecoration: 'none'}}>
+                                <h5 className='page-link' 
+                                    style={{
+                                        borderLeft: '5px solid var(--tint-color)',
+                                        paddingLeft: '2px',
+                                        marginTop: '4px'
+                                }}>
+                                    {session.title}
+                                </h5>
+                            </Link>
+                            
                         ))}
                         
                     </div>
