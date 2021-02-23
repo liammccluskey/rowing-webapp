@@ -30,7 +30,7 @@ export default function NewSessionForm(props) {
             setTimeout(() => {
                 props.setShowSessionForm(false)
                 props.fetchSessions()
-            }, 500);
+            }, 250);
             
         } catch(err) {
             console.log(err)
@@ -40,6 +40,7 @@ export default function NewSessionForm(props) {
     return (
         <div
             style={{
+                pointerEvents: props.showSessionForm ? 'auto' : 'none',
                 opacity: props.showSessionForm ? '100%':'0%',
                 height: props.showSessionForm ? '400px': '0px',
                 marginBottom: props.showSessionForm ? '30px' : '0px',
@@ -49,6 +50,7 @@ export default function NewSessionForm(props) {
                 borderRadius: '5px'
                 }}
         >
+            <br />
             <h4 style={{ textAlign: 'center'}}>Create a Workout</h4>
             <form onSubmit={handleCreateSession}>
                 <label>

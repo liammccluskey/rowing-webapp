@@ -2,8 +2,8 @@
 
 /*global config & reset*/
 * {
-  margin: none;
-  padding: none;
+  margin: 0px 0px;
+  padding: 0px 0px;
   font-family: "DM Sans", sans-serif;
 }
 
@@ -52,9 +52,11 @@ th {
   --tint-color: rgb(14, 127, 182);
   --tint-color-translucent: rgb(14, 127, 182, 0.2);
 
+
    /* rando */  
    --tint-color: rgb(0, 115, 207);
    --tint-color-translucent: rgb(0, 115, 207, 0.2);
+
   /* discord  */
   --tint-color: rgb(114, 137, 218);
   --tint-color-translucent: rgb(114, 137, 218, 0.25);
@@ -79,7 +81,7 @@ th {
   --color-secondary: #8e9296;
   --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 */
-  /*light mode   */ 
+  /*light mode  */
   --bgc: rgb(235,238,243);
   --bgc-light: white;
   --bgc-hover: rgba(0,0,0,0.02);
@@ -203,11 +205,15 @@ tbody tr:hover{
 /* calendar */
 .calendar-card{
   background-color: transparent;
-  border-right: 1px solid var(--tint-color-translucent);
-  border-bottom: 1px solid var(--tint-color-translucent);
+  border-right: 1px solid var(--bc);
+  border-bottom: 1px solid var(--bc);
+  overflow: hidden;
 }
 .calendar-card:hover{
-  background-color: var(--tint-color-translucent);
+  border-color: var(--tint-color);
+  border-radius: 2px;
+  transition: 0.5s;
+  
 }
 
 
@@ -315,6 +321,18 @@ tbody tr:hover{
 .clear-btn-cancel:hover {
   background-color: var(--tint-color-translucent);
   transition: 0.3s
+}
+.icon-btn {
+  background-color: transparent;
+  color: var(--tint-color);
+  font-size: 25px;
+  border-radius: 5px;
+  border: none;
+  padding: 7px 16px;
+}
+.icon-btn:hover {
+  background-color: var(--tint-color-translucent);
+  transition: 0.3s;
 }
 
 

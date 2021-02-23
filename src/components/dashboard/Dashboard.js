@@ -10,6 +10,7 @@ import { useHistory, useLocation } from "react-router-dom"
 import { useTheme } from "../../contexts/ThemeContext"
 import Loading from '../misc/Loading'
 import axios from "axios"
+import moment from 'moment'
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
@@ -23,6 +24,7 @@ export default function Dashboard() {
 
     const [myClubs, setMyClubs] = useState([])
     const [mySessions, setMySessions] = useState([])
+    const [todaySessions, setTodaySessions] = useState([])
     const [loading, setLoading] = useState(true)
 
     const [showSessionForm, setShowSessionForm] = useState(false)
@@ -45,6 +47,8 @@ export default function Dashboard() {
     async function fetchSessions() {
         const res = await api.get(`/sessions/incomplete/uid/${currentUser.uid}`)
         setMySessions(res.data)
+        const today = moment()
+        setTodaySessions(res.data.filter( session => today.isSame( new Date(session.startAt), 'day' )))
     }
 
     function handleToggleMode() {
@@ -78,9 +82,12 @@ export default function Dashboard() {
                             fetchSessions={fetchSessions}
                             myClubs={myClubs}
                         />
-                        {loading ? <Loading /> :
+                        {loading ? <Loading /> : !todaySessions.length ? 
+                        <p style={{color: 'var(--color-secondary', padding: '15px 0px', textAlign: 'center'}}>
+                            You have no workouts scheduled for today
+                        </p> :
                             <div style={{ borderRadius: '5px', border: '1px solid var(--bc)'}} >
-                                {mySessions.map(session => (
+                                {todaySessions.map(session => (
                                     <div key={session._id} className='main-subcontainer' onClick={()=>routeToSessionWithID(session._id)}>
                                         <div className='d-flex jc-space-between ai-center'>
                                             <div className='d-flex jc-flex-start'>
@@ -111,7 +118,7 @@ export default function Dashboard() {
                     <br />
                     <div className='float-container' style={{padding: '15px 20px', marginBottom: '100px'}}>
                         <h3 >Training Calendar</h3>
-                        <Calendar />
+                        <Calendar sessions={mySessions}/>
                     </div>
                 </div>
                 <div>
