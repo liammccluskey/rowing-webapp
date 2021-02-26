@@ -14,7 +14,7 @@ export default function MembersInfoCard(props) {
         <div style={{...props.style, padding: '20px 25px'}} className='float-container'>
             <div className='d-flex jc-space-between ai-center'>
                 <h3>Members <small>( {activities.length} )</small></h3>
-                <button className='solid-btn-secondary'>Join</button>
+                <button onClick={props.handleClickJoin} className='solid-btn-secondary'>Join</button>
             </div>
             <br />
             <table style={{width: '100%'}}>

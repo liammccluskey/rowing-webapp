@@ -13,7 +13,7 @@ export default function LiveActivityTable(props) {
 
     return (
         <div style={{border: '1px solid var(--bc)', borderRadius: '5px', marginBottom: hideSelf ? '10px': '50px'}}>
-            <div className='d-flex jc-space-between ai-center' style={{padding: '5px 20px', backgroundColor: 'var(--bgc-hover)'}}>
+            <div className='d-flex jc-space-between ai-center' style={{padding: '2px 20px', backgroundColor: 'var(--bgc-hover)'}}>
                 <div>
                     <button className='arrow-btn' onClick={() => setHideSelf(curr => !curr)}>
                         <Arrow direction={hideSelf ? 'right' : 'down'} color='var(--color-tertiary)' />

@@ -4,6 +4,7 @@ import SubHeader from '../headers/SubHeader'
 import MembersInfoCard from './MembersInfoCard'
 import SessionInfoCard from './SessionInfoCard'
 import LiveActivityTable from './LiveActivityTable'
+import Arrow from '../misc/Arrow'
 import {useAuth} from '../../contexts/AuthContext'
 import Loading from '../misc/Loading'
 import axios from "axios"
@@ -20,6 +21,9 @@ export default function Session(props) {
     const [activities, setActivities] = useState([])
     const [myActivity, setMyActivity] = useState(null)
     const [loading, setLoading] = useState(true)
+
+    const [hideActivities, setHideActivities] = useState(false)
+    const [hideResults, setHideResults] = useState(true)
 
     useEffect(() => {
         async function fetchData() {
@@ -100,38 +104,42 @@ export default function Session(props) {
                         <br />
                         <SessionInfoCard session={session} style={{width: '275px', height: 'auto'}} />
                         <br />
-                        <MembersInfoCard activities={activities} style={{width:'275px', height: 'auto'}}/>
+                        <MembersInfoCard handleClickJoin={handleClickJoin} activities={activities} style={{width:'275px', height: 'auto'}}/>
                     </div>
                     <div style={{flex: 1, height:'100vh', overflow: 'scroll'}}>
                         <br />
                         <div className='float-container' style={{padding: '20px 25px'}}>
-                            <h3>Workout Activities</h3>
-                            <br /><br />
-                            {['2k Warmup', '10k SS @ 22', '2k Cooldown'].map((item, i) => (
-                                <div>
-                                    <LiveActivityTable activities={activities} activityTitle={item} />
-                                </div>
-                            ))}
-                            
+                            <div className='d-flex jc-flex-start ai-center' style={{gap: '10px'}}>
+                                <button className='arrow-btn' onClick={() => setHideActivities(curr => !curr)}>
+                                    <Arrow direction={hideActivities ? 'right' : 'down'} color='var(--color-tertiary)' />
+                                </button>
+                                <h3>Workout Activities</h3>
+                            </div>
+                            <div style={{display: hideActivities ? 'none' : 'block'}}>
+                                <br /><br />
+                                {['2k Warmup', '10k SS @ 22', '2k Cooldown'].map((item, i) => (
+                                    <div>
+                                        <LiveActivityTable activities={activities} activityTitle={item} />
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                         <br />
                         <div className='float-container' style={{padding: '20px 25px'}}>
-                            <h3 >Workout Results</h3>
-                            <br />
-                            {['2k Warmup', '10k SS @ 22', '2k Cooldown'].map(item => (
-                                <div className='d-flex jc-space-between ai-center' style={{
-                                    border: '1px solid var(--bc)', borderRadius: '5px',
-                                    padding: '5px 20px',
-                                    margin: '10px',
-                                }}>
-                                    <h4 style={{display: 'inline', marginLeft: '15px'}}>{item}</h4>
+                            <div className='d-flex jc-flex-start ai-center' style={{gap: '10px'}}>
+                                <button className='arrow-btn' onClick={() => setHideResults(curr => !curr)}>
+                                    <Arrow direction={hideResults ? 'right' : 'down'} color='var(--color-tertiary)' />
+                                </button>
+                                <h3>Workout Results</h3>
+                            </div>
+                            <div style={{display: hideResults ? 'none' : 'block'}}>
+                                <br /><br />
+                                {['2k Warmup', '10k SS @ 22', '2k Cooldown'].map((item, i) => (
                                     <div>
-                                        <button className='clear-btn-cancel' style={{margin: '0px 10px'}}>View</button>
-                                        <button className='solid-btn-secondary' style={{margin: '0px 10px'}}>Begin</button>
+                                        <LiveActivityTable activities={activities} activityTitle={item} />
                                     </div>
-                                    
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
                        <p style={{marginTop: '200px'}}></p>
                     </div>
