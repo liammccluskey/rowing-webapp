@@ -8,7 +8,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext'
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './components/dashboard/Dashboard'
-import Session from "./components/Session"
+import Session from "./components/session/Session"
 
 import Clubs from './components/explore/Clubs'
 import Sessions from './components/explore/Sessions'

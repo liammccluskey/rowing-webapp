@@ -1,10 +1,32 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
+import axios from 'axios'
+
+const api = axios.create({
+    baseURL: process.env.REACT_APP_API_BASE_URL
+})
 
 export default function UserInfoCard(props) {
     const {currentUser} = useAuth()
     const history = useHistory()
+    const [userStats, setUserStats] = useState({
+        week: '',
+        month: '',
+        year: ''
+    })
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const res = await api.get(`/users/${currentUser.uid}/stats`)
+                setUserStats(res.data)
+            } catch (error) {
+                console.log(error)
+            } 
+        }
+        fetchData()
+    }, [])
 
     return (
         <div style={{...props.style, padding: '15px 15px'}} className='float-container'>
@@ -27,15 +49,15 @@ export default function UserInfoCard(props) {
                 <tbody>
                     <tr>
                         <td>This Week</td>
-                        <td style={{color: 'var(--tint-color)'}}>10k</td>
+                        <td style={{color: 'var(--tint-color)'}}>{userStats.week.toLocaleString()}</td>
                     </tr>
                     <tr>
                         <td>This Month</td>
-                        <td style={{color: 'var(--tint-color)'}}>100k</td>
+                        <td style={{color: 'var(--tint-color)'}}>{userStats.month.toLocaleString()}</td>
                     </tr>
                     <tr>
                         <td>This Year</td>
-                        <td style={{color: 'var(--tint-color)'}}>1 million</td>
+                        <td style={{color: 'var(--tint-color)'}}>{userStats.year.toLocaleString()}</td>
                     </tr>
                 </tbody>
             </table>

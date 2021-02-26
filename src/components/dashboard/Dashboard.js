@@ -69,7 +69,7 @@ export default function Dashboard() {
                     <UserInfoCard style={{width:'225px', height: 'auto'}}/>
                 </div>
                 
-                <div style={{ flex: 1, height: '90vh', overflow: 'scroll'}}>
+                <div style={{ flex: 1, height: '100vh', overflow: 'scroll'}}>
                     <br />
                     <div className='float-container' style={{padding: '15px 20px'}}>
                         <div className='d-flex jc-space-between ai-center'>
@@ -107,7 +107,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                             <p >
-                                                { new Date(session.startAt).toLocaleTimeString([],{hour: '2-digit', minute:'2-digit'})}
+                                                {moment(session.startAt).calendar()}
                                             </p>
                                         </div>
                                     </div>  

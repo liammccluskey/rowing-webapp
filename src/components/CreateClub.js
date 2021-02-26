@@ -84,7 +84,7 @@ export default function CreateClub() {
                             Club Icon <br />
                             <img 
                                 src={tempIconURL ? tempIconURL : process.env.REACT_APP_DEFAULT_CLUB_ICON_URL}
-                                height='250px' width='250px' 
+                                height='200px' width='200px' 
                                 style={{ borderRadius: '5px'}}
                             />
                             <input onChange={handleIconChange} type='file' accept='image/*' required 

@@ -20,8 +20,8 @@ h1, h2, h3, h4, h5 {
   color: var(--color-header);
 }
 h4 {
-  font-weight: 800;
-  font-size: 15px;
+  font-weight: bolder;
+  font-size: 16px;
 }
 h3 {
   font-size: 19px;
@@ -62,13 +62,25 @@ th {
   --tint-color-translucent: rgb(114, 137, 218, 0.25);
 
   /* dark mode */
-  --bgc: black;
+  --bgc: rgb(21, 24, 26);
   --bgc-hover: rgb(24,27,31);
-  --bgc-light:  rgb(16,18,21);
+  --bgc-light: rgb(35, 38, 42);
   --bc: rgb(30,32,34);
   --color: rgb(210,210,210);
   --color-header: rgb(220,220,220);
-  --color-secondary: #8e9296;
+  --color-secondary: rgb(102,102,102,255);
+  --color-tertiary: #8e9296;
+  --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+
+  /* reddit dark mode */
+  --bgc:  #030303;
+  --bgc-hover: #272729;
+  --bgc-light: #1a1a1b;
+  --bc: #343536;
+  --color: rgb(210,210,210);
+  --color-header: rgb(220,220,220);
+  --color-secondary: rgba(102,102,102,255);
+  --color-tertiary: rgb(142, 146, 150);
   --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
   /* discord   
@@ -84,11 +96,12 @@ th {
   /*light mode  */
   --bgc: rgb(235,238,243);
   --bgc-light: white;
-  --bgc-hover: rgba(0,0,0,0.02);
+  --bgc-hover: rgba(0,0,0,0.05);
   --bc: rgb(226, 231, 232);
   --color: rgb(51,51,51);
   --color-header: rgb(51,51,51);
   --color-secondary: rgb(73,73,79);
+  --color-tertiary: rgb(102,102,102);
   --box-shadow: 0 0 15px rgba(0,0,0,0.07);
   
   --page-link-color: rgb(0, 115, 207);
@@ -101,7 +114,7 @@ input, input:active, input:focus,
 textarea, textarea:active, textarea:focus,
 select, select:active, select:focus
  {
-  background-color: var(--bgc);
+  background-color: var(--bgc-hover);
   color: var(--color);
   border: 1px solid var(--bc);
   border-radius: 3px;
@@ -165,7 +178,6 @@ form label {
 .page-link:hover {
   color: var(--page-link-color);
   text-decoration:underline;
-  transition: 0.2s;
 }
 
 .main-container {
@@ -189,7 +201,7 @@ form label {
 }
 
 .float-container {
-  border-radius: 10px;
+  border-radius: 15px;
   background-color: var(--bgc-light);
   box-shadow: var(--box-shadow);
   padding: none;
@@ -200,6 +212,7 @@ form label {
 table {
   border-collapse: collapse;
   background-color: transparent;
+  text-align: left;
 }
 th,td {
   padding: 15px;
@@ -207,7 +220,7 @@ th,td {
 th {
   background-color: transparent;
   border-bottom: thin solid var(--bc);
-  color: var(--tint-color);
+  color: var(--color-secondary);
 }
 tbody tr:hover{
   background-color: var(--bgc-hover);
@@ -218,7 +231,8 @@ tbody tr:hover{
   background-color: transparent;
   border-right: 1px solid var(--bc);
   border-bottom: 1px solid var(--bc);
-  overflow: hidden;
+  overflow: scroll;
+
 }
 .calendar-card:hover{
   border-bottom: 1px solid var(--tint-color);
@@ -333,6 +347,7 @@ tbody tr:hover{
   transition: 0.3s
 }
 .icon-btn {
+  text-align: center;
   background-color: transparent;
   color: var(--tint-color);
   font-size: 25px;
@@ -344,5 +359,31 @@ tbody tr:hover{
   background-color: var(--tint-color-translucent);
   transition: 0.3s;
 }
+.arrow-btn {
+  background-color: transparent;
+  border: none;
+  margin: 0px 0px;
+  border-radius: 5px;
+  padding: 10px 10px;
+}
+.arrow-btn:hover {
+  transition: 0.3s;
+  background-color: var(--tint-color-translucent);
+}
 
+.green-dot {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: green;
+  display: inline-block;
+}
+
+.red-dot {
+  height: 1px;
+  width: 1px;
+  border-radius: 50%;
+  background-color: red;
+  display: inline-block;
+}
 

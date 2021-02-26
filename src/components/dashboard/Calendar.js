@@ -49,22 +49,24 @@ export default function Calendar(props) {
 
     return (
         <div>
-            <div className='d-flex jc-center ai-center' style={{gap: '7px'}}>
-                <h4>{currMoment.format('YYYY')}</h4>
+            <div className='d-flex jc-center ai-center' style={{gap: '7px', marginBottom: '10px'}}>
+                <h3>{currMoment.format('YYYY')}</h3>
                 <button 
                     onClick={() => setCurrMoment(currMoment.subtract(1, 'month').clone())}
                     className='icon-btn'
                 >
                     {'<'}
                 </button>
-                <h4 style={{width: '100px', textAlign: 'center'}}>{currMoment.format('MMMM')}</h4>
+                <h3 style={{width: '100px', textAlign: 'center'}}>{currMoment.format('MMMM')}</h3>
                 <button 
                     onClick={() => setCurrMoment(currMoment.add(1, 'month').clone())}
                     className='icon-btn'
                 >
                     {'>'}
                 </button>
+                
             </div>
+            
             <div style={{
                 display: 'grid',
                 gap: '0px',
