@@ -2,7 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Markazi+Text&display=swap');
 
 .c2screen {
-    background-color: rgba(161, 205, 224, 0.8);
+    background-color: #748f79; /* old style */
+    background-color: rgba(161, 205, 224, 0.8); /* blue pm5 */
     text-align: center;
 }
 

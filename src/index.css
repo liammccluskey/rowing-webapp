@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
 
 /*global config & reset*/
 * {
@@ -19,13 +20,14 @@ h1, h2, h3, h4, h5 {
   font-weight: 500;
   color: var(--color-header);
 }
+h1,h2,h3 {
+  font-weight: 400;
+}
 h4 {
-  font-weight: bolder;
   font-size: 16px;
 }
 h3 {
   font-size: 19px;
-  font-weight: 700;
 }
 p, td, th {
   font-weight: 375;
@@ -49,32 +51,33 @@ th {
 :root {
 
   /* strava blue    */
-  --tint-color: rgb(14, 127, 182);
+  --tint-color: #0e7fb6;
   --tint-color-translucent: rgb(14, 127, 182, 0.2);
 
-  /* gradescope */
+  /* gradescope  
   --tint-color: rgb(28, 160, 160);
   --tint-color-translucent: rgba(28, 160, 160, 0.2);
-
+*/
   /* discord  
   --tint-color: rgb(114, 137, 218);
   --tint-color-translucent: rgb(114, 137, 218, 0.25);
 */
 
-   /* rando  
+   /* rando   
    --tint-color: rgb(0, 115, 207);
    --tint-color-translucent: rgb(0, 115, 207, 0.2);
 */
 
 
   /* reddit dark mode */
-  --bgc:  #030303;
-  --bgc-hover: #272729;
-  --bgc-light: #1a1a1b;
-  --bc: #343536;
+  --bgc:  rgb(3, 3, 3);
+  --bgc-hover: rgb(39, 39, 41);
+  --bgc-light: rgb(26, 26, 27);
+  --bc: rgb(52, 53, 54);
+  --bc-tr: rgba(22,22,23,255);
   --color: rgb(210,210,210);
-  --color-header: rgb(220,220,220);
-  --color-secondary: rgb(142, 146, 150);
+  --color-header: rgb(210,210,210);
+  --color-secondary: rgb(147, 151, 156);
   --color-tertiary: rgba(102,102,102,255);
   --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
@@ -82,14 +85,15 @@ th {
   --bgc: rgb(235,238,243);
   --bgc-light: white;
   --bgc-hover: rgba(0,0,0,0.05);
-  --bc: rgb(226, 231, 232);
+  --bc: rgb(221, 226, 227);
+  --bc-tr: rgb(241,242,242);
   --color: rgb(51,51,51);
-  --color-header: rgb(51,51,51);
+  --color-header: rgb(55,55,55);
   --color-secondary: rgb(73,73,79);
   --color-tertiary: rgb(102,102,102);
   --box-shadow: 0 0 15px rgba(0,0,0,0.07);
   */
-  --color-error: #ff6961;
+  --color-error: #ea374d;
   --color-success: #15b380;
   --page-link-color: rgb(0, 115, 207);
   --ps-nav: 200px;
@@ -206,16 +210,28 @@ table {
 th,td {
   padding: 10px;
 }
+.data-table th, .data-table td {
+  padding: 13px;
+}
 th {
   background-color: transparent;
   border-bottom: thin solid var(--bc);
   color: var(--color-tertiary);
+}
+tr {
+  color: var(--color);
 }
 tbody tr:hover{
   background-color: var(--bgc-hover);
 }
 td:first-child {
   color: var(--color-secondary);
+}
+.data-table tbody tr {
+  border-bottom: 2px solid var(--bc-tr);
+}
+.data-table tbody tr:last-child {
+  border-bottom: none;
 }
 
 /* calendar */
@@ -302,14 +318,15 @@ td:first-child {
 .clear-btn-cancel {
   padding: 15px 25px;
   background-color: var(--tint-color);
-  color: white;
-  font-weight: 600;
+  color: var(--bgc-light);
+  font-weight: 700;
   font-size: 15px;
   border: 1px solid transparent;
   border-radius: 5px;
 }
 .clear-btn,
 .clear-btn-secondary {
+  font-weight: 400;
   background-color: transparent;
   color: var(--tint-color);
   border: 1px solid var(--tint-color);
@@ -333,6 +350,7 @@ td:first-child {
   transition: 0.3s;
 }
 .clear-btn-cancel {
+  font-weight: 400;
   background-color: transparent;
   color: var(--tint-color);
   border: none;
@@ -368,12 +386,22 @@ td:first-child {
 
 /* misc */
 .icon-checkmark {
-  height: 20px;
-  width: 20px;
+  height: 18px;
+  width: 18px;
   border-radius: 50%;
   background-color: var(--tint-color);
-  opacity: 80%;
-  padding: 7px;
+  padding: 6px;
+}
+
+/* valid for h3 */
+.number-item {
+  display: inline-block;
+  text-align: center;
+  padding: 5px 5px;
+  width: 25px;
+  color: var(--bgc-light);
+  background-color: var(--tint-color);
+  border-radius: 50%;
 }
 
 

@@ -65,7 +65,7 @@ export default function LiveActivityTable(props) {
             
             setTimeout(() => {
                 setShowErgConnectionError(curr => !curr)
-            }, 0.5*1000);
+            }, 1*1000);
             return
         }
         const activity = {
@@ -101,69 +101,66 @@ export default function LiveActivityTable(props) {
 
     return (
         <div style={{border: '1px solid var(--bc)', borderRadius: '5px', marginBottom: hideSelf ? '10px': '50px'}}>
-            <div className='d-flex jc-space-between ai-center' style={{
-                padding: '2px 20px', backgroundColor: 'transparent'
-            }}>
-                <div className='d-flex jc-flex-start ai-center' style={{gap: '20px', minHeight: '50px'}}>
+            <div className='d-flex jc-space-between ai-center' style={{backgroundColor: 'var(--bgc-hover)', borderRadius: '4px'}}>
+                <div className='d-flex jc-flex-start ai-center' style={{gap: '20px', minHeight: '55px', marginLeft: '20px'}}>
                     <button className='arrow-btn' onClick={() => setHideSelf(curr => !curr)}>
                         <Arrow direction={hideSelf ? 'right' : 'down'} color='var(--color-tertiary)' />
                     </button>
-                    <p>{props.activityTitle}</p>
+                    <p style={{color: 'var(--color-secondary)'}}>{props.activityTitle}</p>
                 </div>
-                {didCompleteActivity && 
-                    <img 
-                        src='/images/checkmark.png' className='icon-checkmark'
-                        style={{ marginRight: '35px' }}
-                    />
-                }
-                {activityInProgress ?
-                    activityInProgress.workoutItemIndex === props.workoutItemIndex &&
-                        <button
-                            className='clear-btn-cancel'
-                            style={{margin: '0px 10px'}}
-                            onClick={handleClickFinish}
-                        >
-                            Finish
-                        </button>
-                    :
-                    !didCompleteActivity && (hideInstructions ? 
-                        <button
-                            className='clear-btn-cancel' 
-                            style={{margin: '0px 10px'}}
-                            onClick={() => setHideInstructions(false)}
-                        >
-                            Begin
-                        </button> 
+                <div className='d-flex jc-flex-end ai-center'>
+                    {activityInProgress ?
+                        activityInProgress.workoutItemIndex === props.workoutItemIndex &&
+                            <button
+                                className='clear-btn-cancel'
+                                style={{margin: '0px 10px'}}
+                                onClick={handleClickFinish}
+                            >
+                                Finish
+                            </button>
                         :
-                        <button
-                            className='clear-btn-cancel'
-                            style={{margin: '0px 10px'}}
-                            onClick={() => setHideInstructions(true)}
-                        >
-                            Cancel
-                        </button>
-                    )
-                }
-                
-                
+                        !didCompleteActivity && (hideInstructions ? 
+                            <button
+                                className='clear-btn-cancel' 
+                                style={{margin: '0px 10px'}}
+                                onClick={() => setHideInstructions(false)}
+                            >
+                                Begin
+                            </button> 
+                            :
+                            <button
+                                className='clear-btn-cancel'
+                                style={{margin: '0px 10px'}}
+                                onClick={() => setHideInstructions(true)}
+                            >
+                                Cancel
+                            </button>
+                        )
+                    }
+                    <div className='d-flex ai-center jc-center' style={{
+                        height: '100%', width: '125px',
+                        borderLeft: '1px solid var(--bc)',
+                        textAlign: 'center',
+                        verticalAlign: 'middle'
+                    }}>
+                        <img 
+                            src='/images/checkmark_clear.png' height='30px' width='30px'
+                            style={{opacity: didCompleteActivity ? '80%' : '0%'}}
+                        />
+                    </div>
+                </div>
             </div>
-            <div style={{padding: '20px 50px', display: hideInstructions ? 'none' : 'block', color: 'var(--color-secondary)'}}>
-                <Arrow direction='left' color={showErgConnectionError ? 'var(--color-error)' : 'var(--color-tertiary)'} />
-                <p style={{
-                    display: 'inline-block', 
-                    width: showErgConnectionError ? '30px' : '15px',
-                    color: showErgConnectionError ? 'var(--color-error)' : 'var(--color-tertiary)',
-                    fontWeight: '900', fontSize: '17px',
-                    transition: 'width 0.2s',
-                    textAlign: 'center'
-                }}>
+            <div style={{padding: '20px 75px', display: hideInstructions ? 'none' : 'block', color: 'var(--color)'}}>
+                
+                <h3 style={{ 
+                        marginRight: '30px',
+                        backgroundColor: showErgConnectionError && 'var(--color-error)',
+                        transition: 'background-color 0.2s' 
+                    }} 
+                    className='number-item'
+                >
                     1
-                </p>
-                <Arrow 
-                    direction='right' 
-                    color={showErgConnectionError ? 'var(--color-error)' : 'var(--color-tertiary)'} 
-                    style={{marginRight: '15px'}} 
-                />
+                </h3>
                 Connect ergometer: 
                 <p style={{
                     color: ergConnected ? 'var(--color-success)' : 'var(--color-error)',
@@ -175,31 +172,23 @@ export default function LiveActivityTable(props) {
                 {ergConnected ? 
                     <button 
                         onClick={props.handleClickConnect}
-                        style={{marginLeft: '48px', marginTop: '15px'}} className='clear-btn-secondary'
+                        style={{marginLeft: '65px', marginTop: '15px'}} className='clear-btn-secondary'
                     >
                         Connect to New Erg
                     </button> 
                     :
                     <button 
                         onClick={props.handleClickConnect} 
-                        style={{marginLeft: '48px', marginTop: '15px'}} className='clear-btn-secondary'
+                        style={{marginLeft: '65px', marginTop: '15px'}} className='clear-btn-secondary'
                     >
                         Connect to Erg
                     </button>
                 }
                 <br /><br />
-                <Arrow direction='left' color='var(--color-tertiary)' style={{marginTop: '10px'}} />
-                <p style={{
-                    display: 'inline-block', width: '15px',
-                    color: 'var(--color-tertiary)',
-                    fontWeight: '900', fontSize: '17px', textAlign: 'center'
-                }}>
-                    2
-                </p>
+                <h3 style={{ marginRight: '30px' }} className='number-item'>2</h3>
                 
-                <Arrow direction='right' color='var(--color-tertiary)' style={{marginRight: '15px'}}/>
                 Configure workout: 
-                <p style={{display: 'inline', fontSize: '16px', fontWeight: 'bold', marginLeft: '20px', color: 'var(--color)'}}>
+                <p style={{display: 'inline', fontSize: '16px', fontWeight: 'bold', marginLeft: '20px', color: 'var(--color-secondary)'}}>
                     {props.activityTitle}
                 </p>
                 <br />
@@ -227,7 +216,7 @@ export default function LiveActivityTable(props) {
             </div>
 
             <div style={{ display: hideSelf ? 'none': 'block'}}>
-                <table style={{width: '100%'}}>
+                <table className='data-table' style={{width: '100%'}}>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -260,3 +249,33 @@ export default function LiveActivityTable(props) {
         
     )
 }
+
+/*
+<Arrow direction='left' color={showErgConnectionError ? 'var(--color-error)' : 'var(--color-tertiary)'} />
+                <p style={{
+                    display: 'inline-block', 
+                    width: showErgConnectionError ? '30px' : '15px',
+                    color: showErgConnectionError ? 'var(--color-error)' : 'var(--color-tertiary)',
+                    fontWeight: '900', fontSize: '17px',
+                    transition: 'width 0.2s',
+                    textAlign: 'center'
+                }}>
+                    1
+                </p>
+                <Arrow 
+                    direction='right' 
+                    color={showErgConnectionError ? 'var(--color-error)' : 'var(--color-tertiary)'} 
+                    style={{marginRight: '15px'}} 
+                />
+
+<Arrow direction='left' color='var(--color-tertiary)' style={{marginTop: '10px'}} />
+                <p style={{
+                    display: 'inline-block', width: '15px',
+                    color: 'var(--color-tertiary)',
+                    fontWeight: '900', fontSize: '17px', textAlign: 'center'
+                }}>
+                    2
+                </p>
+                
+                <Arrow direction='right' color='var(--color-tertiary)' style={{marginRight: '15px'}}/>
+*/

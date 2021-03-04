@@ -50,14 +50,14 @@ export default function Calendar(props) {
     return (
         <div>
             <div className='d-flex jc-center ai-center' style={{gap: '7px', marginBottom: '10px'}}>
-                <h3>{currMoment.format('YYYY')}</h3>
+                <h4>{currMoment.format('YYYY')}</h4>
                 <button 
                     onClick={() => setCurrMoment(currMoment.subtract(1, 'month').clone())}
                     className='icon-btn'
                 >
                     {'<'}
                 </button>
-                <h3 style={{width: '100px', textAlign: 'center'}}>{currMoment.format('MMMM')}</h3>
+                <h4 style={{width: '100px', textAlign: 'center'}}>{currMoment.format('MMMM')}</h4>
                 <button 
                     onClick={() => setCurrMoment(currMoment.add(1, 'month').clone())}
                     className='icon-btn'
@@ -111,6 +111,7 @@ export default function Calendar(props) {
                                         borderLeft: '3px solid var(--tint-color)',
                                         padding: '5px 5px',
                                         marginTop: '4px',
+                                        fontWeight: '400',
                                         color: 'var(--color-secondary)'
                                 }}>
                                     <p style={{fontSize: '12px'}}>{moment(session.startAt).format('LT')}</p>

@@ -88,16 +88,14 @@ export default function NewSessionForm(props) {
                 pointerEvents: props.showSessionForm ? 'auto' : 'none',
                 opacity: props.showSessionForm ? '100%':'0%',
                 height: props.showSessionForm ? 'auto': '0px',
-                marginBottom: props.showSessionForm ? '30px' : '0px',
-                transition: '0.3s',
+                marginBottom: props.showSessionForm ? '40px' : '0px',
                 padding: '0px 20px',
                 border: '1px solid var(--bc)',
                 borderRadius: '5px'
                 }}
         >
             <br />
-            <h4 style={{ textAlign: 'center'}}>Create a Workout</h4>
-            <br />
+            <h3 style={{ textAlign: 'left', marginBottom: '40px'}}>Create a Workout</h3>
             <form onSubmit={handleCreateSession}>
                 <div className='d-flex jc-flex-start' style={{gap: '40px'}}>
                     <div style={{flex: 1}}>
