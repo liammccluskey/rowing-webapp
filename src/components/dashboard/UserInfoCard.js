@@ -15,6 +15,7 @@ export default function UserInfoCard(props) {
         month: '',
         year: ''
     })
+    const dataCellStyle = {color: 'var(--color)', textAlign: 'left'}
 
     useEffect(() => {
         async function fetchData() {
@@ -42,22 +43,22 @@ export default function UserInfoCard(props) {
             <table style={{width: '100%'}}>
                 <thead>
                     <tr>
-                        <th style={{color: 'var(--color-secondary)'}}>Period</th>
-                        <th style={{color: 'var(--color-secondary)'}}>Meters Rowed</th>
+                        <th >Period</th>
+                        <th >Meters</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>This Week</td>
-                        <td style={{color: 'var(--tint-color)'}}>{userStats.week.toLocaleString()}</td>
+                        <td style={dataCellStyle}>{userStats.week.toLocaleString()}</td>
                     </tr>
                     <tr>
                         <td>This Month</td>
-                        <td style={{color: 'var(--tint-color)'}}>{userStats.month.toLocaleString()}</td>
+                        <td style={dataCellStyle}>{userStats.month.toLocaleString()}</td>
                     </tr>
                     <tr>
                         <td>This Year</td>
-                        <td style={{color: 'var(--tint-color)'}}>{userStats.year.toLocaleString()}</td>
+                        <td style={dataCellStyle}>{userStats.year.toLocaleString()}</td>
                     </tr>
                 </tbody>
             </table>
@@ -66,21 +67,21 @@ export default function UserInfoCard(props) {
                 <thead>
                     <tr>
                         <th style={{color: 'var(--color-secondary)'}}>Event</th>
-                        <th style={{color: 'var(--color-secondary)'}}>Personal Record</th>
+                        <th style={{color: 'var(--color-secondary)'}}>Record</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>2k</td>
-                        <td style={{color: 'var(--tint-color)'}}>7:01</td>
+                        <td style={dataCellStyle}>7:01</td>
                     </tr>
                     <tr>
                         <td>5k</td>
-                        <td style={{color: 'var(--tint-color)'}}>19:36</td>
+                        <td style={dataCellStyle}>19:36</td>
                     </tr>
                     <tr>
                         <td>10k</td>
-                        <td style={{color: 'var(--tint-color)'}}>35:30</td>
+                        <td style={dataCellStyle}>35:30</td>
                     </tr>
                 </tbody>
             </table>

@@ -86,7 +86,7 @@ export default function Calendar(props) {
                 display: 'grid',
                 gridTemplateColumns:'repeat(7,1fr)',
                 gap: '0px',
-                gridAutoRows: '100px',
+                gridAutoRows: '110px',
                 border: '1px solid var(--bc)',
                 borderRadius: '5px',
                 margin: 'none'
@@ -99,8 +99,8 @@ export default function Calendar(props) {
                             color: 'var(--color-secondary)',
                             textTransform: 'uppercase', fontSize: '13px',
                             padding: '2px 5px',
-                            backgroundColor: day.isSame(new Date(), 'day') ? 'var(--tint-color-translucent' : 'transparent',
-                            borderRadius: '0px'
+                            backgroundColor: day.isSame(new Date(), 'day') ? 'var(--tint-color-translucent)' : 'transparent',
+                            marginBottom: '2px',
                         }}>
                             {day.format('D')}
                         </p>
@@ -108,10 +108,12 @@ export default function Calendar(props) {
                             <Link to={`/sessions/${session._id}`} style={{textDecoration: 'none'}}>
                                 <h5 className='page-link' 
                                     style={{
-                                        borderLeft: '5px solid var(--tint-color)',
-                                        paddingLeft: '2px',
-                                        marginTop: '4px'
+                                        borderLeft: '3px solid var(--tint-color)',
+                                        padding: '5px 5px',
+                                        marginTop: '4px',
+                                        color: 'var(--color-secondary)'
                                 }}>
+                                    <p style={{fontSize: '12px'}}>{moment(session.startAt).format('LT')}</p>
                                     {session.title}
                                 </h5>
                             </Link>

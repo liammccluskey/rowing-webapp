@@ -1,0 +1,39 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Markazi+Text&display=swap');
+
+.c2screen {
+    background-color: rgba(161, 205, 224, 0.8);
+    text-align: center;
+}
+
+
+.c2screen h5 {
+    vertical-align: middle;
+    font-family: 'Markazi Text', serif;
+    color: #211a3d;
+}
+
+.c2screen .big, .c2screen .medium, 
+.c2screen .small {
+    padding: 0px 0px ;
+}
+
+.c2screen .big {
+    font-size: 63px;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+
+.c2screen .medium {
+    font-size: 45px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.c2screen .small {
+    display: inline;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 7px;
+    letter-spacing: 1px;
+}

@@ -19,11 +19,14 @@ export default function Session(props) {
     const {currentUser} = useAuth()
     const [session, setSession] = useState(null)
     const [activities, setActivities] = useState([])
-    const [myActivity, setMyActivity] = useState(null)
     const [loading, setLoading] = useState(true)
 
     const [hideActivities, setHideActivities] = useState(false)
     const [hideResults, setHideResults] = useState(true)
+
+    const [currentWorkoutItemIndex, setCurrentWorkoutItemIndex] = useState(-1)
+    const [ergConnected, setErgConnected] = useState(false)
+    const [activityInProgress, setActivityInProgress] = useState(null)
 
     useEffect(() => {
         async function fetchData() {
@@ -35,11 +38,11 @@ export default function Session(props) {
     }, [])
 
     useEffect(async () => {
-        await updateMyActivity()
+        await updateActivityInProgress()
         setTimeout(async () => {
             await fetchActivities()
-        }, 20*1000)
-    }, [myActivity])
+        }, 5*1000)
+    }, [activityInProgress])
 
     async function fetchSession() {
         try {
@@ -54,44 +57,56 @@ export default function Session(props) {
         try {
             const res = await api.get(`/sessions/${sessionID}/activities`)
             setActivities(res.data)
-            setMyActivity(res.data[res.data.findIndex(ac => ac.uid === currentUser.uid)])
+
+            //if (activityInProgress) {return}
+
+            for (let i = 0; i < res.data.length; i++) {
+                for (let j = 0; j < res.data[i].length; j++) {
+                    if (res.data[i][j].uid === currentUser.uid && !res.data[i][j].isCompleted) {
+                        setActivityInProgress(res.data[i][j])
+                        return
+                        // Assume there is only one? -> potential bug
+                    }
+                }
+            }
         } catch (error) {
             console.log(error)
         }
     }
 
-    async function updateMyActivity() {
-        if (!myActivity) { return }
-        const random = () => {
-            return Math.floor(Math.random()*50) % 100 + 25
+    async function updateActivityInProgress() {
+        if (! activityInProgress) {
+            console.log('Error: no activity in progress')
+            return
         }
-        const temp = myActivity
+        const random = () => {
+            return Math.floor(Math.random()*70) % 70 + 60
+        }
+        const temp = activityInProgress
         temp.currentPace = random()
         temp.averagePace = random()
         temp.totalDistance += 5
+        temp.currentStrokeRate = 22
+        temp.totalTime += 15
         try {
-            await api.patch(`/activities/${myActivity._id}`, temp)
+            await api.patch(`/activities/${activityInProgress._id}`, temp)
+            console.log('did update activity in progress')
         } catch (error) {
             console.log(error)
         }
     }
 
     async function handleClickJoin() {
-        const activityData = {
-            name: currentUser.displayName,
-            uid: currentUser.uid
-        }
         try {
-            const res = await api.post('/activities', activityData)
-            const sessionData = {
-                uid: currentUser.uid,
-                activityID: res.data._id
-            }
-            await api.patch(`/sessions/${sessionID}/join`, sessionData)
-            fetchActivities()
+            await api.patch(`/sessions/${sessionID}/join`, {uid: currentUser.uid})
+            fetchSession()
         } catch (error) {
             console.log(error)
         }
+    }
+
+    function handleClickConnect() {
+        setErgConnected(true)
     }
 
     return (
@@ -102,9 +117,12 @@ export default function Session(props) {
                 <div className='main-container d-flex jc-flex-start ai-flex-start' style={{padding: '0px 25px', gap:'25px', margin: '0px'}}>
                     <div>
                         <br />
-                        <SessionInfoCard session={session} style={{width: '275px', height: 'auto'}} />
+                        <SessionInfoCard session={session} style={{width: '250px', height: 'auto'}} />
                         <br />
-                        <MembersInfoCard handleClickJoin={handleClickJoin} activities={activities} style={{width:'275px', height: 'auto'}}/>
+                        <MembersInfoCard 
+                            handleClickJoin={handleClickJoin} 
+                            session={session} 
+                            style={{width:'250px', height: 'auto'}}/>
                     </div>
                     <div style={{flex: 1, height:'100vh', overflow: 'scroll'}}>
                         <br />
@@ -117,9 +135,19 @@ export default function Session(props) {
                             </div>
                             <div style={{display: hideActivities ? 'none' : 'block'}}>
                                 <br /><br />
-                                {['2k Warmup', '10k SS @ 22', '2k Cooldown'].map((item, i) => (
+                                {session.workoutItems.map((item, i) => (
                                     <div>
-                                        <LiveActivityTable activities={activities} activityTitle={item} />
+                                         <LiveActivityTable 
+                                            activities={activities[i]}
+                                            activityInProgress={activityInProgress}
+                                            setActivityInProgress={setActivityInProgress}
+                                            activityTitle={item} 
+                                            session={session}
+                                            workoutItemIndex={i}
+                                            fetchActivities={fetchActivities}
+                                            ergConnected={ergConnected}
+                                            handleClickConnect={handleClickConnect}
+                                        />
                                     </div>
                                 ))}
                             </div>
@@ -134,9 +162,15 @@ export default function Session(props) {
                             </div>
                             <div style={{display: hideResults ? 'none' : 'block'}}>
                                 <br /><br />
-                                {['2k Warmup', '10k SS @ 22', '2k Cooldown'].map((item, i) => (
+                                {session.workoutItems.map((item, i) => (
                                     <div>
-                                        <LiveActivityTable activities={activities} activityTitle={item} />
+                                        <LiveActivityTable 
+                                            activities={activities[i]} 
+                                            activityTitle={item} 
+                                            session={session}
+                                            workoutItemIndex={i}
+                                            fetchActivities={fetchActivities}
+                                        />
                                     </div>
                                 ))}
                             </div>
