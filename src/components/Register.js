@@ -19,11 +19,13 @@ export default function Register() {
             console.log("Passwords must match")
             return
         }
+        console.log(passwordRef.current.value)
         try {
             setAwaitingResponse(true)
-            await signUp(emailRef.current.value, passwordRef.current.value)
+            await signUp('Temp Name', emailRef.current.value, passwordRef.current.value)
             history.push('/dashboard')
         } catch (e) {
+            console.log(e)
             window.alert(e.message)
         }
         setAwaitingResponse(false)

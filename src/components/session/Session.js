@@ -10,6 +10,10 @@ import Loading from '../misc/Loading'
 import axios from "axios"
 import {useParams} from 'react-router-dom'
 
+import {PM5} from './connect_pm5/pm5'
+
+import {cbConnecting, cbConnected, cbDisconnected, cbMessage} from './connect_pm5/main'
+
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
 })
@@ -28,6 +32,20 @@ export default function Session(props) {
     const [ergConnected, setErgConnected] = useState(false)
     const [activityInProgress, setActivityInProgress] = useState(null)
 
+    const pm5 = new PM5(
+        cbConnecting,
+        cbConnected,
+        cbDisconnected,
+        cbMessage
+    )
+
+    useEffect(() => {
+        const disconnect = () => {
+            if ( pm5.connected() ) { pm5.doDisconnect() } 
+        }
+        return disconnect
+    }, [])
+
     useEffect(() => {
         async function fetchData() {
             await fetchSession()
@@ -41,7 +59,7 @@ export default function Session(props) {
         await updateActivityInProgress()
         setTimeout(async () => {
             await fetchActivities()
-        }, 5*1000)
+        }, 20*1000)
     }, [activityInProgress])
 
     async function fetchSession() {
@@ -106,35 +124,60 @@ export default function Session(props) {
     }
 
     function handleClickConnect() {
-        setErgConnected(true)
+        if (!navigator.bluetooth) {
+            alert('This browser does not support bluetooth.');
+        } else if (pm5.connected()) {
+            return
+        } else {
+            pm5.doConnect()
+            setErgConnected(true)
+        }
+    }
+
+    function cbMessage() {
+        
     }
 
     return (
-        <div style={{height: '100vh'}}>
+        <div>
             <MainHeader />
             {loading ? <Loading /> :
-            <div>
-                <div className='main-container d-flex jc-flex-start ai-flex-start' style={{padding: '0px 25px', gap:'25px', margin: '0px'}}>
-                    <div>
-                        <br />
-                        <SessionInfoCard session={session} style={{width: '250px', height: 'auto'}} />
-                        <br />
+            <div className='main-container' style={{padding: '0px 25px'}} >
+                <br /><br/>
+                <div 
+                    className='d-flex jc-flex-start ai-flex-start' 
+                    style={{ gap:'50px' }}
+                >
+                    <div 
+                        className='float-container'
+                        style={{ width: '250px', padding: '20px 0px' }}
+                    >
+                        <SessionInfoCard 
+                            session={session} 
+                            style={{ padding: '0px 20px' }}
+                        />
+                        <br /><br />
                         <MembersInfoCard 
                             handleClickJoin={handleClickJoin} 
-                            session={session} 
-                            style={{width:'250px', height: 'auto'}}/>
+                            session={session}
+                            style={{
+                                height: '400px',
+                                overflow: 'scroll'
+                            }}
+                        />
                     </div>
-                    <div style={{flex: 1, height:'100vh', overflow: 'scroll'}}>
-                        <br />
-                        <div className='float-container' style={{padding: '20px 25px'}}>
+                    <div style={{flex: 1}}>
+                        <div >
+                            <h2>{session.title}</h2>
+                            <br />
                             <div className='d-flex jc-flex-start ai-center' style={{gap: '10px'}}>
                                 <button className='arrow-btn' onClick={() => setHideActivities(curr => !curr)}>
                                     <Arrow direction={hideActivities ? 'right' : 'down'} color='var(--color-tertiary)' />
                                 </button>
-                                <h3>Workout Activities</h3>
+                                <h3 onClick={() => setHideActivities(curr => !curr)}>Workout Activities</h3>
                             </div>
-                            <div style={{display: hideActivities ? 'none' : 'block'}}>
-                                <br /><br />
+                            <div style={{display: hideActivities ? 'none' : 'block',padding: '30px 20px 0px 20px'}}>
+
                                 {session.workoutItems.map((item, i) => (
                                     <div>
                                          <LiveActivityTable 
@@ -153,15 +196,14 @@ export default function Session(props) {
                             </div>
                         </div>
                         <br />
-                        <div className='float-container' style={{padding: '20px 25px'}}>
+                        <div>
                             <div className='d-flex jc-flex-start ai-center' style={{gap: '10px'}}>
                                 <button className='arrow-btn' onClick={() => setHideResults(curr => !curr)}>
                                     <Arrow direction={hideResults ? 'right' : 'down'} color='var(--color-tertiary)' />
                                 </button>
-                                <h3>Workout Results</h3>
+                                <h3 onClick={() => setHideResults(curr => !curr)}>Workout Results</h3>
                             </div>
-                            <div style={{display: hideResults ? 'none' : 'block'}}>
-                                <br /><br />
+                            <div style={{display: hideResults ? 'none' : 'block',padding: '30px 20px'}}>
                                 {session.workoutItems.map((item, i) => (
                                     <div>
                                         <LiveActivityTable 
@@ -175,7 +217,6 @@ export default function Session(props) {
                                 ))}
                             </div>
                         </div>
-                       <p style={{marginTop: '200px'}}></p>
                     </div>
                 </div>
             </div>

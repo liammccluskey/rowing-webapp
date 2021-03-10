@@ -3,7 +3,7 @@ import {useTheme} from "../../contexts/ThemeContext"
 import {Link, useHistory} from 'react-router-dom'
 
 export default function MainHeader(props) {
-    const {companyName} = useTheme()
+    const {isDarkMode, setIsDarkMode} = useTheme()
     const [path, setPath] = useState('')
     const history = useHistory()
     const activeClass = (pathname) => {
@@ -14,22 +14,28 @@ export default function MainHeader(props) {
     }, [])
 
     return (
-        <div className="d-flex jc-space-between ai-center main-header">
+        <div className="d-flex jc-space-between ai-center main-header" style={props.style}>
             <div>
                 <div className='d-flex jc-flex-start ai-center'>
-                    <img className='d-inline'
+                    <h1
                         onClick={() => history.push('/dashboard')}
-                        src={process.env.REACT_APP_COMPANY_ICON_DARK_URL}
-                        src='https://storage.pixteller.com/designs/designs-images/2021-02-22/01/company-icon-1-6032f1de12615.png'
-                        height='50px' width='50px' alt='logo'
-                        style={{color: 'black', borderRadius: '10px'}}    
-                    />
-                   <h3 style={{marginLeft:'15px'}} onClick={() => history.push('/dashboard')}className='d-inline'></h3>
+                        style={{
+                            height: '40px', width: '40px',
+                            display: 'inline-block',
+                            borderRadius: '10px',
+                            backgroundColor: 'var(--tint-color)',
+                            color: 'var(--bgc)',
+                            fontWeight: '400'
+                        }}
+                    >
+                        R
+                    </h1>
+                    <h3 style={{marginLeft:'10px'}} onClick={() => history.push('/dashboard')}className='d-inline'></h3>
                     <input placeholder='Search' style={{width: '300px', marginLeft: '60px'}} type='text'/>
                 </div>
             </div>
-            <div>
-                <ul className='ls-none'>
+            <div className='d-flex ai-center'>
+                <ul className='ls-none d-inline'>
                     <li className='d-inline'>
                         <Link className={`${activeClass('dashboard') } header-link`} to='/dashboard' >
                             Dashboard
@@ -46,6 +52,12 @@ export default function MainHeader(props) {
                         </Link>
                     </li>
                 </ul>
+                <button 
+                    className='icon-btn d-inline' style={{color: 'var(--color-secondary)'}}
+                    onClick={() => setIsDarkMode(curr => !curr)}
+                >
+                    <i className={isDarkMode ? 'gg-sun' : 'gg-moon'} />
+                </button>
             </div>
         </div>
     )

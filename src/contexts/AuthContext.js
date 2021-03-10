@@ -35,6 +35,7 @@ export function AuthProvider({ children }) {
 
     function signUp(displayName, email, password) {
     // Description: Standard register with email
+        
         return auth.createUserWithEmailAndPassword(email, password)
         .then( (userCredential) => createUser(userCredential, displayName) )
     }
@@ -57,7 +58,6 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
     // Description: Register authState Listener on mount
-        console.log("Mounted authcontext")
         const unsubscribe = auth.onAuthStateChanged((user) => {
             setCurrentUser(user)
             setLoading(false)

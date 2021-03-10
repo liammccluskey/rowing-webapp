@@ -100,13 +100,16 @@ export default function LiveActivityTable(props) {
     }
 
     return (
-        <div style={{border: '1px solid var(--bc)', borderRadius: '5px', marginBottom: hideSelf ? '10px': '50px'}}>
-            <div className='d-flex jc-space-between ai-center' style={{backgroundColor: 'var(--bgc-hover)', borderRadius: '4px'}}>
-                <div className='d-flex jc-flex-start ai-center' style={{gap: '20px', minHeight: '55px', marginLeft: '20px'}}>
+        <div style={{borderTop: '1px solid var(--bc)'}}>
+            <div className='d-flex jc-space-between ai-center'>
+                <div 
+                    className='d-flex jc-flex-start ai-center' 
+                    style={{gap: '20px', minHeight: '55px', marginLeft: '20px'}}
+                >
                     <button className='arrow-btn' onClick={() => setHideSelf(curr => !curr)}>
                         <Arrow direction={hideSelf ? 'right' : 'down'} color='var(--color-tertiary)' />
                     </button>
-                    <p style={{color: 'var(--color-secondary)'}}>{props.activityTitle}</p>
+                    <h4 onClick={() => setHideSelf(curr => !curr)}>{props.activityTitle}</h4>
                 </div>
                 <div className='d-flex jc-flex-end ai-center'>
                     {activityInProgress ?
@@ -143,18 +146,21 @@ export default function LiveActivityTable(props) {
                         textAlign: 'center',
                         verticalAlign: 'middle'
                     }}>
-                        <img 
-                            src='/images/checkmark_clear.png' height='30px' width='30px'
-                            style={{opacity: didCompleteActivity ? '80%' : '0%'}}
-                        />
+                        <div className='icon-circle-clear' 
+                            style={{opacity: !didCompleteActivity && '0%', borderColor: 'var(--color-success)'
+                        }}>
+                            <div className='checkmark' />
+                        </div>
                     </div>
                 </div>
             </div>
-            <div style={{padding: '20px 75px', display: hideInstructions ? 'none' : 'block', color: 'var(--color)'}}>
+            <div style={{padding: '20px 50px', display: hideInstructions ? 'none' : 'block', color: 'var(--color-secondary)'}}>
                 
                 <h3 style={{ 
                         marginRight: '30px',
                         backgroundColor: showErgConnectionError && 'var(--color-error)',
+                        color: showErgConnectionError && 'var(--bgc-light)',
+                        borderColor: showErgConnectionError && 'transparent',
                         transition: 'background-color 0.2s' 
                     }} 
                     className='number-item'
@@ -174,27 +180,27 @@ export default function LiveActivityTable(props) {
                         onClick={props.handleClickConnect}
                         style={{marginLeft: '65px', marginTop: '15px'}} className='clear-btn-secondary'
                     >
-                        Connect to New Erg
+                        Reconnect
                     </button> 
                     :
                     <button 
                         onClick={props.handleClickConnect} 
                         style={{marginLeft: '65px', marginTop: '15px'}} className='clear-btn-secondary'
                     >
-                        Connect to Erg
+                        Connect
                     </button>
                 }
                 <br /><br />
                 <h3 style={{ marginRight: '30px' }} className='number-item'>2</h3>
                 
                 Configure workout: 
-                <p style={{display: 'inline', fontSize: '16px', fontWeight: 'bold', marginLeft: '20px', color: 'var(--color-secondary)'}}>
+                <p style={{display: 'inline', fontSize: '16px', marginLeft: '20px', color: 'var(--color)'}}>
                     {props.activityTitle}
                 </p>
-                <br />
+                <br /><br />
                 <button 
                     style={{margin: '10px auto', display: 'block'}}
-                    className='solid-btn-secondary'
+                    className='clear-btn-secondary'
                     onClick={handleClickStartWorkout}
                 >
                     Start Workout
@@ -215,7 +221,11 @@ export default function LiveActivityTable(props) {
                 ))} 
             </div>
 
-            <div style={{ display: hideSelf ? 'none': 'block'}}>
+            <div style={{
+                display: hideSelf ? 'none': 'block',
+                border: '1px solid var(--bc)', borderRadius: '5px',
+                margin: '20px 40px 40px 40px'
+            }}>
                 <table className='data-table' style={{width: '100%'}}>
                     <thead>
                         <tr>
@@ -242,6 +252,11 @@ export default function LiveActivityTable(props) {
                                 <td>{ac.currentStrokeRate}</td>
                             </tr>
                         ))}
+                        {!activities.length &&
+                            <tr>
+                                <td>No activities in progress</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -249,33 +264,3 @@ export default function LiveActivityTable(props) {
         
     )
 }
-
-/*
-<Arrow direction='left' color={showErgConnectionError ? 'var(--color-error)' : 'var(--color-tertiary)'} />
-                <p style={{
-                    display: 'inline-block', 
-                    width: showErgConnectionError ? '30px' : '15px',
-                    color: showErgConnectionError ? 'var(--color-error)' : 'var(--color-tertiary)',
-                    fontWeight: '900', fontSize: '17px',
-                    transition: 'width 0.2s',
-                    textAlign: 'center'
-                }}>
-                    1
-                </p>
-                <Arrow 
-                    direction='right' 
-                    color={showErgConnectionError ? 'var(--color-error)' : 'var(--color-tertiary)'} 
-                    style={{marginRight: '15px'}} 
-                />
-
-<Arrow direction='left' color='var(--color-tertiary)' style={{marginTop: '10px'}} />
-                <p style={{
-                    display: 'inline-block', width: '15px',
-                    color: 'var(--color-tertiary)',
-                    fontWeight: '900', fontSize: '17px', textAlign: 'center'
-                }}>
-                    2
-                </p>
-                
-                <Arrow direction='right' color='var(--color-tertiary)' style={{marginRight: '15px'}}/>
-*/

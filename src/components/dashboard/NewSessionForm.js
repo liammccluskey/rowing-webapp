@@ -89,7 +89,7 @@ export default function NewSessionForm(props) {
                 opacity: props.showSessionForm ? '100%':'0%',
                 height: props.showSessionForm ? 'auto': '0px',
                 marginBottom: props.showSessionForm ? '40px' : '0px',
-                padding: '0px 20px',
+                padding: '0px 30px',
                 border: '1px solid var(--bc)',
                 borderRadius: '5px'
                 }}
@@ -151,12 +151,11 @@ export default function NewSessionForm(props) {
                                 </div>
                             ))}
                             <button 
-                                type='button' className='clear-btn-secondary' 
-                                style={{border: 'none'}}
+                                type='button' className='icon-btn'
                                 hidden={visibleItems === maxItems}
                                 onClick={handleAddItem}
                             >
-                                + Add activity
+                                +
                             </button>
                         </div>
                         

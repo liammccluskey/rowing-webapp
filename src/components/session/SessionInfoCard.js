@@ -27,19 +27,25 @@ export default function SessionInfoCard(props) {
         }
     }, [])
     return (
-        <div className='float-container' style={{...props.style, maxWidth: props.style.width, padding: '20px 25px'}}>
-            <h3 style={{wordWrap: 'break-word'}}>{props.session.title}</h3>
-            <br />
-            <div className='d-flex jc-flex-start ai-flex-start'>
-                <img 
-                    height='50px' width='50px' 
-                    src={club ? club.iconURL : currentUser.photoURL} 
-                    style={{borderRadius: '5px', marginRight: '10px'}}
-                />
-                <div>
-                    <p>{club ? club.name : currentUser.displayName}</p>
-                    <h5 style={{color: 'var(--color-tertiary)'}}>{moment(props.session.startAt).calendar()}</h5>
-                </div>
+        <div 
+            style={{...props.style}}
+            className='d-flex jc-flex-start ai-flex-start'
+        >
+            <img 
+                height='50px' width='50px' 
+                src={club ? club.iconURL : currentUser.photoURL} 
+                style={{borderRadius: '5px', marginRight: '10px'}}
+            />
+            <div>
+                <h4>{club ? club.name : currentUser.displayName}</h4>
+                <h5 
+                    style={{
+                        color: 'var(--color-secondary)',
+                        marginTop: '10px'
+                    }}
+                >
+                    {moment(props.session.startAt).calendar()}
+                </h5>
             </div>
         </div>
     )

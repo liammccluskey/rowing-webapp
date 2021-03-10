@@ -53,33 +53,53 @@ export default function Clubs() {
         <MainHeader />
         <ExploreHeader subPath='/clubs' />
         <div className='main-container'>
-            <div style={{margin: '40px 0px'}} className='d-flex jc-space-between ai-center'>
+            <br /><br />
+            <div className='d-flex jc-space-between ai-center'>
                 <input type='text' placeholder='Find a Club' />
-                <button onClick={handleCreateClub}className='solid-btn'>Create a Club</button>
+                <button onClick={handleCreateClub}className='solid-btn-secondary'>Create a Club</button>
             </div>
-            {loading ?  <Loading />: 
-                <div className='float-container'>
-                    {clubs.map((club, index) => 
-                        <div key={club._id} className='main-subcontainer' onClick={()=>handleClickClub(club)}>
-                            <div className='d-flex jc-space-between ai-center'>
-                                <div className='d-flex jc-flex-start'>
-                                    <img 
-                                        src={club.iconURL}
-                                        height='50px' width='50px' 
-                                        style={{ borderRadius: '5px'}}
-                                    />
-                                    <div style={{margin: '0px 10px'}}>
-                                        <h4 style={{margin: '0px 10px', marginBottom: '5px'}}>{club.name}</h4>
-                                        <p style={{margin: '0px 10px'}}>{`${club.memberUIDs.length} Member${club.memberUIDs.length != 1 ? 's':''}`}</p>
+            <br />
+            {loading ?  
+                <Loading />
+                : 
+                <table style={{width: '100%'}} className='data-table'>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Members</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {clubs.map((club, index) => 
+                            <tr 
+                                key={index}
+                                onClick={()=>handleClickClub(club)}
+                            >
+                                <td>
+                                    <div 
+                                        className='d-flex jc-flex-start ai-flex-start'
+                                        style={{gap: '10px'}}
+                                    >
+                                        <img 
+                                            src={club.iconURL}
+                                            height='50px' width='50px' 
+                                            style={{ borderRadius: '5px'}}
+                                        />
+                                        <h4>{club.name}</h4>
                                     </div>
-                                </div>
-                                <button onClick={() => handleJoinClub(club)} className='clear-btn-secondary'>Join</button>
-                                
-                            </div>
-                            
-                        </div>
-                    )}
-                </div>
+                                    
+                                </td>
+                                <td>
+                                    {`${club.memberUIDs.length} Member${club.memberUIDs.length != 1 ? 's':''}`}
+                                </td>
+                                <td style={{textAlign: 'right'}}>
+                                    <button onClick={() => handleJoinClub(club)} className='clear-btn-secondary'>Join</button>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
             }
         </div>
         

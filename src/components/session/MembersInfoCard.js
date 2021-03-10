@@ -27,11 +27,14 @@ export default function MembersInfoCard(props) {
     }, [props.session])
 
     return (
-        <div style={{...props.style, padding: '20px 25px'}} className='float-container'>
+        <div style={{...props.style}}>
             {loading ? <Loading /> :
             <div>
-                <div className='d-flex jc-space-between ai-center'>
-                    <h3>Members <small>( {members.length} )</small></h3>
+                <div 
+                    className='d-flex jc-space-between ai-center'
+                    style={{ padding: '0px 20px'}}
+                >
+                    <h4>Members <small>( {members.length} )</small></h4>
                     <button 
                         onClick={props.handleClickJoin} 
                         className='solid-btn-secondary'
@@ -40,11 +43,10 @@ export default function MembersInfoCard(props) {
                         Join
                     </button>
                 </div>
-                <br />
                 <table style={{width: '100%'}}>
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

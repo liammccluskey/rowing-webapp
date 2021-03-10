@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
+@import url('https://css.gg/moon.css');
+@import url('https://css.gg/sun.css');
+
 
 /*global config & reset*/
 * {
@@ -17,11 +20,8 @@ button {
   outline: none;
 }
 h1, h2, h3, h4, h5 {
-  font-weight: 500;
-  color: var(--color-header);
-}
-h1,h2,h3 {
   font-weight: 400;
+  color: var(--color-header);
 }
 h4 {
   font-size: 16px;
@@ -30,7 +30,7 @@ h3 {
   font-size: 19px;
 }
 p, td, th {
-  font-weight: 375;
+  font-weight: 300;
   font-size: 15px;
 }
 th {
@@ -54,48 +54,79 @@ th {
   --tint-color: #0e7fb6;
   --tint-color-translucent: rgb(14, 127, 182, 0.2);
 
-  /* gradescope  
-  --tint-color: rgb(28, 160, 160);
-  --tint-color-translucent: rgba(28, 160, 160, 0.2);
-*/
-  /* discord  
-  --tint-color: rgb(114, 137, 218);
-  --tint-color-translucent: rgb(114, 137, 218, 0.25);
-*/
+   /* gradescope  */
+ --tint-color: rgb(28, 160, 160);
+ --tint-color-translucent: rgba(28, 160, 160, 0.2);
 
-   /* rando   
-   --tint-color: rgb(0, 115, 207);
-   --tint-color-translucent: rgb(0, 115, 207, 0.2);
-*/
+ /* rando    */
+ --tint-color: rgb(0, 115, 207);
+ --tint-color-translucent: rgb(0, 115, 207, 0.2);
+
+ /* discord   */
+ --tint-color: rgb(114, 136, 217);
+ --tint-color-translucent: rgb(114, 137, 218, 0.25);
 
 
-  /* reddit dark mode */
-  --bgc:  rgb(3, 3, 3);
-  --bgc-hover: rgb(39, 39, 41);
-  --bgc-light: rgb(26, 26, 27);
-  --bc: rgb(52, 53, 54);
-  --bc-tr: rgba(22,22,23,255);
-  --color: rgb(210,210,210);
-  --color-header: rgb(210,210,210);
-  --color-secondary: rgb(147, 151, 156);
-  --color-tertiary: rgba(102,102,102,255);
-  --box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 
-  /*light mode
-  --bgc: rgb(235,238,243);
-  --bgc-light: white;
-  --bgc-hover: rgba(0,0,0,0.05);
-  --bc: rgb(221, 226, 227);
-  --bc-tr: rgb(241,242,242);
-  --color: rgb(51,51,51);
-  --color-header: rgb(55,55,55);
-  --color-secondary: rgb(73,73,79);
-  --color-tertiary: rgb(102,102,102);
-  --box-shadow: 0 0 15px rgba(0,0,0,0.07);
-  */
+
+
+  /* dark mode */
+  --bgc-d: rgba(30,33,38,255);
+  --bgc-hover-d: rgba(45,48,53);
+  --bgc-light-d: rgba(41,44,50,255);
+  --bgc-nav-d: var(--bgc-light-d);
+  --bc-d: rgba(64,73,77,255);
+  --bc-d: rgba(48,54,58,255);
+  --bc-tr-d: rgba(22,22,23,255);
+  --color-d: rgb(210,210,210);
+  --color-header-d: rgb(225,225,225);
+  --color-secondary-d: rgb(147, 151, 156);
+  --color-tertiary-d: rgba(102,102,102,255);
+  --box-shadow-d: 0 1px 3px rgba(0,0,0,0.2);
+
+  /*light mode*/
+  --bgc-l: white;
+  --bgc-light-l: white;
+  --bgc-nav-l: var(--bgc-light-l);
+  --bgc-hover-l: rgba(0,0,0,0.05);
+  --bc-l: rgb(220, 227, 231);
+  --bc-tr-l: rgb(241,242,242);
+  --color-l: rgb(51,51,51);
+  --color-header-l: rgb(55,55,55);
+  --color-secondary-l: rgb(77,77,79);
+  --color-tertiary-l: rgb(102,102,102);
+  --box-shadow-l: 0 0 15px rgba(0,0,0,0.07);
+  
+
+  /* dynamic color scheme */
+  --bgc-nav: var(--bgc-nav-l);
+  --bgc: var(--bgc-l);
+  --bgc-light: var(--bgc-light-l);
+  --bgc-hover: var(--bgc-hover-l);
+  --bc: var(--bc-l);
+  --bc-tr: var(--bc-tr-l);
+  --color: var(--color-l);
+  --color-header: var(--color-header-l);
+  --color-secondary: var(--color-secondary-l);
+  --color-tertiary: var(--color-tertiary-l);
+  --box-shadow: var(--box-shadow-l);
+
+  /* standard colors */
   --color-error: #ea374d;
-  --color-success: #15b380;
+  --color-success: #0e8925;
   --page-link-color: rgb(0, 115, 207);
+  
+  /* apple notes yellow */
+  --color-yellow: rgb(254, 187, 18);
+  --color-translucent-yellow: rgb(254, 187, 18, 0.2);
+
+  --color-strava: #0e7fb6;
+  --color-translucent-strava: rgb(14, 127, 182, 0.2);
+
+  --color-green: rgba(66,181,129,1);
+  --color-translucent-green: rgba(66,181,129,0.2);
+
+  /* misc global */
   --ps-nav: 200px;
   --ps-main: 200px;
   --ps-small: 50px;
@@ -106,9 +137,10 @@ textarea, textarea:active, textarea:focus,
 select, select:active, select:focus
  {
   background-color: var(--bgc-hover);
+  background-color: transparent;
   color: var(--color);
   border: 1px solid var(--bc);
-  border-radius: 3px;
+  border-radius: 5px;
   padding: 11px 10px;
   outline: none;
 }
@@ -125,25 +157,31 @@ form label {
   font-size: 15px;
 }
 
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: var(--bgc-nav);
+}
 .main-header {
-  background-color: var(--bgc-light);
+  background-color: var(--bgc);
   height: 70px;
   color: var(--color);
   padding: 0px 40px;
   position: sticky;
-  box-shadow: var(--box-shadow);
+  box-shadow: none;
   top: 0px;
 }
 .sub-header {
-  background-color: var(--bgc-light);
+  background-color: var(--bgc);
+  border-bottom: 1px solid var(--bc);
   position: sticky;
   top: 70px;
   text-align: left;
+  padding-top: 20px;
   padding-right: var(--ps-nav);
   padding-left: var(--ps-nav);
   padding-bottom: 16px;
   color: var(--color);
-  border-bottom: 1px solid var(--bc);
 }
 .sub-link-active {
   border-bottom: 3px solid var(--tint-color);
@@ -153,7 +191,7 @@ form label {
   margin-right: 30px;
   margin-left: none;
   margin-top: none;
-  font-weight: 475;
+  font-weight: 400;
   font-size: 15px;
   text-decoration: none;
   padding-bottom: 15px;
@@ -182,21 +220,20 @@ form label {
 }
 
 .main-subcontainer {
-  border-bottom: 1px solid var(--bc);
-  padding: 20px 20px;
-  color: var(--color);
+  border: 1px solid var(--bc);
+  border-radius: 5px;
 }
 .main-subcontainer:hover {
   background-color: var(--bgc-hover);
-}
-.main-subcontainer:last-child {
-  border-bottom: none;
+  border-color: var(--bgc-hover);
 }
 
 .float-container {
-  border-radius: 5px;
-  background-color: var(--bgc-light);
+  border-radius: 8px;
+  background-color: var(--bgc);
+  border: 1px solid var(--bc);
   box-shadow: var(--box-shadow);
+  box-shadow: none;
   padding: none;
   overflow: hidden;
 }
@@ -213,11 +250,13 @@ th,td {
 .data-table th, .data-table td {
   padding: 13px;
 }
+
 th {
   background-color: transparent;
-  border-bottom: thin solid var(--bc);
+  border-bottom: 1px solid var(--bc);
   color: var(--color-tertiary);
 }
+
 tr {
   color: var(--color);
 }
@@ -228,7 +267,7 @@ td:first-child {
   color: var(--color-secondary);
 }
 .data-table tbody tr {
-  border-bottom: 2px solid var(--bc-tr);
+  border-bottom: 1px solid var(--bc);
 }
 .data-table tbody tr:last-child {
   border-bottom: none;
@@ -238,6 +277,7 @@ td:first-child {
 .calendar-card{
   background-color: transparent;
   border-right: 1px solid var(--bc);
+  border-right: none;
   border-bottom: 1px solid var(--bc);
   overflow: scroll;
 
@@ -316,9 +356,10 @@ td:first-child {
 .solid-btn-secondary,
 .clear-btn-secondary,
 .clear-btn-cancel {
+  letter-spacing: 1px;
   padding: 15px 25px;
   background-color: var(--tint-color);
-  color: var(--bgc-light);
+  color: var(--bgc);
   font-weight: 700;
   font-size: 15px;
   border: 1px solid transparent;
@@ -363,10 +404,10 @@ td:first-child {
   text-align: center;
   background-color: transparent;
   color: var(--tint-color);
-  font-size: 25px;
+  font-size: 22px;
   border-radius: 5px;
   border: none;
-  padding: 7px 16px;
+  padding: 5px 14px;
 }
 .icon-btn:hover {
   background-color: var(--tint-color-translucent);
@@ -384,24 +425,59 @@ td:first-child {
   background-color: var(--tint-color-translucent);
 }
 
-/* misc */
-.icon-checkmark {
-  height: 18px;
-  width: 18px;
+/* small icons */
+.icon-circle-clear {
+  height: 16px;
+  width: 16px;
   border-radius: 50%;
-  background-color: var(--tint-color);
+  border: 2px solid;
   padding: 6px;
 }
+
+.icon-circle {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background-color: var(--tint-color);
+  padding: 4px;
+}
+
+.checkmark {
+  /* white check */
+  display: inline-block;
+  transform: rotate(40deg);
+  height: 12px;
+  width: 5px;
+  margin-bottom: 2px;
+  margin-left: 2px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+  border-color: inherit;
+}
+
+.xmark {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-color: inherit;
+}
+
 
 /* valid for h3 */
 .number-item {
   display: inline-block;
+  font-weight: 400;
   text-align: center;
-  padding: 5px 5px;
+  padding: 3px 3px;
   width: 25px;
-  color: var(--bgc-light);
-  background-color: var(--tint-color);
-  border-radius: 50%;
+  color: var(--color-secondary);
+  border: 1px dashed var(--color-secondary);
+  border-radius: 5px;
+}
+
+.clear-btn-secondary {
+  background-color: var(--bgc-hover);
+  border-color: var(--bc);
 }
 
 

@@ -48,16 +48,16 @@ export default function Calendar(props) {
     }, [currMoment, props.sessions] )
 
     return (
-        <div>
+        <div >
             <div className='d-flex jc-center ai-center' style={{gap: '7px', marginBottom: '10px'}}>
-                <h4>{currMoment.format('YYYY')}</h4>
+                <h3>{currMoment.format('YYYY')}</h3>
                 <button 
                     onClick={() => setCurrMoment(currMoment.subtract(1, 'month').clone())}
                     className='icon-btn'
                 >
                     {'<'}
                 </button>
-                <h4 style={{width: '100px', textAlign: 'center'}}>{currMoment.format('MMMM')}</h4>
+                <h3 style={{width: '100px', textAlign: 'center'}}>{currMoment.format('MMMM')}</h3>
                 <button 
                     onClick={() => setCurrMoment(currMoment.add(1, 'month').clone())}
                     className='icon-btn'
@@ -66,7 +66,6 @@ export default function Calendar(props) {
                 </button>
                 
             </div>
-            
             <div style={{
                 display: 'grid',
                 gap: '0px',
@@ -75,10 +74,10 @@ export default function Calendar(props) {
                 {['s','m','t','w','t','f','s'].map((day, id) => (
                     <h6 style={{
                         textTransform: 'uppercase',margin: '0px 0px',
-                        padding: '3px', borderTop: '1px solid var(--bc)',
+                        padding: '3px', color: 'var(--color-secondary)',
                         textAlign: 'center'
-                    }}>{
-                        day}
+                    }}>
+                        {day}
                     </h6>
                 ))}
             </div>
@@ -88,18 +87,23 @@ export default function Calendar(props) {
                 gap: '0px',
                 gridAutoRows: '110px',
                 border: '1px solid var(--bc)',
-                borderRadius: '5px',
-                margin: 'none'
+                borderRadius: '10px',
+                margin: 'none',
+                borderCollapse: 'collapse'
                 }}
                 className='calendar'
             >
                 {calendarDays.map((day, index) => (
-                    <div key={index} className='calendar-card' style={{padding: '0px 0px'}}>
+                    <div 
+                        key={index} 
+                        className='calendar-card' 
+                        style={{padding: '0px 0px', borderLeft: '1px solid var(--bc)'}}
+                    >
                         <p style={{
                             color: 'var(--color-secondary)',
                             textTransform: 'uppercase', fontSize: '13px',
                             padding: '2px 5px',
-                            backgroundColor: day.isSame(new Date(), 'day') ? 'var(--tint-color-translucent)' : 'transparent',
+                            /*backgroundColor: day.isSame(new Date(), 'day') ? 'var(--tint-color-translucent)' : 'transparent',*/
                             marginBottom: '2px',
                         }}>
                             {day.format('D')}
@@ -108,11 +112,11 @@ export default function Calendar(props) {
                             <Link to={`/sessions/${session._id}`} style={{textDecoration: 'none'}}>
                                 <h5 className='page-link' 
                                     style={{
-                                        borderLeft: '3px solid var(--tint-color)',
+                                        borderLeft: '0px solid var(--tint-color)',
                                         padding: '5px 5px',
                                         marginTop: '4px',
                                         fontWeight: '400',
-                                        color: 'var(--color-secondary)'
+                                        color: 'var(--color)'
                                 }}>
                                     <p style={{fontSize: '12px'}}>{moment(session.startAt).format('LT')}</p>
                                     {session.title}

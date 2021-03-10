@@ -1,11 +1,10 @@
 import React, {useState, useContext, useEffect} from "react"
+import {useAuth} from './AuthContext'
+import axios from 'axios'
 
-/*
-    Items contained in ThemeContext:
-        - company name
-        - dark/light mode
-        - ...
-*/
+const api = axios.create({
+    baseURL: process.env.REACT_APP_API_BASE_URL
+})
 
 const ThemeContext = React.createContext() 
 
@@ -15,26 +14,69 @@ export function useTheme() {
 
 export function ThemeProvider({children}) {
     const [isDarkMode, setIsDarkMode] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const {currentUser} = useAuth()
     const companyName = "Rowe"
-    //const companyImgURL = 'https://storage.pixteller.com/editor_icons/fishing/0804109543.svg'
-    //const companyImgURL = 'https://storage.pixteller.com/editor_icons/outdoor-activities/5126958994.svg'
-    const companyImgURL = 'https://storage.pixteller.com/designs/designs-images/2021-02-08/08/boat-bloack-1-60217f6dd4f72.png'
     const domainURL = 'https://rowe.com/clubs/'
+
     const value = {
         isDarkMode, setIsDarkMode,
-        companyName, companyImgURL, domainURL
+        companyName, domainURL
     }
 
+    const cssVars = [
+        '--bgc-nav',
+        '--bgc',
+        '--bgc-hover',
+        '--bgc-light',
+        '--bc',
+        '--bc-tr',
+        '--color',
+        '--color-header',
+        '--color-secondary',
+        '--color-tertiary',
+        '--box-shadow'
+    ]
+
     useEffect(() => {
-        // TEST
-        console.log("themecontext: updated theme")
-        console.log(isDarkMode ? "themecontext: new theme is dark" : "themecontext: new theme is light" )
+        async function fetchData() {
+            try {
+                const res = await api.get(`/users/${currentUser.uid}`)
+                setIsDarkMode(res.data.usesDarkMode)
+                console.log('user data')
+                console.log(res.data)
+            } catch (error) {
+                console.log(error)
+            }
+            setLoading(false)
+        }
+        fetchData()
+    }, [])
+
+    useEffect(() => {
+        let extension = isDarkMode ? '-d' : '-l'
+        let root = document.documentElement;
+
+        cssVars.forEach(name => {
+            root.style.setProperty(name, `var(${name}${extension})`)
+        })
+
+        async function updateData() {
+            try {
+                await api.patch(`/users/${currentUser.uid}/color-theme`, {
+                    usesDarkMode: isDarkMode
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        updateData()
 
     }, [isDarkMode])
 
     return (
         <ThemeContext.Provider value={value}>
-            {children}
+            {!loading && children}
         </ThemeContext.Provider>
     )
 }

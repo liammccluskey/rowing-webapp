@@ -52,7 +52,7 @@ export default function Login() {
                         <input ref={passwordRef} style={inputStyle} type="password" name="password" id="password" required/>
                     </label>
                     <br /><br /><br /><br />
-                    <input className='solid-btn' type="submit" value='Log In'/>
+                    <button className='solid-btn' type="submit">Log In</button>
                     <br /><br />
                 </form>
                 <div className='d-flex' style={{flexDirection: 'column'}}>
