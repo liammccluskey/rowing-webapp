@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * Minimal usage:
  *

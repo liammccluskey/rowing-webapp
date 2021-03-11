@@ -8,8 +8,8 @@ export default function ClubsInfoCard(props) {
     const history = useHistory()
 
     return (
-        <div style={{...props.style, padding: '15px 0px'}} className='float-container' >
-            <h3 style={{marginLeft: '10px'}}>Your Clubs</h3>
+        <div style={{...props.style, padding: '20px 0px'}} className='float-container' >
+            <h3 style={{marginLeft: '20px'}}>Your Clubs</h3>
             <br />
             <table style={{width: '100%'}}>
                 <thead>
@@ -27,7 +27,7 @@ export default function ClubsInfoCard(props) {
                                 />
                                 {club.name}
                             </td>
-                            <td style={{textAlign: 'right'}}>{club.memberUIDs.length}</td>
+                            <td>{club.memberUIDs.length}</td>
                         </tr>
                     ))}
                 </tbody>

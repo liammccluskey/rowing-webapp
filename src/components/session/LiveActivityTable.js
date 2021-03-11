@@ -16,9 +16,12 @@ export default function LiveActivityTable(props) {
     const [hideSelf, setHideSelf] = useState(true)
     const [hideInstructions, setHideInstructions] = useState(true)
 
-    const [activities, setActivities] = useState(props.activities)
+    const [activities, setActivities] = useState(
+        props.activities.filter(ac => !ac.isCompleted)
+    )
     const [ergConnected, setErgConnected] = useState(props.ergConnected)
     const [activityInProgress, setActivityInProgress] = useState(props.activityInProgress)
+    const [startDisabled, setStartDisabled] = useState(false)
 
     const [selectedActivityIDs, setSelectedActivityIDs] = useState(new Set())
     const [showErgConnectionError, setShowErgConnectionError] = useState(false)
@@ -26,7 +29,7 @@ export default function LiveActivityTable(props) {
     
 
     useEffect(() => {
-        setActivities(props.activities)
+        setActivities(props.activities.filter(ac => !ac.isCompleted))
         if (!didCompleteActivity) {
             setDidCompleteActivity(
                 props.activities.filter(ac => ac.uid === currentUser.uid && ac.isCompleted).length > 0
@@ -45,9 +48,14 @@ export default function LiveActivityTable(props) {
 
     async function handleClickFinish() {
         if (! activityInProgress) {
+            // extra check: this should not be possible
             console.log('error finishing: no activity in progress')
             return
+        } else if (activityInProgress.workoutItemIndex !== props.workoutItemIndex) {
+            // extra check: this should not be possible
+            console.log('error finishing activity: incorrect WorkoutItemIndex')
         }
+        removeSelectedActivity(activityInProgress._id)
         try {
             await api.patch(`/activities/${activityInProgress._id}/complete`)
             props.setActivityInProgress(null)
@@ -59,33 +67,38 @@ export default function LiveActivityTable(props) {
     }
 
     async function handleClickStartWorkout() {
-        if (activityInProgress) {return}
-        if (! ergConnected) {
+        setStartDisabled(true)
+
+        if (activityInProgress) {
+            // extra check: cannot start while activity in progress
+            // present error message to user ?
+        }
+        else if (! ergConnected) {
             setShowErgConnectionError(true)
             
             setTimeout(() => {
-                setShowErgConnectionError(curr => !curr)
+                setShowErgConnectionError(false)
             }, 1*1000);
-            return
+        } else {
+            const activity = {
+                uid: currentUser.uid,
+                name: currentUser.displayName,
+                workoutItemIndex: props.workoutItemIndex,
+                sessionID: props.session._id
+            }
+            try {
+                const res = await api.post('/activities', activity)
+                handleClickActivity(res.data._id)
+                props.setActivityInProgress(res.data)
+                props.fetchActivities()
+            } catch (error) {
+                console.log(error)
+            }
+    
+            setHideSelf(false)
+            setHideInstructions(true)
         }
-        const activity = {
-            uid: currentUser.uid,
-            name: currentUser.displayName,
-            workoutItemIndex: props.workoutItemIndex,
-            sessionID: props.session._id
-        }
-        try {
-            const res = await api.post('/activities', activity)
-            handleClickActivity(res.data._id)
-            props.setActivityInProgress(res.data)
-            props.fetchActivities()
-        } catch (error) {
-            console.log(error)
-        }
-
-        setHideSelf(false)
-        setHideInstructions(true)
-
+        setStartDisabled(false)
     }
 
     function handleClickActivity(activityID) {
@@ -94,7 +107,7 @@ export default function LiveActivityTable(props) {
         }
     }
 
-    function handleClickCloseC2Screen(activityID) {
+    function removeSelectedActivity(activityID) {
         selectedActivityIDs.delete(activityID)
         setSelectedActivityIDs( new Set(selectedActivityIDs) )
     }
@@ -202,6 +215,7 @@ export default function LiveActivityTable(props) {
                     style={{margin: '10px auto', display: 'block'}}
                     className='clear-btn-secondary'
                     onClick={handleClickStartWorkout}
+                    disabled={startDisabled}
                 >
                     Start Workout
                 </button>
@@ -216,7 +230,7 @@ export default function LiveActivityTable(props) {
                     <C2Screen 
                         activity={ac} 
                         style={{height: 'auto', width: '275px', margin: '15px 10px'}} 
-                        handleClickClose={() => handleClickCloseC2Screen(ac._id)}
+                        handleClickClose={() => removeSelectedActivity(ac._id)}
                     />
                 ))} 
             </div>

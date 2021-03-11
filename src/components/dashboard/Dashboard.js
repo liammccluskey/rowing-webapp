@@ -64,7 +64,7 @@ export default function Dashboard() {
     return (
         <div>
             <MainHeader />
-            <br /><br />
+            <br />
             <div 
                 className='main-container d-flex jc-flex-start ai-flex-start' 
                 style={{gap: '100px', padding: '0px 100px', marginBottom: '100px'}}
@@ -72,7 +72,7 @@ export default function Dashboard() {
                 <div style={{ flex: 1}} >
                     <div>
                         <h2 >Today's Workouts</h2>
-                        <br /><br />
+                        <br />
                         <NewSessionForm 
                             setShowSessionForm={setShowSessionForm}
                             showSessionForm={showSessionForm}
@@ -150,15 +150,14 @@ export default function Dashboard() {
                     <br /><br /><br />
 
                     <h2 >Training Calendar</h2>
-                    <br />
                     <Calendar sessions={mySessions}/>
                 </div>
                 <div>
                     <h2 >Quick Stats</h2>
-                    <br /><br />
-                    <UserInfoCard style={{width:'300px', height: 'auto'}}/>
                     <br />
-                    <ClubsInfoCard clubs={myClubs} style={{width:'300px', height: 'auto'}}/>
+                    <UserInfoCard style={{width:'325px', height: 'auto'}}/>
+                    <br />
+                    <ClubsInfoCard clubs={myClubs} style={{width:'325px', height: 'auto'}}/>
                 </div>
                 
             </div>

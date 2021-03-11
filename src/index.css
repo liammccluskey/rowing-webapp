@@ -123,8 +123,8 @@ th {
   --color-strava: #0e7fb6;
   --color-translucent-strava: rgb(14, 127, 182, 0.2);
 
-  --color-green: rgba(66,181,129,1);
-  --color-translucent-green: rgba(66,181,129,0.2);
+  --color-green: rgba(46,161,109,1);
+  --color-translucent-green: rgba(46,161,109,0.2);
 
   /* misc global */
   --ps-nav: 200px;

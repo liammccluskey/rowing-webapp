@@ -59,7 +59,7 @@ export default function Session(props) {
         await updateActivityInProgress()
         setTimeout(async () => {
             await fetchActivities()
-        }, 20*1000)
+        }, 5*1000)
     }, [activityInProgress])
 
     async function fetchSession() {
@@ -103,7 +103,7 @@ export default function Session(props) {
         const temp = activityInProgress
         temp.currentPace = random()
         temp.averagePace = random()
-        temp.totalDistance += 5
+        temp.totalDistance += 100
         temp.currentStrokeRate = 22
         temp.totalTime += 15
         try {

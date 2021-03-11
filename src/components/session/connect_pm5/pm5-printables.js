@@ -13,19 +13,19 @@ export const pm5printables = {
     },
     workoutType: function(wtype) {
         switch (wtype) {
-            case 0: return 'Just row, no splits'; break;
-            case 1: return 'Just row, splits'; break;
-            case 2: return 'Fixed dist, no splits'; break;
-            case 3: return 'Fixed dist, splits'; break;
-            case 4: return 'Fixed time, no splits'; break;
-            case 5: return 'Fixed time, splits'; break;
-            case 6: return 'Fixed time, interval'; break;
-            case 7: return 'Fixed dist, interval'; break;
-            case 8: return 'Variable, interval'; break;
-            case 9: return 'Variable, undef rest, interval'; break;
-            case 10: return 'Fixed, calorie'; break;
-            case 11: return 'Fixed, watt-minutes'; break;
-            case 12: return 'Fixed cals, interval'; break;
+            case 0: return [wtype, 'Just row, no splits']; break;
+            case 1: return [wtype, 'Just row, splits']; break;
+            case 2: return [wtype, 'Fixed dist, no splits']; break;
+            case 3: return [wtype, 'Fixed dist, splits']; break;
+            case 4: return [wtype, 'Fixed time, no splits']; break;
+            case 5: return [wtype, 'Fixed time, splits']; break;
+            case 6: return [wtype, 'Fixed time, interval']; break;
+            case 7: return [wtype, 'Fixed dist, interval']; break;
+            case 8: return [wtype, 'Variable, interval']; break;
+            case 9: return [wtype, 'Variable, undef rest, interval']; break;
+            case 10: return [wtype, 'Fixed, calorie']; break;
+            case 11: return [wtype, , 'Fixed, watt-minutes']; break;
+            case 12: return [wtype, , 'Fixed cals, interval']; break;
             default:
                 break;
         }
@@ -33,17 +33,17 @@ export const pm5printables = {
     },
     intervalType: function(itype) {
         switch (itype) {
-            case 0: return 'Time'; break;
-            case 1: return 'Distance'; break;
-            case 2: return 'Rest'; break;
-            case 3: return 'Time, rest undefined'; break;
-            case 4: return 'Distance, rest undefined'; break;
-            case 5: return 'Rest, undefined'; break;
-            case 6: return 'Calorie'; break;
-            case 7: return 'Calorie, rest undefined'; break;
-            case 8: return 'Watt-minute'; break;
-            case 9: return 'Watt-minute, rest undefined'; break;
-            case 255: return 'None';
+            case 0: return [itype, 'Time']; break;
+            case 1: return [itype, 'Distance']; break;
+            case 2: return [itype, 'Rest']; break;
+            case 3: return [itype, 'Time, rest undefined']; break;
+            case 4: return [itype, 'Distance, rest undefined']; break;
+            case 5: return [itype, 'Rest, undefined']; break;
+            case 6: return [itype, 'Calorie']; break;
+            case 7: return [itype, 'Calorie, rest undefined']; break;
+            case 8: return [itype, 'Watt-minute']; break;
+            case 9: return [itype, 'Watt-minute, rest undefined']; break;
+            case 255: return [itype, 'None'];
             default:
                 break;
         }
@@ -51,20 +51,20 @@ export const pm5printables = {
     },
     workoutState: function(wstate) {
         switch (wstate) {
-            case 0: return 'Wait To Begin'; break;
-            case 1: return 'Workout Row'; break;
-            case 2: return 'Countdown Pause'; break;
-            case 3: return 'Interval Rest'; break;
-            case 4: return 'Interval Work Time'; break;
-            case 5: return 'Interval Work Distance'; break;
-            case 6: return 'Interval Rest End To Work Time'; break;
-            case 7: return 'Interval Rest End To Work Distance'; break;
-            case 8: return 'Interval Work Time To Rest'; break;
-            case 9: return 'Interval Work Distance To Rest'; break;
-            case 10: return 'Workout End'; break;
-            case 11: return 'Terminate'; break;
-            case 12: return 'Workout Logged'; break;
-            case 13: return 'Rearm'; break;
+            case 0: return [wstate, 'Wait To Begin']; break;
+            case 1: return [wstate, 'Workout Row']; break;
+            case 2: return [wstate, 'Countdown Pause']; break;
+            case 3: return [wstate, 'Interval Rest']; break;
+            case 4: return [wstate, 'Interval Work Time']; break;
+            case 5: return [wstate, 'Interval Work Distance']; break;
+            case 6: return [wstate, 'Interval Rest End To Work Time']; break;
+            case 7: return [wstate, 'Interval Rest End To Work Distance']; break;
+            case 8: return [wstate, 'Interval Work Time To Rest']; break;
+            case 9: return [wstate, 'Interval Work Distance To Rest']; break;
+            case 10: return [wstate, 'Workout End']; break;
+            case 11: return [wstate, 'Terminate']; break;
+            case 12: return [wstate, 'Workout Logged']; break;
+            case 13: return [wstate, 'Rearm']; break;
             default:
                 break;
         }
