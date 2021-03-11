@@ -248,6 +248,7 @@ export default function LiveActivityTable(props) {
                             <th>Ave Pace</th>
                             <th>Distance</th>
                             <th>Stroke Rate</th>
+                            <th>Elapsed Time</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -262,8 +263,9 @@ export default function LiveActivityTable(props) {
                                 <td>{ac.name}</td>
                                 <td>{ac.currentPace}</td>
                                 <td>{ac.averagePace}</td>
-                                <td>{ac.totalDistance}</td>
-                                <td>{ac.currentStrokeRate}</td>
+                                <td>{ac.distance}</td>
+                                <td>{ac.strokeRate}</td>
+                                <td>{ac.elapsedTime}</td>
                             </tr>
                         ))}
                         {!activities.length &&

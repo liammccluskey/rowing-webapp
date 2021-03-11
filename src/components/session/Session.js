@@ -11,8 +11,7 @@ import axios from "axios"
 import {useParams} from 'react-router-dom'
 
 import {PM5} from './connect_pm5/pm5'
-
-import {cbConnecting, cbConnected, cbDisconnected, cbMessage} from './connect_pm5/main'
+import {pm5fields} from './connect_pm5/pm5-printables'
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
@@ -33,13 +32,47 @@ export default function Session(props) {
     const [activityInProgress, setActivityInProgress] = useState(null)
 
     const pm5 = new PM5(
-        cbConnecting,
-        cbConnected,
-        cbDisconnected,
-        cbMessage
+        () => { console.log('connecting')}, // cbConnecting
+        () => { setErgConnected(true) },    // cbConnected
+        () => { setErgConnected(false) },   // cbDisconnected
+        cbMessage                           // cbMessage
     )
 
+    // REMOVE this
+    const [count, setCount] = useState(0)
+    async function cbMessage(m) {
+        if (! activityInProgress) {
+            console.log('Error: no activity in progress')
+            return
+        }
+        const temp = activityInProgress
+        for (const field in m.data) {
+            if ( temp.hasOwnProperty(field) ) {
+                temp[field] = m.data[field]
+            }
+        }
+
+        // fix this: determine interval for api patch calls
+        if ( count % 20 === 0) {
+            try {
+                await api.patch(`/activities/${activityInProgress._id}`, temp)
+                console.log('did update activity in progress')
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        
+
+        if (count % 50 === 0) {
+            console.log(m)
+            console.log(m.type)
+            console.log(m.data)
+        }
+        setCount(curr => curr + 1)
+    }
+
     useEffect(() => {
+        // disonnect on component dismount
         const disconnect = () => {
             if ( pm5.connected() ) { pm5.doDisconnect() } 
         }
@@ -47,20 +80,17 @@ export default function Session(props) {
     }, [])
 
     useEffect(() => {
+        // subscribe to udpates
         async function fetchData() {
             await fetchSession()
             await fetchActivities()
             setLoading(false)
         }
         fetchData()
-    }, [])
 
-    useEffect(async () => {
-        await updateActivityInProgress()
-        setTimeout(async () => {
-            await fetchActivities()
-        }, 5*1000)
-    }, [activityInProgress])
+        const interval = setInterval(() => fetchData(), 10*1000)
+        return () => { clearInterval(interval) }
+    }, [])
 
     async function fetchSession() {
         try {
@@ -75,9 +105,6 @@ export default function Session(props) {
         try {
             const res = await api.get(`/sessions/${sessionID}/activities`)
             setActivities(res.data)
-
-            //if (activityInProgress) {return}
-
             for (let i = 0; i < res.data.length; i++) {
                 for (let j = 0; j < res.data[i].length; j++) {
                     if (res.data[i][j].uid === currentUser.uid && !res.data[i][j].isCompleted) {
@@ -87,28 +114,6 @@ export default function Session(props) {
                     }
                 }
             }
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    async function updateActivityInProgress() {
-        if (! activityInProgress) {
-            console.log('Error: no activity in progress')
-            return
-        }
-        const random = () => {
-            return Math.floor(Math.random()*70) % 70 + 60
-        }
-        const temp = activityInProgress
-        temp.currentPace = random()
-        temp.averagePace = random()
-        temp.totalDistance += 100
-        temp.currentStrokeRate = 22
-        temp.totalTime += 15
-        try {
-            await api.patch(`/activities/${activityInProgress._id}`, temp)
-            console.log('did update activity in progress')
         } catch (error) {
             console.log(error)
         }
@@ -130,12 +135,7 @@ export default function Session(props) {
             return
         } else {
             pm5.doConnect()
-            setErgConnected(true)
         }
-    }
-
-    function cbMessage() {
-        
     }
 
     return (

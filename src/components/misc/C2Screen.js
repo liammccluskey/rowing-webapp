@@ -4,6 +4,7 @@ import 'moment-duration-format'
 import './c2screen.css'
 
 
+
 export default function C2Screen(props) {
     const [activity, setActivity] = useState(props.activity)
 
@@ -33,10 +34,10 @@ export default function C2Screen(props) {
                 border: '1px solid var(--bc)'
             }}>
                 <h5 style={{gridColumn: '1/3', borderRight: border}} className='medium'>
-                    {moment.duration(activity.totalTime, 'seconds').format('hh:mm:ss')}
+                    {moment.duration(activity.elapsedTime, 'seconds').format('hh:mm:ss')}
                 </h5>
                 <h5 className='medium'>
-                    {activity.currentStrokeRate} <h5 className='small'> s/m</h5>
+                    {activity.strokeRate} <h5 className='small'> s/m</h5>
                 </h5>
                 <h5 className='big' style={{gridColumn: '1/4', borderBottom: border, borderTop: border}}>
                     {moment.duration(activity.currentPace, 'seconds').format('hh:mm:ss')} 
@@ -45,7 +46,7 @@ export default function C2Screen(props) {
                     </h5>
                 </h5>
                 <h5 className='medium' style={{gridColumn: '1/3', borderRight: border}}>
-                    {activity.totalDistance} <h5 className='small' style={{display: 'inline'}}> m</h5>
+                    {activity.distance} <h5 className='small' style={{display: 'inline'}}> m</h5>
                 </h5>
                 <h5 className='medium' style={{gridColumn: '1/4', borderTop: thickBorder}}>
                     {moment.duration(activity.averagePace, 'seconds').format('hh:mm:ss')}
