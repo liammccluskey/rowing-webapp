@@ -8,6 +8,7 @@ import Arrow from '../misc/Arrow'
 import {useAuth} from '../../contexts/AuthContext'
 import Loading from '../misc/Loading'
 import axios from "axios"
+import {moment} from 'moment'
 import {useParams} from 'react-router-dom'
 
 import {PM5} from './connect_pm5/pm5'
@@ -31,45 +32,14 @@ export default function Session(props) {
     const [ergConnected, setErgConnected] = useState(false)
     const [activityInProgress, setActivityInProgress] = useState(null)
 
+    const [C2Data, setC2Data] = useState(null)
+
     const pm5 = new PM5(
         () => { console.log('connecting')}, // cbConnecting
         () => { setErgConnected(true) },    // cbConnected
         () => { setErgConnected(false) },   // cbDisconnected
-        cbMessage                           // cbMessage
+        (m) => { setC2Data(m.data) }         // cbMessage
     )
-
-    // REMOVE this
-    const [count, setCount] = useState(0)
-    async function cbMessage(m) {
-        if (! activityInProgress) {
-            console.log('Error: no activity in progress')
-            return
-        }
-        const temp = activityInProgress
-        for (const field in m.data) {
-            if ( temp.hasOwnProperty(field) ) {
-                temp[field] = m.data[field]
-            }
-        }
-
-        // fix this: determine interval for api patch calls
-        if ( count % 20 === 0) {
-            try {
-                await api.patch(`/activities/${activityInProgress._id}`, temp)
-                console.log('did update activity in progress')
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        
-
-        if (count % 50 === 0) {
-            console.log(m)
-            console.log(m.type)
-            console.log(m.data)
-        }
-        setCount(curr => curr + 1)
-    }
 
     useEffect(() => {
         // disonnect on component dismount
@@ -82,15 +52,17 @@ export default function Session(props) {
     useEffect(() => {
         // subscribe to udpates
         async function fetchData() {
+            console.log('/n/n fetching data /n/n')
             await fetchSession()
             await fetchActivities()
             setLoading(false)
         }
-        fetchData()
-
-        const interval = setInterval(() => fetchData(), 10*1000)
-        return () => { clearInterval(interval) }
-    }, [])
+        if (loading) { fetchData() }
+        setTimeout(() => {
+            fetchData()
+        }, 10*1000);
+        
+    }, [activities])
 
     async function fetchSession() {
         try {
@@ -104,11 +76,13 @@ export default function Session(props) {
     async function fetchActivities() {
         try {
             const res = await api.get(`/sessions/${sessionID}/activities`)
+            console.log(res.data)
             setActivities(res.data)
             for (let i = 0; i < res.data.length; i++) {
                 for (let j = 0; j < res.data[i].length; j++) {
                     if (res.data[i][j].uid === currentUser.uid && !res.data[i][j].isCompleted) {
                         setActivityInProgress(res.data[i][j])
+                        console.log('did set activity in progress')
                         return
                         // Assume there is only one? -> potential bug
                     }
@@ -118,6 +92,26 @@ export default function Session(props) {
             console.log(error)
         }
     }
+
+    const [lastPatchTime, setLastPatchTime] = useState(moment())
+    useEffect(() => {
+        if (moment().diff(lastPatchTime, 'seconds') < 10) {return}
+
+        const updatedActivity = {
+            ...activityInProgress,
+            ...C2Data
+        }
+        async function patchActivity() {
+            try {
+                await api.patch(`/activities/${activityInProgress._id}`, updatedActivity)
+                console.log('did update activity in progress')
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        patchActivity()
+            .then( setLastPatchTime(moment()) )
+    }, [C2Data])
 
     async function handleClickJoin() {
         try {
