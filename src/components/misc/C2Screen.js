@@ -5,6 +5,7 @@ import './c2screen.css'
 
 
 
+
 export default function C2Screen(props) {
     const [activity, setActivity] = useState(props.activity)
 
@@ -46,7 +47,7 @@ export default function C2Screen(props) {
                     </h5>
                 </h5>
                 <h5 className='medium' style={{gridColumn: '1/3', borderRight: border}}>
-                    {activity.distance} <h5 className='small' style={{display: 'inline'}}> m</h5>
+                    {activity.distance.toFixed()} <h5 className='small' style={{display: 'inline'}}> m</h5>
                 </h5>
                 <h5 className='medium' style={{gridColumn: '1/4', borderTop: thickBorder}}>
                     {moment.duration(activity.averagePace, 'seconds').format('hh:mm:ss')}

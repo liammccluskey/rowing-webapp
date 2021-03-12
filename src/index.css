@@ -81,7 +81,7 @@ th {
   --color-d: rgb(210,210,210);
   --color-header-d: rgb(225,225,225);
   --color-secondary-d: rgb(147, 151, 156);
-  --color-tertiary-d: rgba(102,102,102,255);
+  --color-tertiary-d: rgba(110,115,120,255);
   --box-shadow-d: 0 1px 3px rgba(0,0,0,0.2);
 
   /*light mode*/

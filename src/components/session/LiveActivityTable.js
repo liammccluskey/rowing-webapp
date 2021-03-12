@@ -26,15 +26,34 @@ export default function LiveActivityTable(props) {
     const [selectedActivityIDs, setSelectedActivityIDs] = useState(new Set())
     const [showErgConnectionError, setShowErgConnectionError] = useState(false)
     const [didCompleteActivity, setDidCompleteActivity] = useState(false)
+
+    const [usersCompletedCount, setUsersCompletedCount] = useState(0)
+    const [usersActiveCount, setUsersActiveCount] = useState(0)
     
 
     useEffect(() => {
         setActivities(props.activities.filter(ac => !ac.isCompleted))
+        /*
         if (!didCompleteActivity) {
             setDidCompleteActivity(
                 props.activities.filter(ac => ac.uid === currentUser.uid && ac.isCompleted).length > 0
             )
         }
+        */
+        const completedUIDs = new Set()
+        const activeUIDs = new Set()
+        props.activities.forEach(ac => {
+            if ( ac.uid === currentUser.uid && ac.isCompleted ) {
+                setDidCompleteActivity(true)
+            }
+            if ( ac.isCompleted ) {
+                completedUIDs.add( ac.uid )
+            } else {
+                activeUIDs.add( ac.uid )
+            }
+        })
+        setUsersCompletedCount(completedUIDs.size)
+        setUsersActiveCount(activeUIDs.size)
     }, [props.activities])
 
     useEffect(() => {
@@ -153,11 +172,35 @@ export default function LiveActivityTable(props) {
                             </button>
                         )
                     }
+                    <div 
+                        style={{
+                            height: '40px', width: '95px',
+                            borderLeft: '1px solid var(--bc)',
+                            padding: '0px 15px'
+                        }}
+                    >
+                        <div className='d-flex ai-center jc-space-between' style={{width: '100%'}}>
+                            <h5 style={{color: 'var(--color-secondary)', display: 'inline', textAlign: 'left'}}> 
+                                Active
+                            </h5>
+                            <h5 style={{color: 'var(--color-secondary)', display: 'inline', textAlign: 'right'}} >
+                                {usersActiveCount}
+                            </h5>
+                        </div>
+                        <div className='d-flex ai-center jc-space-between' style={{width: '100%'}}>
+                            <h5 style={{color: 'var(--color-secondary)', display: 'inline', textAlign: 'left'}}> 
+                                Complete
+                            </h5>
+                            <h5 style={{color: 'var(--color-secondary)', display: 'inline', textAlign: 'right'}} >
+                                {usersCompletedCount}
+                            </h5>
+                        </div>
+                    </div>
+                    
                     <div className='d-flex ai-center jc-center' style={{
-                        height: '100%', width: '125px',
+                        height: '40px', width: '125px',
                         borderLeft: '1px solid var(--bc)',
                         textAlign: 'center',
-                        verticalAlign: 'middle'
                     }}>
                         <div className='icon-circle-clear' 
                             style={{opacity: !didCompleteActivity && '0%', borderColor: 'var(--color-success)'
@@ -263,7 +306,7 @@ export default function LiveActivityTable(props) {
                                 <td>{ac.name}</td>
                                 <td>{ac.currentPace}</td>
                                 <td>{ac.averagePace}</td>
-                                <td>{ac.distance}</td>
+                                <td>{ac.distance.toFixed()}</td>
                                 <td>{ac.strokeRate}</td>
                                 <td>{ac.elapsedTime}</td>
                             </tr>

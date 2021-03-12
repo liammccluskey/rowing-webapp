@@ -48,7 +48,7 @@ export default function Calendar(props) {
     }, [currMoment, props.sessions] )
 
     return (
-        <div >
+        <div>
             <div className='d-flex jc-center ai-center' style={{gap: '7px', marginBottom: '10px'}}>
                 <h3>{currMoment.format('YYYY')}</h3>
                 <button 
@@ -66,11 +66,13 @@ export default function Calendar(props) {
                 </button>
                 
             </div>
-            <div style={{
-                display: 'grid',
-                gap: '0px',
-                gridTemplateColumns: 'repeat(7, 1fr)'
-            }}>
+            <div 
+                style={{
+                    display: 'grid',
+                    gap: '0px',
+                    gridTemplateColumns: 'repeat(7, 1fr)'
+                }}
+            >
                 {['s','m','t','w','t','f','s'].map((day, id) => (
                     <h6 style={{
                         textTransform: 'uppercase',margin: '0px 0px',

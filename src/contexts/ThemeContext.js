@@ -40,6 +40,7 @@ export function ThemeProvider({children}) {
 
     useEffect(() => {
         async function fetchData() {
+            setLoading(false) // this is wrong, fix it
             try {
                 const res = await api.get(`/users/${currentUser.uid}`)
                 setIsDarkMode(res.data.usesDarkMode)
@@ -48,7 +49,7 @@ export function ThemeProvider({children}) {
             } catch (error) {
                 console.log(error)
             }
-            setLoading(false)
+            
         }
         fetchData()
     }, [])

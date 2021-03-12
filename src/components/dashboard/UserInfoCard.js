@@ -18,6 +18,11 @@ export default function UserInfoCard(props) {
     const history = useHistory()
     const [stats, setStats] = useState(null)
     const [loading, setLoading] = useState(true)
+
+    const style={
+        padding: '20px 20px',
+    }
+    const border = '1px solid var(--bc)'
     
 
     useEffect(() => {
@@ -38,10 +43,7 @@ export default function UserInfoCard(props) {
             {loading ? 
             <Loading /> 
             :
-            <div
-                className='float-container'
-                style={{padding: '20px 20px'}}
-            >
+            <div className='float-container' >
                 <div className='d-flex jc-flex-start ai-center' style={{display: 'none'}}> 
                     <img 
                         height='30px' width='30px' 
@@ -50,73 +52,79 @@ export default function UserInfoCard(props) {
                     />
                     <h3>{currentUser.displayName}</h3>
                 </div>
-                <div
-                    className='d-flex jc-space-between ai-center'
-                >
-                    <h5>This Week</h5>
-                    <h3 style={{color: 'var(--color-strava)'}}>
-                        {stats.aggregate.weekMeters.toLocaleString()} m
-                    </h3>
+                <div style={style}>
+                    <div
+                        className='d-flex jc-space-between ai-center'
+                    >
+                        <h5>This Week</h5>
+                        <h3 style={{color: 'var(--color-strava)'}}>
+                            {stats.aggregate.weekMeters.toLocaleString()} m
+                        </h3>
+                    </div>
+                    <CustomBar 
+                        height='150px' 
+                        labelFreq={1}
+                        maxLabelLength={1}
+                        data={{
+                            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                            label: 'Meters',
+                            dataset: stats.plottable.weekMeters,
+                            backgroundColor: '--color-translucent-strava',
+                            borderColor: '--color-strava'
+                        }}
+                    />
                 </div>
-                <CustomBar 
-                    height='150px' 
-                    labelFreq={1}
-                    maxLabelLength={1}
-                    data={{
-                        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                        label: 'Meters',
-                        dataset: stats.plottable.weekMeters,
-                        backgroundColor: '--color-translucent-strava',
-                        borderColor: '--color-strava'
-                    }}
-                />
-                <br />
                 
-                <div
-                    className='d-flex jc-space-between ai-center'
-                >
-                    <h5>This Month</h5>
-                    <h3 style={{color: 'var(--tint-color)'}}>
-                        {stats.aggregate.monthMeters.toLocaleString()} m
-                    </h3>
+                <div style={{...style, borderTop: border }}>
+                    <div
+                        className='d-flex jc-space-between ai-center'
+                    >
+                        <h5>This Month</h5>
+                        <h3 style={{color: 'var(--tint-color)'}}>
+                            {stats.aggregate.monthMeters.toLocaleString()} m
+                        </h3>
+                    </div>
+                    <CustomBar 
+                        height='150px' 
+                        labelFreq={10}
+                        maxLabelLength={1}
+                        data={{
+                            labels: Array(moment().daysInMonth()).fill(0).map((l, i) => i + 1),
+                            label: 'Meters',
+                            dataset: stats.plottable.monthMeters,
+                            backgroundColor: '--tint-color-translucent',
+                            borderColor: '--tint-color'
+                        }}
+                    />
                 </div>
-                <CustomBar 
-                    height='150px' 
-                    labelFreq={10}
-                    maxLabelLength={1}
-                    data={{
-                        labels: Array(moment().daysInMonth()).fill(0).map((l, i) => i + 1),
-                        label: 'Meters',
-                        dataset: stats.plottable.monthMeters,
-                        backgroundColor: '--tint-color-translucent',
-                        borderColor: '--tint-color'
-                    }}
-                />
                 
-                <br />
-               
-                <div
-                    className='d-flex jc-space-between ai-center'
-                >
-                    <h5>This Year</h5>
-                    <h3 style={{color: 'var(--color-green)'}}>
-                        {stats.aggregate.yearMeters.toLocaleString()} m
-                    </h3>
+                <div style={{...style, borderTop: border, borderBottom: border}}>
+                    <div
+                        className='d-flex jc-space-between ai-center'
+                    >
+                        <h5>This Year</h5>
+                        <h3 style={{color: 'var(--color-green)'}}>
+                            {stats.aggregate.yearMeters.toLocaleString()} m
+                        </h3>
+                    </div>
+                    <CustomBar
+                        height='150px'
+                        labelFreq={3}
+                        maxLabelLength={3}
+                        data={{
+                            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                            label: 'Meters',
+                            dataset: stats.plottable.yearMeters,
+                            backgroundColor: '--color-translucent-green',
+                            borderColor: '--color-green'
+                        }}
+                    />
                 </div>
-                <CustomBar
-                    height='150px'
-                    labelFreq={3}
-                    maxLabelLength={3}
-                    data={{
-                        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                        label: 'Meters',
-                        dataset: stats.plottable.yearMeters,
-                        backgroundColor: '--color-translucent-green',
-                        borderColor: '--color-green'
-                    }}
-                />
+        
                 <br />
+
                 <button style={{display: 'block', margin: '0px auto'}} className='clear-btn-secondary'>View Full Stats</button>
+                <br />
             </ div>
             }
         </div>

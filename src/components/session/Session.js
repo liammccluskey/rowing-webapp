@@ -8,11 +8,10 @@ import Arrow from '../misc/Arrow'
 import {useAuth} from '../../contexts/AuthContext'
 import Loading from '../misc/Loading'
 import axios from "axios"
-import {moment} from 'moment'
+import moment from 'moment'
 import {useParams} from 'react-router-dom'
 
 import {PM5} from './connect_pm5/pm5'
-import {pm5fields} from './connect_pm5/pm5-printables'
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
@@ -28,7 +27,6 @@ export default function Session(props) {
     const [hideActivities, setHideActivities] = useState(false)
     const [hideResults, setHideResults] = useState(true)
 
-    const [currentWorkoutItemIndex, setCurrentWorkoutItemIndex] = useState(-1)
     const [ergConnected, setErgConnected] = useState(false)
     const [activityInProgress, setActivityInProgress] = useState(null)
 
@@ -38,13 +36,27 @@ export default function Session(props) {
         () => { console.log('connecting')}, // cbConnecting
         () => { setErgConnected(true) },    // cbConnected
         () => { setErgConnected(false) },   // cbDisconnected
-        (m) => { setC2Data(m.data) }         // cbMessage
+        (m) => {                             // cbMessage
+            setC2Data(curr => ({...curr, ...m.data}))       
+        }
     )
 
     useEffect(() => {
+        // confirm page refresh
+        window.onbeforeunload = (event) => {
+            const e = event || window.event;
+            // Cancel the event
+            e.preventDefault();
+            if (e) {
+              e.returnValue = ''; // Legacy method for cross browser support
+            }
+            return ''; // Legacy method for cross browser support
+          };
+
         // disonnect on component dismount
         const disconnect = () => {
             if ( pm5.connected() ) { pm5.doDisconnect() } 
+            window.onbeforeunload = () => {}
         }
         return disconnect
     }, [])
@@ -60,7 +72,7 @@ export default function Session(props) {
         if (loading) { fetchData() }
         setTimeout(() => {
             fetchData()
-        }, 10*1000);
+        }, 100*1000);
         
     }, [activities])
 
@@ -82,9 +94,9 @@ export default function Session(props) {
                 for (let j = 0; j < res.data[i].length; j++) {
                     if (res.data[i][j].uid === currentUser.uid && !res.data[i][j].isCompleted) {
                         setActivityInProgress(res.data[i][j])
-                        console.log('did set activity in progress')
                         return
                         // Assume there is only one? -> potential bug
+                        // Should be the case, but this state is possible (almost impossible)
                     }
                 }
             }
@@ -95,12 +107,16 @@ export default function Session(props) {
 
     const [lastPatchTime, setLastPatchTime] = useState(moment())
     useEffect(() => {
-        if (moment().diff(lastPatchTime, 'seconds') < 10) {return}
+        if (moment().diff(lastPatchTime, 'seconds') < 30) {return}
 
         const updatedActivity = {
             ...activityInProgress,
             ...C2Data
         }
+        console.log('\n Fields: ')
+        console.log(updatedActivity.keys)
+        console.log(' \n Data: ')
+        console.log(updatedActivity)
         async function patchActivity() {
             try {
                 await api.patch(`/activities/${activityInProgress._id}`, updatedActivity)
@@ -136,7 +152,11 @@ export default function Session(props) {
         <div>
             <MainHeader />
             {loading ? <Loading /> :
-            <div className='main-container' style={{padding: '0px 25px'}} >
+            <div 
+                className='main-container' 
+                style={{ padding: '0px 25px', marginBottom: '100px'
+                }} 
+            >
                 <br /><br/>
                 <div 
                     className='d-flex jc-flex-start ai-flex-start' 
