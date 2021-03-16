@@ -26,7 +26,6 @@ export default function Statistics() {
             try {
                 const res = await api.get(`/users/${currentUser.uid}/statistics-full`)
                 setStats(res.data)
-                console.log(res.data)
             } catch (error) {
                 console.log(error)
             }
@@ -35,11 +34,26 @@ export default function Statistics() {
         fetchData()
     }, [])
 
-    function plottable() {
-        return stats.plottable
+    useEffect(() => {
+        if (! stats) return
+        console.log('Selected Timeframe: ' + selectedTimeframe)
+        console.log(
+            [...stats.plottable
             [timeframes[selectedTimeframe].key]
-            [metrics[selectedMetric].key]
+            [metrics[selectedMetric].key]],
+        )
+        console.log(stats.plottable)
+        console.log('\n')
+    })
+
+    function plottable() {
+        return [
+            ...stats.plottable
+                [timeframes[selectedTimeframe].key]
+                [metrics[selectedMetric].key]
+        ]
     }
+
     function aggregate(metricID) {
         return stats.aggregate
             [timeframes[selectedTimeframe].key]
@@ -82,7 +96,7 @@ export default function Statistics() {
         },
         2: { key: 'year', graphTitle: 'this Year', 
             labels: () => {
-                const end = moment()
+                const end = moment().add(1, 'month').startOf('month')
                 const start = end.clone().subtract(1, 'year').startOf('month')
                 const labels = []
                 const curr = start.clone()
