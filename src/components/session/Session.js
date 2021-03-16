@@ -72,7 +72,7 @@ export default function Session(props) {
         if (loading) { fetchData() }
         setTimeout(() => {
             fetchData()
-        }, 100*1000);
+        }, 10*1000);
         
     }, [activities])
 
@@ -107,16 +107,13 @@ export default function Session(props) {
 
     const [lastPatchTime, setLastPatchTime] = useState(moment())
     useEffect(() => {
-        if (moment().diff(lastPatchTime, 'seconds') < 30) {return}
+        if (moment().diff(lastPatchTime, 'seconds') < 10) {return}
 
         const updatedActivity = {
             ...activityInProgress,
             ...C2Data
         }
-        console.log('\n Fields: ')
-        console.log(updatedActivity.keys)
-        console.log(' \n Data: ')
-        console.log(updatedActivity)
+        
         async function patchActivity() {
             try {
                 await api.patch(`/activities/${activityInProgress._id}`, updatedActivity)

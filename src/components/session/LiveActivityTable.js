@@ -304,11 +304,11 @@ export default function LiveActivityTable(props) {
                                 onClick={() => handleClickActivity(ac._id)}
                             >
                                 <td>{ac.name}</td>
-                                <td>{ac.currentPace}</td>
-                                <td>{ac.averagePace}</td>
+                                <td>{moment.duration(ac.currentPace, 'seconds').format('hh:mm:ss')}</td>
+                                <td>{moment.duration(ac.averagePace, 'seconds').format('hh:mm:ss')}</td>
                                 <td>{ac.distance.toFixed()}</td>
                                 <td>{ac.strokeRate}</td>
-                                <td>{ac.elapsedTime}</td>
+                                <td>{moment.duration(ac.elapsedTime, 'seconds').format('hh:mm:ss')}</td>
                             </tr>
                         ))}
                         {!activities.length &&

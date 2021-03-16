@@ -42,6 +42,11 @@ export default function MainHeader(props) {
                         </Link>
                     </li>
                     <li className='d-inline'>
+                        <Link className={`${activeClass('training') } header-link`} to='/training/statistics' >
+                            Training
+                        </Link>
+                    </li>
+                    <li className='d-inline'>
                         <Link className={`${activeClass('explore') } header-link`} to='/explore/clubs' >
                             Explore
                         </Link>

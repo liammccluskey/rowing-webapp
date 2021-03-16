@@ -9,6 +9,8 @@ import { ThemeProvider } from './contexts/ThemeContext'
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './components/dashboard/Dashboard'
 import Session from "./components/session/Session"
+import Statistics from './components/training/Statistics'
+import Activity from './components/training/Activity'
 
 import Clubs from './components/explore/Clubs'
 import Sessions from './components/explore/Sessions'
@@ -30,6 +32,9 @@ function App() {
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
+
+                <PrivateRoute path='/training/statistics' component={Statistics} />
+                <PrivateRoute path='/training/activity' component={Activity} />
 
                 <PrivateRoute exact path='/account' component={Account} />
                 <PrivateRoute path='/account/settings' component={Settings} />

@@ -12,7 +12,7 @@ export default function CustomBar(props) {
 
     useEffect(() => {
         setData(props.data)
-    }, [props.data])
+    }, [props])
 
     return (
         <div style={{height: props.height}}>
@@ -44,10 +44,13 @@ export default function CustomBar(props) {
                     scales: {
                         xAxes: [{
                             gridLines: {
-                                display: false
+                                display: false,
+                                drawBorder: false
                             },
                             ticks: {
                                 autoSkip: true,
+                                fontColor: getComputedStyle(document.documentElement)
+                                .getPropertyValue('--color-secondary'),
                                 maxRotation: 0,
                                 minRotation: 0,
                                 callback: function(value, index, values) {
@@ -63,11 +66,7 @@ export default function CustomBar(props) {
                             }
                         }],
                         yAxes: [{
-                            gridLines: {
-                                display: false,
-                            },
                             display: false
-                            
                         }]
                     }
                 }}

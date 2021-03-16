@@ -50,21 +50,21 @@ th {
 
 :root {
 
+  /* random blue    */
+  --tint-color: rgb(0, 115, 207);
+  --tint-color-translucent: rgb(0, 115, 207, 0.2);
+
+  /* discord   */
+  --tint-color: rgb(114, 136, 217);
+  --tint-color-translucent: rgb(114, 137, 218, 0.25);
+
+  /* gradescope  */
+  --tint-color: rgb(28, 160, 160);
+  --tint-color-translucent: rgba(28, 160, 160, 0.2);
+
   /* strava blue    */
   --tint-color: #0e7fb6;
   --tint-color-translucent: rgb(14, 127, 182, 0.2);
-
-   /* gradescope  */
- --tint-color: rgb(28, 160, 160);
- --tint-color-translucent: rgba(28, 160, 160, 0.2);
-
- /* rando    */
- --tint-color: rgb(0, 115, 207);
- --tint-color-translucent: rgb(0, 115, 207, 0.2);
-
- /* discord   */
- --tint-color: rgb(114, 136, 217);
- --tint-color-translucent: rgb(114, 137, 218, 0.25);
 
 
 
@@ -72,11 +72,15 @@ th {
 
   /* dark mode */
   --bgc-d: rgba(30,33,38,255);
+  --bgc-d: black;         /* robinhood */
+  --bgc-d: rgba(13,17,22,255); /* github */
   --bgc-hover-d: rgba(45,48,53);
   --bgc-light-d: rgba(41,44,50,255);
-  --bgc-nav-d: var(--bgc-light-d);
-  --bc-d: rgba(64,73,77,255);
-  --bc-d: rgba(48,54,58,255);
+  --bgc-light-d: #1e2124;  /* robinhood */
+  --bgc-light-d: #21262c;  /* github */
+  --bgc-nav-d: #161b21;     /* github */
+  --bc-d: rgba(48,54,58,255); /* robinhood */
+  --bc-d: rgba(48,54,60,255); /* github */
   --bc-tr-d: rgba(22,22,23,255);
   --color-d: rgb(210,210,210);
   --color-header-d: rgb(225,225,225);
@@ -85,6 +89,7 @@ th {
   --box-shadow-d: 0 1px 3px rgba(0,0,0,0.2);
 
   /*light mode*/
+  --bgc-l: rgb(246, 247, 249);  /* firebase */
   --bgc-l: white;
   --bgc-light-l: white;
   --bgc-nav-l: var(--bgc-light-l);
@@ -93,7 +98,7 @@ th {
   --bc-tr-l: rgb(241,242,242);
   --color-l: rgb(51,51,51);
   --color-header-l: rgb(55,55,55);
-  --color-secondary-l: rgb(77,77,79);
+  --color-secondary-l: rgba(120,124,126,255);
   --color-tertiary-l: rgb(102,102,102);
   --box-shadow-l: 0 0 15px rgba(0,0,0,0.07);
   
@@ -113,7 +118,8 @@ th {
 
   /* standard colors */
   --color-error: #ea374d;
-  --color-success: #0e8925;
+  --color-error: #fd5000; /* robinhood */
+  --color-success: #0f8a25;
   --page-link-color: rgb(0, 115, 207);
   
   /* apple notes yellow */
@@ -125,6 +131,9 @@ th {
 
   --color-green: rgba(46,161,109,1);
   --color-translucent-green: rgba(46,161,109,0.2);
+  
+  --color-green: rgb(14, 137, 37);
+  --color-translucent-green: rgb(14, 137, 37, 0.2);
 
   /* misc global */
   --ps-nav: 200px;
@@ -157,17 +166,11 @@ form label {
   font-size: 15px;
 }
 
-.sidebar {
-  width: 250px;
-  height: 100vh;
-  background-color: var(--bgc-nav);
-}
 .main-header {
   background-color: var(--bgc);
   height: 70px;
   color: var(--color);
   padding: 0px 40px;
-  position: sticky;
   box-shadow: none;
   top: 0px;
 }
@@ -175,13 +178,14 @@ form label {
   background-color: var(--bgc);
   border-bottom: 1px solid var(--bc);
   position: sticky;
-  top: 70px;
+  top: 0px;
   text-align: left;
-  padding-top: 20px;
+  padding-top: 15px;
   padding-right: var(--ps-nav);
   padding-left: var(--ps-nav);
-  padding-bottom: 16px;
+  padding-bottom: 13px;
   color: var(--color);
+  z-index: 100;
 }
 .sub-link-active {
   border-bottom: 3px solid var(--tint-color);
@@ -194,7 +198,7 @@ form label {
   font-weight: 400;
   font-size: 15px;
   text-decoration: none;
-  padding-bottom: 15px;
+  padding-bottom: 11px;
 }
 .header-link:hover,
 .link-active {
@@ -288,6 +292,26 @@ td:first-child {
   
 }
 
+/* dashboard time option */
+.menu-option {
+  border-bottom: 2px solid transparent;
+  padding-bottom: 10px;
+  transition: 0.2s;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--color-secondary);
+}
+.menu-option:hover {
+  color: var(--color);
+}
+.menu-option-active {
+  border-bottom: 2px solid var(--tint-color);
+  padding-bottom: 10px;
+  transition: 0.2s;
+  cursor: pointer;
+  font-weight: 500;
+}
+
 
 /* display flex */
 .d-flex {
@@ -323,6 +347,9 @@ td:first-child {
 }
 .ai-flex-start {
   align-items: flex-start;
+}
+.ai-flex-end {
+  align-items: flex-end;
 }
 
 
@@ -478,6 +505,11 @@ td:first-child {
 .clear-btn-secondary {
   background-color: var(--bgc-hover);
   border-color: var(--bc);
+}
+
+/* random props */
+.onhover-bgc-hover:hover {
+  background-color: var(--bgc-hover);
 }
 
 
