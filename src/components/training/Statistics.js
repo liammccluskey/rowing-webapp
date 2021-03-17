@@ -34,18 +34,6 @@ export default function Statistics() {
         fetchData()
     }, [])
 
-    useEffect(() => {
-        if (! stats) return
-        console.log('Selected Timeframe: ' + selectedTimeframe)
-        console.log(
-            [...stats.plottable
-            [timeframes[selectedTimeframe].key]
-            [metrics[selectedMetric].key]],
-        )
-        console.log(stats.plottable)
-        console.log('\n')
-    })
-
     function plottable() {
         return [
             ...stats.plottable
@@ -73,7 +61,7 @@ export default function Statistics() {
     }
 
     const timeframes = {
-        0: { key: 'week', graphTitle: 'this Week',
+        0: { key: 'week',
             labels: () => {
                 const end = moment()
                 const start = end.clone().subtract(1, 'week')
@@ -87,7 +75,7 @@ export default function Statistics() {
             },
             labelFreq: 1
         },
-        1: { key: 'month', graphTitle: 'this Month',
+        1: { key: 'month',
             labels: () => {
                 const end = moment()
                 const start = end.clone().subtract(1, 'month')
@@ -101,10 +89,10 @@ export default function Statistics() {
             },
             labelFreq: 3
         },
-        2: { key: 'year', graphTitle: 'this Year', 
+        2: { key: 'year',
             labels: () => {
                 const end = moment()
-                const start = end.clone().subtract(1, 'year').startOf('month')
+                const start = end.clone().subtract(1, 'year')
                 const labels = []
                 const curr = start.clone()
                 while (! curr.isAfter(end, 'month')) {
