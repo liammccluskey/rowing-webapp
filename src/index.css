@@ -129,11 +129,11 @@ th {
   --color-strava: #0e7fb6;
   --color-translucent-strava: rgb(14, 127, 182, 0.2);
 
-  --color-green: rgba(46,161,109,1);
-  --color-translucent-green: rgba(46,161,109,0.2);
-  
   --color-green: rgb(14, 137, 37);
   --color-translucent-green: rgb(14, 137, 37, 0.2);
+
+  --color-red: rgb(253, 80, 0);
+  --color-translucent-red: rgba(253, 80, 0, 0.2);
 
   /* misc global */
   --ps-nav: 200px;

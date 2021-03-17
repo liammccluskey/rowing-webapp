@@ -59,6 +59,13 @@ export default function Statistics() {
             [timeframes[selectedTimeframe].key]
             [metrics[metricID].key]
     }
+
+    function delta(metricID) {
+        return stats.delta
+            [timeframes[selectedTimeframe].key]
+            [metrics[metricID].key]
+    }
+
     const metrics = {
         0: { key: 'meters', label: 'meters', unit: 'm', graphTitle: 'Meters rowed'},
         1: { key: 'time', label: 'seconds', unit: 'sec', graphTitle: 'Hours rowed'},
@@ -68,11 +75,11 @@ export default function Statistics() {
     const timeframes = {
         0: { key: 'week', graphTitle: 'this Week',
             labels: () => {
-                const end = moment().add(1, 'day').startOf('day')
-                const start = end.clone().subtract(1, 'week').startOf('day')
+                const end = moment()
+                const start = end.clone().subtract(1, 'week')
                 const labels = []
                 const curr = start.clone()
-                while (curr.isBefore(end, 'day')) {
+                while (! curr.isAfter(end, 'day')) {
                     labels.push(curr.format('M/D'))
                     curr.add(1, 'day')
                 }
@@ -82,11 +89,11 @@ export default function Statistics() {
         },
         1: { key: 'month', graphTitle: 'this Month',
             labels: () => {
-                const end = moment().add(1, 'day').startOf('day')
-                const start = end.clone().subtract(1, 'month').startOf('day')
+                const end = moment()
+                const start = end.clone().subtract(1, 'month')
                 const labels = []
                 const curr = start.clone()
-                while (curr.isBefore(end, 'day')) {
+                while (! curr.isAfter(end, 'day')) {
                     labels.push(curr.format('M/D'))
                     curr.add(1, 'day')
                 }
@@ -96,19 +103,18 @@ export default function Statistics() {
         },
         2: { key: 'year', graphTitle: 'this Year', 
             labels: () => {
-                const end = moment().add(1, 'month').startOf('month')
+                const end = moment()
                 const start = end.clone().subtract(1, 'year').startOf('month')
                 const labels = []
                 const curr = start.clone()
-                while (curr.isBefore(end, 'month')) {
+                while (! curr.isAfter(end, 'month')) {
                     labels.push(curr.format('MMM YYYY'))
                     curr.add(1, 'month')
                 }
                 return labels
             },
             labelFreq: 2
-        },
-        3: { key: 'all', graphTitle: 'All time'}
+        }
     }
 
     return (
@@ -136,7 +142,7 @@ export default function Statistics() {
                                 className='d-flex jc-flex-end ai-center'
                                 style={{gap: '40px'}}
                             >
-                                {['1W', '1M', '1Y', 'ALL'].map((item, idx) => (
+                                {['Week', 'Month', 'Year'].map((item, idx) => (
                                     <h5 
                                         key={idx}
                                         className={idx === selectedTimeframe ? 'menu-option-active' : 'menu-option'}
@@ -154,48 +160,43 @@ export default function Statistics() {
                             style={{padding: '20px 20px'}}
                         >
                             <div className='d-flex jc-space-between ai-center' >
-                                {[
-                                    {title: 'Meters', val: 32000, unit: 'm', change: 5},
-                                    {title: 'Time', val: 45320, unit: 'hours',change: -10},
-                                    {title: 'Calories', val: 2500, unit: 'cal', change: 25}
-                                ].map((item, metricID) => (
+                                {Object.values(metrics).map((metric, metricID) => (
                                     <div 
                                         key={metricID}
                                         style={{ cursor: 'pointer' , borderRadius: '5px' }}
                                         onClick={() => setSelectedMetric(metricID)}
                                     >
-                                        <Arrow color='var(--color)' direction='right' 
+                                        <Arrow color='var(--color-secondary)' direction='right' 
                                             style={{
                                                 marginRight: '10px', display: metricID !== selectedMetric && 'none',
                                             }}
                                         />
                                         <h4 
                                             style={{
-                                                color: metricID === selectedMetric ? 'var(--color)' : 'var(--color-secondary)',
+                                                color: 'var(--color-secondary)',
                                                 textTransform: 'capitalize', display: 'inline',
-                                                marginBottom: '7px', fontWeight: '500'
+                                                fontWeight: '500'
 
                                             }
                                         }>
-                                                {metrics[metricID].key}
+                                                {metric.key}
                                         </h4>
                                        
-                                        <h3 
+                                        <h2 
                                             style={{
-                                                color: item.change >= 0 ? 'var(--color-success)' : 'var(--color-error)',
-                                                marginBottom: '7px'
+                                                margin: '7px 0px'
                                             }}
                                         >
                                             {aggregate(metricID).toLocaleString()} 
-                                            <small style={{marginLeft: '5px'}}> {item.unit}</small>
-                                        </h3>
-                                        {item.change >= 0 ? 
+                                            <small style={{marginLeft: '5px'}}> {metric.unit}</small>
+                                        </h2>
+                                        {delta(metricID) >= 0 ? 
                                             <h5 style={{color: 'var(--color-success)', display: 'inline'}}>
-                                                {`+ ${item.change}%`}
+                                                {`+ ${delta(metricID)}%`}
                                             </h5>
                                             :
                                             <h5 style={{color: 'var(--color-error)', display: 'inline'}}>
-                                                {`- ${Math.abs(item.change)}%`}
+                                                {`- ${Math.abs(delta(metricID))}%`}
                                             </h5>
                                         }
                                         <h5 style={{color: 'var(--color-secondary)', display: 'inline', marginLeft: '10px', marginTop: '7px'}}>
@@ -217,8 +218,8 @@ export default function Statistics() {
                                     labels: timeframes[selectedTimeframe].labels(),
                                     label: metrics[selectedMetric].label,
                                     dataset: plottable(),
-                                    backgroundColor: '--color-translucent-green',
-                                    borderColor: '--color-green'
+                                    backgroundColor: `--color-translucent-${delta(selectedMetric) >= 0 ? 'green' : 'red'}`,
+                                    borderColor: `--color-${delta(selectedMetric) >= 0 ? 'green' : 'red'}`
                                 }}
                             />
                         </div>
@@ -230,7 +231,7 @@ export default function Statistics() {
                                 className='d-flex jc-flex-end ai-center'
                                 style={{gap: '40px'}}
                             >
-                                {['1W', '1M', '1Y', 'ALL'].map((item, idx) => (
+                                {['Week', 'Month', 'Year'].map((item, idx) => (
                                     <h5 
                                         key={idx}
                                         className={idx === selectedTimeframe ? 'menu-option-active' : 'menu-option'}
