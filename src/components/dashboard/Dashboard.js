@@ -63,7 +63,7 @@ export default function Dashboard() {
 
     return (
         <div>
-            <MainHeader />
+            <MainHeader style={{position: 'sticky', top: '0'}} />
             <br />
             <div 
                 className='main-container d-flex jc-flex-start ai-flex-start' 
