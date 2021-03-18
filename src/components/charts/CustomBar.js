@@ -29,7 +29,9 @@ export default function CustomBar(props) {
                             borderColor: getComputedStyle(document.documentElement)
                                 .getPropertyValue(data.borderColor),
                             hoverBackgroundColor: getComputedStyle(document.documentElement)
-                                .getPropertyValue(data.borderColor)
+                                .getPropertyValue(data.borderColor),
+                            hoverBorderColor: getComputedStyle(document.documentElement)
+                            .getPropertyValue(data.borderColor)
                         }
                     ]
                 }}
@@ -66,7 +68,21 @@ export default function CustomBar(props) {
                             }
                         }],
                         yAxes: [{
-                            display: false
+                            gridLines: {
+                                display: false
+                            },
+                            ticks: {
+                                
+                                fontColor: getComputedStyle(document.documentElement)
+                                .getPropertyValue('--color-secondary'),
+                                callback: function (value, index, values) {
+                                    if (index === 0 || index === Math.floor(values.length/2)) {
+                                        return value
+                                    } else {
+                                        return ''
+                                    }
+                                }
+                            }
                         }]
                     }
                 }}

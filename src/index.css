@@ -74,7 +74,7 @@ th {
   --bgc-d: rgba(30,33,38,255);
   --bgc-d: black;         /* robinhood */
   --bgc-d: rgba(13,17,22,255); /* github */
-  --bgc-hover-d: #161b21;
+  --bgc-hover-d: rgb(22, 27, 33);
   --bgc-light-d: rgba(41,44,50,255);
   --bgc-light-d: #1e2124;  /* robinhood */
   --bgc-light-d: #21262c;  /* github */

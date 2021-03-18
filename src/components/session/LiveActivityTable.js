@@ -284,7 +284,7 @@ export default function LiveActivityTable(props) {
                 margin: '20px 40px 40px 40px'
             }}>
                 <table className='data-table' style={{width: '100%'}}>
-                    <thead>
+                    <thead >
                         <tr>
                             <th>Name</th>
                             <th>Pace</th>

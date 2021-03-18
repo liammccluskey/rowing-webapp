@@ -24,7 +24,7 @@ export default function Statistics() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await api.get(`/users/${currentUser.uid}/statistics-full`)
+                let res = await api.get(`/users/${currentUser.uid}/statistics-full`)
                 setStats(res.data)
             } catch (error) {
                 console.log(error)
@@ -57,7 +57,7 @@ export default function Statistics() {
     const metrics = {
         0: { key: 'meters', label: 'meters', unit: 'm', graphTitle: 'Meters rowed', formatted: () => aggregate(0).toLocaleString()},
         1: { key: 'time', label: 'seconds', unit: '', graphTitle: 'Hours rowed', 
-            formatted: () => moment.duration(Math.round(aggregate(1)), 'seconds').format('h [hour] m [min]')
+            formatted: () => moment.duration(Math.round(aggregate(1)), 'seconds').format('h [hour]  m [min]')
         },
         2: { key: 'calories', label: 'calories', unit: 'cal', graphTitle: 'Calories burned', formatted: () => aggregate(2).toLocaleString()}
     }
@@ -172,14 +172,14 @@ export default function Statistics() {
                                                 {metric.key}
                                         </h4>
                                        
-                                        <h2 
+                                        <h3 
                                             style={{
-                                                margin: '7px 0px'
+                                                margin: '7px 0px', fontWeight: '500'
                                             }}
                                         >
                                             {metric.formatted()} 
                                             <small style={{marginLeft: '5px'}}> {metric.unit}</small>
-                                        </h2>
+                                        </h3>
                                         {delta(metricID) >= 0 ? 
                                             <h4 style={{color: 'var(--color-success)', display: 'inline'}}>
                                                 {`+ ${delta(metricID)}%`}
@@ -189,7 +189,7 @@ export default function Statistics() {
                                                 {`- ${Math.abs(delta(metricID))}%`}
                                             </h4>
                                         }
-                                        <h5 style={{color: 'var(--color-secondary)', display: 'inline', marginLeft: '10px', marginTop: '7px'}}>
+                                        <h5 style={{color: 'var(--color-tertiary)', display: 'inline', marginLeft: '10px', marginTop: '7px'}}>
                                             from last {timeframes[selectedTimeframe].key}
                                         </h5>
                                     </div>
@@ -200,8 +200,9 @@ export default function Statistics() {
                             <h4 style={{color: 'var(--color)', fontWeight: '500'}}>
                                 {metrics[selectedMetric].graphTitle}
                             </h4>
+                            <br />
                             <CustomBar 
-                                height='150px' 
+                                height='175px' 
                                 labelFreq={timeframes[selectedTimeframe].labelFreq}
                                 maxLabelLength={10}
                                 data={{

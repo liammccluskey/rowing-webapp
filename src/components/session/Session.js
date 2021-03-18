@@ -4,6 +4,7 @@ import SubHeader from '../headers/SubHeader'
 import MembersInfoCard from './MembersInfoCard'
 import SessionInfoCard from './SessionInfoCard'
 import LiveActivityTable from './LiveActivityTable'
+import ResultsTable from './ResultsTable'
 import Arrow from '../misc/Arrow'
 import {useAuth} from '../../contexts/AuthContext'
 import Loading from '../misc/Loading'
@@ -62,19 +63,20 @@ export default function Session(props) {
     }, [])
 
     useEffect(() => {
-        // subscribe to udpates
+        const refreshRate = 10 // seconds
         async function fetchData() {
-            console.log('/n/n fetching data /n/n')
+            console.log('\n fetching data \n')
             await fetchSession()
             await fetchActivities()
             setLoading(false)
         }
-        if (loading) { fetchData() }
-        setTimeout(() => {
+        fetchData()
+        const interval = setInterval(() => {
             fetchData()
-        }, 10*1000);
-        
-    }, [activities])
+        }, refreshRate*1000);
+
+        return () => clearInterval(interval)
+    }, [])
 
     async function fetchSession() {
         try {
@@ -88,7 +90,6 @@ export default function Session(props) {
     async function fetchActivities() {
         try {
             const res = await api.get(`/sessions/${sessionID}/activities`)
-            console.log(res.data)
             setActivities(res.data)
             for (let i = 0; i < res.data.length; i++) {
                 for (let j = 0; j < res.data[i].length; j++) {
@@ -108,6 +109,7 @@ export default function Session(props) {
     const [lastPatchTime, setLastPatchTime] = useState(moment())
     useEffect(() => {
         if (moment().diff(lastPatchTime, 'seconds') < 10) {return}
+        else if (! activityInProgress) { return }
 
         const updatedActivity = {
             ...activityInProgress,
@@ -217,12 +219,9 @@ export default function Session(props) {
                             <div style={{display: hideResults ? 'none' : 'block',padding: '30px 20px'}}>
                                 {session.workoutItems.map((item, i) => (
                                     <div>
-                                        <LiveActivityTable 
+                                        <ResultsTable 
                                             activities={activities[i]} 
                                             activityTitle={item} 
-                                            session={session}
-                                            workoutItemIndex={i}
-                                            fetchActivities={fetchActivities}
                                         />
                                     </div>
                                 ))}
