@@ -174,7 +174,7 @@ export default function Statistics() {
                                        
                                         <h3 
                                             style={{
-                                                margin: '7px 0px', fontWeight: '500'
+                                                margin: '7px 0px', fontWeight: '500',
                                             }}
                                         >
                                             {metric.formatted()} 
@@ -205,6 +205,7 @@ export default function Statistics() {
                                 height='175px' 
                                 labelFreq={timeframes[selectedTimeframe].labelFreq}
                                 maxLabelLength={10}
+                                showYTicks={true}
                                 data={{
                                     labels: timeframes[selectedTimeframe].labels(),
                                     label: metrics[selectedMetric].label,

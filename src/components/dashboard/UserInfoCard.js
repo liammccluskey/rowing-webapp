@@ -59,7 +59,7 @@ export default function UserInfoCard(props) {
                         className='d-flex jc-space-between ai-center'
                     >
                         <h5>This Week</h5>
-                        <h3 style={{color: 'var(--color-strava)'}}>
+                        <h3 style={{color: 'var(--color-discord)'}}>
                             {stats.aggregate.weekMeters.toLocaleString()} m
                         </h3>
                     </div>
@@ -72,8 +72,8 @@ export default function UserInfoCard(props) {
                             labels: [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
                             label: 'Meters',
                             dataset: stats.plottable.weekMeters,
-                            backgroundColor: '--color-translucent-strava',
-                            borderColor: '--color-strava'
+                            backgroundColor: '--color-translucent-discord',
+                            borderColor: '--color-discord'
                         }}
                     />
                 </div>

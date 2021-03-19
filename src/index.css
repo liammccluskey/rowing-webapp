@@ -73,14 +73,13 @@ th {
   /* dark mode */
   --bgc-d: rgba(30,33,38,255);
   --bgc-d: black;         /* robinhood */
-  --bgc-d: rgba(13,17,22,255); /* github */
   --bgc-hover-d: rgb(22, 27, 33);
   --bgc-light-d: rgba(41,44,50,255);
   --bgc-light-d: #1e2124;  /* robinhood */
   --bgc-light-d: #21262c;  /* github */
   --bgc-nav-d: #161b21;     /* github */
-  --bc-d: rgba(48,54,58,255); /* robinhood */
   --bc-d: rgba(48,54,60,255); /* github */
+  --bc-d: rgba(48,54,58,255); /* robinhood */
   --bc-tr-d: rgba(22,22,23,255);
   --color-d: rgb(210,210,210);
   --color-header-d: rgb(225,225,225);
@@ -134,6 +133,9 @@ th {
 
   --color-red: rgb(253, 80, 0);
   --color-translucent-red: rgba(253, 80, 0, 0.2);
+
+  --color-discord: rgb(114, 136, 217);
+  --color-translucent-discord: rgb(114, 137, 218, 0.25);
 
   /* misc global */
   --ps-nav: 200px;
@@ -279,15 +281,12 @@ td:first-child {
 
 /* calendar */
 .calendar-card{
-  background-color: transparent;
-  border-right: 1px solid var(--bc);
-  border-right: none;
   border-bottom: 1px solid var(--bc);
   overflow: scroll;
 
 }
 .calendar-card:hover{
-  border-bottom: 1px solid var(--tint-color);
+  background-color: var(--bgc-hover);
   transition: 0.2s;
   
 }

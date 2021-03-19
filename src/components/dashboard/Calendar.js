@@ -38,7 +38,6 @@ export default function Calendar(props) {
                 i < props.sessions.length && 
                 day.isSame( new Date( props.sessions[i].startAt ), 'day') 
             ) {
-                console.log('day is same')
                 sessions[id] = [...sessions[id], props.sessions[i] ]
                 i++
             }
@@ -75,9 +74,9 @@ export default function Calendar(props) {
             >
                 {['s','m','t','w','t','f','s'].map((day, id) => (
                     <h6 style={{
-                        textTransform: 'uppercase',margin: '0px 0px',
+                        textTransform: 'uppercase',margin: '5px 0px',
                         padding: '3px', color: 'var(--color-secondary)',
-                        textAlign: 'center'
+                        textAlign: 'center',
                     }}>
                         {day}
                     </h6>
@@ -88,10 +87,7 @@ export default function Calendar(props) {
                 gridTemplateColumns:'repeat(7,1fr)',
                 gap: '0px',
                 gridAutoRows: '110px',
-                border: '1px solid var(--bc)',
-                borderRadius: '10px',
-                margin: 'none',
-                borderCollapse: 'collapse'
+                borderTop: '1px solid var(--bc)',
                 }}
                 className='calendar'
             >
@@ -99,13 +95,12 @@ export default function Calendar(props) {
                     <div 
                         key={index} 
                         className='calendar-card' 
-                        style={{padding: '0px 0px', borderLeft: '1px solid var(--bc)'}}
+                        style={{padding: '0px 0px'}}
                     >
                         <p style={{
-                            color: 'var(--color-secondary)',
-                            textTransform: 'uppercase', fontSize: '13px',
+                            color: 'var(--color)',
+                            textTransform: 'uppercase', fontSize: '14px',
                             padding: '2px 5px',
-                            /*backgroundColor: day.isSame(new Date(), 'day') ? 'var(--tint-color-translucent)' : 'transparent',*/
                             marginBottom: '2px',
                         }}>
                             {day.format('D')}
@@ -114,11 +109,11 @@ export default function Calendar(props) {
                             <Link to={`/sessions/${session._id}`} style={{textDecoration: 'none'}}>
                                 <h5 className='page-link' 
                                     style={{
-                                        borderLeft: '0px solid var(--tint-color)',
+                                        borderLeft: '2px solid var(--tint-color)',
                                         padding: '5px 5px',
                                         marginTop: '4px',
                                         fontWeight: '400',
-                                        color: 'var(--color)'
+                                        color: 'var(--color-secondary)'
                                 }}>
                                     <p style={{fontSize: '12px'}}>{moment(session.startAt).format('LT')}</p>
                                     {session.title}

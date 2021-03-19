@@ -72,7 +72,7 @@ export default function CustomBar(props) {
                                 display: false
                             },
                             ticks: {
-                                
+                                display: props.showYTicks,
                                 fontColor: getComputedStyle(document.documentElement)
                                 .getPropertyValue('--color-secondary'),
                                 callback: function (value, index, values) {
