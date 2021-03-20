@@ -71,18 +71,18 @@ th {
 
 
   /* dark mode */
-
-  --bgc-d: black;         /* robinhood */
   --bgc-d: rgba(30,33,38,255);  /* hulu */
+  --bgc-d: black;     
 
 
-  --bgc-hover-d: rgb(22, 27, 33);   /* robinhood */
   --bgc-hover-d: rgba(41,44,50,255);  /* hulu */
+  --bgc-hover-d: rgb(22, 27, 33);   /* robinhood */
 
   --bgc-light-d: rgba(41,44,50,255);
-  --bgc-light-d: #1e2124;           /* robinhood */
   --bgc-light-d: #21262c;           /* github */
+  --bgc-light-d: #1e2124;           /* robinhood */
   --bgc-nav-d: #161b21;               /* github */
+
   --bc-d: rgba(48,54,60,255);         /* github */
   --bc-d: rgba(48,54,58,255);         /* robinhood */
   --bc-tr-d: rgba(22,22,23,255);

@@ -24,9 +24,14 @@ export default function Statistics() {
 
     const [loadingSearch, setLoadingSearch] = useState(false)
     const [distanceFilter, setDistanceFilter] = useState('10000')
-    const distanceQueryRef = useRef()
+    const distanceComparatorRef = useRef()
     const [prevQueryString, setPrevQueryString] = useState('')
     const [prevQueryReadable, setPrevQueryReadable] = useState('')
+    const [prevQuery, setPrevQuery] = useState({
+        metric: 'Distance',
+        value: 10000,
+        comparator: '<='
+    })
 
     useEffect(() => {
         async function fetchData() {
@@ -39,6 +44,7 @@ export default function Statistics() {
                 setProgressStats(res.data)
                 setPrevQueryString(queryString)
                 setPrevQueryReadable('Distance   <=   10,000 m')
+                setPrevQuery(curr => ({...prevQuery, value: distanceFilter, comparator: '<='}))
             } catch (error) {
                 console.log(error)
             }
@@ -124,19 +130,16 @@ export default function Statistics() {
         setLoadingSearch(true)
         e.preventDefault()
         let queryString
-        let queryReadable
-        switch(distanceQueryRef.current.value) {
-            case 'gte': 
+        switch(distanceComparatorRef.current.value) {
+            case '>=': 
                 queryString = `gte=${distanceFilter}&lte=1000000`
-                queryReadable = `Distance   >=   ${distanceFilter.toLocaleString()} m`
                 break
-            case 'lte': 
+            case '<=': 
                 queryString = `gte=0&lte=${distanceFilter}`
-                queryReadable = `Distance   <=   ${distanceFilter.toLocaleString()} m`
                 break
-            case 'e':
+            case '=':
                 queryString = `gte=${distanceFilter}&lte=${distanceFilter}`
-                queryReadable = `Distance   =   ${distanceFilter.toLocaleString()} m`
+                break
         }
         // Prevent duplicate queries
         if (queryString !== prevQueryString) {
@@ -144,7 +147,7 @@ export default function Statistics() {
                 const res = await api.get(`/users/${currentUser.uid}/statistics-progress?${queryString}`)
                 setProgressStats(res.data)
                 setPrevQueryString(queryString)
-                setPrevQueryReadable(queryReadable)
+                setPrevQuery(curr => ({...prevQuery, value: distanceFilter, comparator: distanceComparatorRef.current.value}))
             } catch (error) {
                 console.log(error)
             }
@@ -287,10 +290,10 @@ export default function Statistics() {
                                     style={{ gap: '10px' }}
                                 >
                                     <h4 style={{fontWeight: '500'}}>Distance</h4>
-                                    <select ref={distanceQueryRef}>
-                                        <option value='lte'>Less than</option>
-                                        <option value='e'>Equal to</option>
-                                        <option value='gte'>Greater than</option>
+                                    <select ref={distanceComparatorRef}>
+                                        <option value='<='>Less than</option>
+                                        <option value='='>Equal to</option>
+                                        <option value='>='>Greater than</option>
                                     </select>
                                     <input 
                                         value={distanceFilter}
@@ -311,13 +314,17 @@ export default function Statistics() {
                             <div className='d-inline-flex jc-flex-start ai-center'
                                 style={{
                                     gap: '0px',
-                                    border: '2px solid var(--bc)',
+                                    border: '1px solid var(--bc)',
                                     borderRadius: '5px', marginLeft: '25px',
                                     overflow: 'hidden'
                                 }}
                             >
-                                <p style={{backgroundColor: 'var(--bc)', padding: '7px 10px', letterSpacing: '1px'}}>Filter</p>
-                                <p style={{padding: '7px 5px', whiteSpace: 'pre'}}>{prevQueryReadable}</p>
+                                <p style={{backgroundColor: 'var(--bgc-hover)', padding: '7px 10px', color: 'var(--tint-color)'}}>
+                                    Workout filter
+                                </p>
+                                <p style={{padding: '7px 10px', whiteSpace: 'pre'}}>
+                                    {prevQuery.metric + '   ' + prevQuery.comparator + '   ' + prevQuery.value.toLocaleString() + ' m'}
+                                </p>
                             </div>
                             <br /><br />
                             <CustomLine 
