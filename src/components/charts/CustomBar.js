@@ -76,7 +76,7 @@ export default function CustomBar(props) {
                                 fontColor: getComputedStyle(document.documentElement)
                                 .getPropertyValue('--color-secondary'),
                                 callback: function (value, index, values) {
-                                    if (index === 0 || index === Math.floor(values.length/2)) {
+                                    if (index === 0 || index === values.length - 1 || index === Math.floor(values.length/2)) {
                                         return value
                                     } else {
                                         return ''

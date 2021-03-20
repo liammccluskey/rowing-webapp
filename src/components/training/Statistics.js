@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import MainHeader from '../headers/MainHeader'
 import TrainingHeader from './TrainingHeader'
 import Loading from '../misc/Loading'
@@ -19,13 +19,26 @@ export default function Statistics() {
     const [selectedMetric, setSelectedMetric] = useState(0)
 
     const [stats, setStats] = useState(null)
+    const [progressStats, setProgressStats] = useState(null)
     const [loading, setLoading] = useState(true)
+
+    const [loadingSearch, setLoadingSearch] = useState(false)
+    const [distanceFilter, setDistanceFilter] = useState('10000')
+    const distanceQueryRef = useRef()
+    const [prevQueryString, setPrevQueryString] = useState('')
+    const [prevQueryReadable, setPrevQueryReadable] = useState('')
 
     useEffect(() => {
         async function fetchData() {
             try {
-                let res = await api.get(`/users/${currentUser.uid}/statistics-full`)
+                let res = await api.get(`/users/${currentUser.uid}/statistics-general`)
                 setStats(res.data)
+
+                const queryString = `gte=0&lte=${distanceFilter}`
+                res = await api.get(`users/${currentUser.uid}/statistics-progress?${queryString}`)
+                setProgressStats(res.data)
+                setPrevQueryString(queryString)
+                setPrevQueryReadable('Distance   <=   10,000 m')
             } catch (error) {
                 console.log(error)
             }
@@ -107,6 +120,40 @@ export default function Statistics() {
         }
     }
 
+    async function handleSubmit(e) {
+        setLoadingSearch(true)
+        e.preventDefault()
+        let queryString
+        let queryReadable
+        switch(distanceQueryRef.current.value) {
+            case 'gte': 
+                queryString = `gte=${distanceFilter}&lte=1000000`
+                queryReadable = `Distance   >=   ${distanceFilter.toLocaleString()} m`
+                break
+            case 'lte': 
+                queryString = `gte=0&lte=${distanceFilter}`
+                queryReadable = `Distance   <=   ${distanceFilter.toLocaleString()} m`
+                break
+            case 'e':
+                queryString = `gte=${distanceFilter}&lte=${distanceFilter}`
+                queryReadable = `Distance   =   ${distanceFilter.toLocaleString()} m`
+        }
+        // Prevent duplicate queries
+        if (queryString !== prevQueryString) {
+            try {
+                const res = await api.get(`/users/${currentUser.uid}/statistics-progress?${queryString}`)
+                setProgressStats(res.data)
+                setPrevQueryString(queryString)
+                setPrevQueryReadable(queryReadable)
+            } catch (error) {
+                console.log(error)
+            }
+        } else {
+            // show error message ?
+        }
+        setTimeout(() => setLoadingSearch(false), 0.5*1000)
+    }
+
     return (
         <div>
             <MainHeader />
@@ -167,16 +214,12 @@ export default function Statistics() {
                                                 textTransform: 'capitalize', display: 'inline',
                                                 fontWeight: '500'
 
-                                            }
-                                        }>
+                                            }}
+                                        >
                                                 {metric.key}
                                         </h4>
                                        
-                                        <h3 
-                                            style={{
-                                                margin: '7px 0px', fontWeight: '500',
-                                            }}
-                                        >
+                                        <h3 style={{ margin: '7px 0px' }} >
                                             {metric.formatted()} 
                                             <small style={{marginLeft: '5px'}}> {metric.unit}</small>
                                         </h3>
@@ -236,30 +279,52 @@ export default function Statistics() {
                         </div>
                         <br />
                         <div style={{padding: '20px 20px'}} className='float-container'>
-                            <div className='d-flex jc-flex-start ai-center' style={{gap: '50px'}}>
-                                {[
-                                    {title: 'Event', options: ['2k', '5k', '10k', '15k']},
-                                    {title: 'Metric', options: ['Ave. Pace', 'Power']}
-                                ].map((item, i) => (
-                                    <div key={i}>
-                                        <h4 style={{fontWeight: '500'}}>{item.title}</h4>
-                                        <select>
-                                            {item.options.map(op => (
-                                                <option val={op}>{op}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                ))}
-                            </div>
+                            <h3 >Filter Workouts</h3>
                             <br />
+                            <form style={{ paddingLeft: '20px'}} onSubmit={handleSubmit}>
+                                <div 
+                                    className='d-inline-flex jc-flex-start ai-center'
+                                    style={{ gap: '10px' }}
+                                >
+                                    <h4 style={{fontWeight: '500'}}>Distance</h4>
+                                    <select ref={distanceQueryRef}>
+                                        <option value='lte'>Less than</option>
+                                        <option value='e'>Equal to</option>
+                                        <option value='gte'>Greater than</option>
+                                    </select>
+                                    <input 
+                                        value={distanceFilter}
+                                        onChange={(e) => setDistanceFilter(e.target.value)}
+                                        type='number' required/>
+                                    <h5 style={{fontWeight: '500'}}>m</h5>
+                                </div>
+                                <br />
+                                <div className='d-flex jc-flex-start ai-center' style={{gap: '10px'}}>
+                                    <button type='submit' className='clear-btn-secondary' style={{marginTop: '15px'}}>
+                                        Search
+                                    </button>
+                                    {loadingSearch && <Loading style={{display: 'inline-block', height: '0px'}} />}
+                                </div>
+                            </form>
+                            <br /><br />
+                            <h3 style={{ display: 'inline'}} >Pace Trend</h3>
+                            <div className='d-inline-flex jc-flex-start ai-center'
+                                style={{
+                                    gap: '0px',
+                                    border: '2px solid var(--bc)',
+                                    borderRadius: '5px', marginLeft: '25px',
+                                    overflow: 'hidden'
+                                }}
+                            >
+                                <p style={{backgroundColor: 'var(--bc)', padding: '7px 10px', letterSpacing: '1px'}}>Filter</p>
+                                <p style={{padding: '7px 5px', whiteSpace: 'pre'}}>{prevQueryReadable}</p>
+                            </div>
+                            <br /><br />
                             <CustomLine 
-                                height='250px' 
+                                height='200px' 
                                 data={{
-                                    labels: Array(moment().daysInMonth()).fill(0).map((l, i) => i + 1),
                                     label: 'Pace / 500m',
-                                    dataset: Array(moment().daysInMonth()).fill(0).map((day, i) => ({
-                                        x: i + 1, y: Math.random()*50
-                                    })),
+                                    dataset: [...progressStats.plottable[timeframes[selectedTimeframe].key] ],
                                     backgroundColor: '--color-translucent-strava',
                                     borderColor: '--color-strava'
                                 }}
@@ -267,7 +332,7 @@ export default function Statistics() {
                         </div>
                     </div>
                 
-                    <div style={{height: '200px'}}></div>
+                    <div style={{height: '175px'}}></div>
                 </div>
             }
         </div>

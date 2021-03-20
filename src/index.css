@@ -71,15 +71,20 @@ th {
 
 
   /* dark mode */
-  --bgc-d: rgba(30,33,38,255);
+
   --bgc-d: black;         /* robinhood */
-  --bgc-hover-d: rgb(22, 27, 33);
+  --bgc-d: rgba(30,33,38,255);  /* hulu */
+
+
+  --bgc-hover-d: rgb(22, 27, 33);   /* robinhood */
+  --bgc-hover-d: rgba(41,44,50,255);  /* hulu */
+
   --bgc-light-d: rgba(41,44,50,255);
-  --bgc-light-d: #1e2124;  /* robinhood */
-  --bgc-light-d: #21262c;  /* github */
-  --bgc-nav-d: #161b21;     /* github */
-  --bc-d: rgba(48,54,60,255); /* github */
-  --bc-d: rgba(48,54,58,255); /* robinhood */
+  --bgc-light-d: #1e2124;           /* robinhood */
+  --bgc-light-d: #21262c;           /* github */
+  --bgc-nav-d: #161b21;               /* github */
+  --bc-d: rgba(48,54,60,255);         /* github */
+  --bc-d: rgba(48,54,58,255);         /* robinhood */
   --bc-tr-d: rgba(22,22,23,255);
   --color-d: rgb(210,210,210);
   --color-header-d: rgb(225,225,225);
@@ -88,10 +93,9 @@ th {
   --box-shadow-d: 0 1px 3px rgba(0,0,0,0.2);
 
   /*light mode*/
-  --bgc-l: rgb(246, 247, 249);  /* firebase */
   --bgc-l: white;
-  --bgc-light-l: white;
-  --bgc-nav-l: var(--bgc-light-l);
+  --bgc-light-l: rgb(246, 247, 249); /* firebase */
+  --bgc-nav-l: var(--bgc-l);
   --bgc-hover-l: rgba(0,0,0,0.05);
   --bc-l: rgb(220, 227, 231);
   --bc-tr-l: rgb(241,242,242);

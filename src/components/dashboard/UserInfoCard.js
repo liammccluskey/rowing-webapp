@@ -63,7 +63,6 @@ export default function UserInfoCard(props) {
                             {stats.aggregate.weekMeters.toLocaleString()} m
                         </h3>
                     </div>
-                    <br />
                     <CustomBar 
                         height='150px' 
                         labelFreq={1}
@@ -87,7 +86,6 @@ export default function UserInfoCard(props) {
                             {stats.aggregate.monthMeters.toLocaleString()} m
                         </h3>
                     </div>
-                    <br />
                     <CustomBar 
                         height='150px' 
                         labelFreq={10}
@@ -111,7 +109,6 @@ export default function UserInfoCard(props) {
                             {stats.aggregate.yearMeters.toLocaleString()} m
                         </h3>
                     </div>
-                    <br />
                     <CustomBar
                         height='150px'
                         labelFreq={3}

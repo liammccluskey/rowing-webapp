@@ -25,7 +25,7 @@ export default function ResultsTable(props) {
         {title: 'Elapsed Time', key: 'elapsedTime'}
     ]
 
-    const [activities, setActivities] = useState([])
+    const [activities, setActivities] = useState(props.activities.filter(ac => ac.isCompleted))
 
     useEffect(() => {
         const completedActivities = props.activities.filter(ac => ac.isCompleted)
@@ -100,7 +100,7 @@ export default function ResultsTable(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {activities.length && activities.map((ac, index) => (
+                        {activities.map((ac, index) => (
                             <tr 
                                 key={index} 
                                 style={{
