@@ -159,35 +159,35 @@ export default function Session(props) {
                 <br /><br/>
                 <div 
                     className='d-flex jc-flex-start ai-flex-start' 
-                    style={{ gap:'50px' }}
+                    style={{ gap:'50px'}}
                 >
                     <div 
                         className='float-container'
-                        style={{ width: '250px', padding: '20px 0px' }}
+                        style={{ width: '250px', backgroundColor: 'var(--bgc-hover)'}}
                     >
                         <SessionInfoCard 
                             session={session} 
-                            style={{ padding: '0px 20px' }}
+                            style={{ padding: '15px 20px' }}
                         />
-                        <br /><br />
+                        <br />
                         <MembersInfoCard 
                             handleClickJoin={handleClickJoin} 
                             session={session}
                             style={{
-                                height: '400px',
+                                height: '500px',
                                 overflow: 'scroll'
                             }}
                         />
                     </div>
                     <div style={{flex: 1}}>
                         <div >
-                            <h2>{session.title}</h2>
+                            <h3 style={{fontWeight: '500'}}>{session.title}</h3>
                             <br />
                             <div className='d-flex jc-flex-start ai-center' style={{gap: '10px'}}>
                                 <button className='arrow-btn' onClick={() => setHideActivities(curr => !curr)}>
                                     <Arrow direction={hideActivities ? 'right' : 'down'} color='var(--color-tertiary)' />
                                 </button>
-                                <h3 onClick={() => setHideActivities(curr => !curr)}>Workout Activities</h3>
+                                <h4 onClick={() => setHideActivities(curr => !curr)}>Workout Activities</h4>
                             </div>
                             <div style={{display: hideActivities ? 'none' : 'block',padding: '30px 20px 0px 20px'}}>
 
@@ -214,7 +214,7 @@ export default function Session(props) {
                                 <button className='arrow-btn' onClick={() => setHideResults(curr => !curr)}>
                                     <Arrow direction={hideResults ? 'right' : 'down'} color='var(--color-tertiary)' />
                                 </button>
-                                <h3 onClick={() => setHideResults(curr => !curr)}>Workout Results</h3>
+                                <h4 onClick={() => setHideResults(curr => !curr)}>Workout Results</h4>
                             </div>
                             <div style={{display: hideResults ? 'none' : 'block',padding: '30px 20px'}}>
                                 {session.workoutItems.map((item, i) => (

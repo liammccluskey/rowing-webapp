@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
+import Arrow from '../misc/Arrow'
 import moment from 'moment'
 
 export default function Calendar(props) {
@@ -47,22 +48,28 @@ export default function Calendar(props) {
     }, [currMoment, props.sessions] )
 
     return (
-        <div>
-            <div className='d-flex jc-center ai-center' style={{gap: '7px', marginBottom: '10px'}}>
-                <h3>{currMoment.format('YYYY')}</h3>
-                <button 
-                    onClick={() => setCurrMoment(currMoment.subtract(1, 'month').clone())}
-                    className='icon-btn'
+        <div className='float-container'>
+            <div className='d-flex jc-center ai-center' 
+                style={{gap: '20px', padding: '5px 0px', backgroundColor: 'var(--bgc-hover)',
+                borderBottom: '1px solid var(--bc)'}}
+            >
+                <h4>{currMoment.format('YYYY')}</h4>
+
+                <div onClick={() => setCurrMoment(currMoment.subtract(1, 'month').clone())}
+                    style={{width: '30px', height: '30px', cursor: 'pointer'}} 
+                    className='d-flex jc-center ai-center'
                 >
-                    {'<'}
-                </button>
-                <h3 style={{width: '100px', textAlign: 'center'}}>{currMoment.format('MMMM')}</h3>
-                <button 
-                    onClick={() => setCurrMoment(currMoment.add(1, 'month').clone())}
-                    className='icon-btn'
+                    <Arrow direction='left' color='var(--color)' />
+                </div>
+                
+                <h4 style={{width: '80px', textAlign: 'center'}}>{currMoment.format('MMMM')}</h4>
+
+                <div onClick={() => setCurrMoment(currMoment.add(1, 'month').clone())}
+                    style={{width: '30px', height: '30px', cursor: 'pointer'}} 
+                    className='d-flex jc-center ai-center'
                 >
-                    {'>'}
-                </button>
+                    <Arrow direction='right' color='var(--color)' />
+                </div>
                 
             </div>
             <div 
@@ -87,18 +94,20 @@ export default function Calendar(props) {
                 gridTemplateColumns:'repeat(7,1fr)',
                 gap: '0px',
                 gridAutoRows: '110px',
-                borderTop: '1px solid var(--bc)',
                 }}
                 className='calendar'
             >
                 {calendarDays.map((day, index) => (
-                    <div 
-                        key={index} 
-                        className='calendar-card' 
-                        style={{padding: '0px 0px'}}
+                    <div key={index} 
+                        style={{
+                            padding: '0px 0px', 
+                            backgroundColor: day.isSame(moment(), 'day') && 'var(--bgc-hover)',
+                            borderTop: '1px solid var(--bgc-hover)',
+                            overflow: 'scroll'
+                        }}
                     >
                         <p style={{
-                            color: 'var(--color)',
+                            color: 'var(--color-secondary)',
                             textTransform: 'uppercase', fontSize: '14px',
                             padding: '2px 5px',
                             marginBottom: '2px',
@@ -109,14 +118,14 @@ export default function Calendar(props) {
                             <Link to={`/sessions/${session._id}`} style={{textDecoration: 'none'}}>
                                 <h5 className='page-link' 
                                     style={{
-                                        borderLeft: '2px solid var(--tint-color)',
+                                        borderLeft: '1px solid var(--tint-color)',
                                         padding: '5px 5px',
                                         marginTop: '4px',
-                                        fontWeight: '400',
-                                        color: 'var(--color-secondary)'
+                                        fontWeight: '400', fontSize: '12px'
                                 }}>
-                                    <p style={{fontSize: '12px'}}>{moment(session.startAt).format('LT')}</p>
                                     {session.title}
+                                    <p style={{fontSize: '12px', display: 'none'}}>{moment(session.startAt).format('LT')}</p>
+                                    
                                 </h5>
                             </Link>
                             

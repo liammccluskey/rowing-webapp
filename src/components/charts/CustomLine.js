@@ -53,10 +53,12 @@ export default function CustomLine(props) {
                         xPadding: 10, yPadding: 10,
                         callbacks: {
                             label: (tooltipItem, data) => {
+                                console.log(tooltipItem)
                                 return 'Pace: ' + moment.duration(tooltipItem.value, 'seconds').format('mm:ss')
                             },
                             title: (tooltipItem, data) => {
-                                return moment(tooltipItem.value).format('LLL')
+                                console.log(tooltipItem)
+                                return moment(tooltipItem[0].xLabel).format('LLL')
                             }
                         }
                     },
@@ -67,7 +69,7 @@ export default function CustomLine(props) {
                                 display: false
                             },
                             type: 'time',
-                            distribution: 'linear',
+                            distribution: 'series',
                             ticks: {
                                 source: 'data'
                             }

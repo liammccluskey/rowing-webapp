@@ -3,6 +3,8 @@ import MainHeader from '../headers/MainHeader'
 import TrainingHeader from './TrainingHeader'
 import Loading from '../misc/Loading'
 import Arrow from '../misc/Arrow'
+import KebabMenu from '../misc/KebabMenu'
+import PencilIcon from '../misc/PencilIcon'
 import CustomBar from '../charts/CustomBar'
 import CustomLine from '../charts/CustomLine'
 import {useAuth} from '../../contexts/AuthContext'
@@ -33,6 +35,8 @@ export default function Statistics() {
         comparator: '<='
     })
 
+    const [hideFilterForm, setHideFilterForm] = useState(true)
+
     useEffect(() => {
         async function fetchData() {
             try {
@@ -45,6 +49,8 @@ export default function Statistics() {
                 setPrevQueryString(queryString)
                 setPrevQueryReadable('Distance   <=   10,000 m')
                 setPrevQuery(curr => ({...prevQuery, value: distanceFilter, comparator: '<='}))
+
+                console.log(res.data.plottable.month)
             } catch (error) {
                 console.log(error)
             }
@@ -154,7 +160,10 @@ export default function Statistics() {
         } else {
             // show error message ?
         }
-        setTimeout(() => setLoadingSearch(false), 0.5*1000)
+        setTimeout(() => {
+            setLoadingSearch(false)
+            setHideFilterForm(true)
+        }, 0.5*1000)
     }
 
     return (
@@ -211,7 +220,7 @@ export default function Statistics() {
                                                 marginRight: '10px', display: metricID !== selectedMetric && 'none',
                                             }}
                                         />
-                                        <h4 
+                                        <p 
                                             style={{
                                                 color: 'var(--color-secondary)',
                                                 textTransform: 'capitalize', display: 'inline',
@@ -220,9 +229,9 @@ export default function Statistics() {
                                             }}
                                         >
                                                 {metric.key}
-                                        </h4>
+                                        </p>
                                        
-                                        <h3 style={{ margin: '7px 0px' }} >
+                                        <h3 style={{ margin: '6px 0px' }} >
                                             {metric.formatted()} 
                                             <small style={{marginLeft: '5px'}}> {metric.unit}</small>
                                         </h3>
@@ -264,7 +273,7 @@ export default function Statistics() {
                     </div>
                     <div id='progress' style={{gridColumn: '1/4'}}>
                         <div id='progress-header' className='d-flex jc-space-between ai-center'>
-                            <h3>Progress</h3>
+                            <h3>Analysis</h3>
                             <div 
                                 className='d-flex jc-flex-end ai-center'
                                 style={{gap: '40px'}}
@@ -282,14 +291,47 @@ export default function Statistics() {
                         </div>
                         <br />
                         <div style={{padding: '20px 20px'}} className='float-container'>
-                            <h3 >Filter Workouts</h3>
-                            <br />
-                            <form style={{ paddingLeft: '20px'}} onSubmit={handleSubmit}>
+                            <div className='d-flex jc-flex-start ai-center' style={{gap: '15px'}}>
+                                <div className='d-inline-flex jc-flex-start ai-center'
+                                    style={{
+                                        gap: '0px',
+                                        border: '1px solid var(--bc)',
+                                        borderRadius: '5px',
+                                        overflow: 'hidden'
+                                    }}
+                                >
+                                    <h4 style={{backgroundColor: 'var(--bgc-hover)', padding: '7px 10px', color: 'var(--tint-color)'}}>
+                                        Workout filter
+                                    </h4>
+                                    <p style={{padding: '7px 10px', whiteSpace: 'pre'}}>
+                                        {prevQuery.metric + '   ' + prevQuery.comparator + '   ' + prevQuery.value.toLocaleString() + ' m'}
+                                    </p>
+                                </div>
+                                <div className='clear-btn-secondary' style={{padding: '0px 0px', paddingRight: '0px'}}
+                                    onClick={() => setHideFilterForm(false)}
+                                >
+                                   <PencilIcon color='var(--tint-color)' />
+                                </div>
+                            </div>
+                            <form onSubmit={handleSubmit}
+                                style={{ 
+                                    overflow: 'hidden', transform: 'scale(1)',
+                                    padding: '0px 20px', 
+                                    marginTop: hideFilterForm ? 0 : 20,
+                                    opacity: hideFilterForm ? 0: 100,
+                                    height: hideFilterForm ? 0 : 210, transition: 'all ease 0.5s',
+                                    backgroundColor: 'var(--bgc-hover)', borderRadius: '5px', border: '1px solid var(--bc)'
+                                }} 
+                                
+                            >
+                                <br />
+                                <h4 style={{fontWeight: 500}}>Edit Workout Filter</h4>
+                                <br />
                                 <div 
                                     className='d-inline-flex jc-flex-start ai-center'
                                     style={{ gap: '10px' }}
                                 >
-                                    <h4 style={{fontWeight: '500'}}>Distance</h4>
+                                    <p>Distance</p>
                                     <select ref={distanceComparatorRef}>
                                         <option value='<='>Less than</option>
                                         <option value='='>Equal to</option>
@@ -302,38 +344,28 @@ export default function Statistics() {
                                     <h5 style={{fontWeight: '500'}}>m</h5>
                                 </div>
                                 <br />
-                                <div className='d-flex jc-flex-start ai-center' style={{gap: '10px'}}>
-                                    <button type='submit' className='clear-btn-secondary' style={{marginTop: '15px'}}>
+                                <br />
+                                <div className='d-flex jc-space-between ai-center' style={{gap: '10px', marginTop: '10px'}}>
+                                    <button type='submit' className='solid-btn-secondary'>
                                         Search
                                     </button>
-                                    {loadingSearch && <Loading style={{display: 'inline-block', height: '0px'}} />}
+                                    {loadingSearch && <Loading />}
+                                    <button onClick={() => setHideFilterForm(true)}type='button' className='clear-btn-cancel'>
+                                        Cancel
+                                    </button>
                                 </div>
                             </form>
-                            <br /><br />
-                            <h3 style={{ display: 'inline'}} >Pace Trend</h3>
-                            <div className='d-inline-flex jc-flex-start ai-center'
-                                style={{
-                                    gap: '0px',
-                                    border: '1px solid var(--bc)',
-                                    borderRadius: '5px', marginLeft: '25px',
-                                    overflow: 'hidden'
-                                }}
-                            >
-                                <p style={{backgroundColor: 'var(--bgc-hover)', padding: '7px 10px', color: 'var(--tint-color)'}}>
-                                    Workout filter
-                                </p>
-                                <p style={{padding: '7px 10px', whiteSpace: 'pre'}}>
-                                    {prevQuery.metric + '   ' + prevQuery.comparator + '   ' + prevQuery.value.toLocaleString() + ' m'}
-                                </p>
-                            </div>
-                            <br /><br />
+                            <br />
+
+                            <h4 style={{fontWeight: '500'}} >Workout Pace Trend</h4>
+                            <br />
                             <CustomLine 
                                 height='200px' 
                                 data={{
                                     label: 'Pace / 500m',
                                     dataset: [...progressStats.plottable[timeframes[selectedTimeframe].key] ],
-                                    backgroundColor: '--color-translucent-strava',
-                                    borderColor: '--color-strava'
+                                    backgroundColor: '--tint-color-translucent',
+                                    borderColor: '--tint-color'
                                 }}
                             />
                         </div>

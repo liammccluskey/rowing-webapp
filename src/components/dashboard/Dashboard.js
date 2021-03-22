@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from "react"
 import MainHeader from "../headers/MainHeader"
 import Sidebar from '../headers/Sidebar'
@@ -65,13 +64,26 @@ export default function Dashboard() {
         <div>
             <MainHeader style={{position: 'sticky', top: '0'}} />
             <br />
+            <br />
             <div 
                 className='main-container d-flex jc-flex-start ai-flex-start' 
-                style={{gap: '100px', padding: '0px 100px', marginBottom: '100px'}}
+                style={{gap: '75px', padding: '0px 50px', marginBottom: '100px'}}
             >
+                <div>
+                    <UserInfoCard style={{width:'325px', height: 'auto'}}/>
+                    <br />
+                    <ClubsInfoCard clubs={myClubs} style={{width:'325px', height: 'auto'}}/>
+                </div>
+                
                 <div style={{ flex: 1}} >
                     <div>
-                        <h2 >Today's Workouts</h2>
+                        <div className='d-flex jc-space-between ai-center'>
+
+                            <h3>Today's Workouts</h3>
+                            <button className='clear-btn-secondary' onClick={() => setShowSessionForm(true)}>
+                                Add Workout
+                            </button>
+                        </div>
                         <br />
                         <NewSessionForm 
                             setShowSessionForm={setShowSessionForm}
@@ -79,94 +91,62 @@ export default function Dashboard() {
                             fetchSessions={fetchSessions}
                             myClubs={myClubs}
                         />
-                        {loading ? 
-                            <Loading />
-                            :
-                            <div
-                                style={{
-                                    display: 'grid', gap: '10px',
-                                    gridTemplateColumns: 'repeat(3,1fr)',
-                                    gridAutoRows: 'minmax(125px, auto)',
-                                }}
-                            >
-                                {todaySessions.map(session => (
-                                    <div 
-                                        key={session._id} 
-                                        onClick={()=>routeToSessionWithID(session._id)}
-                                        style={{padding: '20px 20px'}}
-                                        className='main-subcontainer'
+                        {loading ? <Loading /> : 
+                        <div className='float-container'>
+                            <table style={{width: '100%'}} >
+                                <thead>
+                                    <tr style={{backgroundColor: 'var(--bgc-hover)'}}>
+                                        <th style={{color: 'var(--color)'}}>Host</th>
+                                        <th style={{color: 'var(--color)'}}>Title</th>
+                                        <th style={{color: 'var(--color)'}}>Starts At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {todaySessions.map( (session, i) => (
+                                    <tr key={i}
+                                        onClick={() => routeToSessionWithID(session._id)}
                                     >
-                                        <div 
-                                            className='d-flex jc-flex-start ai-flex-start'
-                                            style={{
-                                                gap: '10px',
-                                                marginBottom: '10px'
-                                            }}
-                                        >
-                                            <img 
-                                                style={{borderRadius: '5px'}}
-                                                height='40px' width='40px' 
+                                        <td className='d-flex jc-flex-start ai-center' style={{gap: '10px'}}>
+                                            <img style={{borderRadius: '5px'}} height='30px' width='30px' 
                                                 src={session.associatedClubID === 'none' ?
                                                     currentUser.photoURL : 
                                                     myClubs.find(club=>club._id===session.associatedClubID).iconURL
                                                 }
                                             />
-                                            <h4 style={{
-                                                color: 'var(--color-secondary)',
-                                                display: 'inline'
-                                            }}>
-                                                {session.associatedClubID === 'none' ? 
-                                                    currentUser.displayName 
-                                                    :
-                                                    myClubs.find(club=>club._id===session.associatedClubID).name
-                                                }
-                                            </h4>
-                                        </div>
-                                        <h4>{session.title} </h4>
-                                        <br />
-                                        <h3
-                                            style={{
-                                                
-                                                float: 'right'
-                                            }}
-                                        >
+                                            {session.associatedClubID === 'none' ? 
+                                                currentUser.displayName 
+                                                :
+                                                myClubs.find(club=>club._id===session.associatedClubID).name
+                                            }
+                                        </td>
+                                        <td>
+                                            {session.title}
+                                        </td>
+                                        <td>
                                             {moment(session.startAt).format('LT')}
-                                        </h3>
-                                    </div>  
-                                ))}
-                                <div
-                                    className='main-subcontainer d-flex ai-center jc-center'
-                                    style={{ padding: '20px 20px'}}
-                                    onClick={() => setShowSessionForm(true)}
-                                >
-                                    <h4 style={{color: 'var(--tint-color)'}}>
-                                        + New Workout
-                                    </h4>
-                                </div>
-                            </div>
-                        }
+                                        </td>
+                                    </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            {!todaySessions.length && 
+                                <p style={{textAlign: 'center', padding: '15px 0px'}}>You have no workouts scheduled for today</p>
+                            }
+                        </div>}
                     </div>
 
                     <br /><br /><br />
 
-                    <h2 >Training Calendar</h2>
+                    <h3 >Training Calendar</h3>
+                    <br />
                     <Calendar sessions={mySessions}/>
                 </div>
-                <div>
-                    <h2 >Quick Stats</h2>
-                    <br />
-                    <UserInfoCard style={{width:'325px', height: 'auto'}}/>
-                    <br />
-                    <ClubsInfoCard clubs={myClubs} style={{width:'325px', height: 'auto'}}/>
-                </div>
-                
             </div>
         </div>
         
     )   
 
 }
-
 
 /*
 import React, { useEffect, useState, useRef } from "react"
@@ -232,75 +212,84 @@ export default function Dashboard() {
     }
 
     return (
-        <div style={{height: '100vh'}}>
-            <MainHeader />
-            <div className='main-container d-flex jc-flex-start ai-flex-start' style={{gap: '25px', padding: '0px 25px'}}>
-                <div>
-                    <br />
-                    <UserInfoCard style={{width:'250px', height: 'auto'}}/>
-                </div>
-                
-                <div style={{ flex: 1, height: '100vh', overflow: 'scroll'}}>
-                    <br />
-                    <div className='float-container' style={{padding: '15px 20px'}}>
-                        <div className='d-flex jc-space-between ai-center'>
-                            <h3 >Today's Workouts</h3>
-                            <button onClick={() => setShowSessionForm(true)} className='clear-btn-secondary'>New Workout</button>
-                        </div><br />
+        <div>
+            <MainHeader style={{position: 'sticky', top: '0'}} />
+            <br />
+            <br />
+            <div 
+                className='main-container d-flex jc-flex-start ai-flex-start' 
+                style={{gap: '100px', padding: '0px 100px', marginBottom: '100px'}}
+            >
+                <div style={{ flex: 1}} >
+                    <div>
+                        <h2>Today's Workouts</h2>
+                        <div className='d-flex jc-flex-end'>
+                            <button className='clear-btn-secondary' onClick={() => setShowSessionForm(true)}>
+                                Add Workout
+                            </button>
+                        </div>
+                        <br />
                         <NewSessionForm 
                             setShowSessionForm={setShowSessionForm}
                             showSessionForm={showSessionForm}
                             fetchSessions={fetchSessions}
                             myClubs={myClubs}
                         />
-                        {loading ? <Loading /> : !todaySessions.length ? 
-                        <p style={{color: 'var(--color-secondary', padding: '15px 0px', textAlign: 'center'}}>
-                            You have no workouts scheduled for today
-                        </p> :
-                            <div style={{ borderRadius: '5px', border: '1px solid var(--bc)'}} >
-                                {todaySessions.map(session => (
-                                    <div 
-                                        key={session._id} 
-                                        className='main-subcontainer' 
-                                        onClick={()=>routeToSessionWithID(session._id)}
-                                        style={{padding: '20px 20px'}}
-                                    >
-                                        <div className='d-flex jc-space-between ai-center'>
-                                            <div className='d-flex jc-flex-start'>
-                                                <img 
-                                                    style={{borderRadius: '5px'}}
-                                                    height='50px' width='50px' 
-                                                    src={session.associatedClubID === 'none' ?
-                                                        currentUser.photoURL : 
-                                                        myClubs.find(club=>club._id===session.associatedClubID).iconURL
-                                                    }
-                                                />
-                                                <div style={{margin: '0px 10px'}}>
-                                                    <h4 style={{margin: '0px 10px', marginBottom: '5px'}}>{session.title}</h4>
-                                                    <p style={{margin: '0px 10px', color: 'var(--color-secondary)'}}>
-                                                        {`Host: ${session.hostName}`}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p >
-                                                {moment(session.startAt).calendar()}
-                                            </p>
-                                        </div>
-                                    </div>  
-                                ))}
-                            </div>
-                        }
+                        {loading ? <Loading /> : 
+                        <div className='float-container'>
+                            <table style={{width: '100%'}}>
+                                <thead>
+                                    <tr style={{backgroundColor: 'var(--bgc-hover)'}}>
+                                        <th>Host</th>
+                                        <th>Title</th>
+                                        <th>Starts At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {todaySessions.map( (session, i) => (
+                                    <tr key={i} style={{borderBottom: '1px solid var(--bc)'}}>
+                                        <td className='d-flex jc-flex-start ai-center' style={{gap: '10px'}}>
+                                            <img style={{borderRadius: '5px'}} height='40px' width='40px' 
+                                                src={session.associatedClubID === 'none' ?
+                                                    currentUser.photoURL : 
+                                                    myClubs.find(club=>club._id===session.associatedClubID).iconURL
+                                                }
+                                            />
+                                            <h4>
+                                                {session.associatedClubID === 'none' ? 
+                                                    currentUser.displayName 
+                                                    :
+                                                    myClubs.find(club=>club._id===session.associatedClubID).name
+                                                }
+                                            </h4>
+                                        </td>
+                                        <td>
+                                            {session.title}
+                                        </td>
+                                        <td>
+                                            {moment(session.startAt).format('LT')}
+                                        </td>
+                                    </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>}
                     </div>
+
+                    <br /><br /><br />
+
+                    <h2 >Training Calendar</h2>
                     <br />
-                    <div className='float-container' style={{padding: '15px 20px', marginBottom: '100px'}}>
-                        <h3 >Training Calendar</h3>
-                        <Calendar sessions={mySessions}/>
-                    </div>
+                    <Calendar sessions={mySessions}/>
                 </div>
                 <div>
+                    <h2 >Quick Stats</h2>
                     <br />
-                    <ClubsInfoCard clubs={myClubs} style={{width:'250px', height: 'auto'}}/>
+                    <UserInfoCard style={{width:'325px', height: 'auto'}}/>
+                    <br />
+                    <ClubsInfoCard clubs={myClubs} style={{width:'325px', height: 'auto'}}/>
                 </div>
+                
             </div>
         </div>
         

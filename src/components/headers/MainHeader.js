@@ -25,12 +25,16 @@ export default function MainHeader(props) {
                             borderRadius: '10px',
                             backgroundColor: 'var(--tint-color)',
                             color: 'var(--bgc)',
-                            fontWeight: '400'
+                            fontWeight: '400',
+                            display: 'none'
                         }}
                     >
-                        R
+                        
                     </h1>
-                    <h3 style={{marginLeft:'10px'}} onClick={() => history.push('/dashboard')}className='d-inline'></h3>
+                    <img height='30px' width='33px'
+                        src={isDarkMode ? process.env.REACT_APP_COMPANY_ICON_URL : process.env.REACT_APP_COMPANY_ICON_DARK_URL}
+                    />
+                    <h3 style={{marginLeft:'10px'}} onClick={() => history.push('/dashboard')}className='d-inline'>Rowa</h3>
                     <input placeholder='Search' style={{width: '300px', marginLeft: '60px'}} type='text'/>
                 </div>
             </div>
