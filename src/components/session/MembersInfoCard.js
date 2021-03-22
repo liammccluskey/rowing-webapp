@@ -30,10 +30,7 @@ export default function MembersInfoCard(props) {
         <div style={{...props.style}}>
             {loading ? <Loading /> :
             <div>
-                <div 
-                    className='d-flex jc-space-between ai-center'
-                    style={{ padding: '0px 20px'}}
-                >
+                <div className='d-flex jc-space-between ai-center'>
                     <h4 style={{fontWeight: '500'}}>Members <small>( {members.length} )</small></h4>
                     <button 
                         onClick={props.handleClickJoin} 

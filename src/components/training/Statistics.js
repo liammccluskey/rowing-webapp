@@ -185,7 +185,7 @@ export default function Statistics() {
                 >
                     <div id='general' style={{gridColumn: '1/4'}}>
                         <div id='general-header' className='d-flex jc-space-between ai-center'>
-                            <h3>General</h3>
+                            <h3 style={{fontWeight: '500'}}>General</h3>
                             <div 
                                 className='d-flex jc-flex-end ai-center'
                                 style={{gap: '40px'}}
@@ -272,7 +272,7 @@ export default function Statistics() {
                     </div>
                     <div id='progress' style={{gridColumn: '1/4'}}>
                         <div id='progress-header' className='d-flex jc-space-between ai-center'>
-                            <h3>Analysis</h3>
+                            <h3 style={{fontWeight: '500'}}>Analysis</h3>
                             <div 
                                 className='d-flex jc-flex-end ai-center'
                                 style={{gap: '40px'}}
@@ -319,7 +319,7 @@ export default function Statistics() {
                                     marginTop: hideFilterForm ? 0 : 20,
                                     opacity: hideFilterForm ? 0: 100,
                                     height: hideFilterForm ? 0 : 210, transition: 'all ease 0.4s',
-                                    backgroundColor: 'var(--bgc-hover)', borderRadius: '5px', border: '1px solid var(--bc)'
+                                    backgroundColor: 'var(--bgc)', borderRadius: '5px', border: '1px solid var(--bc)'
                                 }} 
                                 
                             >

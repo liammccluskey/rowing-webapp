@@ -55,7 +55,7 @@ export default function UserInfoCard(props) {
             :
             <div className='float-container'>
                 <div className='d-flex jc-flex-start ai-center' 
-                    style={{borderBottom: '1px solid var(--bc)', backgroundColor: 'var(--bgc-hover)', padding: '10px 10px'}}
+                    style={{borderBottom: '1px solid var(--bc)', padding: '10px 10px'}}
                 > 
                     <img height='30px' width='30px' 
                         src={currentUser.photoURL} 

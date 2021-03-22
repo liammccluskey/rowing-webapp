@@ -83,16 +83,13 @@ export default function NewSessionForm(props) {
     }
 
     return (
-        <div
+        <div className='float-container'
             style={{
                 pointerEvents: props.showSessionForm ? 'auto' : 'none',
                 opacity: props.showSessionForm ? '100%':'0%',
                 height: props.showSessionForm ? 'auto': '0px',
                 marginBottom: props.showSessionForm ? '40px' : '0px',
                 padding: '0px 30px',
-                border: '1px solid var(--bc)',
-                borderRadius: '5px',
-                backgroundColor:'var(--bgc-hover)'
                 }}
         >
             <br />

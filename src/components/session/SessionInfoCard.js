@@ -36,13 +36,8 @@ export default function SessionInfoCard(props) {
                     style={{borderRadius: '5px', marginRight: '10px'}}
                 />
                 <div>
-                    <h4>{club ? club.name : currentUser.displayName}</h4>
-                    <h5 
-                        style={{
-                            color: 'var(--color-secondary)',
-                            marginTop: '10px'
-                        }}
-                    >
+                    <h4 style={{color: 'var(--color-secondary)'}}>{club ? club.name : currentUser.displayName}</h4>
+                    <h5 style={{color: 'var(--color-secondary)',marginTop: '10px'}}>
                         {moment(props.session.startAt).calendar()}
                     </h5>
                 </div>
