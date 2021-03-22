@@ -22,7 +22,6 @@ export default function Account() {
         <div>
             <MainHeader />
             <AccountHeader subPath='/'/>
-            <button onClick={signOut} className='clear-btn'>Sign Out</button>
             <div style={{height: '150vh'}}></div>
 
         </div>

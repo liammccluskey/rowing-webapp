@@ -91,11 +91,12 @@ export default function NewSessionForm(props) {
                 marginBottom: props.showSessionForm ? '40px' : '0px',
                 padding: '0px 30px',
                 border: '1px solid var(--bc)',
-                borderRadius: '5px'
+                borderRadius: '5px',
+                backgroundColor:'var(--bgc-hover)'
                 }}
         >
             <br />
-            <h3 style={{ textAlign: 'left', marginBottom: '40px'}}>Create a Workout</h3>
+            <h4 style={{ textAlign: 'left', marginBottom: '40px', fontWeight: '500'}}>Create a Workout</h4>
             <form onSubmit={handleCreateSession}>
                 <div className='d-flex jc-flex-start' style={{gap: '40px'}}>
                     <div style={{flex: 1}}>
@@ -162,8 +163,8 @@ export default function NewSessionForm(props) {
                     </div>   
                 </div>
                 <br />
-                <div className='d-flex jc-space-between'>
-                    <button  className='clear-btn-secondary' type='submit'>Create</button>
+                <div className='d-flex jc-space-between ai-center'>
+                    <button  className='solid-btn-secondary' type='submit'>Create</button>
                     <button type='button' onClick={()=>props.setShowSessionForm(false)} className='clear-btn-cancel'>Close</button>
                 </div>
             </form>

@@ -69,17 +69,16 @@ export default function Dashboard() {
                 className='main-container d-flex jc-flex-start ai-flex-start' 
                 style={{gap: '75px', padding: '0px 50px', marginBottom: '100px'}}
             >
-                <div>
-                    <UserInfoCard style={{width:'325px', height: 'auto'}}/>
+                <div hidden={false}>
+                    <UserInfoCard style={{width:'300px', height: 'auto'}}/>
                     <br />
-                    <ClubsInfoCard clubs={myClubs} style={{width:'325px', height: 'auto'}}/>
+                    <ClubsInfoCard clubs={myClubs} style={{width:'300px', height: 'auto'}}/>
                 </div>
-                
                 <div style={{ flex: 1}} >
                     <div>
                         <div className='d-flex jc-space-between ai-center'>
 
-                            <h3>Today's Workouts</h3>
+                            <h2>Today's Workouts</h2>
                             <button className='clear-btn-secondary' onClick={() => setShowSessionForm(true)}>
                                 Add Workout
                             </button>
@@ -92,16 +91,16 @@ export default function Dashboard() {
                             myClubs={myClubs}
                         />
                         {loading ? <Loading /> : 
-                        <div className='float-container'>
+                        <div>
                             <table style={{width: '100%'}} >
                                 <thead>
-                                    <tr style={{backgroundColor: 'var(--bgc-hover)'}}>
+                                    <tr style={{backgroundColor: 'var(--bgc)'}}>
                                         <th style={{color: 'var(--color)'}}>Host</th>
                                         <th style={{color: 'var(--color)'}}>Title</th>
                                         <th style={{color: 'var(--color)'}}>Starts At</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody >
                                     {todaySessions.map( (session, i) => (
                                     <tr key={i}
                                         onClick={() => routeToSessionWithID(session._id)}
@@ -137,10 +136,11 @@ export default function Dashboard() {
 
                     <br /><br /><br />
 
-                    <h3 >Training Calendar</h3>
-                    <br />
+                    <h2 >Training Calendar</h2>
                     <Calendar sessions={mySessions}/>
                 </div>
+                
+                
             </div>
         </div>
         

@@ -4,7 +4,6 @@ import TrainingHeader from './TrainingHeader'
 import Loading from '../misc/Loading'
 import Arrow from '../misc/Arrow'
 import KebabMenu from '../misc/KebabMenu'
-import PencilIcon from '../misc/PencilIcon'
 import CustomBar from '../charts/CustomBar'
 import CustomLine from '../charts/CustomLine'
 import {useAuth} from '../../contexts/AuthContext'
@@ -307,10 +306,10 @@ export default function Statistics() {
                                         {prevQuery.metric + '   ' + prevQuery.comparator + '   ' + prevQuery.value.toLocaleString() + ' m'}
                                     </p>
                                 </div>
-                                <div className='clear-btn-secondary' style={{padding: '0px 0px', paddingRight: '0px'}}
+                                <div className='clear-btn-secondary' style={{padding: '4px 8px'}}
                                     onClick={() => setHideFilterForm(false)}
                                 >
-                                   <PencilIcon color='var(--tint-color)' />
+                                   <i class="bi bi-pencil" style={{fontSize: '25px'}}/>
                                 </div>
                             </div>
                             <form onSubmit={handleSubmit}
@@ -319,7 +318,7 @@ export default function Statistics() {
                                     padding: '0px 20px', 
                                     marginTop: hideFilterForm ? 0 : 20,
                                     opacity: hideFilterForm ? 0: 100,
-                                    height: hideFilterForm ? 0 : 210, transition: 'all ease 0.5s',
+                                    height: hideFilterForm ? 0 : 210, transition: 'all ease 0.4s',
                                     backgroundColor: 'var(--bgc-hover)', borderRadius: '5px', border: '1px solid var(--bc)'
                                 }} 
                                 

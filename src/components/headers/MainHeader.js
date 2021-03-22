@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from "react"
 import {useTheme} from "../../contexts/ThemeContext"
 import {Link, useHistory} from 'react-router-dom'
+import DropdownMenu from './DropdownMenu'
 
 export default function MainHeader(props) {
     const {isDarkMode, setIsDarkMode} = useTheme()
     const [path, setPath] = useState('')
     const history = useHistory()
+
+    const [hideMenu, setHideMenu] = useState(true)
+    
     const activeClass = (pathname) => {
         return path.includes(pathname) ? 'link-active' : ''
     }
@@ -56,18 +60,16 @@ export default function MainHeader(props) {
                         </Link>
                     </li>
                     <li className='d-inline'>
-                        <Link className={`${activeClass('account') } header-link`} to='/account' >
+                        <Link className={`${activeClass('account') } header-link`} to='/account' 
+                            onClick={ e => {e.preventDefault(); setHideMenu(false)} }
+                        >
                             Account
                         </Link>
                     </li>
                 </ul>
-                <button 
-                    className='icon-btn d-inline' style={{color: 'var(--color-secondary)'}}
-                    onClick={() => setIsDarkMode(curr => !curr)}
-                >
-                    <i className={isDarkMode ? 'gg-sun' : 'gg-moon'} />
-                </button>
+                
             </div>
+            <DropdownMenu hideSelf={hideMenu} setHideSelf={setHideMenu} />
         </div>
     )
 }

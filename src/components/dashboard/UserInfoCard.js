@@ -25,8 +25,13 @@ export default function UserInfoCard(props) {
     }
     const statsValueStyle = {
         letterSpacing: '1px',
-        color: 'var(--color-header)'
+        color: 'var(--color-strava)'
     }
+
+    const graphFillColor = '--color-translucent-strava'
+    const graphBorderColor = '--color-strava'
+
+    const timeframeStyle = { color: 'var(--color)'}
     
 
     useEffect(() => {
@@ -62,21 +67,21 @@ export default function UserInfoCard(props) {
                     <div
                         className='d-flex jc-space-between ai-center'
                     >
-                        <h5>This Week</h5>
+                        <h5 style={timeframeStyle}>This Week</h5>
                         <h4 style={statsValueStyle}>
                             {stats.aggregate.weekMeters.toLocaleString()} m
                         </h4>
                     </div>
                     <CustomBar 
-                        height='125px' 
+                        height='115px' 
                         labelFreq={1}
                         maxLabelLength={1}
                         data={{
                             labels: [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
                             label: 'Meters',
                             dataset: stats.plottable.weekMeters,
-                            backgroundColor: '--tint-color-translucent',
-                            borderColor: '--tint-color'
+                            backgroundColor: graphFillColor,
+                            borderColor: graphBorderColor
                         }}
                     />
                 </div>
@@ -85,21 +90,21 @@ export default function UserInfoCard(props) {
                     <div
                         className='d-flex jc-space-between ai-center'
                     >
-                        <h5>This Month</h5>
+                        <h5 style={timeframeStyle}>This Month</h5>
                         <h4 style={statsValueStyle}>
                             {stats.aggregate.monthMeters.toLocaleString()} m
                         </h4>
                     </div>
                     <CustomBar 
-                        height='125px' 
+                        height='115px' 
                         labelFreq={10}
                         maxLabelLength={1}
                         data={{
                             labels: Array(moment().daysInMonth()).fill(0).map((l, i) => i + 1),
                             label: 'Meters',
                             dataset: stats.plottable.monthMeters,
-                            backgroundColor: '--tint-color-translucent',
-                            borderColor: '--tint-color'
+                            backgroundColor: graphFillColor,
+                            borderColor: graphBorderColor
                         }}
                     />
                 </div>
@@ -108,26 +113,26 @@ export default function UserInfoCard(props) {
                     <div
                         className='d-flex jc-space-between ai-center'
                     >
-                        <h5>This Year</h5>
+                        <h5 style={timeframeStyle}>This Year</h5>
                         <h4 style={statsValueStyle}>
                             {stats.aggregate.yearMeters.toLocaleString()} m
                         </h4>
                     </div>
                     <CustomBar
-                        height='125px'
+                        height='115px'
                         labelFreq={3}
                         maxLabelLength={3}
                         data={{
                             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                             label: 'Meters',
                             dataset: stats.plottable.yearMeters,
-                            backgroundColor: '--tint-color-translucent',
-                            borderColor: '--tint-color'
+                            backgroundColor: graphFillColor,
+                            borderColor: graphBorderColor
                         }}
                     />
                 </div>
                 <div className='d-flex jc-space-around ai-center page-link'
-                    style={{padding: '13px 0px', fontSize: '14px'}}
+                    style={{padding: '13px 0px', fontSize: '14px', borderTop: '1px solid var(--bc)'}}
                     onClick={() => history.push('/training/statistics')}
                 >
                     Your Statistics

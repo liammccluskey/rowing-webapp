@@ -150,13 +150,14 @@ export default function Session(props) {
     return (
         <div>
             <MainHeader />
+            {!loading && <SubHeader title={session.title} />}
             {loading ? <Loading /> :
             <div 
                 className='main-container' 
                 style={{ padding: '0px 25px', marginBottom: '100px'
                 }} 
             >
-                <br /><br/>
+                <br />
                 <div 
                     className='d-flex jc-flex-start ai-flex-start' 
                     style={{ gap:'50px'}}
@@ -181,8 +182,6 @@ export default function Session(props) {
                     </div>
                     <div style={{flex: 1}}>
                         <div >
-                            <h3 style={{fontWeight: '500'}}>{session.title}</h3>
-                            <br />
                             <div className='d-flex jc-flex-start ai-center' style={{gap: '10px'}}>
                                 <button className='arrow-btn' onClick={() => setHideActivities(curr => !curr)}>
                                     <Arrow direction={hideActivities ? 'right' : 'down'} color='var(--color-tertiary)' />
