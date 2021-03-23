@@ -17,7 +17,7 @@ export default function DropdownMenu(props) {
         padding: itemPadding,
         gap: '15px'
     }
-    const iconStyle={ fontSize: '25px' }
+    const iconStyle={ fontSize: '23px' , color: 'var(--color-secondary)'}
 
     const accountTabs = [
         {title: 'Account', iconName: 'person-circle', path: '/'},
@@ -64,7 +64,7 @@ export default function DropdownMenu(props) {
                     className='d-flex jc-space-between ai-center'
                 >
                     <div className='d-flex jc-flex-start ai-center' style={{gap: '15px'}}>
-                    <i class="bi bi-moon" style={iconStyle}/>
+                    <i class="bi bi-moon-fill" style={iconStyle}/>
                         <h4>Night Mode</h4>
                     </div>
                     <label class="switch">

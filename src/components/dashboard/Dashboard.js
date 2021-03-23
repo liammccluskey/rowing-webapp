@@ -80,7 +80,6 @@ export default function Dashboard() {
 
                             <h3 style={{fontWeight: '500'}}>Today's Workouts</h3>
                             <button className='clear-btn-secondary' onClick={() => setShowSessionForm(true)}>
-                                <i className='bi bi-plus' style={{fontSize: '21px'}} />
                                 <div>Add Workout</div>
                             </button>
                         </div>
@@ -92,10 +91,10 @@ export default function Dashboard() {
                             myClubs={myClubs}
                         />
                         {loading ? <Loading /> : 
-                        <div>
+                        <div className='float-container'>
                             <table style={{width: '100%'}} >
                                 <thead>
-                                    <tr style={{backgroundColor: 'var(--bgc)'}}>
+                                    <tr >
                                         <th style={{color: 'var(--color)'}}>Host</th>
                                         <th style={{color: 'var(--color)'}}>Title</th>
                                         <th style={{color: 'var(--color)'}}>Starts At</th>
@@ -113,11 +112,14 @@ export default function Dashboard() {
                                                     myClubs.find(club=>club._id===session.associatedClubID).iconURL
                                                 }
                                             />
-                                            {session.associatedClubID === 'none' ? 
-                                                currentUser.displayName 
-                                                :
-                                                myClubs.find(club=>club._id===session.associatedClubID).name
-                                            }
+                                            <p className='page-link'>
+                                                {session.associatedClubID === 'none' ? 
+                                                    currentUser.displayName 
+                                                    :
+                                                    myClubs.find(club=>club._id===session.associatedClubID).name
+                                                }
+                                            </p>
+                                                
                                         </td>
                                         <td>
                                             {session.title}
