@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react'
+import {useTheme} from '../../contexts/ThemeContext'
 import {Line} from 'react-chartjs-2'
 import moment from 'moment'
 
 export default function CustomLine(props) {
     const [data, setData] = useState(props.data)
+    const {isDarkMode, setIsDarkMode} = useTheme()
+
+    const [localTheme, setLocalTheme] = useState(isDarkMode)
 
     const borderColor = getComputedStyle(document.documentElement)
     .getPropertyValue(data.borderColor)
@@ -15,10 +19,17 @@ export default function CustomLine(props) {
     .getPropertyValue('--color-secondary-d')
     const tooltipColor = getComputedStyle(document.documentElement)
     .getPropertyValue('--bgc-light-d')
+    const bgc = getComputedStyle(document.documentElement)
+    .getPropertyValue('--bgc-light')
 
     useEffect(() => {
         setData(props.data)
     }, [props])
+
+    // Force rerenders on color theme change
+    useEffect(() => {
+        setLocalTheme(isDarkMode)
+    }, [isDarkMode])
 
     return (
         <div style={{height: props.height}}>
@@ -30,10 +41,12 @@ export default function CustomLine(props) {
                             label: data.label,
                             data: data.dataset,
                             backgroundColor: backgroundColor,
-                            pointRadius: 5,
+                            pointRadius: 4,
+                            pointBackgroundColor: borderColor,
                             pointBackgroundColor: borderColor,
                             borderColor: borderColor,
-                            borderWidth: 1,
+                            borderWidth: 2,
+                            lineTension: 0
                         }
                     ]
                 }}
@@ -43,7 +56,6 @@ export default function CustomLine(props) {
                         display: false
                     },
                     tooltips: {
-                        backgroundColor: tooltipColor,
                         titleFontSize: 14,
                         titleFontStyle: 'bold',
                         titleFontColor: colorMain,
@@ -71,6 +83,7 @@ export default function CustomLine(props) {
                             type: 'time',
                             distribution: 'series',
                             ticks: {
+                                fontColor: colorSecondary,
                                 source: 'data'
                             }
                         }],
@@ -81,6 +94,7 @@ export default function CustomLine(props) {
                                 borderDash: [10, 5]
                             },
                             ticks: {
+                                fontColor: colorSecondary,
                                 callback: function (value, index, values) {
                                     if (index === 0 || index === values.length - 1 || index === Math.floor(values.length/2)) {
                                         return moment.duration(value, 'seconds').format('mm:ss')

@@ -67,13 +67,14 @@ th {
   --tint-color-translucent: rgba(28, 160, 160, 0.2);
 
 
-  /* random blue    */
-  --tint-color: rgb(0, 115, 207);
-  --tint-color-translucent: rgb(0, 115, 207, 0.2);
-
   /* discord   */
   --tint-color: rgb(114, 136, 217);
   --tint-color-translucent: rgb(114, 137, 218, 0.25);
+
+
+  /* random blue    */
+  --tint-color: rgb(0, 115, 207);
+  --tint-color-translucent: rgb(0, 115, 207, 0.2);
 
 
 
@@ -81,52 +82,38 @@ th {
   /* dark mode */
   --bgc-d: black;
 
+  --bgc-light-d: rgb(12,14,17);
+
   --bgc-hover-d: rgb(22, 27, 33);   /* robinhood */
 
-  --bgc-light-d: rgb(33, 38, 44);           /* github */
-  --bgc-light-d: rgb(7, 9, 13);           /* robinhood */
-
-  --bgc-nav-d: var(--bgc-light-d);               /* github */
+  --bgc-nav-d: var(--bgc-light-d);     
 
   --bc-d: rgba(48,54,60,255);         /* github */
   --bc-d: rgba(48,54,58,255);         /* robinhood */
-  --bc-d: rgb(30,33,36);
+  --bc-d: rgb(23,26,29);
 
   --bc-tr-d: rgba(22,22,23,255);
   --color-d: rgb(205,205,205);
-  --color-header-d: rgb(225,225,225);
+  --color-header-d: rgb(215,215,215);
   --color-secondary-d: rgb(147, 151, 156);
   --color-tertiary-d: rgba(110,115,120,255);
-  --box-shadow-d: 0 1px 3px rgba(0,0,0,0.2);
+  --box-shadow-d: none;
 
-  /*light mode*/
-  --bgc-l: white;
-  --bgc-light-l: rgb(246, 247, 249); /* firebase */
-  --bgc-nav-l: var(--bgc-l);
 
-  --bgc-hover-l: rgba(0,0,0,0.05);
-  --bgc-hover-l: rgb(243, 245, 247);
-  --bc-l: rgb(220, 227, 231);
-  --bc-tr-l: rgb(241,242,242);
-  --color-l: rgb(51,51,51);
-  --color-header-l: rgb(55,55,55);
-  --color-secondary-l: rgba(120,124,126,255);
-  --color-tertiary-l: rgb(102,102,102);
-  --box-shadow-l: 0 0 15px rgba(0,0,0,0.07);
 
-   /*light mode dark background*/
-   --bgc-l:  rgb(240, 243, 246); ;
+   /*light mode*/
+   --bgc-l:  rgb(240, 243, 246); 
    --bgc-light-l: white;/* firebase */
-   --bgc-nav-l: var(--bgc-light);
+   --bgc-hover-l: rgb(245,247,249);
+   --bgc-nav-l: var(--bgc-light-l);
  
-   --bgc-hover-l: rgb(252,252,253);
    --bc-l: rgb(220, 227, 231);
    --bc-tr-l: rgb(241,242,242);
    --color-l: rgb(51,51,51);
    --color-header-l: rgb(55,55,55);
    --color-secondary-l: rgba(120,124,126,255);
    --color-tertiary-l: rgb(102,102,102);
-   --box-shadow-l: 0 0 15px rgba(0,0,0,0.07);
+   --box-shadow-l: 0 0 15px rgba(0,0,0,0.03);
   
 
   /* dynamic color scheme */
@@ -144,7 +131,8 @@ th {
 
   /* standard colors */
   --color-error: #ea374d;
-  --color-error: #fd5000; /* robinhood */
+  --color-error: rgb(253, 80, 0); /* robinhood */
+
   --color-success: #0f8a25;
   --page-link-color: rgb(0, 115, 207);
   --page-link-color: rgb(70,141,228);
@@ -165,11 +153,24 @@ th {
   --color-discord: rgb(114, 136, 217);
   --color-translucent-discord: rgb(114, 137, 218, 0.25);
 
+  --color-apple-blue: rgb(38, 135, 250);
+  --color-translucent-apple-blue: rgb(38, 135, 250, 0.2);
+
   /* misc global */
   --ps-nav: 200px;
   --ps-main: 200px;
   --ps-small: 50px;
 }
+
+.search-bar {
+  border: 1px solid var(--bc);
+  border-radius: 5px;
+  padding-left: 10px;
+}
+.search-bar:hover {
+  border-color: var(--tint-color);
+}
+
 
 input, input:active, input:focus,
 textarea, textarea:active, textarea:focus,
@@ -201,21 +202,19 @@ form label {
   height: 70px;
   color: var(--color);
   padding: 0px 40px;
-  box-shadow: none;
+  box-shadow: var(--box-shadow);
   top: 0px;
 }
 .sub-header {
   background-color: var(--bgc-nav);
-  border-bottom: 1px solid var(--bc);
   position: sticky;
   top: 0px;
   text-align: left;
-  padding-top: 15px;
+  padding-top: 13px;
   padding-right: var(--ps-nav);
   padding-left: var(--ps-nav);
   padding-bottom: 13px;
   color: var(--color);
-  z-index: 100;
 }
 .sub-link-active {
   border-bottom: 3px solid var(--tint-color);
@@ -225,7 +224,7 @@ form label {
   margin-right: 30px;
   margin-left: none;
   margin-top: none;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 15px;
   text-decoration: none;
   padding-bottom: 11px;
@@ -264,19 +263,16 @@ form label {
 
 .float-container {
   border-radius: 5px;
-  border: 1px solid var(--bc);
   box-shadow: var(--box-shadow);
-  box-shadow: none;
   padding: none;
   overflow: hidden;
-
   background-color: var(--bgc-light);
+
 }
 
 /* tables */
 table {
   border-collapse: collapse;
-  background-color: transparent;
   text-align: left;
 }
 th,td {
@@ -288,9 +284,22 @@ th,td {
 }
 
 th {
-  background-color: transparent;
   border-bottom: 1px solid var(--bc);
   color: var(--color-tertiary);
+  font-weight: 500;
+}
+
+
+.th-sortable{
+  cursor: pointer;
+}
+.th-sortable:hover {
+  color: var(--color);
+}
+
+.th-selected {
+  color: var(--tint-color);
+  border-bottom: 2px solid var(--tint-color);
 }
 
 tr {
@@ -409,7 +418,7 @@ table tbody tr:last-child {
   letter-spacing: 1px;
   padding: 15px 25px;
   background-color: var(--tint-color);
-  color: var(--bgc);
+  color: var(--bgc-light);
   font-weight: 500;
   font-size: 15px;
   border: 1px solid transparent;
@@ -420,7 +429,7 @@ table tbody tr:last-child {
   font-weight: 400;
   background-color: var(--bgc-hover);
   color: var(--tint-color);
-  border: 1px solid var(--bc);
+  border: 1px solid var(--tint-color-translucent);
 }
 .solid-btn-secondary,
 .clear-btn-secondary {
@@ -595,3 +604,11 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+
+
+/* random */
+.rotate-180 {
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+
+}

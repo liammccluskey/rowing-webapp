@@ -56,7 +56,7 @@ export default function Calendar(props) {
                     style={{width: '30px', height: '30px', cursor: 'pointer'}} 
                     className='d-flex jc-center ai-center'
                 >
-                    <Arrow direction='left' color='var(--color)' />
+                    <i className='bi bi-chevron-left' />
                 </div>
                 
                 <h4 style={{width: '80px', textAlign: 'center'}}>{currMoment.format('MMMM')}</h4>
@@ -65,7 +65,7 @@ export default function Calendar(props) {
                     style={{width: '30px', height: '30px', cursor: 'pointer'}} 
                     className='d-flex jc-center ai-center'
                 >
-                    <Arrow direction='right' color='var(--color)' />
+                    <i className='bi bi-chevron-right' />
                 </div>
                 
             </div>

@@ -132,12 +132,9 @@ export default function LiveActivityTable(props) {
     }
 
     return (
-        <div style={{borderTop: '1px solid var(--bc)'}}>
+        <div >
             <div className='d-flex jc-space-between ai-center'>
-                <div 
-                    className='d-flex jc-flex-start ai-center' 
-                    style={{gap: '20px', minHeight: '55px', marginLeft: '20px'}}
-                >
+                <div className='d-flex jc-flex-start ai-center' style={{gap: '20px', minHeight: '55px'}} >
                     <button className='arrow-btn' onClick={() => setHideSelf(curr => !curr)}>
                         <Arrow direction={hideSelf ? 'right' : 'down'} color='var(--color-tertiary)' />
                     </button>
@@ -183,7 +180,7 @@ export default function LiveActivityTable(props) {
                             <h5 style={{color: 'var(--color-secondary)', display: 'inline', textAlign: 'left'}}> 
                                 Active
                             </h5>
-                            <h5 style={{color: 'var(--color-secondary)', display: 'inline', textAlign: 'right'}} >
+                            <h5 style={{color: 'var(--tint-color)', display: 'inline', textAlign: 'right'}} >
                                 {usersActiveCount}
                             </h5>
                         </div>
@@ -191,7 +188,7 @@ export default function LiveActivityTable(props) {
                             <h5 style={{color: 'var(--color-secondary)', display: 'inline', textAlign: 'left'}}> 
                                 Complete
                             </h5>
-                            <h5 style={{color: 'var(--color-secondary)', display: 'inline', textAlign: 'right'}} >
+                            <h5 style={{color: 'var(--tint-color)', display: 'inline', textAlign: 'right'}} >
                                 {usersCompletedCount}
                             </h5>
                         </div>
@@ -202,122 +199,122 @@ export default function LiveActivityTable(props) {
                         borderLeft: '1px solid var(--bc)',
                         textAlign: 'center',
                     }}>
-                        <div className='icon-circle-clear' 
-                            style={{opacity: !didCompleteActivity && '0%', borderColor: 'var(--color-success)'
-                        }}>
-                            <div className='checkmark' />
-                        </div>
+                        <i className='bi bi-check-square-fill' 
+                            style={{fontSize: '25px', color: 'var(--color-success)', opacity: !didCompleteActivity && 0}} 
+                        />
                     </div>
                 </div>
             </div>
-            <div style={{padding: '20px 50px', display: hideInstructions ? 'none' : 'block', color: 'var(--color-secondary)'}}>
-                
-                <h3 style={{ 
-                        marginRight: '30px',
-                        backgroundColor: showErgConnectionError && 'var(--color-error)',
-                        color: showErgConnectionError && 'var(--bgc-light)',
-                        borderColor: showErgConnectionError && 'transparent',
-                        transition: 'background-color 0.2s' 
-                    }} 
-                    className='number-item'
-                >
-                    1
-                </h3>
-                Connect ergometer: 
-                <p style={{
-                    color: ergConnected ? 'var(--color-success)' : 'var(--color-error)',
-                    display: 'inline', fontSize: '16px',
-                    marginLeft: '10px'
-                }}>
-                    {ergConnected ? ' Connected' : ' Not Connected'}
-                </p><br />
-                {ergConnected ? 
-                    <button 
-                        onClick={props.handleClickConnect}
-                        style={{marginLeft: '65px', marginTop: '15px'}} className='clear-btn-secondary'
+            <div style={{borderLeft: '2px solid var(--bc)', marginLeft: 8}}>
+                <div style={{padding: '15px 35px', display: hideInstructions && 'none',color: 'var(--color-secondary)'}}>
+                    
+                    <h3 style={{ 
+                            marginRight: '30px',
+                            backgroundColor: showErgConnectionError && 'var(--color-error)',
+                            color: showErgConnectionError && 'var(--bgc-light)',
+                            borderColor: showErgConnectionError && 'transparent',
+                            transition: 'background-color 0.2s' 
+                        }} 
+                        className='number-item'
                     >
-                        Reconnect
-                    </button> 
-                    :
+                        1
+                    </h3>
+                    Connect ergometer: 
+                    <p style={{
+                        color: ergConnected ? 'var(--color-success)' : 'var(--color-error)',
+                        display: 'inline', fontSize: '16px',
+                        marginLeft: '10px'
+                    }}>
+                        {ergConnected ? ' Connected' : ' Not Connected'}
+                    </p><br />
+                    {ergConnected ? 
+                        <button 
+                            onClick={props.handleClickConnect}
+                            style={{marginLeft: '65px', marginTop: '15px'}} className='clear-btn-secondary'
+                        >
+                            Reconnect
+                        </button> 
+                        :
+                        <button 
+                            onClick={props.handleClickConnect} 
+                            style={{marginLeft: '65px', marginTop: '15px'}} className='clear-btn-secondary'
+                        >
+                            Connect
+                        </button>
+                    }
+                    <br /><br />
+                    <h3 style={{ marginRight: '30px' }} className='number-item'>2</h3>
+                    
+                    Configure workout: 
+                    <p style={{display: 'inline', fontSize: '16px', marginLeft: '20px', color: 'var(--color)'}}>
+                        {props.activityTitle}
+                    </p>
+                    <br /><br />
                     <button 
-                        onClick={props.handleClickConnect} 
-                        style={{marginLeft: '65px', marginTop: '15px'}} className='clear-btn-secondary'
+                        style={{margin: '10px auto', display: 'block'}}
+                        className='clear-btn-secondary'
+                        onClick={handleClickStartWorkout}
+                        disabled={startDisabled}
                     >
-                        Connect
+                        Start Workout
                     </button>
-                }
-                <br /><br />
-                <h3 style={{ marginRight: '30px' }} className='number-item'>2</h3>
-                
-                Configure workout: 
-                <p style={{display: 'inline', fontSize: '16px', marginLeft: '20px', color: 'var(--color)'}}>
-                    {props.activityTitle}
-                </p>
-                <br /><br />
-                <button 
-                    style={{margin: '10px auto', display: 'block'}}
-                    className='clear-btn-secondary'
-                    onClick={handleClickStartWorkout}
-                    disabled={startDisabled}
+                </div >
+                    
+                <div 
+                    className='d-flex jc-space-around ai-flex-start' 
+                    style={{display: hideSelf ? 'none' : 'flex', padding: '0px 20px', flexWrap: 'wrap'}}
                 >
-                    Start Workout
-                </button>
-            </div >
-                
-            <div 
-                className='d-flex jc-space-around ai-flex-start' 
-                style={{display: hideSelf ? 'none' : 'flex', padding: '0px 20px', flexWrap: 'wrap'}}
-            >
-                
-                {activities.filter(ac => selectedActivityIDs.has(ac._id)).map(ac =>(
-                    <C2Screen 
-                        activity={ac} 
-                        style={{height: 'auto', width: '275px', margin: '15px 10px'}} 
-                        handleClickClose={() => removeSelectedActivity(ac._id)}
-                    />
-                ))} 
-            </div>
+                    
+                    {activities.filter(ac => selectedActivityIDs.has(ac._id)).map(ac =>(
+                        <C2Screen 
+                            activity={ac} 
+                            style={{height: 'auto', width: '275px', margin: '15px 10px'}} 
+                            handleClickClose={() => removeSelectedActivity(ac._id)}
+                        />
+                    ))} 
+                </div>
 
-            <div style={{
-                display: hideSelf ? 'none': 'block',
-                border: '1px solid var(--bc)', borderRadius: '5px',
-                margin: '20px 40px 40px 40px'
-            }}>
-                <table className='data-table' style={{width: '100%'}}>
-                    <thead >
-                        <tr>
-                            <th>Name</th>
-                            <th>Pace</th>
-                            <th>Ave Pace</th>
-                            <th>Distance</th>
-                            <th>Stroke Rate</th>
-                            <th>Elapsed Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {activities.map((ac, index) => (
-                            <tr 
-                                key={index} 
-                                style={{
-                                    borderLeft: ac.uid == currentUser.uid ? '3px solid var(--tint-color)' : 'none'
-                                }}
-                                onClick={() => handleClickActivity(ac._id)}
-                            >
-                                <td>{ac.name}</td>
-                                <td>{moment.duration(ac.currentPace, 'seconds').format('hh:mm:ss')}</td>
-                                <td>{moment.duration(ac.averagePace, 'seconds').format('hh:mm:ss')}</td>
-                                <td>{ac.distance.toFixed()}</td>
-                                <td>{ac.strokeRate}</td>
-                                <td>{moment.duration(ac.elapsedTime, 'seconds').format('hh:mm:ss')}</td>
-                            </tr>
-                        ))}
-                        {!activities.length &&
+                <div style={{
+                    display: hideSelf ? 'none': 'block',
+                    margin: '30px 10px',
+                }}>
+                    <table className='data-table' style={{width: '100%'}}>
+                        <thead >
                             <tr>
-                                <td>No activities in progress</td>
+                                <th>Name</th>
+                                <th>Pace</th>
+                                <th>Ave Pace</th>
+                                <th>Distance</th>
+                                <th>Stroke Rate</th>
+                                <th>Elapsed Time</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {activities.map((ac, index) => (
+                                <tr 
+                                    key={index} 
+                                    style={{
+                                        borderLeft: ac.uid == currentUser.uid ? '3px solid var(--tint-color)' : 'none'
+                                    }}
+                                    onClick={() => handleClickActivity(ac._id)}
+                                >
+                                    <td>{ac.name}</td>
+                                    <td>{moment.duration(ac.currentPace, 'seconds').format('hh:mm:ss')}</td>
+                                    <td>{moment.duration(ac.averagePace, 'seconds').format('hh:mm:ss')}</td>
+                                    <td>{ac.distance.toFixed()}</td>
+                                    <td>{ac.strokeRate}</td>
+                                    <td>{moment.duration(ac.elapsedTime, 'seconds').format('hh:mm:ss')}</td>
+                                </tr>
+                            ))}
+                            {!activities.length &&
+                                <tr>
+                                    <td>No activities in progress</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                
             </div>
         </div>
         

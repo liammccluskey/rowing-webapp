@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
 import Loading from '../misc/Loading'
-import Arrow from '../misc/Arrow'
 import axios from 'axios'
 import moment from 'moment'
 
@@ -136,7 +135,7 @@ export default function UserInfoCard(props) {
                     onClick={() => history.push('/training/statistics')}
                 >
                     Your Statistics
-                    <Arrow direction='right' color='var(--color)'/>
+                    <i className='bi bi-chevron-right' style={{fontSize: '20px'}} />
                 </div>
             </ div>
             }

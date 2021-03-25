@@ -20,26 +20,20 @@ export default function MainHeader(props) {
     return (
         <div className="d-flex jc-space-between ai-center main-header" style={props.style}>
             <div>
-                <div className='d-flex jc-flex-start ai-center'>
-                    <h1
-                        onClick={() => history.push('/dashboard')}
-                        style={{
-                            height: '40px', width: '40px',
-                            display: 'inline-block',
-                            borderRadius: '10px',
-                            backgroundColor: 'var(--tint-color)',
-                            color: 'var(--bgc)',
-                            fontWeight: '400',
-                            display: 'none'
-                        }}
-                    >
-                        
-                    </h1>
-                    <img height='30px' width='33px'
-                        src={isDarkMode ? process.env.REACT_APP_COMPANY_ICON_URL : process.env.REACT_APP_COMPANY_ICON_DARK_URL}
-                    />
-                    <h3 style={{marginLeft:'10px'}} onClick={() => history.push('/dashboard')}className='d-inline'>Rowa</h3>
-                    <input placeholder='Search' style={{width: '300px', marginLeft: '60px'}} type='text'/>
+                <div className='d-flex jc-flex-start ai-center' style={{gap: 50}}>
+                    <div className='d-flex jc-center ai-center' style={{gap: 10}}>   
+                        <img height='30px' width='33px'
+                            src={isDarkMode ? process.env.REACT_APP_COMPANY_ICON_URL : process.env.REACT_APP_COMPANY_ICON_DARK_URL}
+                        />
+                        <h3 onClick={() => history.push('/dashboard')}className='d-inline'>Rowa</h3>
+                    </div>
+                    
+
+                    <div className='d-inline-flex jc-flex-start ai-center search-bar'>
+                        <i className='bi bi-search' style={{color: 'var(--color-secondary)'}} />
+                        <input placeholder='Search' style={{width: '300px', borderColor: 'transparent'}} type='text'/>
+                    </div>
+                    
                 </div>
             </div>
             <div className='d-flex ai-center'>

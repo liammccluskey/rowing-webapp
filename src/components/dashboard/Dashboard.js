@@ -78,7 +78,7 @@ export default function Dashboard() {
                     <div>
                         <div className='d-flex jc-space-between ai-center'>
 
-                            <h3 style={{fontWeight: '500'}}>Today's Workouts</h3>
+                            <h3 style={{fontWeight: '400'}}>Today's Workouts</h3>
                             <button className='clear-btn-secondary' onClick={() => setShowSessionForm(true)}>
                                 <div>Add Workout</div>
                             </button>
@@ -95,9 +95,9 @@ export default function Dashboard() {
                             <table style={{width: '100%'}} >
                                 <thead>
                                     <tr >
-                                        <th style={{color: 'var(--color)'}}>Host</th>
-                                        <th style={{color: 'var(--color)'}}>Title</th>
-                                        <th style={{color: 'var(--color)'}}>Starts At</th>
+                                        <th >Host</th>
+                                        <th >Title</th>
+                                        <th >Starts At</th>
                                     </tr>
                                 </thead>
                                 <tbody >
@@ -112,7 +112,7 @@ export default function Dashboard() {
                                                     myClubs.find(club=>club._id===session.associatedClubID).iconURL
                                                 }
                                             />
-                                            <p className='page-link'>
+                                            <p>
                                                 {session.associatedClubID === 'none' ? 
                                                     currentUser.displayName 
                                                     :
@@ -132,14 +132,16 @@ export default function Dashboard() {
                                 </tbody>
                             </table>
                             {!todaySessions.length && 
-                                <p style={{textAlign: 'center', padding: '15px 0px'}}>You have no workouts scheduled for today</p>
+                                <p style={{textAlign: 'center', padding: '15px 0px', color: 'var(--color-secondary)' }}>
+                                    You have no workouts scheduled for today
+                                </p>
                             }
                         </div>}
                     </div>
 
                     <br /><br /><br />
 
-                    <h3 style={{fontWeight: '500'}}>Training Calendar</h3>
+                    <h3 >Training Calendar</h3>
                     <Calendar sessions={mySessions}/>
                 </div>
                 

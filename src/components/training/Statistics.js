@@ -2,8 +2,6 @@ import React, {useState, useEffect, useRef} from 'react'
 import MainHeader from '../headers/MainHeader'
 import TrainingHeader from './TrainingHeader'
 import Loading from '../misc/Loading'
-import Arrow from '../misc/Arrow'
-import KebabMenu from '../misc/KebabMenu'
 import CustomBar from '../charts/CustomBar'
 import CustomLine from '../charts/CustomLine'
 import {useAuth} from '../../contexts/AuthContext'
@@ -157,7 +155,7 @@ export default function Statistics() {
                 console.log(error)
             }
         } else {
-            // show error message ?
+            // show error message ?s
         }
         setTimeout(() => {
             setLoadingSearch(false)
@@ -185,7 +183,7 @@ export default function Statistics() {
                 >
                     <div id='general' style={{gridColumn: '1/4'}}>
                         <div id='general-header' className='d-flex jc-space-between ai-center'>
-                            <h3 style={{fontWeight: '500'}}>General</h3>
+                            <h3 >General</h3>
                             <div 
                                 className='d-flex jc-flex-end ai-center'
                                 style={{gap: '40px'}}
@@ -214,10 +212,8 @@ export default function Statistics() {
                                         style={{ cursor: 'pointer' , borderRadius: '5px' }}
                                         onClick={() => setSelectedMetric(metricID)}
                                     >
-                                        <Arrow color='var(--color-secondary)' direction='right' 
-                                            style={{
-                                                marginRight: '10px', display: metricID !== selectedMetric && 'none',
-                                            }}
+                                        <i className='bi bi-chevron-right' 
+                                            style={{marginRight: '10px', display: metricID !== selectedMetric && 'none'}}
                                         />
                                         <p 
                                             style={{
@@ -272,7 +268,7 @@ export default function Statistics() {
                     </div>
                     <div id='progress' style={{gridColumn: '1/4'}}>
                         <div id='progress-header' className='d-flex jc-space-between ai-center'>
-                            <h3 style={{fontWeight: '500'}}>Analysis</h3>
+                            <h3>Analysis</h3>
                             <div 
                                 className='d-flex jc-flex-end ai-center'
                                 style={{gap: '40px'}}
@@ -346,6 +342,7 @@ export default function Statistics() {
                                 <br />
                                 <div className='d-flex jc-space-between ai-center' style={{gap: '10px', marginTop: '10px'}}>
                                     <button type='submit' className='solid-btn-secondary'>
+                                        <i className='bi bi-search' style={{fontSize: 18}} />
                                         Search
                                     </button>
                                     {loadingSearch && <Loading />}

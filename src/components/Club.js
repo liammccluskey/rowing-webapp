@@ -18,7 +18,7 @@ export default function Club(props) {
     useEffect( () => {
         async function fetchData() {
             try {
-                const res = await api.get(`/clubs/search-one?customURL=${clubURL}`)
+                const res = await api.get(`/clubs/customURL/${clubURL}`)
                 setClub(res.data)
                 console.log(res.data)
             } catch(error) {

@@ -57,11 +57,11 @@ export default function ResultsTable(props) {
     }
 
     return (
-        <div style={{borderTop: '1px solid var(--bc)'}}>
+        <div >
             <div className='d-flex jc-space-between ai-center'>
                 <div 
                     className='d-flex jc-flex-start ai-center' 
-                    style={{gap: '20px', minHeight: '55px', marginLeft: '20px'}}
+                    style={{gap: '20px', minHeight: '55px'}}
                 >
                     <button className='arrow-btn' onClick={() => setHideSelf(curr => !curr)}>
                         <Arrow direction={hideSelf ? 'right' : 'down'} color='var(--color-tertiary)' />
@@ -72,8 +72,7 @@ export default function ResultsTable(props) {
 
             <div style={{
                 display: hideSelf ? 'none': 'block',
-                border: '1px solid var(--bc)', borderRadius: '5px',
-                margin: '20px 40px 40px 40px'
+                margin: '30px 10px',
             }}>
                 <table className='data-table' style={{width: '100%'}}>
                     <thead>
@@ -83,18 +82,19 @@ export default function ResultsTable(props) {
                                     onClick={() => {
                                         setSortedKey(col.key)
                                         setSortAscending(curr => !curr)
-                                    }} 
-                                    style={{cursor: 'pointer'}}
+                                    }}
+                                    className={sortedKey === col.key ? 'th-sortable th-selected' : 'th-sortable'}
                                 >
                                     {col.title}
-                                    <Arrow 
-                                        color='var(--color-tertiary)' 
-                                        direction={sortAscending ? 'up' : 'down'}
-                                        style={{
-                                            opacity: sortedKey !== col.key && '0%',
-                                            marginLeft: '15px'
-                                        }}
-                                    />
+                                    <div className={!sortAscending && 'rotate-180'} style={{display: 'inline-block', marginLeft: '8px'}}>
+                                        <i className='bi bi-triangle-fill' 
+                                            style={{
+                                                fontSize: '10px', color: 'var(--tint-color)',
+                                                opacity: sortedKey !== col.key && '0%'
+                                            }} 
+                                        />
+                                    </div>
+                                    
                                 </th>
                             ))}
                         </tr>
