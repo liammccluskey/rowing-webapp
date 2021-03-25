@@ -1,12 +1,24 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
-import Arrow from '../misc/Arrow'
+import {useAuth} from '../../contexts/AuthContext'
 import moment from 'moment'
+import axios from "axios"
+
+const api = axios.create({
+    baseURL: process.env.REACT_APP_API_BASE_URL
+})
 
 export default function Calendar(props) {
     const [currMoment, setCurrMoment] = useState(moment())
     const [calendarDays, setCalendarDays] = useState([])
     const [sessions, setSessions] = useState([])
+    const [data, setData] = useState([])
+
+    const {currentUser} = useAuth()
+
+    useEffect(() => {
+        fetchData()
+    }, [currMoment])
 
     useEffect( () => {
         // Get days in this month
@@ -20,32 +32,38 @@ export default function Calendar(props) {
         }
         setCalendarDays(days)
 
-        // Get this months sessions
-        if (!props.sessions.length) {return}
+        // map sessionsData to sessions arr
         const sessions = Array(days.length).fill([])
-        let i = 0
 
-        // advance pointer to start day
-        while (
-            i < props.sessions.length && 
-            startDay.isAfter(new Date( props.sessions[i].startAt),'day') 
-        ) {
-            i++ 
+        if (data.sessions && data.fetchedMoment.isSame(currMoment, 'month')) {
+            data.sessions.forEach(session => {
+                const idx = moment(session.startAt).diff(startDay, 'days')
+                // check if we have this months sessions
+                if (idx >= 0 && idx < days.length) {
+                    sessions[idx] = [...sessions[idx], session]
+                }
+            })
         }
-
-        // fill sessions arr
-        days.forEach((day, id) => {
-            while (
-                i < props.sessions.length && 
-                day.isSame( new Date( props.sessions[i].startAt ), 'day') 
-            ) {
-                sessions[id] = [...sessions[id], props.sessions[i] ]
-                i++
-            }
-        });
-
+        
         setSessions(sessions)
-    }, [currMoment, props.sessions] )
+    }, [currMoment, data] )
+
+    async function fetchData() {
+        const query = {
+            year: currMoment.year(),
+            month: currMoment.month()
+        }
+        const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
+        try {
+            const res = await api.get(`/sessions/uid/${currentUser.uid}?${queryString}`)
+            setData({
+                sessions: res.data,
+                fetchedMoment: currMoment.clone()
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <div>

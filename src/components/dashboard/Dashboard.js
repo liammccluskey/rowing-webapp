@@ -23,7 +23,6 @@ export default function Dashboard() {
     const location = useLocation()
 
     const [myClubs, setMyClubs] = useState([])
-    const [mySessions, setMySessions] = useState([])
     const [todaySessions, setTodaySessions] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -45,10 +44,18 @@ export default function Dashboard() {
     }
 
     async function fetchSessions() {
-        const res = await api.get(`/sessions/incomplete/uid/${currentUser.uid}`)
-        setMySessions(res.data)
-        const today = moment()
-        setTodaySessions(res.data.filter( session => today.isSame( new Date(session.startAt), 'day' )))
+        const query = {
+            year: moment().year(),
+            month: moment().month(),
+            day: moment().date()
+        }
+        const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
+        try {
+            const res = await api.get(`/sessions/uid/${currentUser.uid}?${queryString}`)
+            setTodaySessions(res.data)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     function handleToggleMode() {
@@ -142,7 +149,7 @@ export default function Dashboard() {
                     <br /><br /><br />
 
                     <h3 >Training Calendar</h3>
-                    <Calendar sessions={mySessions}/>
+                    <Calendar />
                 </div>
                 
                 
