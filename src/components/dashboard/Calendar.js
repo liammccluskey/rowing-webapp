@@ -51,7 +51,8 @@ export default function Calendar(props) {
     async function fetchData() {
         const query = {
             year: currMoment.year(),
-            month: currMoment.month()
+            month: currMoment.month(),
+            sparse: 1
         }
         const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
         try {

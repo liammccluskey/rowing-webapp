@@ -24,11 +24,11 @@ export default function UserInfoCard(props) {
     }
     const statsValueStyle = {
         letterSpacing: '1px',
-        color: 'var(--color-strava)'
+        color: 'var(--color-rh-blue)'
     }
 
-    const graphFillColor = '--color-translucent-strava'
-    const graphBorderColor = '--color-strava'
+    const graphFillColor = '--color-translucent-rh-blue'
+    const graphBorderColor = '--color-rh-blue'
 
     const timeframeStyle = { color: 'var(--color)'}
     
@@ -52,7 +52,7 @@ export default function UserInfoCard(props) {
             {loading ? 
             <Loading /> 
             :
-            <div className='float-container'>
+            <div className='float-container' >
                 <div className='d-flex jc-flex-start ai-center' 
                     style={{borderBottom: '1px solid var(--bc)', padding: '10px 10px'}}
                 > 

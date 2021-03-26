@@ -35,7 +35,8 @@ export function ThemeProvider({children}) {
         '--color-header',
         '--color-secondary',
         '--color-tertiary',
-        '--box-shadow'
+        '--box-shadow',
+        '--float-border'
     ]
 
     useEffect(() => {

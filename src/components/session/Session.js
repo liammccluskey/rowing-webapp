@@ -164,7 +164,7 @@ export default function Session(props) {
                             session={session}
                         />
                     </div>
-                    <div style={{flex: 1, padding: '0px 50px'}}>
+                    <div style={{flex: 1, padding: '0px 50px', marginBottom: 100}}>
 
                         <br /><br />
                         <h2 style={{fontWeight: '500'}}>{session.title}</h2>

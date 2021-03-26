@@ -14,7 +14,7 @@ const api = axios.create({
 
 export default function Statistics() {
     const {currentUser} = useAuth()
-    const [selectedTimeframe, setSelectedTimeframe] = useState(0)
+    const [selectedTimeframe, setSelectedTimeframe] = useState(1) // month selected
     const [selectedMetric, setSelectedMetric] = useState(0)
 
     const [stats, setStats] = useState(null)
@@ -360,8 +360,8 @@ export default function Statistics() {
                                 data={{
                                     label: 'Pace / 500m',
                                     dataset: [...progressStats.plottable[timeframes[selectedTimeframe].key] ],
-                                    backgroundColor: '--tint-color-translucent',
-                                    borderColor: '--tint-color'
+                                    backgroundColor: '--color-translucent-rh-blue',
+                                    borderColor: '--color-rh-blue'
                                 }}
                             />
                         </div>

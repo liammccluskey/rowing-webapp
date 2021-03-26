@@ -43,10 +43,8 @@ export default function ResultsTable(props) {
 
     function sortActivities(inputActivities) {
         if (sortAscending) {
-            console.log('did sort ascending for :' + props.activityTitle)
             return inputActivities.sort( (a, b) => a[sortedKey] < b[sortedKey] ? -1 : 1)
         } else {
-            console.log('did sort descending for :' + props.activityTitle)
             return inputActivities.sort( (a, b) => a[sortedKey] > b[sortedKey] ? -1 : 1)
         }
     }

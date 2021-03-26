@@ -60,6 +60,7 @@ export default function Clubs() {
 
     async function searchClubs(clubName, pageNum) {
         setLoading(true)
+        setResults(null)
         try {
             const res = await api.get(`/clubs/search?name=${clubName}&page=${pageNum}`)
             setResults(res.data)
@@ -80,7 +81,7 @@ export default function Clubs() {
                 <form onSubmit={handleSubmitSearch}>
                     <div className='search-bar' style={{backgroundColor: 'var(--bgc-light)'}}>
                         <i className='bi bi-search' />
-                        <input ref={searchRef} type='text' placeholder='Search by Club name' style={{borderColor: 'transparent', width: 250}} /> 
+                        <input ref={searchRef} type='text' placeholder='Find a club by name' style={{borderColor: 'transparent', width: 250}} /> 
                     </div>
                 </form>
                 
@@ -127,9 +128,9 @@ export default function Clubs() {
                     </tbody>
                 </table>
                 {( (submittedSearch && !loading && !results.clubs.length) || !submittedSearch ) &&
-                    <div style={{textAlign: 'center', fontSize: 18, color: 'var(--color-secondary)', padding: '50px 0px'}}>
+                    <div style={{textAlign: 'center', fontSize: 17, color: 'var(--color-secondary)', padding: '50px 0px'}}>
                     {(submittedSearch && !loading) ? 
-                        !results.clubs.length && `We couldn't find an clubs matching the name " ${submittedSearch} "`
+                        !results.clubs.length && `We couldn't find any clubs matching the name "${submittedSearch}"`
                         :
                         'Use the search bar above to find clubs'
                     }

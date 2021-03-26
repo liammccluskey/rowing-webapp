@@ -35,7 +35,7 @@ export default function Paginator(props) {
     }
 
     return (
-        <div className='d-flex jc-center' style={{gap: 15}}>
+        <div className='d-flex jc-center' style={{gap: 15, display: props.resultsCount === 0 && 'none'}}>
             <button className='clear-btn-secondary' onClick={onClickPrevious} disabled={currPage === 1}>
                 <i className='bi bi-arrow-left' style={arrowStyle}/>
             </button>
