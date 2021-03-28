@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {useHistory} from 'react-router-dom'
 import MainHeader from '../headers/MainHeader'
 import TrainingHeader from './TrainingHeader'
 import Paginator from '../misc/Paginator'
+import Loading from '../misc/Loading'
 import {useAuth} from '../../contexts/AuthContext'
 import axios from 'axios'
 import moment from 'moment'
@@ -19,10 +20,37 @@ export default function Activity() {
     const [loading, setLoading] = useState(false)
 
     const [currPage, setCurrPage] = useState(1)
-    const [submittedQuery, setSubmittedQuery] = useState(null)
 
     const [sortedKey, setSortedKey] = useState('createdAt')
     const [sortAscending, setSortAscending] = useState(true)
+
+    const [submittedQuery, setSubmittedQuery] = useState(null)
+    const [selectedSortParam, setSelectedSortParam] = useState(0)
+    const sortOrderRef = useRef()
+    const sortParams = [
+        {title: 'Date', key: 'createdAt', description: {                // 0
+            asc: 'Oldest to Newest', desc: 'Newest to Oldest'
+        }},
+        {title: 'Distance', key: 'distance', description: {             // 1
+            asc: 'Shortest to Longest', desc: 'Longest to Shortest'
+        }},
+        {title: 'Workout Time', key: 'elapsedTime', description: {      // 2    
+            asc: 'Shortest to Longest', desc: 'Longest to Shortest'
+        }},
+        {title: 'Average Pace', key: 'averagePace', description: {      // 3
+            asc: 'Fastest to Slowest', desc: 'Slowest to Fastest'
+        }}
+    ]
+    const comparators = [
+        {title: 'No filter', value: 'none'},
+        {title: 'Greater than', value: '$gte'},
+        {title: 'Less than', value: '$lte'},
+        {title: 'Equal to', value: '$eq'}
+    ]
+    const filters = [
+        {title: 'Distance', key: 'distance', unit: 'm', comparatorRef: useRef('none'), valueRef: useRef(0)},    // 0
+        {title: 'Time', key: 'elapsedTime', unit: 'sec', comparatorRef: useRef('none'), valueRef: useRef(0)}    // 1
+    ]
 
     const tableColumns = [
         {title: 'Date', key: 'createdAt'},
@@ -34,15 +62,29 @@ export default function Activity() {
     ]
 
     useEffect(() => {
-        fetchData( {workoutType: 1}, 1 )
+        fetchData( false, 1 )
     }, [])
 
-    async function fetchData(query, page) {
+    async function fetchData(useSubmittedQuery, page) {
         // TODO: convert query obj to querystring
         setLoading(true)
+        const query = useSubmittedQuery ?  submittedQuery :
+        {
+            pagesize: 15,
+            page: page,
+            sortby: sortOrderRef.current.value +  sortParams[selectedSortParam].key,
+            ...Object.fromEntries(
+                filters.filter(filter => filter.comparatorRef.current.value !== 'none')
+                .map(filter => [
+                    `${filter.key}[${filter.comparatorRef.current.value}]`,
+                    filter.valueRef.current.value
+                ])
+            )
+        }
+        const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
+
         try {
-            const res = await api.get(`/activities/uid/${currentUser.uid}?page=${page}&pagesize=15`)
-            console.log(res.data)
+            const res = await api.get(`/activities/uid/${currentUser.uid}?${queryString}`)
             setResults({
                 count: res.data.count,
                 activities: sortActivities(res.data.activities)
@@ -74,11 +116,16 @@ export default function Activity() {
     }
 
     function onClickPrevious() {
-        fetchData(submittedQuery, currPage - 1)
+        fetchData(true, currPage - 1)
     }
 
     function onClickNext() {
-        fetchData(submittedQuery, currPage + 1)
+        fetchData(true, currPage + 1)
+    }
+
+    function handleSubmitForm(e) {
+        e.preventDefault()
+        fetchData(false, 1)
     }
 
     return (
@@ -87,12 +134,61 @@ export default function Activity() {
             <TrainingHeader subPath='/activity' />
             <div className='main-container' style={{marginBottom: 100}}>
                 <br />
-                <div className='inv-container' style={{padding: '0px 20px'}}>
+                <div className='float-container' style={{padding: '0px 20px'}}>
                     <br />
-                    <h3 style={{fontWeight: 500}}>Filter Workouts</h3>
+                    <h3 >Filter Workouts</h3>
+                    <br />
+                    <form onSubmit={handleSubmitForm}>
+                        <div className='d-flex jc-flex-start ai-flex-start' style={{gap: 20}}>
+                            <label>
+                                Sort By <br />
+                                <select value={selectedSortParam} onChange={(e) => setSelectedSortParam(e.target.value)}>
+                                    {sortParams.map((param, idx) => (
+                                        <option key={idx} value={idx}>{param.title}</option>
+                                    ))}
+                                </select>
+                            </label>
+                            <label>
+                                Order <br />
+                                <select ref={sortOrderRef}>
+                                    <option value='-' selected={true}>{sortParams[selectedSortParam].description.desc}</option>
+                                    <option value='+'>{sortParams[selectedSortParam].description.asc}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <br /><br />
+                        {filters.map((filter, idx) => (
+                            <label key={idx}>
+                                {filter.title} <br />
+                                <div className='d-flex jc-flex-start ai-center' style={{gap: 15, marginBottom: 15}}>
+                                    <select ref={filter.comparatorRef}>
+                                        {comparators.map(comparator => (
+                                            <option value={comparator.value}>{comparator.title}</option>
+                                        ))}
+                                    </select>
+                                    <input ref={filter.valueRef}/>
+                                    {filter.unit}
+                                </div>
+                                
+                            </label>
 
+                        ))}
+                        <div className='d-flex jc-space-between ai-center'>
+                            <button type='submit' className='solid-btn-secondary'>
+                                <i className='bi bi-search' style={{fontSize: 18}} />
+                                Search
+                            </button>
+                            <button type='button' className='clear-btn-cancel'>
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
                     <br />
                 </div>
+                <br />
+                {(!loading && submittedQuery !== null) &&
+                    <h3 style={{color: 'var(--color-secondary)'}}>{results.count.toLocaleString()} results</h3>
+                }
                 <br />
                 <div id='results' className='float-container'>
                     <table style={{width: '100%'}}>
@@ -136,6 +232,7 @@ export default function Activity() {
                         ))}
                         </tbody>
                     </table>
+                    {loading && <Loading />}
                 </div>
 
                 <br />

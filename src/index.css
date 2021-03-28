@@ -223,7 +223,8 @@ select:active, select:focus
 form label {
   font-weight: 400;
   color: var(--color-secondary);
-  font-size: 15px;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
 .main-header {
@@ -271,6 +272,7 @@ form label {
 }
 .page-link:hover {
   color: var(--page-link-color);
+  text-decoration: underline;
 }
 
 .main-container {
@@ -301,7 +303,7 @@ form label {
 
 .inv-container {
   border-radius: 5px;
-  border: 2px solid var(--bc);
+  border: 1px solid var(--bc);
   background-color: transparent;
 }
 
@@ -311,7 +313,7 @@ table {
   text-align: left;
 }
 th,td {
-  padding: 10px;
+  padding: 13px;
   font-size: 14px;
 }
 .data-table th, .data-table td {
@@ -322,6 +324,11 @@ th {
   border-bottom: 1px solid var(--bc);
   color: var(--color-tertiary);
   font-weight: 500;
+  /* spotify inspired */
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12px;
 }
 
 
@@ -346,7 +353,8 @@ tbody tr:hover{
 td:first-child {
   color: var(--color-secondary);
 }
-.data-table tbody tr {
+.data-table tbody tr,
+table tbody tr {
   border-bottom: 1px solid var(--bc);
 }
 .data-table tbody tr:last-child, 

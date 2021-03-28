@@ -118,7 +118,7 @@ export default function Calendar(props) {
                         <div key={index} 
                             style={{
                                 padding: '0px 0px', 
-                                backgroundColor: day.isSame(moment(), 'day') && 'var(--bgc-hover)',
+                                backgroundColor: day.isSame(moment(), 'day') && 'var(--tint-color-translucent)',
                                 borderTop: '1px solid var(--bgc-hover)',
                                 overflow: 'scroll'
                             }}
