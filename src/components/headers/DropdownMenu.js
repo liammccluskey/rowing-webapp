@@ -17,7 +17,7 @@ export default function DropdownMenu(props) {
         padding: itemPadding,
         gap: '15px'
     }
-    const iconStyle={ fontSize: '23px' , color: 'var(--color-secondary)'}
+    const iconStyle={ fontSize: '20px' , color: 'var(--color-secondary)'}
 
     const tabs = [
         {title: 'Settings', iconName: 'gear-fill', path: '/settings/account'}
@@ -38,7 +38,7 @@ export default function DropdownMenu(props) {
         >
             <div className='float-container' hidden={hideSelf}
                 style={{
-                    width: '300px', position: 'fixed', top: '65px', right: '70px',
+                    width: '300px', position: 'fixed', top: '70px', right: '40px',
                     backgroundColor: 'var(--bgc-hover)', zIndex: '102',
                     padding: '0px 0px', textAlign: 'left',
                     backgroundColor: 'var(--bgc-light)', border: '2px solid var(--bc)'

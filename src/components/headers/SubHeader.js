@@ -20,7 +20,7 @@ export default function SubHeader(props) {
                 {props.items && props.items.map( (item, idx) => (
                     <Link key={idx} className={`${activeClass(item.path)} header-link`}
                         to={props.path + item.path}
-                        style={{paddingBottom: 11}}
+                        style={{paddingBottom: 8}}
                     >
                         {item.title}
                     </Link>

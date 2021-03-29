@@ -57,8 +57,8 @@ th {
 }
 
 :root {
-  --tint-color: var(--color-reddit-blue);
-  --tint-color-translucent: var(--color-translucent-reddit-blue);
+  --tint-color: var(--color-strava);
+  --tint-color-translucent: var(--color-translucent-strava);
 
 
   /* dark mode */
@@ -87,7 +87,6 @@ th {
 
 
    /*light mode*/
-   --bgc-l:  rgb(240, 243, 246); 
    --bgc-l: rgb(243,246,249);
    --bgc-light-l: white;/* firebase */
    --bgc-hover-l: rgb(245,247,249);
@@ -271,6 +270,28 @@ form label {
   background-color: var(--bgc);
 }
 
+/* settings */
+.settings-list .settings-row:last-child {
+  border-bottom: 1px solid var(--bc);
+}
+.settings-row,
+.editable-settings-row {
+  border-top: 1px solid var(--bc);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 60px;
+  padding: 0px 30px;
+}
+.editable-settings-row:hover {
+  cursor: pointer;
+  background-color: var(--bgc-hover);
+}
+.editable-settings-row h4:first-child,
+.settings-row h4:first-child {
+  color: var(--color-secondary);
+}
+
 /* tables */
 table {
   border-collapse: collapse;
@@ -441,7 +462,8 @@ table tbody tr:last-child {
   border: 1px solid var(--tint-color);
 }
 .solid-btn-secondary,
-.clear-btn-secondary {
+.clear-btn-secondary,
+.error-btn-secondary {
   padding: 8px 20px;
   font-size: 14px;
 }
@@ -491,6 +513,19 @@ table tbody tr:last-child {
 .arrow-btn:hover {
   transition: 0.3s;
   background-color: var(--tint-color-translucent);
+}
+
+.error-btn-secondary {
+  color: var(--color-error);
+  font-weight: 400;
+  background-color: transparent;
+  border: 1px solid var(--color-red);
+  border-radius: 5px;
+  letter-spacing: 1px;
+}
+.error-btn-secondary:hover {
+  transition: 0.3s;
+  background-color: var(--color-translucent-red);
 }
 
 /* small icons */
