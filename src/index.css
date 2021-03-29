@@ -57,47 +57,8 @@ th {
 }
 
 :root {
-
-  /* random blue    */
-  --tint-color: rgb(0, 115, 207);
-  --tint-color-translucent: rgb(0, 115, 207, 0.2);
-
-  /* discord   */
-  --tint-color: rgb(114, 136, 217);
-  --tint-color-translucent: rgb(114, 137, 218, 0.25);
-
-
-  /* gradescope  */
-  --tint-color: rgb(28, 160, 160);
-  --tint-color-translucent: rgba(28, 160, 160, 0.2);
-
-  /* spotify green (based on) */
-  --tint-color: rgba(18,175,75,255);
-  --tint-color-translucent: rgba(18,175,75,0.2);
-
-
-  /* robinhood blue (landing) */
-  --tint-color: rgb(16,124,243);
-  --tint-color-translucent: rgba(16,124,243,0.2);
-
-
-  /* reddit blue */
-  --tint-color: rgb(14, 121, 211);
-  --tint-color-translucent: rgb(14, 121, 211, 0.2);
-
-
-  /* strava blue    */
-  --tint-color: #0e7fb6;
-  --tint-color-translucent: rgb(14, 127, 182, 0.2);
-
-
-
-
-
-
-
-
-
+  --tint-color: var(--color-reddit-blue);
+  --tint-color-translucent: var(--color-translucent-reddit-blue);
 
 
   /* dark mode */
@@ -127,6 +88,7 @@ th {
 
    /*light mode*/
    --bgc-l:  rgb(240, 243, 246); 
+   --bgc-l: rgb(243,246,249);
    --bgc-light-l: white;/* firebase */
    --bgc-hover-l: rgb(245,247,249);
    --bgc-nav-l: var(--bgc-light-l);
@@ -185,6 +147,10 @@ th {
   --color-rh-blue: rgb(14, 121, 211);
   --color-translucent-rh-blue: rgb(14, 121, 211, 0.2);
 
+  --color-reddit-blue: rgb(14, 121, 211);
+  --color-translucent-reddit-blue: rgb(14, 121, 211, 0.2);
+
+
   /* misc global */
   --ps-nav: 200px;
   --ps-main: 200px;
@@ -222,7 +188,7 @@ select:active, select:focus
 }
 form label {
   font-weight: 400;
-  color: var(--color-secondary);
+  color: var(--color);
   font-size: 14px;
   margin-bottom: 5px;
 }
@@ -234,6 +200,7 @@ form label {
   padding: 0px 40px;
   box-shadow: var(--box-shadow);
   top: 0px;
+  z-index: 10;
 }
 .sub-header {
   background-color: var(--bgc-nav);
@@ -243,21 +210,18 @@ form label {
   padding-top: 13px;
   padding-right: var(--ps-nav);
   padding-left: var(--ps-nav);
-  padding-bottom: 13px;
   color: var(--color);
+  z-index: 10;
+  border-bottom: 1px solid var(--bc);
 }
 .sub-link-active {
   border-bottom: 3px solid var(--tint-color);
 }
 .header-link {
   color: var(--color);
-  margin-right: 30px;
-  margin-left: none;
-  margin-top: none;
   font-weight: 400;
   font-size: 15px;
   text-decoration: none;
-  padding-bottom: 11px;
 }
 .header-link:hover,
 .link-active {
@@ -301,10 +265,10 @@ form label {
   background-color: var(--bgc-light);
 }
 
-.inv-container {
+.bgc-container {
   border-radius: 5px;
   border: 1px solid var(--bc);
-  background-color: transparent;
+  background-color: var(--bgc);
 }
 
 /* tables */
@@ -471,8 +435,10 @@ table tbody tr:last-child {
 .clear-btn-secondary {
   font-weight: 400;
   background-color: var(--bgc-hover);
+  background-color: transparent;
   color: var(--tint-color);
   border: 1px solid var(--tint-color-translucent);
+  border: 1px solid var(--tint-color);
 }
 .solid-btn-secondary,
 .clear-btn-secondary {
@@ -580,6 +546,14 @@ table tbody tr:last-child {
 /* random props */
 .onhover-bgc-hover:hover {
   background-color: var(--bgc-hover);
+}
+
+.onhover-bc {
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+.onhover-bc:hover {
+  border-color: var(--bc);
 }
 
 

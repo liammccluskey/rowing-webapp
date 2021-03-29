@@ -19,9 +19,8 @@ export default function DropdownMenu(props) {
     }
     const iconStyle={ fontSize: '23px' , color: 'var(--color-secondary)'}
 
-    const accountTabs = [
-        {title: 'Account', iconName: 'person-circle', path: '/'},
-        {title: 'Settings', iconName: 'gear-fill', path: '/settings'}
+    const tabs = [
+        {title: 'Settings', iconName: 'gear-fill', path: '/settings/account'}
     ]
 
     useEffect(() => {
@@ -41,7 +40,8 @@ export default function DropdownMenu(props) {
                 style={{
                     width: '300px', position: 'fixed', top: '65px', right: '70px',
                     backgroundColor: 'var(--bgc-hover)', zIndex: '102',
-                    padding: '0px 0px', textAlign: 'left'
+                    padding: '0px 0px', textAlign: 'left',
+                    backgroundColor: 'var(--bgc-light)', border: '2px solid var(--bc)'
                 }}
             >
                 <div style={{padding: '20px 25px', borderBottom: border }}>
@@ -49,9 +49,9 @@ export default function DropdownMenu(props) {
                 </div>
 
                 <div style={{borderBottom: border}}>
-                    {accountTabs.map(tab => (
+                    {tabs.map(tab => (
                         <div className='d-flex jc-flex-start ai-center' style={itemStyle}
-                            onClick={() => history.push(`/account${tab.path}`)}
+                            onClick={() => history.push(tab.path)}
                         >
                             <i class={`bi bi-${tab.iconName}`} style={iconStyle} />
                             <h4>{tab.title}</h4>

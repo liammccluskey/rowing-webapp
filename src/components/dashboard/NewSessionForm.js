@@ -83,7 +83,7 @@ export default function NewSessionForm(props) {
     }
 
     return (
-        <div className='float-container'
+        <div className='bgc-container'
             style={{
                 pointerEvents: props.showSessionForm ? 'auto' : 'none',
                 opacity: props.showSessionForm ? '100%':'0%',

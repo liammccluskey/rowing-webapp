@@ -19,12 +19,14 @@ export default function Activity() {
     const [results, setResults] = useState([])
     const [loading, setLoading] = useState(false)
 
+    const [hideFilterForm, setHideFilterForm] = useState(true)
     const [currPage, setCurrPage] = useState(1)
 
     const [sortedKey, setSortedKey] = useState('createdAt')
     const [sortAscending, setSortAscending] = useState(true)
 
     const [submittedQuery, setSubmittedQuery] = useState(null)
+    const [submittedQueryString, setSubmittedQueryString] = useState(null)
     const [selectedSortParam, setSelectedSortParam] = useState(0)
     const sortOrderRef = useRef()
     const sortParams = [
@@ -91,6 +93,7 @@ export default function Activity() {
             })
             setCurrPage(page)
             setSubmittedQuery(query)
+            setSubmittedQueryString(queryString)
         } catch (error) {
             console.log(error)
         }
@@ -126,6 +129,9 @@ export default function Activity() {
     function handleSubmitForm(e) {
         e.preventDefault()
         fetchData(false, 1)
+        .then(setTimeout(() => {
+            setHideFilterForm(true)
+        }, 0.5*1000))
     }
 
     return (
@@ -133,61 +139,90 @@ export default function Activity() {
             <MainHeader />
             <TrainingHeader subPath='/activity' />
             <div className='main-container' style={{marginBottom: 100}}>
+                <br /><br />
+                <h3>Workout Filter</h3>
                 <br />
-                <div className='float-container' style={{padding: '0px 20px'}}>
+                <div className='d-flex jc-flex-start ai-center' style={{gap: '15px'}}>
+                    <div className='d-inline-flex jc-flex-start ai-center'
+                        style={{
+                            gap: '0px',
+                            border: '1px solid var(--bc)',
+                            borderRadius: '5px',
+                            overflow: 'hidden'
+                        }}
+                    >
+                        <p style={{backgroundColor: 'var(--bgc-light)', padding: '7px 10px'}}>
+                            Showing results for
+                        </p>
+                        <p style={{padding: '7px 10px', whiteSpace: 'pre'}}>
+                            {submittedQueryString}
+                        </p>
+                    </div>
+                    <div className='clear-btn-secondary' style={{padding: '4px 8px'}}
+                        onClick={() => setHideFilterForm(false)}
+                    >
+                        <i class="bi bi-pencil" style={{fontSize: '25px'}}/>
+                    </div>
+                </div>
+                <form onSubmit={handleSubmitForm} className='bgc-container'
+                    style={{ 
+                        overflow: 'hidden', transform: 'scale(1)',
+                        padding: '0px 20px', 
+                        marginTop: hideFilterForm ? 0 : 20,
+                        opacity: hideFilterForm ? 0: 100,
+                        height: hideFilterForm ? 0 : 400, transition: 'all ease 0.4s',
+                    }} 
+                >
                     <br />
-                    <h3 >Filter Workouts</h3>
+                    <h4 style={{fontWeight: 500}}>Edit Workout Filter</h4>
                     <br />
-                    <form onSubmit={handleSubmitForm}>
-                        <div className='d-flex jc-flex-start ai-flex-start' style={{gap: 20}}>
-                            <label>
-                                Sort By <br />
-                                <select value={selectedSortParam} onChange={(e) => setSelectedSortParam(e.target.value)}>
-                                    {sortParams.map((param, idx) => (
-                                        <option key={idx} value={idx}>{param.title}</option>
+                    <div className='d-flex jc-flex-start ai-flex-start' style={{gap: 20}}>
+                        <label>
+                            Sort By <br />
+                            <select value={selectedSortParam} onChange={(e) => setSelectedSortParam(e.target.value)}>
+                                {sortParams.map((param, idx) => (
+                                    <option key={idx} value={idx}>{param.title}</option>
+                                ))}
+                            </select>
+                        </label>
+                        <label>
+                            Order <br />
+                            <select ref={sortOrderRef}>
+                                <option value='-' selected={true}>{sortParams[selectedSortParam].description.desc}</option>
+                                <option value='+'>{sortParams[selectedSortParam].description.asc}</option>
+                            </select>
+                        </label>
+                    </div>
+                    <br />
+                    {filters.map((filter, idx) => (
+                        <label key={idx}>
+                            {filter.title} <br />
+                            <div className='d-flex jc-flex-start ai-center' style={{gap: 15, marginBottom: 15}}>
+                                <select ref={filter.comparatorRef}>
+                                    {comparators.map(comparator => (
+                                        <option value={comparator.value}>{comparator.title}</option>
                                     ))}
                                 </select>
-                            </label>
-                            <label>
-                                Order <br />
-                                <select ref={sortOrderRef}>
-                                    <option value='-' selected={true}>{sortParams[selectedSortParam].description.desc}</option>
-                                    <option value='+'>{sortParams[selectedSortParam].description.asc}</option>
-                                </select>
-                            </label>
-                        </div>
-                        <br /><br />
-                        {filters.map((filter, idx) => (
-                            <label key={idx}>
-                                {filter.title} <br />
-                                <div className='d-flex jc-flex-start ai-center' style={{gap: 15, marginBottom: 15}}>
-                                    <select ref={filter.comparatorRef}>
-                                        {comparators.map(comparator => (
-                                            <option value={comparator.value}>{comparator.title}</option>
-                                        ))}
-                                    </select>
-                                    <input ref={filter.valueRef}/>
-                                    {filter.unit}
-                                </div>
-                                
-                            </label>
+                                <input ref={filter.valueRef}/>
+                                {filter.unit}
+                            </div>
+                            
+                        </label>
 
-                        ))}
-                        <div className='d-flex jc-space-between ai-center'>
-                            <button type='submit' className='solid-btn-secondary'>
-                                <i className='bi bi-search' style={{fontSize: 18}} />
-                                Search
-                            </button>
-                            <button type='button' className='clear-btn-cancel'>
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                    <br />
-                </div>
+                    ))}
+                    <div className='d-flex jc-space-between ai-center'>
+                        <button type='submit' className='solid-btn-secondary'>
+                            <i className='bi bi-search' style={{fontSize: 18}} />
+                            Search
+                        </button>
+                        <button type='button' className='clear-btn-cancel' onClick={() => setHideFilterForm(true)}>
+                            Cancel
+                        </button>
+                    </div>
+                </form>
                 <br />
                 {(!loading && submittedQuery !== null) &&
-                    <h3 style={{color: 'var(--color-secondary)'}}>{results.count.toLocaleString()} results</h3>
+                    <h4 style={{color: 'var(--color-secondary)'}}>{results.count.toLocaleString()} results</h4>
                 }
                 <br />
                 <div id='results' className='float-container'>

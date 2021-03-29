@@ -104,7 +104,7 @@ export default function Dashboard() {
                                     <tr >
                                         <th >Host</th>
                                         <th >Title</th>
-                                        <th >Starts At</th>
+                                        <th >Start Time</th>
                                     </tr>
                                 </thead>
                                 <tbody >

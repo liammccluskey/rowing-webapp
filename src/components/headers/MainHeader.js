@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react"
 import {useTheme} from "../../contexts/ThemeContext"
+import {useAuth} from '../../contexts/AuthContext'
 import {Link, useHistory} from 'react-router-dom'
 import DropdownMenu from './DropdownMenu'
 
 export default function MainHeader(props) {
     const {isDarkMode, setIsDarkMode} = useTheme()
+    const {currentUser} = useAuth()
     const [path, setPath] = useState('')
     const history = useHistory()
 
@@ -36,32 +38,22 @@ export default function MainHeader(props) {
                     
                 </div>
             </div>
-            <div className='d-flex ai-center'>
-                <ul className='ls-none d-inline'>
-                    <li className='d-inline'>
-                        <Link className={`${activeClass('dashboard') } header-link`} to='/dashboard' >
-                            Dashboard
-                        </Link>
-                    </li>
-                    <li className='d-inline'>
-                        <Link className={`${activeClass('training') } header-link`} to='/training/statistics' >
-                            Training
-                        </Link>
-                    </li>
-                    <li className='d-inline'>
-                        <Link className={`${activeClass('explore') } header-link`} to='/explore/clubs' >
-                            Explore
-                        </Link>
-                    </li>
-                    <li className='d-inline'>
-                        <Link className={`${activeClass('account') } header-link`} to='/account' 
-                            onClick={ e => {e.preventDefault(); setHideMenu(false)} }
-                        >
-                            Account
-                        </Link>
-                    </li>
-                </ul>
-                
+            <div className='d-flex jc-flex-end ai-center' style={{gap: 30}}>
+                <Link className={`${activeClass('dashboard') } header-link`} to='/dashboard' >
+                    Dashboard
+                </Link>
+                <Link className={`${activeClass('training') } header-link`} to='/training/statistics' >
+                    Training
+                </Link>
+                <Link className={`${activeClass('explore') } header-link`} to='/explore/clubs' >
+                    Explore
+                </Link>
+                <div className='d-flex jc-center ai-center onhover-bc' onClick={() => setHideMenu(false)}
+                    style={{gap: 10, cursor: 'pointer', padding: '5px 5px'}} 
+                >
+                    <img src={currentUser.photoURL} height={30} width={30} style={{borderRadius: '50%'}}/>
+                    <i className='bi bi-chevron-down' />
+                </div>
             </div>
             <DropdownMenu hideSelf={hideMenu} setHideSelf={setHideMenu} />
         </div>

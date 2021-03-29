@@ -11,10 +11,9 @@ export default function Paginator(props) {
     }, [props])
 
     const itemStyle={
-        border: '1px solid var(--tint-color-translucent)',
+        border: '1px solid var(--tint-color)',
         borderRadius: 3,
         padding: '10px 10px',
-        backgroundColor: 'var(--bgc-hover)',
         textAlign: 'center',
         color: 'var(--tint-color)'
     }
