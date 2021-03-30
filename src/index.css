@@ -57,8 +57,8 @@ th {
 }
 
 :root {
-  --tint-color: var(--color-strava);
-  --tint-color-translucent: var(--color-translucent-strava);
+  --tint-color: var(--color-green);
+  --tint-color-translucent: var(--color-translucent-green);
 
 
   /* dark mode */
@@ -67,10 +67,9 @@ th {
 
   --bgc-light-d: rgb(20,21,23);
   --bgc-light-d: rgb(13,15,18);
-
   --bgc-hover-d: rgb(22, 27, 33);   /* robinhood */
-
-  --bgc-nav-d: var(--bgc-light-d);     
+  --bgc-nav-d: var(--bgc-light-d); 
+  --bgc-settings-d: black;    
 
   --bc-d: rgba(48,54,60,255);         /* github */
   --bc-d: rgba(48,54,58,255);         /* robinhood */
@@ -82,24 +81,26 @@ th {
   --color-secondary-d: rgb(147, 151, 156);
   --color-tertiary-d: rgba(110,115,120,255);
   --box-shadow-d: none;
+  --box-shadow-dark-d: none;
   --float-border-d: 1px solid var(--bc);
 
 
 
-   /*light mode*/
-   --bgc-l: rgb(243,246,249);
-   --bgc-light-l: white;/* firebase */
-   --bgc-hover-l: rgb(245,247,249);
-   --bgc-nav-l: var(--bgc-light-l);
- 
-   --bc-l: rgb(220, 227, 231);
-   --bc-tr-l: rgb(241,242,242);
-   --color-l: rgb(51,51,51);
-   --color-header-l: rgb(55,55,55);
-   --color-secondary-l: rgba(120,124,126,255);
-   --color-tertiary-l: rgb(102,102,102);
-   --box-shadow-l: 0 0 15px rgba(0,0,0,0.05);
-   --float-border-l: none;
+  /*light mode*/
+  --bgc-l: rgb(243,246,249);
+  --bgc-light-l: white;/* firebase */
+  --bgc-hover-l: rgb(245,247,249);
+  --bgc-nav-l: var(--bgc-light-l);
+  --bgc-settings-l: white;
+  --bc-l: rgb(220, 227, 231);
+  --bc-tr-l: rgb(241,242,242);
+  --color-l: rgb(51,51,51);
+  --color-header-l: rgb(55,55,55);
+  --color-secondary-l: rgba(120,124,126,255);
+  --color-tertiary-l: rgb(102,102,102);
+  --box-shadow-l: 0 0 15px rgba(0,0,0,0.055);
+  --box-shadow-dark-l: 0 0 20px rgba(0,0,0, 0.15);
+  --float-border-l: none;
   
 
   /* dynamic color scheme */
@@ -107,6 +108,7 @@ th {
   --bgc: var(--bgc-l);
   --bgc-light: var(--bgc-light-l);
   --bgc-hover: var(--bgc-hover-l);
+  --bgc-settings: var(--bgc-settings-l);
   --bc: var(--bc-l);
   --bc-tr: var(--bc-tr-l);
   --color: var(--color-l);
@@ -114,6 +116,7 @@ th {
   --color-secondary: var(--color-secondary-l);
   --color-tertiary: var(--color-tertiary-l);
   --box-shadow: var(--box-shadow-l);
+  --box-shadow-dark: var(--box-shadow-dark-l);
   --float-border: var(--float-border-l);
 
   /* standard colors */
@@ -166,6 +169,7 @@ th {
 }
 
 
+
 input, input:active, input:focus,
 textarea, textarea:active, textarea:focus,
 select, select:active, select:focus
@@ -214,7 +218,7 @@ form label {
   border-bottom: 1px solid var(--bc);
 }
 .sub-link-active {
-  border-bottom: 3px solid var(--tint-color);
+  border-bottom: 2px solid var(--tint-color);
 }
 .header-link {
   color: var(--color);
@@ -271,6 +275,10 @@ form label {
 }
 
 /* settings */
+.settings-page {
+  background-color: var(--bgc-settings);
+  min-height: 100vh;
+}
 .settings-list .settings-row:last-child {
   border-bottom: 1px solid var(--bc);
 }
@@ -290,6 +298,22 @@ form label {
 .editable-settings-row h4:first-child,
 .settings-row h4:first-child {
   color: var(--color-secondary);
+}
+.settings-edit-container {
+  background-color: var(--bgc-light);
+  border-radius: 5px;
+  box-shadow: var(--box-shadow-dark);
+  padding: 0px 30px;
+  overflow: hidden;
+}
+.settings-edit-header {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 21px 0px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--bc);
 }
 
 /* tables */
@@ -632,12 +656,12 @@ table tbody tr:last-child {
 }
 
 input:checked + .slider {
-  background-color: #0e79d3
+  background-color: var(--tint-color);
   ;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #0e79d3
+  box-shadow: 0 0 1px var(--tint-color);
   ;
 }
 

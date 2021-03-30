@@ -8,6 +8,9 @@ export default function Profile() {
         <div>
             <MainHeader />
             <SettingsHeader subPath='/profile' />
+            <div className='main-container settings-page'>
+
+            </div>
         </div>
     )
 }

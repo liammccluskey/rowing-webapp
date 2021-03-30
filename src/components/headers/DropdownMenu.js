@@ -20,7 +20,7 @@ export default function DropdownMenu(props) {
     const iconStyle={ fontSize: '20px' , color: 'var(--color-secondary)'}
 
     const tabs = [
-        {title: 'Settings', iconName: 'gear-fill', path: '/settings/account'}
+        {title: 'Settings', iconName: 'gear', path: '/settings/account'}
     ]
 
     useEffect(() => {
@@ -41,11 +41,13 @@ export default function DropdownMenu(props) {
                     width: '300px', position: 'fixed', top: '70px', right: '40px',
                     backgroundColor: 'var(--bgc-hover)', zIndex: '102',
                     padding: '0px 0px', textAlign: 'left',
-                    backgroundColor: 'var(--bgc-light)', border: '2px solid var(--bc)'
+                    backgroundColor: 'var(--bgc-light)', 
+                    border: isDarkMode ? '1px solid var(--bc)' : 'none',
+                    boxShadow: 'var(--box-shadow-dark)'
                 }}
             >
                 <div style={{padding: '20px 25px', borderBottom: border }}>
-                    <h4 style={{fontWeight: '700'}}>{currentUser.displayName}</h4>   
+                    <h4 style={{fontWeight: '500'}}>{currentUser.displayName}</h4>   
                 </div>
 
                 <div style={{borderBottom: border}}>
@@ -64,7 +66,7 @@ export default function DropdownMenu(props) {
                     className='d-flex jc-space-between ai-center'
                 >
                     <div className='d-flex jc-flex-start ai-center' style={{gap: '15px'}}>
-                    <i class="bi bi-moon-fill" style={iconStyle}/>
+                    <i class="bi bi-moon" style={iconStyle}/>
                         <h4>Night Mode</h4>
                     </div>
                     <label class="switch">

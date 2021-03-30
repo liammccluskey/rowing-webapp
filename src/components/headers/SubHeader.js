@@ -16,11 +16,11 @@ export default function SubHeader(props) {
                         <img height='50px' width='50px' style={{marginRight: '10px', borderRadius: '5px'}} src={props.imgURL} />
                 }
             </div>
-            <div className='d-flex jc-flex-start' style={{gap: 20, marginBottom: 0}}>
+            <div className='d-flex jc-flex-start' style={{gap: 20}}>
                 {props.items && props.items.map( (item, idx) => (
                     <Link key={idx} className={`${activeClass(item.path)} header-link`}
                         to={props.path + item.path}
-                        style={{paddingBottom: 8}}
+                        style={{paddingBottom: 11}}
                     >
                         {item.title}
                     </Link>

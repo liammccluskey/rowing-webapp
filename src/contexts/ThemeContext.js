@@ -14,6 +14,7 @@ export function useTheme() {
 
 export function ThemeProvider({children}) {
     const [isDarkMode, setIsDarkMode] = useState(false)
+    const [tintColor, setTintColor] = useState(0)
     const [loading, setLoading] = useState(true)
     const {currentUser} = useAuth()
     const companyName = "Rowe"
@@ -29,6 +30,7 @@ export function ThemeProvider({children}) {
         '--bgc',
         '--bgc-hover',
         '--bgc-light',
+        '--bgc-settings',
         '--bc',
         '--bc-tr',
         '--color',
@@ -36,6 +38,7 @@ export function ThemeProvider({children}) {
         '--color-secondary',
         '--color-tertiary',
         '--box-shadow',
+        '--box-shadow-dark',
         '--float-border'
     ]
 

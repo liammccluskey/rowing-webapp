@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import MainHeader from '../headers/MainHeader'
 import SettingsHeader from './SettingsHeader'
 import {useAuth} from '../../contexts/AuthContext'
+import {useTheme} from '../../contexts/ThemeContext'
 import Loading from '../misc/Loading'
 import moment from 'moment'
 import axios from 'axios'
@@ -12,8 +13,12 @@ const api = axios.create({
 
 export default function Account() {
     const {currentUser} = useAuth()
+    const {isDarkMode} = useTheme()
     const [userData, setUserData] = useState(null)
     const [loading, setLoading] = useState(true)
+
+    const [editingEmail, setEditingEmail] = useState(false)
+    const [email, setEmail] = useState(currentUser.email)
 
     useEffect(() => {
         async function fetchData() {
@@ -33,9 +38,9 @@ export default function Account() {
             <MainHeader />
             <SettingsHeader subPath='/account' />
             {loading ? <Loading /> :
-            <div className='main-container' style={{backgroundColor: 'var(--bgc-light)', minHeight: '100vh'}} >
+            <div className='main-container settings-page'>
                 <br /><br />
-                <h3 style={{fontWeight: 500}}>Membership</h3>
+                <h3>Membership</h3>
                 <br />
                 <div className='settings-list'>
                     <div className='settings-row'>
@@ -49,12 +54,29 @@ export default function Account() {
                     </div>
                 </div>
                 <br /><br /><br />
-                <h3 style={{fontWeight: 500}}>General</h3>
+                <h3>General</h3>
                 <br />
                 <div className='settings-list'>
-                    <div className='editable-settings-row'>
-                        <h4>Email</h4>
+                    <div className='editable-settings-row' style={{display: editingEmail && 'none'}} onClick={() => setEditingEmail(true)}>
+                        <h4>Email Address</h4>
                         <h4>{currentUser.email}</h4>
+                    </div>
+                    <div className='settings-edit-container' hidden={!editingEmail} style={{ marginBottom: editingEmail && 15}}>
+                        <div className='settings-edit-header' onClick={() => setEditingEmail(false)}>
+                            <h4>Email Address</h4>
+                            <i className='bi bi-pencil' />
+                        </div>
+                        <br />
+                        <div className='d-flex jc-space-between ai-center'>
+                            <h4>Email Address</h4>
+                            <input value={email} onChange={(e) => setEmail(e.target.value)} type='email' style={{width: 300}}/>
+                        </div>
+                        <br /><br />
+                        <div className='d-flex jc-flex-end' style={{gap: 20}}>
+                            <button className='clear-btn-secondary' onClick={() => setEditingEmail(false)}>Cancel</button>
+                            <button className='solid-btn-secondary'>Save</button>
+                        </div>
+                        <br />
                     </div>
                     <div className='settings-row'>
                         <h4>Password</h4>
