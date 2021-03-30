@@ -11,13 +11,13 @@ export default function DropdownMenu(props) {
     const [hideSelf, setHideSelf] = useState(props.hideSelf)
 
     const border = '1px solid var(--bc)'
-    const itemPadding = '14px 25px'
+    const itemPadding = '12px 25px'
     const itemStyle = {
         cursor: 'pointer', 
         padding: itemPadding,
         gap: '15px'
     }
-    const iconStyle={ fontSize: '20px' , color: 'var(--color-secondary)'}
+    const iconStyle={ fontSize: '20px' , color: 'var(--color)'}
 
     const tabs = [
         {title: 'Settings', iconName: 'gear', path: '/settings/account'}
@@ -56,7 +56,7 @@ export default function DropdownMenu(props) {
                             onClick={() => history.push(tab.path)}
                         >
                             <i class={`bi bi-${tab.iconName}`} style={iconStyle} />
-                            <h4>{tab.title}</h4>
+                            <p>{tab.title}</p>
                         </div>
                     ))}
                     
@@ -67,7 +67,7 @@ export default function DropdownMenu(props) {
                 >
                     <div className='d-flex jc-flex-start ai-center' style={{gap: '15px'}}>
                     <i class="bi bi-moon" style={iconStyle}/>
-                        <h4>Night Mode</h4>
+                        <p>Night Mode</p>
                     </div>
                     <label class="switch">
                         <input type="checkbox" checked={isDarkMode} onChange={() => setIsDarkMode(curr => !curr)} />
@@ -77,7 +77,7 @@ export default function DropdownMenu(props) {
                 </div>
                 <div className='d-flex jc-flex-start ai-center' style={{...itemStyle}}>
                     <i class="bi bi-box-arrow-right" style={iconStyle}/>
-                    <h4 >Log Out</h4>
+                    <p >Log Out</p>
                 </div>
                 
                 
