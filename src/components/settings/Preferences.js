@@ -4,14 +4,17 @@ import MainHeader from '../headers/MainHeader'
 import {useTheme} from '../../contexts/ThemeContext'
 
 export default function Preferences() {
-    const {isDarkMode, setIsDarkMode} = useTheme()
+    const {isDarkMode, setIsDarkMode, tintColor, setTintColor, tintColors} = useTheme()
 
     const [editingTheme, setEditingTheme] = useState(false)
     const [editingTint, setEditingTint] = useState(false)
 
     function handleThemeChange(e) {
         setIsDarkMode(e.target.value === 'dark')
-        console.log(e.target.value)
+    }
+
+    function handleTintChange(e) {
+        setTintColor(e.target.value)
     }
 
     return (
@@ -48,7 +51,7 @@ export default function Preferences() {
                     </div>
                     <div className='editable-settings-row' onClick={() => setEditingTint(true)} style={{display: editingTint&&'none'}}>
                         <h4>Tint Color</h4>
-                        <h4>Blue</h4>
+                        {tintColors[tintColor].name}
                     </div>
                     <div className='settings-edit-container' hidden={!editingTint} style={{marginBottom: editingTint&&15}}>
                         <div className='settings-edit-header' onClick={() => setEditingTint(false)}>
@@ -58,9 +61,10 @@ export default function Preferences() {
                         <br />
                         <div className='d-flex jc-space-between ai-center'>
                             <h4>Tint Color</h4>
-                            <select>
-                                <option>Blue</option>
-                                <option>Green</option>
+                            <select value={tintColor} onChange={handleTintChange}>
+                                {tintColors.map((tc, idx) => (
+                                    <option value={idx}>{tc.name}</option>
+                                ))}
                             </select>
                         </div>
                         <br /><br />

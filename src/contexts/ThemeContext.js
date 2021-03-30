@@ -20,8 +20,16 @@ export function ThemeProvider({children}) {
     const companyName = "Rowe"
     const domainURL = 'https://rowe.com/clubs/'
 
+    const tintColors = [
+        {name: 'Soft Blue', extension: 'strava'},    // default
+        {name: 'Green', extension: 'green'},
+        {name: 'Purple', extension: 'discord'},
+        {name: 'Sharp Blue', extension: 'rh-blue'}
+    ]
+
     const value = {
         isDarkMode, setIsDarkMode,
+        tintColor, setTintColor, tintColors,
         companyName, domainURL
     }
 
@@ -60,7 +68,7 @@ export function ThemeProvider({children}) {
 
     useEffect(() => {
         let extension = isDarkMode ? '-d' : '-l'
-        let root = document.documentElement;
+        let root = document.documentElement
 
         cssVars.forEach(name => {
             root.style.setProperty(name, `var(${name}${extension})`)
@@ -78,6 +86,14 @@ export function ThemeProvider({children}) {
         updateData()
 
     }, [isDarkMode])
+
+    useEffect(() => {
+        const extension = tintColors[tintColor].extension
+        const root = document.documentElement
+
+        root.style.setProperty('--tint-color', `var(--color-${extension})`)
+        root.style.setProperty('--tint-color-translucent', `var(--color-translucent-${extension})`)
+    }, [tintColor])
 
     return (
         <ThemeContext.Provider value={value}>
