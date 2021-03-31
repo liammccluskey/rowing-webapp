@@ -14,7 +14,7 @@ const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
 })
 
-export default function Account() {
+export default function Settings() {
     const {currentUser} = useAuth()
     const {isDarkMode} = useTheme()
     const [userData, setUserData] = useState(null)
@@ -45,10 +45,10 @@ export default function Account() {
 
     return (
         <div>
-            <MainHeader style={{position: 'sticky', top: 0}} />
+            <MainHeader style={{position: 'sticky', top: 0, boxShadow: 'none'}} />
             <SubHeader title='Settings' style={{position: 'sticky', top: 70}} />
             {loading ? <Loading /> :
-            <div className='main-container settings-page d-flex jc-flex-start ai-flex-start'>
+            <div className='main-container settings-page d-flex jc-flex-start ai-flex-start' style={{zIndex: -1}}>
                 <div className='settings-menu'>
                     {settingsGroups.map((group, idx) => (
                         <p key={idx} style={{marginBottom: 15}} className='menu-link'
@@ -94,8 +94,8 @@ export default function Account() {
                             </div>
                             <br /><br />
                             <div className='d-flex jc-flex-end' style={{gap: 20}}>
-                                <button className='clear-btn-secondary' onClick={() => setEditingEmail(false)}>Cancel</button>
-                                <button className='solid-btn-secondary'>Save</button>
+                                <button className='clear-btn-secondary bc-trans' onClick={() => setEditingEmail(false)}>Cancel</button>
+                                <button className='solid-btn-secondary bc-trans'>Save</button>
                             </div>
                             <br />
                         </div>

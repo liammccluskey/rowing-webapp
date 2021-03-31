@@ -360,8 +360,8 @@ export default function Statistics() {
                                 data={{
                                     label: 'Pace / 500m',
                                     dataset: [...progressStats.plottable[timeframes[selectedTimeframe].key] ],
-                                    backgroundColor: '--color-translucent-rh-blue',
-                                    borderColor: '--color-rh-blue'
+                                    backgroundColor: '--tint-color-translucent',
+                                    borderColor: '--tint-color'
                                 }}
                             />
                         </div>

@@ -24,11 +24,11 @@ export default function UserInfoCard(props) {
     }
     const statsValueStyle = {
         letterSpacing: '1px',
-        color: 'var(--color-rh-blue)'
+        color: 'var(--tint-color)'
     }
 
-    const graphFillColor = '--color-translucent-rh-blue'
-    const graphBorderColor = '--color-rh-blue'
+    const graphFillColor = '--tint-color-translucent'
+    const graphBorderColor = '--tint-color'
 
     const timeframeStyle = { color: 'var(--color)'}
     

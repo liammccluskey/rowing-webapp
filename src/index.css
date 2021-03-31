@@ -56,6 +56,10 @@ th {
   scrollbar-width: none;  /* Firefox */
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --tint-color: var(--color-green);
   --tint-color-translucent: var(--color-translucent-green);
@@ -203,7 +207,6 @@ form label {
   padding: 0px 40px;
   box-shadow: var(--box-shadow);
   top: 0px;
-  z-index: 10;
 }
 .sub-header {
   background-color: var(--bgc-nav);
@@ -214,7 +217,6 @@ form label {
   padding-right: var(--ps-nav);
   padding-left: var(--ps-nav);
   color: var(--color);
-  z-index: 10;
   border-bottom: 1px solid var(--bc);
 }
 .sub-link-active {
@@ -278,9 +280,31 @@ form label {
 .settings-page {
   background-color: var(--bgc-settings);
   min-height: 100vh;
+  padding-top: 40px;
+}
+.settings-menu {
+  position: fixed;
+}
+.settings-page h3 {
+  font-weight: 500;
+}
+.settings-page .clear-btn-secondary,
+.settings-page .error-btn-secondary {
+  border: none;
+  font-weight: 500;
+}
+.settings-page .menu-link {
+  cursor: pointer;
+  color: var(--color-header);
+}
+.settings-page .menu-link:hover {
+  color: var(--tint-color);
 }
 .settings-list .settings-row:last-child {
   border-bottom: 1px solid var(--bc);
+}
+.settings-list {
+  margin-bottom: 60px;
 }
 .settings-row,
 .editable-settings-row {
@@ -288,22 +312,22 @@ form label {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 60px;
-  padding: 0px 30px;
+  min-height: 50px;
+  padding: 0px 15px;
 }
 .editable-settings-row:hover {
   cursor: pointer;
   background-color: var(--bgc-hover);
 }
-.editable-settings-row h4:first-child,
-.settings-row h4:first-child {
+.editable-settings-row p:first-child,
+.settings-row p:first-child {
   color: var(--color-secondary);
 }
 .settings-edit-container {
   background-color: var(--bgc-light);
   border-radius: 5px;
   box-shadow: var(--box-shadow-dark);
-  padding: 0px 30px;
+  padding: 0px 15px;
   overflow: hidden;
 }
 .settings-edit-header {
@@ -311,7 +335,7 @@ form label {
   gap: 20px;
   justify-content: flex-start;
   align-items: center;
-  padding: 21px 0px;
+  padding: 15px 0px;
   cursor: pointer;
   border-bottom: 1px solid var(--bc);
 }
@@ -682,5 +706,4 @@ input:checked + .slider:before {
 .rotate-180 {
   transform: rotate(180deg);
   -webkit-transform: rotate(180deg);
-
 }

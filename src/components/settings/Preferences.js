@@ -1,6 +1,5 @@
+
 import React, { useState } from 'react'
-import SettingsHeader from './SettingsHeader'
-import MainHeader from '../headers/MainHeader'
 import {useTheme} from '../../contexts/ThemeContext'
 
 export default function Preferences() {
@@ -19,62 +18,69 @@ export default function Preferences() {
 
     return (
         <div>
-            <MainHeader />
-            <SettingsHeader subPath='/preferences' />
-            <div className='main-container settings-page'>
-                <br /><br />
-                <h3>Appearance</h3>
-                <br />
-                <div className='settings-list'>
-                    <div className='editable-settings-row' onClick={() => setEditingTheme(true)} style={{display: editingTheme&&'none'}}>
-                        <h4>Color Theme</h4>
-                        <h4>{isDarkMode ? 'Dark' : 'Light'}</h4>
-                    </div>
-                    <div className='settings-edit-container' hidden={!editingTheme} style={{ marginBottom: editingTheme && 15}}>
-                        <div className='settings-edit-header' onClick={() => setEditingTheme(false)}>
-                            <h4>Color Theme</h4>
-                            <i className='bi bi-pencil' />
-                        </div>
-                        <br />
-                        <div className='d-flex jc-space-between ai-center'>
-                            <h4>Color Theme</h4>
-                            <select value={isDarkMode ? 'dark' : 'light'} onChange={handleThemeChange}>
-                                <option value='light'>Light</option>
-                                <option value='dark'>Dark</option>
-                            </select>
-                        </div>
-                        <br /><br />
-                        <div className='d-flex jc-flex-end'>
-                            <button className='clear-btn' onClick={() => setEditingTheme(false)}>Close</button>
-                        </div>
-                        <br />
-                    </div>
-                    <div className='editable-settings-row' onClick={() => setEditingTint(true)} style={{display: editingTint&&'none'}}>
-                        <h4>Tint Color</h4>
-                        {tintColors[tintColor].name}
-                    </div>
-                    <div className='settings-edit-container' hidden={!editingTint} style={{marginBottom: editingTint&&15}}>
-                        <div className='settings-edit-header' onClick={() => setEditingTint(false)}>
-                            <h4>Tint Color</h4>
-                            <i className='bi bi-pencil' />
-                        </div>
-                        <br />
-                        <div className='d-flex jc-space-between ai-center'>
-                            <h4>Tint Color</h4>
-                            <select value={tintColor} onChange={handleTintChange}>
-                                {tintColors.map((tc, idx) => (
-                                    <option value={idx}>{tc.name}</option>
-                                ))}
-                            </select>
-                        </div>
-                        <br /><br />
-                        <div className='d-flex jc-flex-end'>
-                            <button className='clear-btn' onClick={() => setEditingTint(false)}>Close</button>
-                        </div>
-                        <br />
+            <h3 id='Preferences'>Preferences</h3>
+            <br />
+            <div className='settings-list'>
+                <div className='editable-settings-row' onClick={() => setEditingTheme(true)} style={{display: editingTheme&&'none'}}>
+                    <p>Color Theme</p>
+                    <div className='d-flex jc-flex-end ai-center' style={{gap: 10}}>
+                        <i className={`bi bi-${isDarkMode ? 'moon' : 'sun'}`} style={{fontSize: 20}} />
+                        <p>{isDarkMode ? 'Dark' : 'Light'}</p>
                     </div>
                 </div>
-                
+                <div className='settings-edit-container' hidden={!editingTheme} style={{ marginBottom: editingTheme && 15}}>
+                    <div className='settings-edit-header' onClick={() => setEditingTheme(false)}>
+                        <p>Color Theme</p>
+                        <i className='bi bi-pencil' />
+                    </div>
+                    <br />
+                    <div className='d-flex jc-space-between ai-center'>
+                        <p>Color Theme</p>
+                        <select value={isDarkMode ? 'dark' : 'light'} onChange={handleThemeChange}>
+                            <option value='light'>Light</option>
+                            <option value='dark'>Dark</option>
+                        </select>
+                    </div>
+                    <br /><br />
+                    <div className='d-flex jc-flex-end'>
+                        <button className='clear-btn' onClick={() => setEditingTheme(false)}>Close</button>
+                    </div>
+                    <br />
+                </div>
+                <div className='editable-settings-row' onClick={() => setEditingTint(true)} style={{display: editingTint&&'none'}}>
+                    <p>Tint Color</p>
+                    <div className='d-flex jc-flex-end ai-center' style={{gap: 10}}>
+                        <div style={{
+                                borderRadius: '50%', height: 18, width: 18,
+                                backgroundColor: `var(--color-${tintColors[tintColor].extension}`
+                            }}
+                        />
+                        <p style={{color: `var(--color-${tintColors[tintColor].extension}`}}>
+                            {tintColors[tintColor].name}
+                        </p>
+                    </div>
+                    
+                </div>
+                <div className='settings-edit-container' hidden={!editingTint} style={{marginBottom: editingTint&&15}}>
+                    <div className='settings-edit-header' onClick={() => setEditingTint(false)}>
+                        <p>Tint Color</p>
+                        <i className='bi bi-pencil' />
+                    </div>
+                    <br />
+                    <div className='d-flex jc-space-between ai-center'>
+                        <p>Tint Color</p>
+                        <select value={tintColor} onChange={handleTintChange}>
+                            {tintColors.map((tc, idx) => (
+                                <option value={idx}>{tc.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <br /><br />
+                    <div className='d-flex jc-flex-end'>
+                        <button className='clear-btn' onClick={() => setEditingTint(false)}>Close</button>
+                    </div>
+                    <br />
+                </div>
             </div>
         </div>
     )

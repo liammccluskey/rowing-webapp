@@ -20,7 +20,7 @@ export default function DropdownMenu(props) {
     const iconStyle={ fontSize: '20px' , color: 'var(--color)'}
 
     const tabs = [
-        {title: 'Settings', iconName: 'gear', path: '/settings/account'}
+        {title: 'Settings', iconName: 'gear', path: '/settings'}
     ]
 
     useEffect(() => {
@@ -30,16 +30,16 @@ export default function DropdownMenu(props) {
     return (
         <div hidden={hideSelf} onClick={() => props.setHideSelf(true)}
             style={{
-                height: '100vh', width: '100vw', position: 'fixed',
+                height: '100vh', width: '100vw', position: 'absolute',
                 top: '0px', right: '0px',
-                zIndex: '101',
+                zIndex: 10
             }} 
             
         >
             <div className='float-container' hidden={hideSelf}
                 style={{
                     width: '300px', position: 'fixed', top: '70px', right: '40px',
-                    backgroundColor: 'var(--bgc-hover)', zIndex: '102',
+                    backgroundColor: 'var(--bgc-hover)', zIndex: 20,
                     padding: '0px 0px', textAlign: 'left',
                     backgroundColor: 'var(--bgc-light)', 
                     border: isDarkMode ? '1px solid var(--bc)' : 'none',
