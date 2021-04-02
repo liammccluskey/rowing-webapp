@@ -75,7 +75,9 @@ export default function DropdownMenu(props) {
                     </label>
                 
                 </div>
-                <div className='d-flex jc-flex-start ai-center' style={{...itemStyle}}>
+                <div className='d-flex jc-flex-start ai-center' style={{...itemStyle}}
+                    onClick={signOut}
+                >
                     <i class="bi bi-box-arrow-right" style={iconStyle}/>
                     <p >Log Out</p>
                 </div>

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import Arrow from '../misc/Arrow'
 import C2Screen from '../misc/C2Screen'
 import {useAuth} from '../../contexts/AuthContext'
 import axios from 'axios'
@@ -55,14 +54,14 @@ export default function ResultsTable(props) {
     }
 
     return (
-        <div >
+        <div style={{marginBottom: hideSelf ? 0 : 30}}>
             <div className='d-flex jc-space-between ai-center'>
                 <div 
                     className='d-flex jc-flex-start ai-center' 
                     style={{gap: '20px', minHeight: '55px'}}
                 >
                     <button className='arrow-btn' onClick={() => setHideSelf(curr => !curr)}>
-                        <Arrow direction={hideSelf ? 'right' : 'down'} color='var(--color-tertiary)' />
+                        <i className={`bi bi-chevron-${hideSelf ? 'right' : 'down'}`} style={{color: 'var(--color)'}} />
                     </button>
                     <h4 onClick={() => setHideSelf(curr => !curr)}>{props.activityTitle}</h4>
                 </div>
@@ -70,8 +69,8 @@ export default function ResultsTable(props) {
 
             <div style={{
                 display: hideSelf ? 'none': 'block',
-                margin: '30px 10px',
-            }}>
+                margin: '0px 35px', marginTop: !hideSelf && 20
+            }} className='bgc-container'>
                 <table className='data-table' style={{width: '100%'}}>
                     <thead>
                         <tr>

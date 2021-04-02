@@ -146,14 +146,15 @@ export default function Session(props) {
 
     return (
         <div>
-            <MainHeader style={{position: 'sticky', top: 0}} />
+            <MainHeader />
+            {!loading && <SubHeader title={session.title}/> }
             {loading ? <Loading /> :
             <div className='main-container' style={{ padding: '0px 0px'}} >
                 <div className='d-flex jc-flex-start ai-flex-start' >
                     <div 
                         style={{ 
-                            width: '225px', minHeight: '100vh', backgroundColor: 'var(--bgc)',
-                            padding: '0px 25px', borderRight: '1px solid var(--bc)'
+                            width: '225px', backgroundColor: 'var(--bgc)', padding: '0px 25px',
+                            position: 'sticky', top: 70
                         }}
                     >
                         <br /><br />
@@ -164,15 +165,12 @@ export default function Session(props) {
                             session={session}
                         />
                     </div>
-                    <div style={{flex: 1, padding: '0px 50px', marginBottom: 100}}>
-
-                        <br /><br />
-                        <h2 style={{fontWeight: '500'}}>{session.title}</h2>
+                    <div style={{flex: 1, padding: '0px 50px', borderLeft: '1px solid var(--bc)',}}>
                         <br /><br />
 
                         <h3 >Workout Activities</h3>
                         <br />
-                        <div className='float-container' style={{padding: '10px 20px'}}>
+                        <div className='float-container' style={{padding: '10px 10px'}}>
                             {session.workoutItems.map((item, i) => (
                                 <div>
                                         <LiveActivityTable 
@@ -194,7 +192,7 @@ export default function Session(props) {
 
                         <h3 >Workout Results</h3>
                         <br />
-                        <div className='float-container' style={{padding: '10px 20px'}}>
+                        <div className='float-container' style={{padding: '10px 10px'}}>
                             {session.workoutItems.map((item, i) => (
                                 <div>
                                     <ResultsTable 
@@ -204,6 +202,7 @@ export default function Session(props) {
                                 </div>
                             ))}
                         </div>
+                        <div style={{height: 300}} />
                     </div>
                 </div>
             </div>

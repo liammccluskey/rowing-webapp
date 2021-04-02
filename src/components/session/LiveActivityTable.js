@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import Arrow from '../misc/Arrow'
 import C2Screen from '../misc/C2Screen'
 import {useAuth} from '../../contexts/AuthContext'
 import axios from 'axios'
@@ -132,11 +131,11 @@ export default function LiveActivityTable(props) {
     }
 
     return (
-        <div >
+        <div style={{marginBottom: hideSelf ? 0 : 30}}>
             <div className='d-flex jc-space-between ai-center'>
-                <div className='d-flex jc-flex-start ai-center' style={{gap: '20px', minHeight: '55px'}} >
+                <div className='d-flex jc-flex-start ai-center' style={{gap: 10, minHeight: '55px'}} >
                     <button className='arrow-btn' onClick={() => setHideSelf(curr => !curr)}>
-                        <Arrow direction={hideSelf ? 'right' : 'down'} color='var(--color-tertiary)' />
+                        <i className={`bi bi-chevron-${hideSelf ? 'right' : 'down'}`} style={{color: 'var(--color)'}} />
                     </button>
                     <h4 onClick={() => setHideSelf(curr => !curr)}>{props.activityTitle}</h4>
                 </div>
@@ -199,14 +198,14 @@ export default function LiveActivityTable(props) {
                         borderLeft: '1px solid var(--bc)',
                         textAlign: 'center',
                     }}>
-                        <i className='bi bi-check-square-fill' 
-                            style={{fontSize: '25px', color: 'var(--color-success)', opacity: !didCompleteActivity && 0}} 
+                        <i className='bi bi-check-square' 
+                            style={{fontSize: '25px', color: 'var(--tint-color)', opacity: !didCompleteActivity && 0}} 
                         />
                     </div>
                 </div>
             </div>
-            <div style={{borderLeft: '2px solid var(--bc)', marginLeft: 8}}>
-                <div style={{padding: '15px 35px', display: hideInstructions && 'none',color: 'var(--color-secondary)'}}>
+            <div style={{padding: '0px 35px', paddingTop: !hideSelf && 20}}>
+                <div style={{ display: hideInstructions && 'none',color: 'var(--color-secondary)'}}>
                     
                     <h3 style={{ 
                             marginRight: '30px',
@@ -252,7 +251,7 @@ export default function LiveActivityTable(props) {
                     <br /><br />
                     <button 
                         style={{margin: '10px auto', display: 'block'}}
-                        className='clear-btn-secondary'
+                        className='solid-btn-secondary'
                         onClick={handleClickStartWorkout}
                         disabled={startDisabled}
                     >
@@ -260,9 +259,8 @@ export default function LiveActivityTable(props) {
                     </button>
                 </div >
                     
-                <div 
-                    className='d-flex jc-space-around ai-flex-start' 
-                    style={{display: hideSelf ? 'none' : 'flex', padding: '0px 20px', flexWrap: 'wrap'}}
+                <div className='d-flex jc-space-around ai-flex-start' 
+                    style={{display: hideSelf ? 'none' : 'flex', flexWrap: 'wrap'}}
                 >
                     
                     {activities.filter(ac => selectedActivityIDs.has(ac._id)).map(ac =>(
@@ -274,10 +272,7 @@ export default function LiveActivityTable(props) {
                     ))} 
                 </div>
 
-                <div style={{
-                    display: hideSelf ? 'none': 'block',
-                    margin: '30px 10px',
-                }}>
+                <div style={{display: hideSelf ? 'none': 'block'}} className='bgc-container'>
                     <table className='data-table' style={{width: '100%'}}>
                         <thead >
                             <tr>

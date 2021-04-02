@@ -45,8 +45,8 @@ export default function Settings() {
 
     return (
         <div>
-            <MainHeader style={{position: 'sticky', top: 0, boxShadow: 'none'}} />
-            <SubHeader title='Settings' style={{position: 'sticky', top: 70}} />
+            <MainHeader />
+            <SubHeader title='Settings' />
             {loading ? <Loading /> :
             <div className='main-container settings-page d-flex jc-flex-start ai-flex-start' style={{zIndex: -1}}>
                 <div className='settings-menu'>
@@ -54,7 +54,7 @@ export default function Settings() {
                         <p key={idx} style={{marginBottom: 15}} className='menu-link'
                             onClick={() => {
                                 const elemPos = document.getElementById(group.title).offsetTop
-                                window.scrollTo({top: elemPos - 170})
+                                window.scrollTo({top: elemPos - 80})
                             }}
                         >
                             {group.title}
@@ -72,7 +72,7 @@ export default function Settings() {
                         <div className='settings-row'>
                             <p>Subscription</p>
                             <p>None</p>
-                            <button className='solid-btn-secondary'>Subscribe Now</button>
+                            <button className='clear-btn-secondary'>Subscribe Now</button>
                         </div>
                     </div>
                     <h3 id='Account'>Account</h3>
@@ -110,7 +110,7 @@ export default function Settings() {
                     </div>
                     <Profile />
                     <Preferences />
-                    <div style={{height: 500}} />
+                    <div style={{height: 450}} />
                 </div>
             </div>
             }

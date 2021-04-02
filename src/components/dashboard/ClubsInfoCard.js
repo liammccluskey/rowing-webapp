@@ -21,7 +21,9 @@ export default function ClubsInfoCard(props) {
                 <tbody>
                     {!props.clubs ? <Loading /> : props.clubs.map((club, id) => (
                         <tr key={id}>
-                            <td className='d-flex jc-flex-start ai-center' style={{flexWrap: 'nowrap', gap:'5px'}}>
+                            <td className='d-flex jc-flex-start ai-center page-link' style={{flexWrap: 'nowrap', gap:'5px'}}
+                                onClick={()=>history.push(`/clubs/${club.customURL}`)}
+                            >
                                 <img height='30px' width='30px' style={{borderRadius: '3px'}}
                                     src={club.iconURL}
                                 />

@@ -24,7 +24,8 @@ export function ThemeProvider({children}) {
         {name: 'Soft Blue', extension: 'strava'},    // default
         {name: 'Green', extension: 'green'},
         {name: 'Purple', extension: 'discord'},
-        {name: 'Sharp Blue', extension: 'rh-blue'}
+        {name: 'Sharp Blue', extension: 'rh-blue'},
+        {name: 'Twitter Blue', extension: 'twitter-blue'}
     ]
 
     const value = {
