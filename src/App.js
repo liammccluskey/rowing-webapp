@@ -15,9 +15,6 @@ import Activity from './components/training/Activity'
 import Clubs from './components/explore/Clubs'
 import Sessions from './components/explore/Sessions'
 
-import Account from './components/settings/Account'
-import Profile from './components/settings/Profile'
-import Preferences from './components/settings/Preferences'
 import Settings from './components/settings/Settings'
 
 import CreateClub from './components/CreateClub'

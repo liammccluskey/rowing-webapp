@@ -118,7 +118,7 @@ export default function Clubs() {
                                     
                                 </td>
                                 <td>
-                                    {`${club.memberUIDs.length} Member${club.memberUIDs.length != 1 ? 's':''}`}
+                                    {`${club.memberUIDs.length} Member${club.memberUIDs.length !== 1 && 's'}`}
                                 </td>
                                 <td style={{textAlign: 'right'}}>
                                     <button onClick={() => handleJoinClub(club)} className='clear-btn-secondary'>Join</button>

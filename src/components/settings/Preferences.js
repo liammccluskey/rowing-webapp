@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react'
 import {useTheme} from '../../contexts/ThemeContext'
+import FloatMessage from '../misc/FloatMessage'
+import moment from 'moment'
 
 export default function Preferences() {
     const {isDarkMode, setIsDarkMode, tintColor, setTintColor, tintColors} = useTheme()
@@ -8,12 +10,18 @@ export default function Preferences() {
     const [editingTheme, setEditingTheme] = useState(false)
     const [editingTint, setEditingTint] = useState(false)
 
+    const [displayMessage, setDisplayMessage] = useState()
+
     function handleThemeChange(e) {
         setIsDarkMode(e.target.value === 'dark')
+        setDisplayMessage({title: 'Changes saved', isError: false, timestamp: moment()})
+        setEditingTheme(false)
     }
 
     function handleTintChange(e) {
         setTintColor(e.target.value)
+        setDisplayMessage({title: 'Changes saved', isError: false, timestamp: moment()})
+        setEditingTint(false)
     }
 
     return (
@@ -82,6 +90,7 @@ export default function Preferences() {
                     <br />
                 </div>
             </div>
+            {displayMessage && <FloatMessage message={displayMessage} />}
         </div>
     )
 }

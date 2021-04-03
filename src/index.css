@@ -65,8 +65,8 @@ html {
 }
 
 :root {
-  --tint-color: var(--color-green);
-  --tint-color-translucent: var(--color-translucent-green);
+  --tint-color: var(--color-twitter-blue);
+  --tint-color-translucent: var(--color-translucent-twitter-blue);
 
 
   /* dark mode */
@@ -304,6 +304,9 @@ form label {
 .settings-page .error-btn-secondary {
   border: none;
   font-weight: 500;
+}
+.settings-page input {
+  width: 200px;
 }
 .settings-page .menu-link {
   cursor: pointer;
@@ -718,4 +721,7 @@ input:checked + .slider:before {
 .rotate-180 {
   transform: rotate(180deg);
   -webkit-transform: rotate(180deg);
+}
+.onhover-bright:hover {
+  filter: brightness(125%);
 }
