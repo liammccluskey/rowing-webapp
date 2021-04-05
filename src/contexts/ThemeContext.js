@@ -14,7 +14,7 @@ export function useTheme() {
 
 export function ThemeProvider({children}) {
     const [isDarkMode, setIsDarkMode] = useState(false)
-    const [tintColor, setTintColor] = useState(4)
+    const [tintColor, setTintColor] = useState(1)   // mint default
     const [loading, setLoading] = useState(true)
     const {currentUser} = useAuth()
     const companyName = "Rowe"
@@ -22,7 +22,7 @@ export function ThemeProvider({children}) {
 
     const tintColors = [
         {name: 'Soft Blue', extension: 'strava'},    // default
-        {name: 'Green', extension: 'green'},
+        {name: 'Mint', extension: 'mint'},
         {name: 'Purple', extension: 'discord'},
         {name: 'Sharp Blue', extension: 'rh-blue'},
         {name: 'Twitter Blue', extension: 'twitter-blue'}

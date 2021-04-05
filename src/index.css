@@ -168,6 +168,8 @@ html {
   --color-twitter-blue: rgb(30,162,242);
   --color-translucent-twitter-blue: rgba(30,162,242,0.2);
 
+  --color-mint: rgb(24, 158, 138);
+  --color-translucent-mint: rgba(24, 158, 138, 0.2);
 
   /* misc global */
   --ps-nav: 200px;
