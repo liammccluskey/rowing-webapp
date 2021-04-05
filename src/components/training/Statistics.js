@@ -14,8 +14,13 @@ const api = axios.create({
 
 export default function Statistics() {
     const {currentUser} = useAuth()
-    const [selectedTimeframe, setSelectedTimeframe] = useState(1) // month selected
-    const [selectedMetric, setSelectedMetric] = useState(0)
+
+    // general stats (top)
+    const [timeframe1, setTimeframe1] = useState(1)         // month
+    const [selectedMetric, setSelectedMetric] = useState(0) // meters
+    
+    // analysis stats (bottom)
+    const [timeframe2, setTimeframe2] = useState(1)         // month
 
     const [stats, setStats] = useState(null)
     const [progressStats, setProgressStats] = useState(null)
@@ -59,20 +64,20 @@ export default function Statistics() {
     function plottable() {
         return [
             ...stats.plottable
-                [timeframes[selectedTimeframe].key]
+                [timeframes[timeframe1].key]
                 [metrics[selectedMetric].key]
         ]
     }
 
     function aggregate(metricID) {
         return stats.aggregate
-            [timeframes[selectedTimeframe].key]
+            [timeframes[timeframe1].key]
             [metrics[metricID].key]
     }
 
     function delta(metricID) {
         return stats.delta
-            [timeframes[selectedTimeframe].key]
+            [timeframes[timeframe1].key]
             [metrics[metricID].key]
     }
 
@@ -191,8 +196,8 @@ export default function Statistics() {
                                 {['Week', 'Month', 'Year'].map((item, idx) => (
                                     <h5 
                                         key={idx}
-                                        className={idx === selectedTimeframe ? 'menu-option-active' : 'menu-option'}
-                                        onClick={() => setSelectedTimeframe(idx)}
+                                        className={idx === timeframe1 ? 'menu-option-active' : 'menu-option'}
+                                        onClick={() => setTimeframe1(idx)}
                                     >
                                         {item}
                                     </h5>
@@ -240,7 +245,7 @@ export default function Statistics() {
                                             </h4>
                                         }
                                         <h5 style={{color: 'var(--color-tertiary)', display: 'inline', marginLeft: '10px', marginTop: '7px'}}>
-                                            from last {timeframes[selectedTimeframe].key}
+                                            from last {timeframes[timeframe1].key}
                                         </h5>
                                     </div>
                                 ))}
@@ -253,11 +258,11 @@ export default function Statistics() {
                             <br />
                             <CustomBar 
                                 height='175px' 
-                                labelFreq={timeframes[selectedTimeframe].labelFreq}
+                                labelFreq={timeframes[timeframe1].labelFreq}
                                 maxLabelLength={10}
                                 showYTicks={true}
                                 data={{
-                                    labels: timeframes[selectedTimeframe].labels(),
+                                    labels: timeframes[timeframe1].labels(),
                                     label: metrics[selectedMetric].label,
                                     dataset: plottable(),
                                     backgroundColor: `--color-translucent-${delta(selectedMetric) >= 0 ? 'green' : 'red'}`,
@@ -276,8 +281,8 @@ export default function Statistics() {
                                 {['Week', 'Month', 'Year'].map((item, idx) => (
                                     <h5 
                                         key={idx}
-                                        className={idx === selectedTimeframe ? 'menu-option-active' : 'menu-option'}
-                                        onClick={() => setSelectedTimeframe(idx)}
+                                        className={idx === timeframe2 ? 'menu-option-active' : 'menu-option'}
+                                        onClick={() => setTimeframe2(idx)}
                                     >
                                         {item}
                                     </h5>
@@ -359,7 +364,7 @@ export default function Statistics() {
                                 height='200px' 
                                 data={{
                                     label: 'Pace / 500m',
-                                    dataset: [...progressStats.plottable[timeframes[selectedTimeframe].key] ],
+                                    dataset: [...progressStats.plottable[timeframes[timeframe2].key] ],
                                     backgroundColor: '--tint-color-translucent',
                                     borderColor: '--tint-color'
                                 }}

@@ -253,7 +253,7 @@ export default function Activity() {
                             </tr>
                         </thead>
                         <tbody>
-                        {(!loading && results.count) && results.activities.map((ac, idx) => (
+                        {(!loading && results.count > 0) && results.activities.map((ac, idx) => (
                             <tr key={idx}>
                                 <td>{moment(ac.createdAt).format('ll')}</td>
                                 <td className='page-link' onClick={() => history.push(`/sessions/${ac.sessionID}`)}>
@@ -267,6 +267,11 @@ export default function Activity() {
                         ))}
                         </tbody>
                     </table>
+                    {( (submittedQuery && !loading && !results.activities.length) &&
+                        <div style={{textAlign: 'center', fontSize: 17, color: 'var(--color-secondary)', padding: '50px 0px'}}>
+                            We couldn't find any activities matching those filters
+                        </div>
+                    )}
                     {loading && <Loading />}
                 </div>
 

@@ -1,12 +1,13 @@
 
 import React, {useState, useEffect} from 'react'
-import FloatMessage from '../misc/FloatMessage'
 import {useAuth} from '../../contexts/AuthContext'
+import {useMessage} from '../../contexts/MessageContext'
 import {storage} from '../../firebase'
 import moment from 'moment'
 
 export default function Profile() {
     const {currentUser} = useAuth()
+    const {setMessage} = useMessage()
 
     const [profileDisplayName, setProfileDisplayName] = useState(currentUser.displayName)
     const [displayName, setDisplayName] = useState(currentUser.displayName)
@@ -16,8 +17,6 @@ export default function Profile() {
     const [photoURL, setPhotoURL] = useState()
     const [photoFile, setPhotoFile] = useState()
     const [isEditingPhoto, setIsEditingPhoto] = useState(false)
-
-    const [displayMessage, setDisplayMessage] = useState()
 
     useEffect( () => {
         if (!photoFile) {return}
@@ -31,10 +30,10 @@ export default function Profile() {
                 displayName: displayName
             })
             setProfileDisplayName(displayName)
-            setDisplayMessage({title: 'Changes saved', isError: false, timestamp: moment()})
+            setMessage({title: 'Changes saved', isError: false, timestamp: moment()})
         } catch (error) {
             console.log(error)
-            setDisplayMessage({title: error.message, isError: true, timestamp: moment()})
+            setMessage({title: error.message, isError: true, timestamp: moment()})
         }
         setIsEditingName(false)
     }
@@ -48,20 +47,12 @@ export default function Profile() {
                 photoURL: resURL
             })
             setProfilePhotoURL(resURL)
-            setDisplayMessage({title: 'Changes saved', isError: false, timestamp: moment()})
+            setMessage({title: 'Changes saved', isError: false, timestamp: moment()})
         } catch(error) {
             console.log(error)
-            setDisplayMessage({title: error.message, isError: true, timestamp: moment()})
+            setMessage({title: error.message, isError: true, timestamp: moment()})
         }
         setIsEditingPhoto(false)
-    }
-    
-    function handleClickDeleteAccount() {
-        setDisplayMessage({
-            title: 'We apologize, but this feature is currently in development',
-            isError: true,
-            timestamp: moment()
-        })
     }
 
     return (
@@ -87,7 +78,7 @@ export default function Profile() {
                             <input type='text' value={displayName} onChange={e => setDisplayName(e.target.value)} required/>
                         </div>
                         <br /><br />
-                        <div className='d-flex jc-flex-end'>
+                        <div className='d-flex jc-flex-end' style={{gap: 20}}>
                             <button type='button' className='clear-btn-secondary' onClick={() => setIsEditingName(false)}>Cancel</button>
                             <button type='submit' className='solid-btn-secondary'>Save</button>
                         </div>
@@ -113,7 +104,7 @@ export default function Profile() {
                             <input type='file' accept='image/*' onChange={e => setPhotoFile(e.target.files[0])} required/>
                         </div>
                         <br /><br />
-                        <div className='d-flex jc-flex-end'>
+                        <div className='d-flex jc-flex-end' style={{gap: 20}}>
                             <button type='button' className='clear-btn-secondary' onClick={() => setIsEditingPhoto(false)}>Cancel</button>
                             <button type='submit' className='solid-btn-secondary'>Save</button>
                         </div>
@@ -122,7 +113,6 @@ export default function Profile() {
                 </div>
 
             </div>
-            {displayMessage && <FloatMessage message={displayMessage} />}
         </div>
     )
 }

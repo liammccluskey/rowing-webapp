@@ -5,7 +5,6 @@ import MembersInfoCard from './MembersInfoCard'
 import SessionInfoCard from './SessionInfoCard'
 import LiveActivityTable from './LiveActivityTable'
 import ResultsTable from './ResultsTable'
-import Arrow from '../misc/Arrow'
 import {useAuth} from '../../contexts/AuthContext'
 import Loading from '../misc/Loading'
 import axios from "axios"

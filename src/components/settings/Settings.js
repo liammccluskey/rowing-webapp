@@ -6,8 +6,7 @@ import Profile from './Profile'
 import Preferences from './Preferences'
 import {useAuth} from '../../contexts/AuthContext'
 import {useTheme} from '../../contexts/ThemeContext'
-import FloatMessage from '../misc/FloatMessage'
-import auth from '../../firebase'
+import {useMessage} from '../../contexts/MessageContext'
 import Loading from '../misc/Loading'
 import moment from 'moment'
 import axios from 'axios'
@@ -21,6 +20,7 @@ const api = axios.create({
 
 export default function Settings() {
     const {currentUser} = useAuth()
+    const {setMessage} = useMessage()
     const {isDarkMode} = useTheme()
     const [userData, setUserData] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -28,8 +28,6 @@ export default function Settings() {
     const [profileEmail, setProfileEmail] = useState(currentUser.email)
     const [editingEmail, setEditingEmail] = useState(false)
     const [email, setEmail] = useState(currentUser.email)
-
-    const [displayMessage, setDisplayMessage] = useState()
 
     useEffect(() => {
         async function fetchData() {
@@ -49,10 +47,10 @@ export default function Settings() {
         try {
             await currentUser.updateEmail(email)
             setProfileEmail(email)
-            setDisplayMessage({title: 'Changes saved', isError: false, timestamp: moment()})
+            setMessage({title: 'Changes saved', isError: false, timestamp: moment()})
         } catch (error) {
             console.log(error)
-            setDisplayMessage({title: error.message, isError: true, timestamp: moment()})
+            setMessage({title: error.message, isError: true, timestamp: moment()})
         }
         setEditingEmail(false)
     }
@@ -60,15 +58,15 @@ export default function Settings() {
     async function handleClickResetPassword() {
         try {
             await firebase.auth().sendPasswordResetEmail(currentUser.email)
-            setDisplayMessage({title: 'Check your email for a reset password link', isError: false, timestamp: moment()})
+            setMessage({title: 'Check your email for a reset password link', isError: false, timestamp: moment()})
         } catch (error) {
             console.log(error)
-            setDisplayMessage({title: error.message, isError: true, timestamp: moment()})
+            setMessage({title: error.message, isError: true, timestamp: moment()})
         }
     }
 
     function handleClickSubscribe() {
-        setDisplayMessage({
+        setMessage({
             title: 'We apologize, but this feature is currently in development',
             isError: true,
             timestamp: moment()
@@ -104,7 +102,7 @@ export default function Settings() {
                         </p>
                     ))}
                 </div>
-                <div style={{width: 650, maxWidth: 650, minWidth: 650, marginLeft: 200}}>
+                <div style={{width: 650, maxWidth: 650, minWidth: 650, marginLeft: 150}}>
                     <h3 id='Membership'>Membership</h3>
                     <br />
                     <div className='settings-list'>
@@ -157,7 +155,6 @@ export default function Settings() {
                     <Preferences />
                     <div style={{height: 450}} />
                 </div>
-                {displayMessage && <FloatMessage message={displayMessage} /> }
             </div>
             }
         </div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState} from "react"
 import MainHeader from "../headers/MainHeader"
-import Sidebar from '../headers/Sidebar'
 import Calendar from './Calendar'
 import UserInfoCard from './UserInfoCard'
 import ClubsInfoCard from './ClubsInfoCard'
@@ -18,9 +17,7 @@ const api = axios.create({
 
 export default function Dashboard() {
     const { currentUser } = useAuth()
-    const { isDarkMode, setIsDarkMode, companyName } = useTheme()
     const history = useHistory()
-    const location = useLocation()
 
     const [myClubs, setMyClubs] = useState([])
     const [todaySessions, setTodaySessions] = useState([])
@@ -58,11 +55,6 @@ export default function Dashboard() {
         }
     }
 
-    function handleToggleMode() {
-        console.log("dashboard: did toggle mode change")
-        setIsDarkMode(currState => !currState)
-    }
-
     function routeToSessionWithID(sessionID) {
         history.push(`/sessions/${sessionID}`)
     }
@@ -73,7 +65,7 @@ export default function Dashboard() {
             <br />
             <br />
             <div 
-                className='main-container d-flex jc-flex-start ai-flex-start' 
+                className='main-container d-flex jc-flex-start ai-flex-start'
                 style={{gap: '75px', padding: '0px 50px', marginBottom: '100px'}}
             >
                 <div hidden={false}>

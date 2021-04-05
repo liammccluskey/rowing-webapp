@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext'
+import { MessageProvider } from './contexts/MessageContext'
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './components/dashboard/Dashboard'
 import Session from "./components/session/Session"
@@ -25,7 +26,8 @@ function App() {
     <div className="App">
       <Router>
         <AuthProvider>
-            <ThemeProvider>
+          <ThemeProvider>
+            <MessageProvider>
               <Switch>
                 <Route exact path="/" component={Landing} />
                 <Route path="/login" component={Login} />
@@ -45,7 +47,8 @@ function App() {
 
                 <PrivateRoute path='/sessions/:sessionID' component={Session} />
               </Switch>
-            </ThemeProvider>
+            </MessageProvider>
+          </ThemeProvider>
         </AuthProvider>
       </Router>
     </div>

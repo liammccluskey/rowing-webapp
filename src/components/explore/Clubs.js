@@ -3,7 +3,9 @@ import ExploreHeader from './ExploreHeader'
 import MainHeader from '../headers/MainHeader'
 import {useHistory} from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
+import {useMessage} from '../../contexts/MessageContext'
 import axios from 'axios'
+import moment from 'moment'
 import Loading from '../misc/Loading'
 import Paginator from '../misc/Paginator'
 
@@ -13,6 +15,7 @@ const api = axios.create({
 
 export default function Clubs() {
     const {currentUser} = useAuth()
+    const {setMessage} = useMessage()
     const [results, setResults] = useState(null)
     const [loading, setLoading] = useState(false)
     const history = useHistory()
@@ -33,9 +36,13 @@ export default function Clubs() {
         console.log(`Trying to join club with UID: ${currentUser.uid}`)
         try {
             await api.patch(`/clubs/${club._id}/join`, {uid: currentUser.uid})
+            setMessage({title: `Your request to join " ${club.name} " was successful`, isError: false, timestamp: moment() })
             history.push(`/clubs/${club.customURL}`)
         } catch(error) {
-            console.log(error)
+            setMessage({
+                title: `Your request to join " ${club.name} " could not be processed at this time`,
+                isError: false, timestamp: moment() 
+            })
         }
     }
 

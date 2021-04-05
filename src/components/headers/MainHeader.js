@@ -20,7 +20,7 @@ export default function MainHeader(props) {
     }, [])
 
     return (
-        <div className="d-flex jc-space-between ai-center main-header" style={props.style}>
+        <div className="d-flex jc-space-between ai-center main-header" style={{...props.style}}>
             <div>
                 <div className='d-flex jc-flex-start ai-center' style={{gap: 50}}>
                     <div className='d-flex jc-center ai-center' style={{gap: 10}}>   

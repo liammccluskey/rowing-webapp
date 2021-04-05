@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {Bar} from 'react-chartjs-2'
+import {useTheme} from '../../contexts/ThemeContext'
 
 /*
     - Custom Bar Chart
@@ -9,10 +10,18 @@ import {Bar} from 'react-chartjs-2'
 
 export default function CustomBar(props) {
     const [data, setData] = useState(props.data)
+    const {isDarkMode} = useTheme()
+    const [localTheme, setLocalTheme] = useState(isDarkMode)
 
     useEffect(() => {
         setData(props.data)
     }, [props])
+
+
+    // Force rerenders on color theme change
+    useEffect(() => {
+        setLocalTheme(isDarkMode)
+    }, [isDarkMode])
 
     return (
         <div style={{height: props.height}}>
