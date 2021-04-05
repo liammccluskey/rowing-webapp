@@ -26,6 +26,7 @@ body {
 button {
   outline: none;
   cursor: pointer;
+  font-weight: 500;
 }
 h1, h2, h3, h4, h5 {
   font-weight: 400;
@@ -521,14 +522,12 @@ table tbody tr:last-child {
   padding: 15px 25px;
   background-color: var(--tint-color);
   color: var(--bgc-light);
-  font-weight: 500;
   font-size: 15px;
   border: 1px solid transparent;
   border-radius: 5px;
 }
 .clear-btn,
 .clear-btn-secondary {
-  font-weight: 700;
   background-color: var(--bgc-hover);
   background-color: transparent;
   color: var(--tint-color);
@@ -540,7 +539,6 @@ table tbody tr:last-child {
 .error-btn-secondary {
   padding: 8px 20px;
   font-size: 14px;
-  font-weight: 500;
 }
 .solid-btn-secondary{
   padding: 9px 20px;
@@ -556,7 +554,6 @@ table tbody tr:last-child {
   transition: 0.3s;
 }
 .clear-btn-cancel {
-  font-weight: 500;
   background-color: transparent;
   color: var(--tint-color);
   border: none;
@@ -592,7 +589,6 @@ table tbody tr:last-child {
 
 .error-btn-secondary {
   color: var(--color-error);
-  font-weight: 500;
   background-color: transparent;
   border: 1px solid var(--color-red);
   border-radius: 5px;
