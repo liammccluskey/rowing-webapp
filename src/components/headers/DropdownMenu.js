@@ -66,19 +66,19 @@ export default function DropdownMenu(props) {
                     className='d-flex jc-space-between ai-center'
                 >
                     <div className='d-flex jc-flex-start ai-center' style={{gap: '15px'}}>
-                    <i class="bi bi-moon" style={iconStyle}/>
+                    <i className="bi bi-moon" style={iconStyle}/>
                         <p>Night Mode</p>
                     </div>
-                    <label class="switch">
+                    <label className="switch">
                         <input type="checkbox" checked={isDarkMode} onChange={() => setIsDarkMode(curr => !curr)} />
-                        <span class="slider round"></span>
+                        <span className="slider round"></span>
                     </label>
                 
                 </div>
                 <div className='d-flex jc-flex-start ai-center' style={{...itemStyle}}
                     onClick={signOut}
                 >
-                    <i class="bi bi-box-arrow-right" style={iconStyle}/>
+                    <i className="bi bi-box-arrow-right" style={iconStyle}/>
                     <p >Log Out</p>
                 </div>
                 

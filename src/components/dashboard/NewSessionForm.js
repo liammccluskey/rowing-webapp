@@ -1,6 +1,8 @@
 import React, {useRef, useState} from 'react'
 import {useAuth} from '../../contexts/AuthContext'
+import {useMessage} from '../../contexts/MessageContext'
 import axios from 'axios'
+import moment from 'moment'
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
@@ -8,6 +10,7 @@ const api = axios.create({
 
 export default function NewSessionForm(props) {
     const {currentUser} = useAuth()
+    const {setMessage} = useMessage()
     const sessionTitleRef = useRef()
     const sessionDateRef = useRef()
     const sessionTimeRef = useRef()
@@ -38,13 +41,11 @@ export default function NewSessionForm(props) {
         }
         try {
             const res = await api.post('/sessions', sessionData)
-            setTimeout(() => {
-                props.setShowSessionForm(false)
-                props.fetchSessions()
-            }, 250);
-            
+            setMessage({title: 'Successfully created session', isError: false, timestamp: moment()})
+            props.setShowSessionForm(false)
+            props.fetchSessions()
         } catch(err) {
-            console.log(err)
+            setMessage({title: `Error creating session. ${err.message}`, isError: true, timestamp: moment()})
         }
     }
 

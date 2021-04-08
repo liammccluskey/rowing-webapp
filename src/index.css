@@ -176,6 +176,10 @@ html {
   --ps-main: 200px;
   --ps-small: 50px;
   --main-nav-height: 70px;
+
+  --ps-nav: 13%;
+  --ps-main: 13%;
+  --ps-small: 5%;
 }
 
 .search-bar {

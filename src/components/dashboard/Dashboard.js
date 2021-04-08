@@ -44,12 +44,14 @@ export default function Dashboard() {
         const query = {
             year: moment().year(),
             month: moment().month(),
-            day: moment().date()
+            day: moment().date(),
+            sparse: 0
         }
         const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
         try {
             const res = await api.get(`/sessions/uid/${currentUser.uid}?${queryString}`)
             setTodaySessions(res.data)
+            console.log(res.data)
         } catch (error) {
             console.log(error)
         }
@@ -106,18 +108,13 @@ export default function Dashboard() {
                                     >
                                         <td className='d-flex jc-flex-start ai-center' style={{gap: '10px'}}>
                                             <img style={{borderRadius: '5px'}} height='30px' width='30px' 
-                                                src={session.associatedClubID === 'none' ?
-                                                    currentUser.photoURL : 
-                                                    myClubs.find(club=>club._id===session.associatedClubID).iconURL
+                                                src={session.hasOwnProperty('club') ? 
+                                                    session.club.iconURL
+                                                    :
+                                                    currentUser.photoURL
                                                 }
                                             />
-                                            <p>
-                                                {session.associatedClubID === 'none' ? 
-                                                    currentUser.displayName 
-                                                    :
-                                                    myClubs.find(club=>club._id===session.associatedClubID).name
-                                                }
-                                            </p>
+                                            <p> {session.hasOwnProperty('club') ? session.club.name : currentUser.displayName} </p>
                                                 
                                         </td>
                                         <td>

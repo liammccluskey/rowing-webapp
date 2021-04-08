@@ -57,14 +57,13 @@ export default function ClubHeader(props) {
             }
         }
         await leaveClub()
-        setConfirmationHidden(true)
         props.fetchData()
 
     }
 
     return (
         <div style={{position: 'sticky', top: 0}}>
-            <Confirmation title='Confirm' message='Are you sure you wish to leave this club?' 
+            <Confirmation title='Confirm' message='Are you sure you want to leave this club?' 
                 handleClickConfirm={handleClickConfirmLeave} hidden={confirmationHidden} setHidden={setConfirmationHidden}
             />
             <img className='banner-image' src={srcBanner} />
