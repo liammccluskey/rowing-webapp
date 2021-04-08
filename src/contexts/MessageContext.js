@@ -21,7 +21,7 @@ export function MessageProvider({children}) {
         if (! messageTimestamps.has(message.timestamp.format())) {
             setMessages([...messages, {...message, isHidden: false, key: key} ])
             setMessageTimestamps(curr => (new Set([...curr, message.timestamp.format()])) )
-            setTimeout(() => hideMessage(key), 6*1000);
+            setTimeout(() => hideMessage(key), 5*1000);
         }
         
     }, [message])

@@ -38,7 +38,6 @@ export default function UserInfoCard(props) {
             try {
                 const res = await api.get(`/users/${currentUser.uid}/statistics`)
                 setStats(res.data)
-                console.log(res.data)
             } catch (error) {
                 console.log(error)
             } 

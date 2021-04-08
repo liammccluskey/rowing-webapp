@@ -19,7 +19,8 @@ import Sessions from './components/explore/Sessions'
 import Settings from './components/settings/Settings'
 
 import CreateClub from './components/CreateClub'
-import Club from './components/Club'
+import Club from './components/club/Club'
+import Members from './components/club/Members'
 
 function App() {
   return (
@@ -43,7 +44,8 @@ function App() {
                 <PrivateRoute path='/explore/sessions' component={Sessions} />
 
                 <PrivateRoute path='/club-create' component={CreateClub} />
-                <PrivateRoute path='/clubs/:clubURL' component={Club} />
+                <PrivateRoute path='/clubs/:clubURL/general' component={Club} />
+                <PrivateRoute path='/clubs/:clubURL/members' component={Members} />
 
                 <PrivateRoute path='/sessions/:sessionID' component={Session} />
               </Switch>

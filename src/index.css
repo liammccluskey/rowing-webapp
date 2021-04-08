@@ -175,6 +175,7 @@ html {
   --ps-nav: 200px;
   --ps-main: 200px;
   --ps-small: 50px;
+  --main-nav-height: 70px;
 }
 
 .search-bar {
@@ -208,7 +209,7 @@ select:active, select:focus
   transition: 0.2s;
 }
 form label {
-  font-weight: 400;
+  font-weight: 500;
   color: var(--color);
   font-size: 14px;
   margin-bottom: 5px;
@@ -227,7 +228,7 @@ form label {
 
 .main-header {
   background-color: var(--bgc-nav);
-  height: 70px;
+  height: var(--main-nav-height);
   color: var(--color);
   padding: 0px 40px;
   box-shadow: var(--box-shadow);
@@ -310,7 +311,6 @@ form label {
 }
 .settings-menu {
   position: sticky;
-  top: 70px;
 }
 .settings-page h3 {
   font-weight: 400;
@@ -370,6 +370,15 @@ form label {
   border-bottom: 1px solid var(--bc);
 }
 
+/* club page */
+.banner-image {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  max-height: 135px;
+}
+
 /* tables */
 table {
   border-collapse: collapse;
@@ -425,7 +434,7 @@ table tbody tr:last-child {
   border-bottom: none;
 }
 
-/* dashboard time option */
+/* stats time option */
 .menu-option {
   border-bottom: 2px solid transparent;
   padding-bottom: 10px;

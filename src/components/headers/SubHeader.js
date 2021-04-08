@@ -12,6 +12,7 @@ export default function SubHeader(props) {
         <div className='sub-header' style={props.style}>
             <div className='d-flex jc-space-between ai-center'>
                 <h2 style={{marginBottom: 12}}>{props.title}</h2>
+                {props.children}
             </div>
             <div className='d-flex jc-flex-start' style={{gap: 25}}>
                 {props.items && props.items.map( (item, idx) => (

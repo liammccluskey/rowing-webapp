@@ -1,5 +1,5 @@
 
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import MainHeader from '../headers/MainHeader'
 import SubHeader from '../headers/SubHeader'
 import Profile from './Profile'
@@ -28,6 +28,13 @@ export default function Settings() {
     const [profileEmail, setProfileEmail] = useState(currentUser.email)
     const [editingEmail, setEditingEmail] = useState(false)
     const [email, setEmail] = useState(currentUser.email)
+
+    const menuRef = useCallback(node => {
+        if (node !== null) {
+            setMenuOffset(node.offsetTop - 70)
+        }
+    }, [])
+    const [menuOffset, setMenuOffset] = useState(0)
 
     useEffect(() => {
         async function fetchData() {
@@ -90,7 +97,7 @@ export default function Settings() {
             <SubHeader title='Settings' />
             {loading ? <Loading /> :
             <div className='main-container settings-page d-flex jc-flex-start ai-flex-start' style={{zIndex: -1}}>
-                <div className='settings-menu'>
+                <div id='settings-menu' className='settings-menu' ref={menuRef} style={{top: menuOffset}}>
                     {settingsGroups.map((group, idx) => (
                         <p key={idx} style={{marginBottom: 15}} className='menu-link'
                             onClick={() => {

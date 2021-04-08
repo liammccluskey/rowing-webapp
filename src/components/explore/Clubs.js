@@ -29,20 +29,16 @@ export default function Clubs() {
     }
 
     function handleClickClub(club) {
-        history.push(`/clubs/${club.customURL}`)
+        history.push(`/clubs/${club.customURL}/general`)
     }
 
     async function handleJoinClub(club) {
-        console.log(`Trying to join club with UID: ${currentUser.uid}`)
         try {
             await api.patch(`/clubs/${club._id}/join`, {uid: currentUser.uid})
-            setMessage({title: `Your request to join " ${club.name} " was successful`, isError: false, timestamp: moment() })
-            history.push(`/clubs/${club.customURL}`)
+            setMessage({title: `Successfully joined  "${club.name}"`, isError: false, timestamp: moment() })
+            history.push(`/clubs/${club.customURL}/general`)
         } catch(error) {
-            setMessage({
-                title: `Your request to join " ${club.name} " could not be processed at this time`,
-                isError: false, timestamp: moment() 
-            })
+            setMessage({title: `Error joining "${club.name}"`, isError: true, timestamp: moment() })
         }
     }
 
@@ -106,10 +102,7 @@ export default function Clubs() {
                     </thead>
                     <tbody>
                         {(submittedSearch && results && !loading) && results.clubs.map((club, index) => 
-                            <tr 
-                                key={index}
-                                onClick={()=>handleClickClub(club)}
-                            >
+                            <tr key={index}>
                                 <td>
                                     <div 
                                         className='d-flex jc-flex-start ai-flex-start'
@@ -120,7 +113,7 @@ export default function Clubs() {
                                             height='50px' width='50px' 
                                             style={{ borderRadius: '5px'}}
                                         />
-                                        <h4>{club.name}</h4>
+                                        <h4 className='page-link' onClick={() => handleClickClub(club)}>{club.name}</h4>
                                     </div>
                                     
                                 </td>

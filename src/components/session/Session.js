@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useState, useCallback} from "react"
 import MainHeader from "../headers/MainHeader"
 import SubHeader from '../headers/SubHeader'
 import MembersInfoCard from './MembersInfoCard'
@@ -37,6 +37,13 @@ export default function Session(props) {
             setC2Data(curr => ({...curr, ...m.data}))       
         }
     )
+
+    const menuRef = useCallback(node => {
+        if (node !== null) {
+            setMenuOffset(node.offsetTop - 70)
+        }
+    }, [])
+    const [menuOffset, setMenuOffset] = useState(0)
 
     useEffect(() => {
         // confirm page refresh
@@ -150,10 +157,10 @@ export default function Session(props) {
             {loading ? <Loading /> :
             <div className='main-container' style={{ padding: '0px 0px'}} >
                 <div className='d-flex jc-flex-start ai-flex-start' >
-                    <div 
+                    <div ref={menuRef}
                         style={{ 
                             width: '225px', backgroundColor: 'var(--bgc)', padding: '0px 25px',
-                            position: 'sticky', top: 70
+                            position: 'sticky', top: menuOffset
                         }}
                     >
                         <br /><br />
