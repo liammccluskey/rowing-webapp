@@ -745,3 +745,27 @@ input:checked + .slider:before {
 .onhover-bright:hover {
   filter: brightness(125%);
 }
+.tt-u {
+  text-transform: uppercase;
+}
+.tt-c {
+  text-transform: capitalize;
+}
+.lc-1 {
+  letter-spacing: 1px;
+}
+.lc-2 {
+  letter-spacing: 2px;
+}
+.c-tc {
+  color: var(--tint-color);
+}
+.fw-s {
+  font-weight: 400;
+}
+.fw-m {
+  font-weight: 500;
+}
+.fw-l {
+  font-weight: 700;
+}

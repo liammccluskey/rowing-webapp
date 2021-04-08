@@ -5,6 +5,7 @@ import {useMessage} from '../../contexts/MessageContext'
 import {useAuth} from '../../contexts/AuthContext'
 import moment from 'moment'
 import axios from 'axios'
+import Confirmation from '../misc/Confirmation'
 
 const srcBanner = 'https://styles.redditmedia.com/t5_2qljq/styles/bannerBackgroundImage_zfhrcn1w7u911.jpg?width=4000&format=pjpg&s=88d594d779756f76ef8a5e0073e1d2959cd501bf'
 const src ='https://miro.medium.com/max/3600/1*i-PXQ3H7ork5fLqr2dQw6g.png'
@@ -19,6 +20,8 @@ export default function ClubHeader(props) {
 
     const [club, setClub] = useState(props.club)
     const [isMember, setIsMember] = useState()
+
+    const [confirmationHidden, setConfirmationHidden] = useState(true)
 
     const items = [
         {title: 'General', path: '/general'},
@@ -44,7 +47,7 @@ export default function ClubHeader(props) {
         props.fetchData()
     }
 
-    async function handleClickLeave() {
+    async function handleClickConfirmLeave() {
         async function leaveClub() {
             try {
                 await api.patch(`/clubs/${club._id}/leave`, {uid: currentUser.uid})
@@ -54,11 +57,16 @@ export default function ClubHeader(props) {
             }
         }
         await leaveClub()
+        setConfirmationHidden(true)
         props.fetchData()
+
     }
 
     return (
         <div style={{position: 'sticky', top: 0}}>
+            <Confirmation title='Confirm' message='Are you sure you wish to leave this club?' 
+                handleClickConfirm={handleClickConfirmLeave} hidden={confirmationHidden} setHidden={setConfirmationHidden}
+            />
             <img className='banner-image' src={srcBanner} />
             <SubHeader
                 title={props.title} 
@@ -67,7 +75,7 @@ export default function ClubHeader(props) {
                 subPath={props.subPath}
             >
                 {isMember ? 
-                    <button className='clear-btn-secondary' onClick={handleClickLeave}>Leave</button>
+                    <button className='clear-btn-secondary' onClick={() => setConfirmationHidden(false)}>Leave</button>
                     :
                     <button className='solid-btn-secondary' onClick={handleClickJoin}>Join</button>
                 }
