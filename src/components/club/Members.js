@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import MainHeader from '../headers/MainHeader'
 import ClubHeader from './ClubHeader'
-import {useParams} from 'react-router-dom'
+import {useParams, useHistory} from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
 import Loading from '../misc/Loading'
 import axios from 'axios'
@@ -12,6 +12,7 @@ const api = axios.create({
 
 export default function Members() {
     const {clubURL} = useParams()
+    const history = useHistory()
     const {currentUser} = useAuth()
 
     const [club, setClub] = useState()
@@ -36,7 +37,7 @@ export default function Members() {
             <MainHeader />
             {loading ? <Loading /> : !club ? <h2 style={{paddingTop: 40}}>We couldn't find a club at that link</h2> :
             <div >
-                <ClubHeader title={club.name} subPath='/members' fetchData={fetchData} club={club} /> 
+                <ClubHeader title={club.name} subPath='/members' fetchData={fetchData} club={club}/> 
                 <div className='main-container' style={{paddingBottom: 200}}>
                     <br /><br />
                     <h3>Admins</h3>
@@ -51,7 +52,18 @@ export default function Members() {
                             <tbody>
                                 {club.admins.map((admin, idx) => (
                                     <tr key={idx}>
-                                        <td className='page-link'>{admin.displayName}</td>
+                                        <td className='d-flex ai-center'> 
+                                            {admin.iconURL ? 
+                                                <img className='user-icon d-inline' src={admin.iconURL} />
+                                                :
+                                                <div className='user-icon-default'>
+                                                    <i className='bi bi-person' />
+                                                </div>
+                                            }
+                                            <h4 className='page-link d-inline' onClick={() => history.push(`/athletes/${admin.uid}`)}>
+                                                {admin.displayName}
+                                            </h4>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -70,7 +82,20 @@ export default function Members() {
                             <tbody>
                                 {club.members.map((member, idx) => (
                                     <tr key={idx}>
-                                        <td className='page-link'>{member.displayName}</td>
+                                        <td className='d-flex ai-center'>
+                                            {member.iconURL ? 
+                                                <img className='user-icon d-inline' src={member.iconURL} />
+                                                :
+                                                <div className='user-icon-default'>
+                                                    <i className='bi bi-person' />
+                                                </div> 
+                                            }
+                                            <h4 className='page-link d-inline' onClick={() => history.push(`/athletes/${member.uid}`)}>
+                                                {member.displayName}
+                                            </h4>
+                                        </td>
+                                        
+                                        
                                     </tr>
                                 ))}
                             </tbody>

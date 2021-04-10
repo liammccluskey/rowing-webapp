@@ -20,6 +20,7 @@ export default function DropdownMenu(props) {
     const iconStyle={ fontSize: '20px' , color: 'var(--color)'}
 
     const tabs = [
+        {title: 'Profile', iconName: 'person', path: `/athletes/${currentUser.uid}`},
         {title: 'Settings', iconName: 'gear', path: '/settings'}
     ]
 

@@ -11,8 +11,22 @@ export default function SubHeader(props) {
     return (
         <div className='sub-header' style={props.style}>
             <div className='d-flex jc-space-between ai-center'>
-                <h2 style={{marginBottom: 12}}>{props.title}</h2>
-                {props.children}
+                <div className='d-flex jc-flex-start ai-center' 
+                    style={{marginTop: props.iconURL && -20, marginBottom: 12}}
+                >
+                    {props.iconURL && 
+                        <img height={60} width={60} src={props.iconURL} 
+                            style={{
+                                border: '0px solid var(--bc)', borderRadius: '5px',
+                                marginRight: 10
+                            }} 
+                        />
+                    }
+                    <h2>{props.title}</h2>
+                </div>
+                <div className='d-flex jc-flex-end ai-center'>
+                    {props.children}
+                </div>
             </div>
             <div className='d-flex jc-flex-start' style={{gap: 25}}>
                 {props.items && props.items.map( (item, idx) => (
@@ -25,6 +39,5 @@ export default function SubHeader(props) {
                 ))}
             </div>
         </div>
-
     )
 }

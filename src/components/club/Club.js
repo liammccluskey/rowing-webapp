@@ -35,9 +35,9 @@ export default function Club(props) {
     return (
         <div>
             <MainHeader />
-            {loading ? <Loading /> : !club ? <h2 style={{paddingTop: 40}}>We couldn't find any club at that link</h2> :
+            {loading ? <Loading /> : !club ? <h2 style={{paddingTop: 40}}>We couldn't find a club at that link</h2> :
             <div>
-                <ClubHeader title={club.name} subPath='/general' fetchData={fetchData} club={club} />
+                <ClubHeader title={club.name} subPath='/general' fetchData={fetchData} club={club}/>
                 <div className='main-container' style={{height: '100vh'}}>
                     <br /><br />
                     <p>{club.description}</p>

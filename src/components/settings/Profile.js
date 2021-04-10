@@ -4,6 +4,11 @@ import {useAuth} from '../../contexts/AuthContext'
 import {useMessage} from '../../contexts/MessageContext'
 import {storage} from '../../firebase'
 import moment from 'moment'
+import axios from 'axios'
+
+const api = axios.create({
+    baseURL: process.env.REACT_APP_API_BASE_URL
+})
 
 export default function Profile() {
     const {currentUser} = useAuth()
@@ -40,16 +45,23 @@ export default function Profile() {
 
     async function handleSubmitImage(e) {
         e.preventDefault()
+        async function patchIconURL(iconURL) {
+            try {
+                await api.patch(`/users/${currentUser.uid}/iconURL`, {iconURL: iconURL})
+            } catch (error) {
+                setMessage({title: error.message, isError: true, timestamp: moment()})
+            }
+        } 
         try {
             await storage.ref('users').child(currentUser.uid).put(photoFile);
             const resURL = await storage.ref('users').child(currentUser.uid).getDownloadURL()
             await currentUser.updateProfile({
                 photoURL: resURL
             })
+            await patchIconURL(resURL)
             setProfilePhotoURL(resURL)
             setMessage({title: 'Changes saved', isError: false, timestamp: moment()})
         } catch(error) {
-            console.log(error)
             setMessage({title: error.message, isError: true, timestamp: moment()})
         }
         setIsEditingPhoto(false)

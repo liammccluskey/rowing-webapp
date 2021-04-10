@@ -72,6 +72,7 @@ export default function ClubHeader(props) {
                 items={items} 
                 path={`/clubs/${club.customURL}`}
                 subPath={props.subPath}
+                iconURL={props.club.iconURL}
             >
                 {isMember ? 
                     <button className='clear-btn-secondary' onClick={() => setConfirmationHidden(false)}>Leave</button>

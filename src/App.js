@@ -22,6 +22,8 @@ import CreateClub from './components/CreateClub'
 import Club from './components/club/Club'
 import Members from './components/club/Members'
 
+import Athlete from './components/athlete/Athlete'
+
 function App() {
   return (
     <div className="App">
@@ -46,6 +48,8 @@ function App() {
                 <PrivateRoute path='/club-create' component={CreateClub} />
                 <PrivateRoute path='/clubs/:clubURL/general' component={Club} />
                 <PrivateRoute path='/clubs/:clubURL/members' component={Members} />
+
+                <PrivateRoute path='/athletes/:uid' component={Athlete} />
 
                 <PrivateRoute path='/sessions/:sessionID' component={Session} />
               </Switch>

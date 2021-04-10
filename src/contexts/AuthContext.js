@@ -32,7 +32,6 @@ export function AuthProvider({ children }) {
         }
     }
 
-
     function signUp(displayName, email, password) {
     // Description: Standard register with email
         
