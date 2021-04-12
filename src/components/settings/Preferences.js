@@ -78,7 +78,7 @@ export default function Preferences() {
                         <p>Tint Color</p>
                         <select value={tintColor} onChange={handleTintChange}>
                             {tintColors.map((tc, idx) => (
-                                <option value={idx}>{tc.name}</option>
+                                <option key={idx} value={idx}>{tc.name}</option>
                             ))}
                         </select>
                     </div>

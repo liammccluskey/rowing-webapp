@@ -14,7 +14,7 @@ const api = axios.create({
 })
 
 export default function Clubs() {
-    const {currentUser} = useAuth()
+    const {currentUser, thisUser} = useAuth()
     const {setMessage} = useMessage()
     const [results, setResults] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -34,8 +34,8 @@ export default function Clubs() {
 
     async function handleJoinClub(club) {
         try {
-            await api.patch(`/clubs/${club._id}/join`, {uid: currentUser.uid})
-            setMessage({title: `Successfully joined  "${club.name}"`, isError: false, timestamp: moment() })
+            await api.post('/clubmemberships', {club: club._id, user: thisUser._id})
+            setMessage({title: `Joined "${club.name}"`, isError: false, timestamp: moment() })
             history.push(`/clubs/${club.customURL}/general`)
         } catch(error) {
             setMessage({title: `Error joining "${club.name}"`, isError: true, timestamp: moment() })
@@ -65,7 +65,7 @@ export default function Clubs() {
         setLoading(true)
         setResults(null)
         try {
-            const res = await api.get(`/clubs/search?name=${clubName}&page=${pageNum}`)
+            const res = await api.get(`/clubs/search?name=${clubName}&page=${pageNum}&pagesize=15`)
             setResults(res.data)
             setSubmittedSearch(clubName)
         } catch (error) {
@@ -96,7 +96,6 @@ export default function Clubs() {
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Members</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -104,21 +103,15 @@ export default function Clubs() {
                         {(submittedSearch && results && !loading) && results.clubs.map((club, index) => 
                             <tr key={index}>
                                 <td>
-                                    <div 
-                                        className='d-flex jc-flex-start ai-flex-start'
-                                        style={{gap: '10px'}}
-                                    >
+                                    <div className='d-flex jc-flex-start ai-center'>
                                         <img 
                                             src={club.iconURL}
                                             height='50px' width='50px' 
-                                            style={{ borderRadius: '5px'}}
+                                            style={{ borderRadius: '5px', marginRight: 10}}
                                         />
                                         <h4 className='page-link' onClick={() => handleClickClub(club)}>{club.name}</h4>
                                     </div>
                                     
-                                </td>
-                                <td>
-                                    {`${club.memberUIDs.length} Member${club.memberUIDs.length !== 1 && 's'}`}
                                 </td>
                                 <td style={{textAlign: 'right'}}>
                                     <button onClick={() => handleJoinClub(club)} className='clear-btn-secondary'>Join</button>

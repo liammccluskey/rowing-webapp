@@ -9,7 +9,7 @@ const api = axios.create({
 })
 
 export default function NewSessionForm(props) {
-    const {currentUser} = useAuth()
+    const {thisUser} = useAuth()
     const {setMessage} = useMessage()
     const sessionTitleRef = useRef()
     const sessionDateRef = useRef()
@@ -32,16 +32,15 @@ export default function NewSessionForm(props) {
         const startAt = new Date(`${sessionDateRef.current.value}T${sessionTimeRef.current.value}`)
         const sessionData = {
             title: sessionTitleRef.current.value,
-            hostName: currentUser.displayName,
-            hostUID: currentUser.uid,
+            hostUser: thisUser._id,
             startAt: startAt,
             isAccessibleByLink: sessionPrivacyRef.current.value === 'link',
-            associatedClubID: ['link', 'self'].includes(sessionPrivacyRef.current.value) ? 'none' : sessionPrivacyRef.current.value,
+            club: ['link', 'self'].includes(sessionPrivacyRef.current.value) ? undefined : sessionPrivacyRef.current.value,
             workoutItems: sessionItems.filter((item, i) => i < visibleItems)
         }
         try {
             const res = await api.post('/sessions', sessionData)
-            setMessage({title: 'Successfully created session', isError: false, timestamp: moment()})
+            setMessage({title: 'Created session', isError: false, timestamp: moment()})
             props.setShowSessionForm(false)
             props.fetchSessions()
         } catch(err) {
@@ -56,10 +55,6 @@ export default function NewSessionForm(props) {
     }
 
     function handleAddItem() {
-        console.log('did click add item. init vals')
-        console.log(`visible items: ${visibleItems}`)
-        console.log(hideItems)
-        console.log(' new vals')
         if (visibleItems === maxItems) {return}
         const hide = [...hideItems]
         for (let i = 0; i < hide.length; i++) {
@@ -68,8 +63,6 @@ export default function NewSessionForm(props) {
                 break
             }
         }
-        console.log(`visible items: ${visibleItems + 1}`)
-        console.log(hide)
         setHideItems(hide)
         setVisibleItems(curr => curr + 1)
 
@@ -117,8 +110,8 @@ export default function NewSessionForm(props) {
                             <select ref={sessionPrivacyRef}>
                                 <option value="self">Only Me</option>
                                 <option value="link">Anyone with link</option>
-                                {props.myClubs.map(club => (
-                                    <option value={club._id}>
+                                {props.myClubs.map((club, idx) => (
+                                    <option key={idx} value={club._id}>
                                         {club.name}
                                     </option>
                                 ))}

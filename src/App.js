@@ -14,7 +14,6 @@ import Statistics from './components/training/Statistics'
 import Activity from './components/training/Activity'
 
 import Clubs from './components/explore/Clubs'
-import Sessions from './components/explore/Sessions'
 
 import Settings from './components/settings/Settings'
 
@@ -23,6 +22,7 @@ import Club from './components/club/Club'
 import Members from './components/club/Members'
 
 import Athlete from './components/athlete/Athlete'
+import Following from './components/athlete/Following'
 
 function App() {
   return (
@@ -43,13 +43,14 @@ function App() {
                 <PrivateRoute path='/settings' component={Settings} />
 
                 <PrivateRoute path='/explore/clubs' component={Clubs} />
-                <PrivateRoute path='/explore/sessions' component={Sessions} />
 
                 <PrivateRoute path='/club-create' component={CreateClub} />
                 <PrivateRoute path='/clubs/:clubURL/general' component={Club} />
                 <PrivateRoute path='/clubs/:clubURL/members' component={Members} />
+                
+                <PrivateRoute exact path='/athletes/:userID' component={Athlete} />
+                <PrivateRoute path='/athletes/:userID/following' component={Following} />
 
-                <PrivateRoute path='/athletes/:uid' component={Athlete} />
 
                 <PrivateRoute path='/sessions/:sessionID' component={Session} />
               </Switch>

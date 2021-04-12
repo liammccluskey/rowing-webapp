@@ -14,7 +14,7 @@ export default function Calendar(props) {
     const [sessions, setSessions] = useState([])
     const [data, setData] = useState([])
 
-    const {currentUser} = useAuth()
+    const {thisUser} = useAuth()
 
     useEffect(() => {
         fetchData()
@@ -56,7 +56,7 @@ export default function Calendar(props) {
         }
         const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
         try {
-            const res = await api.get(`/sessions/uid/${currentUser.uid}?${queryString}`)
+            const res = await api.get(`/sessions/user/${thisUser._id}?${queryString}`)
             setData({
                 sessions: res.data,
                 fetchedMoment: currMoment.clone()
@@ -97,7 +97,7 @@ export default function Calendar(props) {
                     }}
                 >
                     {['s','m','t','w','t','f','s'].map((day, id) => (
-                        <h6 style={{
+                        <h6 key={id} style={{
                             textTransform: 'uppercase',margin: '5px 0px',
                             padding: '3px', color: 'var(--color)',
                             textAlign: 'center',
@@ -132,7 +132,7 @@ export default function Calendar(props) {
                                 {day.format('D')}
                             </p>
                             {sessions[index] && sessions[index].map( (session, i) => (
-                                <Link to={`/sessions/${session._id}`} style={{textDecoration: 'none'}}>
+                                <Link to={`/sessions/${session._id}`} style={{textDecoration: 'none'}} key={i}>
                                     <h5 className='page-link' 
                                         style={{
                                             borderLeft: '1px solid var(--tint-color)',

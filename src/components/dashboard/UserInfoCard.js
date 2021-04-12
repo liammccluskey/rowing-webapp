@@ -14,7 +14,7 @@ const api = axios.create({
 })
 
 export default function UserInfoCard(props) {
-    const {currentUser} = useAuth()
+    const {currentUser, thisUser} = useAuth()
     const history = useHistory()
     const [stats, setStats] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -36,7 +36,7 @@ export default function UserInfoCard(props) {
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await api.get(`/users/${currentUser.uid}/statistics`)
+                const res = await api.get(`/users/${thisUser._id}/statistics`)
                 setStats(res.data)
             } catch (error) {
                 console.log(error)
@@ -48,9 +48,7 @@ export default function UserInfoCard(props) {
 
     return (
         <div style={{...props.style}}>
-            {loading ? 
-            <Loading /> 
-            :
+            {loading ? <Loading /> :
             <div className='float-container' >
                 <div className='d-flex jc-flex-start ai-center' 
                     style={{borderBottom: '1px solid var(--bc)', padding: '10px 10px'}}

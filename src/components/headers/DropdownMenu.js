@@ -4,7 +4,7 @@ import {useTheme} from '../../contexts/ThemeContext'
 import {useAuth} from '../../contexts/AuthContext'
 
 export default function DropdownMenu(props) {
-    const {currentUser, signOut} = useAuth()
+    const {currentUser, thisUser, signOut} = useAuth()
     const {isDarkMode, setIsDarkMode} = useTheme()
     const history = useHistory()
 
@@ -20,7 +20,7 @@ export default function DropdownMenu(props) {
     const iconStyle={ fontSize: '20px' , color: 'var(--color)'}
 
     const tabs = [
-        {title: 'Profile', iconName: 'person', path: `/athletes/${currentUser.uid}`},
+        {title: 'Profile', iconName: 'person', path: `/athletes/${thisUser._id}`},
         {title: 'Settings', iconName: 'gear', path: '/settings'}
     ]
 
@@ -52,11 +52,11 @@ export default function DropdownMenu(props) {
                 </div>
 
                 <div style={{borderBottom: border}}>
-                    {tabs.map(tab => (
-                        <div className='d-flex jc-flex-start ai-center' style={itemStyle}
+                    {tabs.map((tab, idx) => (
+                        <div key={idx} className='d-flex jc-flex-start ai-center' style={itemStyle}
                             onClick={() => history.push(tab.path)}
                         >
-                            <i class={`bi bi-${tab.iconName}`} style={iconStyle} />
+                            <i className={`bi bi-${tab.iconName}`} style={iconStyle} />
                             <p>{tab.title}</p>
                         </div>
                     ))}

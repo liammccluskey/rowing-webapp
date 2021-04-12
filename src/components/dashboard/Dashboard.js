@@ -5,8 +5,7 @@ import UserInfoCard from './UserInfoCard'
 import ClubsInfoCard from './ClubsInfoCard'
 import NewSessionForm from './NewSessionForm'
 import { useAuth } from "../../contexts/AuthContext"
-import { useHistory, useLocation } from "react-router-dom"
-import { useTheme } from "../../contexts/ThemeContext"
+import { useHistory } from "react-router-dom"
 import Loading from '../misc/Loading'
 import axios from "axios"
 import moment from 'moment'
@@ -16,7 +15,7 @@ const api = axios.create({
 })
 
 export default function Dashboard() {
-    const { currentUser } = useAuth()
+    const { currentUser, thisUser } = useAuth()
     const history = useHistory()
 
     const [myClubs, setMyClubs] = useState([])
@@ -35,7 +34,7 @@ export default function Dashboard() {
     }, [])
 
     async function fetchClubs() {
-        const url = `/clubs/uid/${currentUser.uid}`
+        const url = `/clubmemberships/user/${thisUser._id}`
         const res = await api.get(url)
         setMyClubs(res.data)
     }
@@ -49,16 +48,13 @@ export default function Dashboard() {
         }
         const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
         try {
-            const res = await api.get(`/sessions/uid/${currentUser.uid}?${queryString}`)
+            const res = await api.get(`/sessions/user/${thisUser._id}?${queryString}`)
             setTodaySessions(res.data)
-            console.log(res.data)
-        } catch (error) {
-            console.log(error)
-        }
+        } catch (error) { console.log(error) }
     }
 
-    function routeToSessionWithID(sessionID) {
-        history.push(`/sessions/${sessionID}`)
+    function routeToSession(session) {
+        history.push(`/sessions/${session._id}`)
     }
 
     return (
@@ -103,19 +99,18 @@ export default function Dashboard() {
                                 </thead>
                                 <tbody >
                                     {todaySessions.map( (session, i) => (
-                                    <tr key={i}
-                                        onClick={() => routeToSessionWithID(session._id)}
-                                    >
+                                    <tr key={i} onClick={() => routeToSession(session)} >
                                         <td className='d-flex jc-flex-start ai-center' style={{gap: '10px'}}>
-                                            <img style={{borderRadius: '5px'}} height='30px' width='30px' 
-                                                src={session.hasOwnProperty('club') ? 
-                                                    session.club.iconURL
+                                            {session.club && <img src={session.club.iconURL} className='club-icon' />}
+                                            {!session.club && (
+                                                session.hostUser.iconURL ? 
+                                                    <img src={session.hostUser.iconURL} className='user-icon' />
                                                     :
-                                                    currentUser.photoURL
-                                                }
-                                            />
-                                            <p> {session.hasOwnProperty('club') ? session.club.name : currentUser.displayName} </p>
-                                                
+                                                    <div className='user-icon-default'>
+                                                        <i className='bi bi-person' />
+                                                    </div>
+                                            )}
+                                            <p> {session.club ? session.club.name : currentUser.displayName} </p>
                                         </td>
                                         <td>
                                             {session.title}

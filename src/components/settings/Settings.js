@@ -5,7 +5,6 @@ import SubHeader from '../headers/SubHeader'
 import Profile from './Profile'
 import Preferences from './Preferences'
 import {useAuth} from '../../contexts/AuthContext'
-import {useTheme} from '../../contexts/ThemeContext'
 import {useMessage} from '../../contexts/MessageContext'
 import Loading from '../misc/Loading'
 import moment from 'moment'
@@ -19,11 +18,8 @@ const api = axios.create({
 })
 
 export default function Settings() {
-    const {currentUser} = useAuth()
+    const {currentUser, thisUser} = useAuth()
     const {setMessage} = useMessage()
-    const {isDarkMode} = useTheme()
-    const [userData, setUserData] = useState(null)
-    const [loading, setLoading] = useState(true)
 
     const [profileEmail, setProfileEmail] = useState(currentUser.email)
     const [editingEmail, setEditingEmail] = useState(false)
@@ -35,19 +31,6 @@ export default function Settings() {
         }
     }, [])
     const [menuOffset, setMenuOffset] = useState(0)
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const res = await api.get(`/users/${currentUser.uid}`)
-                setUserData(res.data)
-            } catch (error) {
-                console.log(error)
-            }
-            setLoading(false)
-        }
-        fetchData()
-    }, [])
 
     async function handleSubmitEmail(e) {
         e.preventDefault()
@@ -95,7 +78,6 @@ export default function Settings() {
         <div>
             <MainHeader />
             <SubHeader title='Settings' />
-            {loading ? <Loading /> :
             <div className='main-container settings-page d-flex jc-flex-start ai-flex-start' style={{zIndex: -1}}>
                 <div id='settings-menu' className='settings-menu' ref={menuRef} style={{top: menuOffset}}>
                     {settingsGroups.map((group, idx) => (
@@ -115,7 +97,7 @@ export default function Settings() {
                     <div className='settings-list'>
                         <div className='settings-row'>
                             <p>Member Since</p>
-                            <p>{moment(userData.createdAt).format('LL')}</p>
+                            <p>{moment(thisUser.createdAt).format('LL')}</p>
                         </div>
                         <div className='settings-row'>
                             <p>Subscription</p>
@@ -128,7 +110,7 @@ export default function Settings() {
                     <div className='settings-list'>
                         <div className='editable-settings-row' style={{display: editingEmail && 'none'}} onClick={() => setEditingEmail(true)}>
                             <p>Email Address</p>
-                            <p>{currentUser.email}</p>
+                            <p>{profileEmail}</p>
                         </div>
                         <div className='settings-edit-container' hidden={!editingEmail} style={{ marginBottom: editingEmail && 15}}>
                             <div className='settings-edit-header' onClick={() => setEditingEmail(false)}>
@@ -163,7 +145,6 @@ export default function Settings() {
                     <div style={{height: 450}} />
                 </div>
             </div>
-            }
         </div>
     )
 }

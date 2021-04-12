@@ -13,23 +13,49 @@ const api = axios.create({
 export default function Members() {
     const {clubURL} = useParams()
     const history = useHistory()
-    const {currentUser} = useAuth()
+    const {thisUser} = useAuth()
 
     const [club, setClub] = useState()
+    const [membership, setMembership] = useState()
+    const [members, setMembers] = useState()
+    const [admins, setAdmins] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [clubURL])
 
+    useEffect(() => {
+        fetchMembers()
+    }, [club])
+
+    
     async function fetchData() {
         try {
             const res = await api.get(`/clubs/customURL/${clubURL}`)
             setClub(res.data)
-        } catch (error) {
+            await __fetchMembers(res.data._id)
+        } catch(error) {
             console.log(error)
         }
         setLoading(false)
+    }
+
+    async function __fetchMembers(clubID) {
+        try {
+            let res = await api.get(`/clubmemberships/club/${clubID}`)
+            setMembers(res.data.filter(m => m.role === 0))
+            setAdmins(res.data.filter(m => m.role > 0))
+            res = await api.get(`/clubmemberships/ismember?user=${thisUser._id}&club=${clubID}`)
+            setMembership(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    function fetchMembers() {
+        if (!club) {return}
+        __fetchMembers(club._id)
     }
 
     return (
@@ -37,7 +63,10 @@ export default function Members() {
             <MainHeader />
             {loading ? <Loading /> : !club ? <h2 style={{paddingTop: 40}}>We couldn't find a club at that link</h2> :
             <div >
-                <ClubHeader title={club.name} subPath='/members' fetchData={fetchData} club={club}/> 
+                <ClubHeader title={club.name} subPath='/members' 
+                    fetchData={fetchData} 
+                    club={club} members={members} membership={membership}
+                /> 
                 <div className='main-container' style={{paddingBottom: 200}}>
                     <br /><br />
                     <h3>Admins</h3>
@@ -50,7 +79,7 @@ export default function Members() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {club.admins.map((admin, idx) => (
+                                {admins.map((admin, idx) => (
                                     <tr key={idx}>
                                         <td className='d-flex ai-center'> 
                                             {admin.iconURL ? 
@@ -60,7 +89,7 @@ export default function Members() {
                                                     <i className='bi bi-person' />
                                                 </div>
                                             }
-                                            <h4 className='page-link d-inline' onClick={() => history.push(`/athletes/${admin.uid}`)}>
+                                            <h4 className='page-link d-inline' onClick={() => history.push(`/athletes/${admin._id}`)}>
                                                 {admin.displayName}
                                             </h4>
                                         </td>
@@ -80,7 +109,7 @@ export default function Members() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {club.members.map((member, idx) => (
+                                {members.map((member, idx) => (
                                     <tr key={idx}>
                                         <td className='d-flex ai-center'>
                                             {member.iconURL ? 
@@ -100,6 +129,9 @@ export default function Members() {
                                 ))}
                             </tbody>
                         </table>
+                        {(members && !members.length) && 
+                            <h4 className='c-cs' style={{padding: '20px 15px'}}>{`${club.name} currently has no members`}</h4>
+                        }
                     </div>
                 </div>
             </div>

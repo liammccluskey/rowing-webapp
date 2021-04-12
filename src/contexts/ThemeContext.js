@@ -13,10 +13,11 @@ export function useTheme() {
 }
 
 export function ThemeProvider({children}) {
-    const [isDarkMode, setIsDarkMode] = useState(false)
+    const {currentUser, thisUser, fetchThisUser} = useAuth()
+
+    const [isDarkMode, setIsDarkMode] = useState(thisUser ? thisUser.usesDarkMode : false)
     const [tintColor, setTintColor] = useState(1)   // mint default
-    const [loading, setLoading] = useState(true)
-    const {currentUser} = useAuth()
+
     const companyName = "Rowe"
     const domainURL = 'https://rowe.com/clubs/'
 
@@ -52,22 +53,6 @@ export function ThemeProvider({children}) {
     ]
 
     useEffect(() => {
-        async function fetchData() {
-            setLoading(false) // this is wrong, fix it
-            try {
-                const res = await api.get(`/users/${currentUser.uid}`)
-                setIsDarkMode(res.data.usesDarkMode)
-                console.log('user data')
-                console.log(res.data)
-            } catch (error) {
-                console.log(error)
-            }
-            
-        }
-        fetchData()
-    }, [])
-
-    useEffect(() => {
         let extension = isDarkMode ? '-d' : '-l'
         let root = document.documentElement
 
@@ -77,15 +62,14 @@ export function ThemeProvider({children}) {
 
         async function updateData() {
             try {
-                await api.patch(`/users/${currentUser.uid}/color-theme`, {
+                await api.patch(`/users/${thisUser._id}/color-theme`, {
                     usesDarkMode: isDarkMode
                 })
             } catch (error) {
                 console.log(error)
             }
         }
-        updateData()
-
+        if (thisUser) {updateData()}
     }, [isDarkMode])
 
     useEffect(() => {
@@ -98,7 +82,7 @@ export function ThemeProvider({children}) {
 
     return (
         <ThemeContext.Provider value={value}>
-            {!loading && children}
+            {children}
         </ThemeContext.Provider>
     )
 }

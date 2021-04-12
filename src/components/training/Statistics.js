@@ -13,7 +13,7 @@ const api = axios.create({
 })
 
 export default function Statistics() {
-    const {currentUser} = useAuth()
+    const {thisUser} = useAuth()
 
     // general stats (top)
     const [timeframe1, setTimeframe1] = useState(1)         // month
@@ -42,17 +42,15 @@ export default function Statistics() {
     useEffect(() => {
         async function fetchData() {
             try {
-                let res = await api.get(`/users/${currentUser.uid}/statistics-general`)
+                let res = await api.get(`/users/${thisUser._id}/statistics-general`)
                 setStats(res.data)
 
                 const queryString = `gte=0&lte=${distanceFilter}`
-                res = await api.get(`users/${currentUser.uid}/statistics-progress?${queryString}`)
+                res = await api.get(`users/${thisUser._id}/statistics-progress?${queryString}`)
                 setProgressStats(res.data)
                 setPrevQueryString(queryString)
                 setPrevQueryReadable('Distance   <=   10,000 m')
                 setPrevQuery(curr => ({...prevQuery, value: distanceFilter, comparator: '<='}))
-
-                console.log(res.data.plottable.month)
             } catch (error) {
                 console.log(error)
             }
@@ -152,15 +150,13 @@ export default function Statistics() {
         // Prevent duplicate queries
         if (queryString !== prevQueryString) {
             try {
-                const res = await api.get(`/users/${currentUser.uid}/statistics-progress?${queryString}`)
+                const res = await api.get(`/users/${thisUser._id}/statistics-progress?${queryString}`)
                 setProgressStats(res.data)
                 setPrevQueryString(queryString)
                 setPrevQuery(curr => ({...prevQuery, value: distanceFilter, comparator: distanceComparatorRef.current.value}))
             } catch (error) {
                 console.log(error)
             }
-        } else {
-            // show error message ?s
         }
         setTimeout(() => {
             setLoadingSearch(false)
@@ -310,7 +306,7 @@ export default function Statistics() {
                                 <div className='clear-btn-secondary' style={{padding: '4px 8px'}}
                                     onClick={() => setHideFilterForm(false)}
                                 >
-                                   <i class="bi bi-pencil" style={{fontSize: '25px'}}/>
+                                   <i className="bi bi-pencil" style={{fontSize: '25px'}}/>
                                 </div>
                             </div>
                             <form onSubmit={handleSubmit}

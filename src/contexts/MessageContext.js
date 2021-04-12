@@ -46,8 +46,8 @@ export function MessageProvider({children}) {
         <MessageContext.Provider value={value}>
             {children}
             <div style={{position: 'fixed', left: '50%', marginLeft: -messageWidth/2, bottom: 100, width: messageWidth}}>
-                {messages !== null && messages.map(message => (
-                    <div className='d-flex jc-flex-start float-container' 
+                {messages !== null && messages.map((message, idx) => (
+                    <div key={idx} className='d-flex jc-flex-start float-container' 
                         style={{overflow: 'hidden', gap: 0, border: '2px solid var(--bc)', marginTop: 10, display: message.isHidden && 'none'}}
                         hidden={message.isHidden}
                     >

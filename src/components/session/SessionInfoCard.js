@@ -7,36 +7,30 @@ const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
 })
 export default function SessionInfoCard(props) {
-    const [club, setClub] = useState()
+    const [session, setSession] = useState(props.session)
     const [loading, setLoading] = useState(true)
-    const {currentUser} = useAuth()
+    const {currentUser, thisUser} = useAuth()
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const res = await api.get(`/clubs/${props.session.associatedClubID}`)
-                setClub(res.data)
-                
-            } catch (error) {
-                console.log(error)
-            }
-            setLoading(false)
-        }
-        if (props.session.associatedClubID !== 'none') {
-            fetchData()
-        }
-    }, [])
+        setSession(props.session)
+    }, [props])
     return (
         <div style={{...props.style}}>
             <h4 style={{fontWeight: '500', marginBottom: '10px'}}>Session Host</h4>
             <div className='d-flex jc-flex-start ai-flex-start' >
-                <img 
-                    height='50px' width='50px' 
-                    src={club ? club.iconURL : currentUser.photoURL} 
-                    style={{borderRadius: '5px', marginRight: '10px'}}
-                />
+                {session.club && <img src={session.club.iconURL} height={50} width={50} className='club-icon' />}
+                {!session.club && (
+                    session.hostUser.iconURL ? 
+                        <img className='user-icon' height={50} width={50} src='user-icon' />
+                        :
+                        <div className='user-icon-default' style={{height: 50, width: 50}}>
+                            <i className='bi bi-person' />
+                        </div>
+                )}
                 <div>
-                    <h4 style={{color: 'var(--color-secondary)'}}>{club ? club.name : currentUser.displayName}</h4>
+                    <h4 style={{color: 'var(--color-secondary)'}}>
+                        {session.club ? session.club.name : session.hostUser.displayName}
+                    </h4>
                     <h5 style={{color: 'var(--color-secondary)',marginTop: '10px'}}>
                         {moment(props.session.startAt).calendar()}
                     </h5>

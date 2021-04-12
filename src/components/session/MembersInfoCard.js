@@ -7,35 +7,31 @@ const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
 })
 export default function MembersInfoCard(props) {
-    const {currentUser} = useAuth()
+    const {thisUser} = useAuth()
     const [session, setSession] = useState(props.session)
-    const [members, setMembers] = useState()
-    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const res = await api.get(`/sessions/${props.session._id}/members`)
-                setMembers(res.data)
-            } catch (error) {
-                console.log(error)
-            }
-            setLoading(false)
-        }
-        fetchData()
         setSession(props.session)
-    }, [props.session])
+    }, [props])
+
+    async function handleClickJoin() {
+        try {
+            await api.patch(`/sessions/${session._id}/join`, {user: thisUser._id})
+        } catch (error) {
+            console.log(error)
+        }
+        props.fetchSession()
+    }
 
     return (
         <div style={{...props.style}}>
-            {loading ? <Loading /> :
             <div>
                 <div className='d-flex jc-space-between ai-center'>
-                    <h4 style={{fontWeight: '500'}}>Members <small>( {members.length} )</small></h4>
+                    <h4 style={{fontWeight: '500'}}>Members <small>( {session.members.length} )</small></h4>
                     <button 
-                        onClick={props.handleClickJoin} 
+                        onClick={handleClickJoin} 
                         className='solid-btn-secondary'
-                        hidden={session.memberUIDs.includes(currentUser.uid)}
+                        hidden={session.members.some(m => m._id === thisUser._id)}
                     >
                         Join
                     </button>
@@ -47,7 +43,7 @@ export default function MembersInfoCard(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {members.map(member => (
+                        {session.members.map(member => (
                             <tr>
                                 <td >{member.displayName}</td>
                             </tr>
@@ -55,9 +51,6 @@ export default function MembersInfoCard(props) {
                     </tbody>
                 </table>
             </div>
-            
-            }
-            
         </div>
     )
 }

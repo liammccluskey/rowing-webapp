@@ -4,7 +4,6 @@ import {useHistory} from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
 
 export default function ClubsInfoCard(props) {
-    const {currentUser} = useAuth()
     const history = useHistory()
 
     return (
@@ -15,21 +14,17 @@ export default function ClubsInfoCard(props) {
                 <thead>
                     <tr>
                         <th style={{color: 'var(--color-secondary)'}}>Club</th>
-                        <th style={{color: 'var(--color-secondary)'}}>Members</th>
                     </tr>
                 </thead>
                 <tbody>
                     {!props.clubs ? <Loading /> : props.clubs.map((club, id) => (
                         <tr key={id}>
-                            <td className='d-flex jc-flex-start ai-center page-link' style={{flexWrap: 'nowrap', gap:'5px'}}
+                            <td className='d-flex jc-flex-start ai-center page-link'
                                 onClick={()=>history.push(`/clubs/${club.customURL}/general`)}
                             >
-                                <img height='30px' width='30px' style={{borderRadius: '3px'}}
-                                    src={club.iconURL}
-                                />
-                                {club.name}
+                                <img className='club-icon' src={club.iconURL}/>
+                                <p>{club.name}</p>
                             </td>
-                            <td>{club.memberUIDs.length}</td>
                         </tr>
                     ))}
                 </tbody>

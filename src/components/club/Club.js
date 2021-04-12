@@ -13,23 +13,42 @@ const api = axios.create({
 
 export default function Club(props) {
     const {clubURL} = useParams()
-    const {currentUser} = useAuth()
+    const {thisUser} = useAuth()
+
+    const [members, setMembers] = useState()
+    const [membership, setMembership] = useState()
     const [club, setClub] = useState()
     const [loading, setLoading] = useState(true)
 
     useEffect( () => {
         fetchData()
-    },[clubURL])
+    }, [clubURL])
 
     async function fetchData() {
         try {
             const res = await api.get(`/clubs/customURL/${clubURL}`)
             setClub(res.data)
-            console.log(res.data)
+            await __fetchMembers(res.data._id)
         } catch(error) {
             console.log(error)
         }
         setLoading(false)
+    }
+
+    async function __fetchMembers(clubID) {
+        try {
+            let res = await api.get(`/clubmemberships/club/${clubID}`)
+            setMembers(res.data)
+            res = await api.get(`/clubmemberships/ismember?user=${thisUser._id}&club=${clubID}`)
+            setMembership(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    function fetchMembers() {
+        if (!club) {return}
+        __fetchMembers(club._id)
     }
 
     return (
@@ -37,7 +56,10 @@ export default function Club(props) {
             <MainHeader />
             {loading ? <Loading /> : !club ? <h2 style={{paddingTop: 40}}>We couldn't find a club at that link</h2> :
             <div>
-                <ClubHeader title={club.name} subPath='/general' fetchData={fetchData} club={club}/>
+                <ClubHeader title={club.name} subPath='/general' 
+                    fetchData={fetchMembers} 
+                    club={club} members={members} membership={membership}
+                />
                 <div className='main-container' style={{height: '100vh'}}>
                     <br /><br />
                     <p>{club.description}</p>

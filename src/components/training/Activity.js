@@ -13,7 +13,7 @@ const api = axios.create({
 })
 
 export default function Activity() {
-    const {currentUser} = useAuth()
+    const {thisUser} = useAuth()
     const history = useHistory()
 
     const [results, setResults] = useState([])
@@ -86,7 +86,7 @@ export default function Activity() {
         const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
 
         try {
-            const res = await api.get(`/activities/uid/${currentUser.uid}?${queryString}`)
+            const res = await api.get(`/activities/search?user=${thisUser._id}&${queryString}`)
             setResults({
                 count: res.data.count,
                 activities: sortActivities(res.data.activities)
@@ -161,7 +161,7 @@ export default function Activity() {
                     <div className='clear-btn-secondary' style={{padding: '4px 8px'}}
                         onClick={() => setHideFilterForm(false)}
                     >
-                        <i class="bi bi-pencil" style={{fontSize: '25px'}}/>
+                        <i className="bi bi-pencil" style={{fontSize: '25px'}}/>
                     </div>
                 </div>
                 <form onSubmit={handleSubmitForm} className='bgc-container'
@@ -188,7 +188,7 @@ export default function Activity() {
                         <label>
                             Order <br />
                             <select ref={sortOrderRef}>
-                                <option value='-' selected={true}>{sortParams[selectedSortParam].description.desc}</option>
+                                <option value='-' defaultValue={true}>{sortParams[selectedSortParam].description.desc}</option>
                                 <option value='+'>{sortParams[selectedSortParam].description.asc}</option>
                             </select>
                         </label>
@@ -239,7 +239,7 @@ export default function Activity() {
                                         className={sortedKey === col.key ? 'th-sortable th-selected' : 'th-sortable'}
                                     >
                                         {col.title}
-                                        <div className={!sortAscending && 'rotate-180'} style={{display: 'inline-block', marginLeft: '8px'}}>
+                                        <div className={!sortAscending ? 'rotate-180' : ''} style={{display: 'inline-block', marginLeft: '8px'}}>
                                             <i className='bi bi-triangle-fill' 
                                                 style={{
                                                     fontSize: '10px', color: 'var(--tint-color)',

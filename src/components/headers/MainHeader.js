@@ -51,7 +51,7 @@ export default function MainHeader(props) {
                 <div className='d-flex jc-center ai-center onhover-bc' onClick={() => setHideMenu(false)}
                     style={{gap: 10, cursor: 'pointer', padding: '5px 5px'}} 
                 >
-                    <img src={currentUser.photoURL} height={30} width={30} style={{borderRadius: '50%'}}/>
+                    <img src={currentUser.photoURL}height={30} width={30} style={{margin: 0, borderRadius: '50%'}} />
                     <i className='bi bi-chevron-down' />
                 </div>
             </div>

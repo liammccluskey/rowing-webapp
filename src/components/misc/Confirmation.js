@@ -7,7 +7,6 @@ export default function Confirmation(props) {
 
     useEffect(() => {
         setHidden(props.hidden)
-        console.log('did change hidden')
     }, [props.hidden])
 
     const sectionStyle = {padding: '20px 30px', borderLeft: '3px solid var(--tint-color)', textAlign: 'left'}

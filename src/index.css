@@ -219,7 +219,6 @@ form label {
   font-weight: 500;
   color: var(--color);
   font-size: 14px;
-  margin-bottom: 5px;
 }
 .landing-header {
   background-color: var(--bgc-nav-l);
@@ -274,7 +273,6 @@ form label {
 }
 .page-link:hover {
   color: var(--page-link-color);
-  text-decoration: underline;
 }
 
 .main-container {
@@ -386,6 +384,40 @@ form label {
   max-height: 135px;
 }
 
+/* create club page */
+.icon-image-input {
+  height: 75px; width: 75px;
+  border: 1px solid var(--bc);
+  border-radius: 5px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--tint-color);
+  font-size: 30px;
+  overflow: hidden;
+}
+.icon-image-input img {
+  height: 100%; width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.banner-image-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid var(--bc);
+  color: var(--tint-color);
+  font-size: 50px;
+  overflow: hidden;
+}
+.banner-image-input img {
+  width: 100%;
+  max-height: 125px;
+  object-position: center;
+  object-fit: cover;
+}
+
 /* tables */
 table {
   border-collapse: collapse;
@@ -462,12 +494,16 @@ table tbody tr:last-child {
 }
 
 /* icons */
-.user-icon {
+.user-icon,
+.club-icon {
   display: inline;
   height: 35px;
   width: 35px;
   border-radius: 50%;
   margin-right: 15px;
+}
+.club-icon {
+  border-radius: 5px;
 }
 .user-icon-default {
   display: inline-flex;
@@ -787,6 +823,9 @@ input:checked + .slider:before {
 }
 .c-tc {
   color: var(--tint-color);
+}
+.c-cs {
+  color: var(--color-secondary);
 }
 .fw-s {
   font-weight: 400;

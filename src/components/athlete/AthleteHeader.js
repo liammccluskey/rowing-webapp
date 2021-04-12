@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import SubHeader from '../headers/SubHeader'
 import {useAuth} from '../../contexts/AuthContext'
 import {useMessage} from '../../contexts/MessageContext'
+import {useHistory, useParams} from 'react-router-dom'
 import Confirmation from '../misc/Confirmation'
 import axios from 'axios'
 import moment from 'moment'
@@ -13,18 +14,22 @@ const api = axios.create({
 })
 
 export default function AthleteHeader(props) {
-    const {currentUser} = useAuth()
+    const {thisUser} = useAuth()
+    const {userID} = useParams()
     const {setMessage} = useMessage()
+    const history = useHistory()
 
     const [user, setUser] = useState(props.user)
-    const [follows, setFollows] = useState()
+    const [followSummary, setFollowSummary] = useState()
+    const [loadingSummary, setLoadingSummary] = useState(true)
     const [doesFollow, setDoesFollow] = useState()
-    const [loading, setLoading] = useState(true)
+    const [loadingDoesFollow, setLoadingDoesFollow] = useState(true)
 
     const [confirmationHidden, setConfirmationHidden] = useState(true)
     
     const items = [
-        {title: 'Overview', path: '/'}
+        {title: 'Overview', path: '/'},
+        {title: 'Following', path: '/following'}
     ]
 
     useEffect(() => {
@@ -32,46 +37,57 @@ export default function AthleteHeader(props) {
         fetchData()
     }, [props.user]) 
 
-    async function fetchData() {
-        await fetchFollowSummary()
-        await fetchDoesFollow()
-        setLoading(false)
+    function fetchData() {
+        fetchFollowSummary()
+        fetchDoesFollow()
     }
 
     async function fetchFollowSummary() {
         try {
-            const res = await api.get(`/follows/uid/${user.uid}/summary`)
-            setFollows(res.data)
+            const res = await api.get(`/follows/user/${userID}/summary`)
+            setFollowSummary(res.data)
         } catch (error) {console.log(error)}
+        setLoadingSummary(false)
     }
 
     async function fetchDoesFollow() {
         try {
-            const res = await api.get(`/follows/uid/${currentUser.uid}/doesfollow/uid/${user.uid}`)
+            const res = await api.get(`/follows/doesfollow?follower=${thisUser._id}&followee=${userID}`)
             setDoesFollow(res.data.doesFollow)
         } catch (error) {
             console.log(error.message)
         }
+        setLoadingDoesFollow(false)
     }
 
     async function handleClickFollow() {
         try {
-            await api.post('/follows', {follower: currentUser.uid, followee: user.uid})
+            await api.post('/follows', {follower: thisUser._id, followee: userID})
             setMessage({title: `You are now following ${user.displayName}`, isError: false, timestamp: moment()})
         } catch (error) {
             setMessage({title: `Error following ${user.displayName}. ${error.message}`, isError: true, timestamp: moment()})
         }
         fetchData()
+        {props.fetchData && props.fetchData()}
     }
 
-    async function handleClickUnfollow() {
-        try {
-            await api.delete(`/follows?follower=${currentUser.uid}&followee=${user.uid}`)
-            setMessage({title: `You unfollowed ${user.displayName}`, isError: false, timestamp: moment()})
-        } catch (error) {
-            setMessage({title: `Error unfollowing ${user.displayName}. ${error.message}`, isError: true, timestamp: moment()})
+    async function handleClickConfirmUnfollow() {
+        async function unfollow() {
+            try {
+                await api.delete(`/follows?follower=${thisUser._id}&followee=${userID}`)
+                setMessage({title: `You unfollowed ${user.displayName}`, isError: false, timestamp: moment()})
+            } catch (error) {
+                setMessage({title: `Error unfollowing ${user.displayName}. ${error.message}`, isError: true, timestamp: moment()})
+            }
         }
+        await unfollow()
         fetchData()
+        {props.fetchData && props.fetchData()}
+    }
+
+    function routeToFollowing() {
+        if (props.subPath === '/following') { return }
+        history.push(`/athletes/${userID}/following`)
     }
 
     return (
@@ -80,23 +96,23 @@ export default function AthleteHeader(props) {
             <SubHeader 
                 title={user.displayName}
                 iconURL={user.iconURL}
-                path={`/athletes/${user.uid}`}
+                path={`/athletes/${userID}`}
                 subPath={props.subPath}
                 items={items}
             >
-                {!loading &&
+                {!loadingSummary &&
                     <div className='d-flex jc-center ai-center' style={{marginRight: 40}}>
-                        <h3 style={{marginRight: 20}}>
-                            {follows.followees.toLocaleString()} 
-                            <h6>Following</h6>
-                        </h3>
-                        <h3>
-                            {follows.followers.toLocaleString()}
-                            <h6>Followers</h6>
-                        </h3>
+                        <div style={{marginRight: 20, textAlign: 'center'}}>
+                            <h3>{followSummary.followees.toLocaleString()}</h3>
+                            <h5 className='page-link c-cs' onClick={routeToFollowing}>Following</h5>
+                        </div>
+                        <div style={{textAlign: 'center'}}>
+                            <h3>{followSummary.followers.toLocaleString()}</h3>
+                            <h5 className='page-link c-cs' onClick={routeToFollowing}>Followers</h5>
+                        </div>
                     </div>
                 }
-                {(!loading && user.uid !== currentUser.uid) && 
+                {(!loadingDoesFollow && userID !== thisUser._id) && 
                     (doesFollow ? 
                         <button className='clear-btn-secondary' onClick={() => setConfirmationHidden(false)}>Unfollow</button>
                         :
@@ -105,7 +121,7 @@ export default function AthleteHeader(props) {
                 }
             </SubHeader>
             <Confirmation title='Confirm' message={`Are you sure you want to unfollow ${user.displayName}?`}
-                handleClickConfirm={handleClickUnfollow} hidden={confirmationHidden} setHidden={setConfirmationHidden}
+                handleClickConfirm={handleClickConfirmUnfollow} hidden={confirmationHidden} setHidden={setConfirmationHidden}
             />
         </div>
     )

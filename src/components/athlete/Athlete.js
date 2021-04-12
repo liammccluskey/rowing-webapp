@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react'
 import {useParams} from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
@@ -12,7 +13,7 @@ const api = axios.create({
 
 export default function Athlete() {
     const {currentUser} = useAuth()
-    const {uid} = useParams()
+    const {userID} = useParams()
 
     const [user, setUser] = useState()
     const [loading, setLoading] = useState(true)
@@ -21,7 +22,7 @@ export default function Athlete() {
         setLoading(true)
         async function fetchData() {
             try {
-                const res = await api.get(`/users/${uid}`)
+                const res = await api.get(`/users/${userID}`)
                 setUser(res.data)
             } catch (error) {
                 console.log(error)
@@ -29,16 +30,21 @@ export default function Athlete() {
             setLoading(false)
         }
         fetchData()
-    }, [uid])
+    }, [userID])
 
     return (
         <div>
             <MainHeader />
-            {loading ? <Loading /> : !user ? <h2 style={{paddingTop: 40}}>We couldn't find an athlete at that link</h2> :
+            {(!loading && !user) && <h2 style={{paddingTop: 40}}>We couldn't find an athlete at that link</h2>}
+            {(!loading && user) &&
             <div>
                 <AthleteHeader user={user} subPath='/' />
+                <div className='main-container'>
+
+                </div>
             </div>
             }
+            
         </div>
 
     )

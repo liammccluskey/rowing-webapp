@@ -19,7 +19,7 @@ const api = axios.create({
 
 export default function Session(props) {
     const {sessionID} = useParams()
-    const {currentUser} = useAuth()
+    const {currentUser, thisUser} = useAuth()
     const [session, setSession] = useState(null)
     const [activities, setActivities] = useState([])
     const [loading, setLoading] = useState(true)
@@ -49,7 +49,6 @@ export default function Session(props) {
         // confirm page refresh
         window.onbeforeunload = (event) => {
             const e = event || window.event;
-            // Cancel the event
             e.preventDefault();
             if (e) {
               e.returnValue = ''; // Legacy method for cross browser support
@@ -57,7 +56,6 @@ export default function Session(props) {
             return ''; // Legacy method for cross browser support
           };
 
-        // disonnect on component dismount
         const disconnect = () => {
             if ( pm5.connected() ) { pm5.doDisconnect() } 
             window.onbeforeunload = () => {}
@@ -68,7 +66,6 @@ export default function Session(props) {
     useEffect(() => {
         const refreshRate = 10 // seconds
         async function fetchData() {
-            console.log('\n fetching data \n')
             await fetchSession()
             await fetchActivities()
             setLoading(false)
@@ -122,7 +119,6 @@ export default function Session(props) {
         async function patchActivity() {
             try {
                 await api.patch(`/activities/${activityInProgress._id}`, updatedActivity)
-                console.log('did update activity in progress')
             } catch (error) {
                 console.log(error)
             }
@@ -130,15 +126,6 @@ export default function Session(props) {
         patchActivity()
             .then( setLastPatchTime(moment()) )
     }, [C2Data])
-
-    async function handleClickJoin() {
-        try {
-            await api.patch(`/sessions/${sessionID}/join`, {uid: currentUser.uid})
-            fetchSession()
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     function handleClickConnect() {
         if (!navigator.bluetooth) {
@@ -166,10 +153,7 @@ export default function Session(props) {
                         <br /><br />
                         <SessionInfoCard session={session} />
                         <br /><br />
-                        <MembersInfoCard 
-                            handleClickJoin={handleClickJoin} 
-                            session={session}
-                        />
+                        <MembersInfoCard session={session} fetchData={fetchSession}/>
                     </div>
                     <div style={{flex: 1, padding: '0px 50px', borderLeft: '1px solid var(--bc)',}}>
                         <br /><br />

@@ -11,7 +11,7 @@ const api = axios.create({
 })
 
 export default function Profile() {
-    const {currentUser} = useAuth()
+    const {currentUser, thisUser} = useAuth()
     const {setMessage} = useMessage()
 
     const [profileDisplayName, setProfileDisplayName] = useState(currentUser.displayName)
@@ -19,21 +19,17 @@ export default function Profile() {
     const [isEditingName, setIsEditingName] = useState(false)
 
     const [profilePhotoURL, setProfilePhotoURL] = useState(currentUser.photoURL)
-    const [photoURL, setPhotoURL] = useState()
     const [photoFile, setPhotoFile] = useState()
     const [isEditingPhoto, setIsEditingPhoto] = useState(false)
 
-    useEffect( () => {
-        if (!photoFile) {return}
-        setPhotoURL(URL.createObjectURL(photoFile))
-    }, [photoFile])
 
     async function handleSubmitName(e) {
         e.preventDefault()
         try {
-            await currentUser.updateProfile({
-                displayName: displayName
-            })
+            const update = { displayName: displayName }
+            await currentUser.updateProfile(update)
+            await api.patch(`/users/${thisUser._id}/displayName`, update)
+
             setProfileDisplayName(displayName)
             setMessage({title: 'Changes saved', isError: false, timestamp: moment()})
         } catch (error) {
@@ -45,20 +41,13 @@ export default function Profile() {
 
     async function handleSubmitImage(e) {
         e.preventDefault()
-        async function patchIconURL(iconURL) {
-            try {
-                await api.patch(`/users/${currentUser.uid}/iconURL`, {iconURL: iconURL})
-            } catch (error) {
-                setMessage({title: error.message, isError: true, timestamp: moment()})
-            }
-        } 
         try {
-            await storage.ref('users').child(currentUser.uid).put(photoFile);
-            const resURL = await storage.ref('users').child(currentUser.uid).getDownloadURL()
+            await storage.ref('users').child(thisUser._id).put(photoFile);
+            const resURL = await storage.ref('users').child(thisUser._id).getDownloadURL()
             await currentUser.updateProfile({
                 photoURL: resURL
             })
-            await patchIconURL(resURL)
+            await api.patch(`/users/${thisUser._id}/iconURL`, {iconURL: resURL})
             setProfilePhotoURL(resURL)
             setMessage({title: 'Changes saved', isError: false, timestamp: moment()})
         } catch(error) {
@@ -76,7 +65,7 @@ export default function Profile() {
                     onClick={() => setIsEditingName(true)}
                 >
                     <p>Display Name</p>
-                    <p>{currentUser.displayName}</p>
+                    <p>{profileDisplayName}</p>
                 </div>
                 <div className='settings-edit-container' hidden={!isEditingName} style={{marginBottom: isEditingName && 15}}>
                     <div className='settings-edit-header' onClick={() => setIsEditingName(false)}>
@@ -102,7 +91,7 @@ export default function Profile() {
                     onClick={() => setIsEditingPhoto(true)}
                 >
                     <p>Current Photo</p>
-                    <img height={40} width={40} style={{borderRadius: '50%'}} src={profilePhotoURL}/>
+                    <img className='user-icon' src={profilePhotoURL}/>
                 </div>
                 <div className='settings-edit-container' hidden={!isEditingPhoto} style={{marginBottom: isEditingPhoto && 15}}>
                     <div className='settings-edit-header' onClick={() => setIsEditingPhoto(false)}>

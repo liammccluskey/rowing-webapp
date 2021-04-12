@@ -30,10 +30,10 @@ export default function Login() {
 
     async function handleContinueWithGoogle() {
         try {
-            await continueWithGoogle()
-            history.push('/dashboard')
+            continueWithGoogle()
+            .then(history.push('/dashboard'))
         } catch(e) {
-            window.alert(e.message)
+            window.alert('Login Page: ' + e.message)
         }
     }
 
