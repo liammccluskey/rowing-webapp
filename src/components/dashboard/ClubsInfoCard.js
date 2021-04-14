@@ -12,13 +12,11 @@ export default function ClubsInfoCard(props) {
             <br />
             <table style={{width: '100%'}}>
                 <thead>
-                    <tr>
-                        <th style={{color: 'var(--color-secondary)'}}>Club</th>
-                    </tr>
+                    <tr><th></th></tr>
                 </thead>
                 <tbody>
                     {!props.clubs ? <Loading /> : props.clubs.map((club, id) => (
-                        <tr key={id}>
+                        <tr key={id} style={{border: 'none'}}>
                             <td className='d-flex jc-flex-start ai-center page-link'
                                 onClick={()=>history.push(`/clubs/${club.customURL}/general`)}
                             >

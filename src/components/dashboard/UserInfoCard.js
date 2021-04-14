@@ -46,6 +46,10 @@ export default function UserInfoCard(props) {
         fetchData()
     }, [])
 
+    function handleClickName() {
+        history.push(`/athletes/${thisUser._id}`)
+    }
+
     return (
         <div style={{...props.style}}>
             {loading ? <Loading /> :
@@ -57,7 +61,7 @@ export default function UserInfoCard(props) {
                         src={currentUser.photoURL} 
                         style={{borderRadius: '50%', marginRight: '10px'}}
                     />
-                    <h4>{currentUser.displayName}</h4>
+                    <h4 className='page-link' onClick={handleClickName}>{currentUser.displayName}</h4>
                 </div>
                 <div style={style}>
                     <div

@@ -18,9 +18,6 @@ export function ThemeProvider({children}) {
     const [isDarkMode, setIsDarkMode] = useState(thisUser ? thisUser.usesDarkMode : false)
     const [tintColor, setTintColor] = useState(1)   // mint default
 
-    const companyName = "Rowe"
-    const domainURL = 'https://rowe.com/clubs/'
-
     const tintColors = [
         {name: 'Soft Blue', extension: 'strava'},    // default
         {name: 'Mint', extension: 'mint'},
@@ -31,8 +28,7 @@ export function ThemeProvider({children}) {
 
     const value = {
         isDarkMode, setIsDarkMode,
-        tintColor, setTintColor, tintColors,
-        companyName, domainURL
+        tintColor, setTintColor, tintColors
     }
 
     const cssVars = [

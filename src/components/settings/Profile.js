@@ -10,8 +10,11 @@ const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
 })
 
+
+const src ='https://miro.medium.com/max/3600/1*i-PXQ3H7ork5fLqr2dQw6g.png'
+
 export default function Profile() {
-    const {currentUser, thisUser} = useAuth()
+    const {currentUser, thisUser, fetchThisUser} = useAuth()
     const {setMessage} = useMessage()
 
     const [profileDisplayName, setProfileDisplayName] = useState(currentUser.displayName)
@@ -21,6 +24,10 @@ export default function Profile() {
     const [profilePhotoURL, setProfilePhotoURL] = useState(currentUser.photoURL)
     const [photoFile, setPhotoFile] = useState()
     const [isEditingPhoto, setIsEditingPhoto] = useState(false)
+
+    const [profileBannerURL, setProfileBannerURL] = useState(thisUser.bannerURL ? thisUser.bannerURL : src)
+    const [bannerFile, setBannerFile] = useState()
+    const [isEditingBanner, setIsEditingBanner] = useState(false)
 
 
     async function handleSubmitName(e) {
@@ -42,8 +49,8 @@ export default function Profile() {
     async function handleSubmitImage(e) {
         e.preventDefault()
         try {
-            await storage.ref('users').child(thisUser._id).put(photoFile);
-            const resURL = await storage.ref('users').child(thisUser._id).getDownloadURL()
+            await storage.ref('usericons').child(thisUser._id).put(photoFile);
+            const resURL = await storage.ref('usericons').child(thisUser._id).getDownloadURL()
             await currentUser.updateProfile({
                 photoURL: resURL
             })
@@ -54,6 +61,20 @@ export default function Profile() {
             setMessage({title: error.message, isError: true, timestamp: moment()})
         }
         setIsEditingPhoto(false)
+    }
+
+    async function handleSubmitBanner(e) {
+        e.preventDefault() 
+        try {
+            await storage.ref('userbanners').child(thisUser._id).put(bannerFile);
+            const resURL = await storage.ref('userbanners').child(thisUser._id).getDownloadURL()
+            await api.patch(`/users/${thisUser._id}/bannerURL`, {bannerURL: resURL})
+            setProfileBannerURL(resURL)
+            setMessage({title: 'Changes saved', isError: false, timestamp: moment()})
+        } catch(error) {
+            setMessage({title: error.message, isError: true, timestamp: moment()})
+        }
+        setIsEditingBanner(false)
     }
 
     return (
@@ -107,6 +128,32 @@ export default function Profile() {
                         <br /><br />
                         <div className='d-flex jc-flex-end' style={{gap: 20}}>
                             <button type='button' className='clear-btn-secondary' onClick={() => setIsEditingPhoto(false)}>Cancel</button>
+                            <button type='submit' className='solid-btn-secondary'>Save</button>
+                        </div>
+                    </form>
+                    <br />
+                </div>
+
+                <div className='editable-settings-row' style={{display: isEditingBanner && 'none'}}
+                    onClick={() => setIsEditingBanner(true)}
+                >
+                    <p>Current Banner Photo</p>
+                    <img className='banner-image' src={profileBannerURL} style={{width: 200, height: 50}} />
+                </div>
+                <div className='settings-edit-container' hidden={!isEditingBanner} style={{marginBottom: isEditingBanner && 15}}>
+                    <div className='settings-edit-header' onClick={() => setIsEditingBanner(false)}>
+                        <p>Current Banner Photo</p>
+                        <i className='bi bi-pencil' />
+                    </div>
+                    <br />
+                    <form onSubmit={handleSubmitBanner}>
+                        <div className='d-flex jc-space-between ai-center'>
+                            <p>Current Banner Photo</p>
+                            <input type='file' accept='image/*' onChange={e => setBannerFile(e.target.files[0])} required/>
+                        </div>
+                        <br /><br />
+                        <div className='d-flex jc-flex-end' style={{gap: 20}}>
+                            <button type='button' className='clear-btn-secondary' onClick={() => setIsEditingBanner(false)}>Cancel</button>
                             <button type='submit' className='solid-btn-secondary'>Save</button>
                         </div>
                     </form>

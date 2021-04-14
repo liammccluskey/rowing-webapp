@@ -22,15 +22,13 @@ export default function MainHeader(props) {
     return (
         <div className="d-flex jc-space-between ai-center main-header" style={{...props.style}}>
             <div>
-                <div className='d-flex jc-flex-start ai-center' style={{gap: 50}}>
-                    <div className='d-flex jc-center ai-center' style={{gap: 10}}>   
-                        <img height='30px' width='33px'
-                            src={isDarkMode ? process.env.REACT_APP_COMPANY_ICON_URL : process.env.REACT_APP_COMPANY_ICON_DARK_URL}
-                        />
-                        <h3 onClick={() => history.push('/dashboard')}className='d-inline'>Rowa</h3>
-                    </div>
+                <div className='d-flex jc-flex-start ai-center'> 
+                    <h3 onClick={() => history.push('/dashboard')} className='logo-text'
+                        style={{marginRight: 60}}
+                    >
+                        {process.env.REACT_APP_COMPANY_NAME}
+                    </h3>
                     
-
                     <div className='d-inline-flex jc-flex-start ai-center search-bar'>
                         <i className='bi bi-search' style={{color: 'var(--color-secondary)'}} />
                         <input placeholder='Search' style={{width: '300px', borderColor: 'transparent'}} type='text'/>

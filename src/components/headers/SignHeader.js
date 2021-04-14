@@ -1,13 +1,13 @@
-import React from "react"
-import {Link} from "react-router-dom";
+import React, {useEffect} from "react"
+import {useHistory} from "react-router-dom"
 
 export default function SignHeader() {
+    const history = useHistory()
+
     return (
-        <header>
-            <ul className="d-inline ls-none m-20">
-                <li><Link to="/">Landing</Link></li>
-            </ul>
-        </header>
+        <div className='main-header d-flex jc-flex-start ai-center'>
+            <h3 onClick={() => history.push('/')} className='logo-text'>{process.env.REACT_APP_COMPANY_NAME}</h3>
+        </div>
 
     );
 }

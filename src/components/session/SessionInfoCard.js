@@ -21,7 +21,7 @@ export default function SessionInfoCard(props) {
                 {session.club && <img src={session.club.iconURL} height={50} width={50} className='club-icon' />}
                 {!session.club && (
                     session.hostUser.iconURL ? 
-                        <img className='user-icon' height={50} width={50} src='user-icon' />
+                        <img className='user-icon' height={50} width={50} src={session.hostUser.iconURL} />
                         :
                         <div className='user-icon-default' style={{height: 50, width: 50}}>
                             <i className='bi bi-person' />

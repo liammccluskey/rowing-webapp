@@ -1,10 +1,11 @@
-import './App.css';
-import React from "react";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Landing from "./components/Landing";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import { AuthProvider } from './contexts/AuthContext';
+import './App.css'
+import React from "react"
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import Landing from "./components/Landing"
+import Login from "./components/Login"
+import Register from "./components/Register"
+import PasswordReset from './components/PasswordReset'
+import { AuthProvider } from './contexts/AuthContext'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { MessageProvider } from './contexts/MessageContext'
 import PrivateRoute from './components/PrivateRoute'
@@ -35,6 +36,7 @@ function App() {
                 <Route exact path="/" component={Landing} />
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
+                <Route path='/reset' component={PasswordReset} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
 
                 <PrivateRoute path='/training/statistics' component={Statistics} />
@@ -47,7 +49,7 @@ function App() {
                 <PrivateRoute path='/club-create' component={CreateClub} />
                 <PrivateRoute path='/clubs/:clubURL/general' component={Club} />
                 <PrivateRoute path='/clubs/:clubURL/members' component={Members} />
-                
+
                 <PrivateRoute exact path='/athletes/:userID' component={Athlete} />
                 <PrivateRoute path='/athletes/:userID/following' component={Following} />
 

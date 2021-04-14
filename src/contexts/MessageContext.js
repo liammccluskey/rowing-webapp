@@ -48,7 +48,10 @@ export function MessageProvider({children}) {
             <div style={{position: 'fixed', left: '50%', marginLeft: -messageWidth/2, bottom: 100, width: messageWidth}}>
                 {messages !== null && messages.map((message, idx) => (
                     <div key={idx} className='d-flex jc-flex-start float-container' 
-                        style={{overflow: 'hidden', gap: 0, border: '2px solid var(--bc)', marginTop: 10, display: message.isHidden && 'none'}}
+                        style={{
+                            overflow: 'hidden', gap: 0, border: message.isError ? '2px solid var(--color-error)' : '2px solid var(--tint-color)',
+                            marginTop: 10, display: message.isHidden && 'none'
+                        }}
                         hidden={message.isHidden}
                     >
                         <div  onClick={() => hideMessage(message.key)}

@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import MainHeader from './headers/MainHeader'
 import SubHeader from './headers/SubHeader'
-import {useTheme} from '../contexts/ThemeContext'
+import {useMessage} from '../contexts/MessageContext'
 import {storage} from '../firebase'
 import {useAuth} from '../contexts/AuthContext'
 import axios from 'axios'
+import moment from 'moment'
 import {useHistory} from 'react-router-dom'
 
 const api = axios.create({
@@ -14,13 +15,15 @@ const api = axios.create({
 const srcBanner = 'https://styles.redditmedia.com/t5_2qljq/styles/bannerBackgroundImage_zfhrcn1w7u911.jpg?width=4000&format=pjpg&s=88d594d779756f76ef8a5e0073e1d2959cd501bf'
 
 export default function CreateClub() {
-    const {domainURL} = useTheme()
+    const {setMessage} = useMessage()
     const {thisUser} = useAuth()
     const history = useHistory()
 
     const [name, setName] = useState('')
     const [customURL, setCustomURL] = useState('')
     const [description, setDescription] = useState('')
+
+    const [URLIsAvailable, setURLIsAvailable] = useState(false)
 
     const [tempIconURL, setTempIconURL] = useState()
     const [iconFile, setIconFile] = useState()
@@ -33,6 +36,10 @@ export default function CreateClub() {
     async function handleSubmit(e) {
         e.preventDefault()
         // Upload club image
+        if (!URLIsAvailable) {
+            setMessage({title: 'The club URL you have requested is not available. Try another.', isError: true, timestamp: moment()})
+            return
+        }
         let iconURL
         try {
             await storage.ref('clubicons').child(customURL).put(iconFile);
@@ -62,9 +69,10 @@ export default function CreateClub() {
         try {
             const res = await api.post('/clubs', clubData)
             await api.post('/clubmemberships', {user: thisUser._id, club: res.data._id, role: 2})
-            history.push(`/clubs/${customURL}`)
+            setMessage({title: 'Club created', isError: false, timestamp: moment()})
+            history.push(`/clubs/${customURL}/general`)
         } catch (error) {
-            console.log(error)
+            setMessage({title: `Error creating club. ${error.message}`, isError: true, timestamp: moment()})
         }
     }
 
@@ -74,6 +82,12 @@ export default function CreateClub() {
         if (validRegex.test(e.target.value)) {
             setCustomURL(e.target.value)
         }
+    }
+
+    function handleClickUserDefaultBanner() {
+        setTempBannerURL(null)
+        setBannerFile(null)
+        setMessage({title: 'Set default banner', isError: false, timestamp: moment()})
     }
 
     useEffect( () => {
@@ -87,13 +101,24 @@ export default function CreateClub() {
         setTempBannerURL(URL.createObjectURL(bannerFile))
     }, [bannerFile])
 
+    useEffect(() => {
+        async function checkAvailability() {
+            if (!customURL.length) {return}
+            try {
+                const res = await api.get(`/clubs/isavailable?customURL=${customURL}`)
+                setURLIsAvailable(res.data.isAvailable)
+            } catch (error) { console.log(error) }
+        }
+        checkAvailability()
+    }, [customURL])
+
     return (
         <div>
             <MainHeader />
             <SubHeader title='Create a Club' />
             <br />
             <div className='main-container'>
-                <div className='float-container' style={{padding: '20px 20px'}}>
+                <div className='float-container' style={{padding: '30px 30px', marginBottom: 100}}>
                     <form className='create-club' id='form-create-club' onSubmit={handleSubmit}>
                         <label>
                             Club Name *<br />
@@ -110,7 +135,10 @@ export default function CreateClub() {
                                 <i className='bi bi-upload' style={{position: 'absolute'}} />
                             </div>
                         </label>
-                        <br />
+                        <button className='clear-btn-secondary' style={{float: 'right'}} onClick={handleClickUserDefaultBanner} type='button'>
+                            Use default banner
+                        </button>
+                        <br /><br />
                         <label >
                             Club Icon *<br />
                             <input onChange={e => setIconFile(e.target.files[0])} type='file' accept='image/*' required 
@@ -133,8 +161,19 @@ export default function CreateClub() {
                         <br /><br />
                         <label>
                             Custom URL *<br />
-                            {domainURL}
+                            <p className='d-inline'>{window.location.hostname}/clubs/</p>
                             <input value={customURL} onChange={handleCustomURLChange} required/>
+                            <br />
+                            {customURL.length > 0 && 
+                                <div className='d-flex jc-flex-start ai-center' 
+                                    style={{color: URLIsAvailable ? 'var(--color-success)' : 'var(--color-error)'}}
+                                >
+                                    <i className={URLIsAvailable ? 'bi bi-check-circle-fill' : 'bi bi-exclamation-circle-fill'} 
+                                        style={{marginRight: 10}}
+                                    />
+                                    <p>{URLIsAvailable ? 'This club url is available' : 'This club url is not available' } </p>
+                                </div>
+                            }
                         </label>
                         <br /><br />
                     </form>

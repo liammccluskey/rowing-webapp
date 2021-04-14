@@ -80,7 +80,11 @@ export function AuthProvider({ children }) {
             setCurrentUser(user)
             if (user) {
                 await __fetchThisUser(user)
-                history.push('/dashboard')
+                const currentPath = window.location.pathname
+                if (currentPath.includes('login') || currentPath.includes('register')) {
+                    history.push('/dashboard')
+                    console.log('did push dashboard')
+                }
             }
             setLoading(false)
         })

@@ -3,10 +3,15 @@ import LandingHeader from "./headers/LandingHeader";
 
 export default function Landing() {
     return (
-        <div style={{minHeight: '100vh'}}>
+        <div style={{minHeight: '200vh'}}>
             <LandingHeader />
-            <h1>This is the landing page</h1>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="var(--color-twitter-blue)" fillOpacity="1" d="M0,32L30,80C60,128,120,224,180,224C240,224,300,128,360,117.3C420,107,480,181,540,202.7C600,224,660,192,720,165.3C780,139,840,117,900,133.3C960,149,1020,203,1080,208C1140,213,1200,171,1260,160C1320,149,1380,171,1410,181.3L1440,192L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style={{position: 'fixed', bottom: 0, left: 0}}>
+                <path fill="var(--tint-color)" fillOpacity="1" d="M0,32L80,26.7C160,21,320,11,480,21.3C640,32,800,64,960,69.3C1120,75,1280,53,1360,42.7L1440,32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
+            </svg>
+            <div className='main-container'>
+                <br /><br />
+                <h1 className='fw-m'></h1>
+            </div>
         </div>
     );
 }

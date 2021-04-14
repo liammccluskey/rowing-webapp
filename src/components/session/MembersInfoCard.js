@@ -9,9 +9,11 @@ const api = axios.create({
 export default function MembersInfoCard(props) {
     const {thisUser} = useAuth()
     const [session, setSession] = useState(props.session)
+    const [isMember, setIsMember] = useState(false)
 
     useEffect(() => {
         setSession(props.session)
+        setIsMember(props.session.members.some(m => m._id === thisUser._id))
     }, [props])
 
     async function handleClickJoin() {
@@ -20,7 +22,7 @@ export default function MembersInfoCard(props) {
         } catch (error) {
             console.log(error)
         }
-        props.fetchSession()
+        props.fetchData()
     }
 
     return (
@@ -31,7 +33,8 @@ export default function MembersInfoCard(props) {
                     <button 
                         onClick={handleClickJoin} 
                         className='solid-btn-secondary'
-                        hidden={session.members.some(m => m._id === thisUser._id)}
+                        disabled={isMember}
+                        style={{display: isMember && 'none'}}
                     >
                         Join
                     </button>
@@ -45,7 +48,16 @@ export default function MembersInfoCard(props) {
                     <tbody>
                         {session.members.map(member => (
                             <tr>
-                                <td >{member.displayName}</td>
+                                <td className='d-flex jc-flex-start ai-center'>
+                                    {member.iconURL && <img src={member.iconURL} className='user-icon-small' />}
+                                    {!member.iconURL &&
+                                        <div className='user-icon-default-small'>
+                                            <i className='bi bi-person' />
+                                        </div>
+                                    }
+                                    <p>{member.displayName}</p>
+                                </td>
+                                
                             </tr>
                         ))}
                     </tbody>

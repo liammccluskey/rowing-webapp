@@ -1,63 +1,83 @@
 import React, { useState, useRef } from "react"
-import SignHeader from "./headers/SignHeader";
+import SignHeader from "./headers/SignHeader"
 import { useAuth } from "../contexts/AuthContext"
 import {useHistory} from "react-router-dom"
+import { useMessage } from '../contexts/MessageContext'
+import moment from 'moment'
 
 export default function Register() {
+    const history = useHistory()
+    const { setMessage } = useMessage()
+
     const emailRef = useRef()
     const passwordRef = useRef()
-    const confirmPasswordRef = useRef()
+    const nameRef = useRef()
     const {signUp, continueWithGoogle} = useAuth()
-    const [error, setError] = useState('')
     const [awaitingResponse, setAwaitingResponse] = useState(false) 
-    const history = useHistory()
 
 
     async function handleSubmit (e) {
         e.preventDefault()
-        if (passwordRef.current.value !== confirmPasswordRef.current.value) {
-            console.log("Passwords must match")
-            return
-        }
-        console.log(passwordRef.current.value)
         try {
             setAwaitingResponse(true)
-            await signUp('Temp Name', emailRef.current.value, passwordRef.current.value)
-            history.push('/dashboard')
-        } catch (e) {
-            console.log(e)
-            window.alert(e.message)
+            await signUp(nameRef.current.value, emailRef.current.value, passwordRef.current.value)
+        } catch (error) {
+            setMessage({title: error.message, isError: true, timestamp: moment()})
+            setAwaitingResponse(false)
         }
-        setAwaitingResponse(false)
     }
 
     async function handleContinueWithGoogle() {
         try {
             await continueWithGoogle()
-            history.push('/dashboard')
         } catch (e) {
             window.alert(e.message)
         }
     }
 
+    function handleClickSignIn() {
+        history.push('/login')
+    }
+
     return (
         <div>
             <SignHeader />
-            <form onSubmit={handleSubmit}>
-                <label>Email
-                    <input ref={emailRef} type="email" required/>
-                </label>
-                <label>Password
-                    <input ref={passwordRef} type="password" required/>
-                </label>
-                <label>Confirm Password
-                    <input ref={confirmPasswordRef} type="password"></input>
-                </label>
-                <input disabled={awaitingResponse} type="submit"/>
-            </form>
-            <br />
-            <button onClick={handleContinueWithGoogle}>Continue with Google</button>
-            <h1>This is the registration page</h1>
+            <br /><br />
+            <div className='float-container login-card'>
+                <form onSubmit={handleSubmit}>
+                    <h3>Create your account</h3>
+                    <br /><br />
+                    <label>Email <br />
+                        <input ref={emailRef} type="email" name="email" id="email" required/>
+                    </label>
+                    <br /><br />
+                    <label>Full name <br />
+                        <input ref={nameRef} type='text' required />
+                    </label>
+                    <br /><br />
+                    <label>Password <br />
+                        <input ref={passwordRef}  type="password" name="password" id="password" required/>
+                    </label>
+                    <br />
+                    <br /><br /><br />
+                    <button className='solid-btn-secondary' type="submit">Create account</button>
+                    <br /><br />
+                </form>
+                <h4 className='d-flex jc-center'>or</h4>
+                <br />
+                <button className='clear-btn-secondary' disabled={awaitingResponse} onClick={handleContinueWithGoogle} >
+                    <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                        height='18px' width='18px'
+                    />
+                    Continue with Google
+                </button>
+            </div>
+            <div className='d-flex jc-center' style={{marginTop: 10}}>
+                <p style={{marginRight: 10}}>Already have an account?</p>
+                <p className='action-link' onClick={handleClickSignIn}>Sign in</p>
+            </div>
+            
         </div>
     );
 }
