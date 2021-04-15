@@ -5,29 +5,23 @@ import {useAuth} from '../../contexts/AuthContext'
 
 export default function ClubsInfoCard(props) {
     const history = useHistory()
+    const {currentUser} = useAuth()
+
+    function handleClickClub(club) {
+        history.push(`/clubs/${club.customURL}/general`)
+    }
 
     return (
-        <div style={{...props.style, padding: '20px 0px'}} className='float-container' >
-            <h3 style={{marginLeft: '20px'}}>Your Clubs</h3>
+        <div style={{...props.style, padding: '20px 20px'}} className='float-container bs-bb' >
+            <h3>Your Clubs</h3>
             <br />
-            <table style={{width: '100%'}}>
-                <thead>
-                    <tr><th></th></tr>
-                </thead>
-                <tbody>
-                    {!props.clubs ? <Loading /> : props.clubs.map((club, id) => (
-                        <tr key={id} style={{border: 'none'}}>
-                            <td className='d-flex jc-flex-start ai-center page-link'
-                                onClick={()=>history.push(`/clubs/${club.customURL}/general`)}
-                            >
-                                <img className='club-icon' src={club.iconURL}/>
-                                <p>{club.name}</p>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <br />
+            <div className='ai-center' style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 30}}>
+                {props.clubs && props.clubs.map((club, idx) => (
+                    <img key={idx} src={club.iconURL} className='club-icon-medium' onClick={() => handleClickClub(club)} />
+                ))}
+                <img src={currentUser.photoURL} className='club-icon-medium' />
+            </div>
+           <br />
             <button 
                 style={{display: 'block', margin: '0px auto'}} 
                 className='clear-btn-secondary'

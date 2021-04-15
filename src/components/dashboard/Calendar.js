@@ -91,8 +91,7 @@ export default function Calendar(props) {
             <div className='float-container'>
                 <div
                     style={{
-                        display: 'grid',
-                        gap: '0px',
+                        display: 'grid', gap: 0,
                         gridTemplateColumns: 'repeat(7, 1fr)'
                     }}
                 >

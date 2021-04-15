@@ -42,7 +42,7 @@ export default function Register() {
     return (
         <div>
             <SignHeader />
-            <br /><br />
+            <br />
             <div className='float-container login-card'>
                 <form onSubmit={handleSubmit}>
                     <h3>Create your account</h3>
@@ -78,6 +78,7 @@ export default function Register() {
                 <p className='action-link' onClick={handleClickSignIn}>Sign in</p>
             </div>
             
+            <div className='login-spacer'></div>
         </div>
     );
 }

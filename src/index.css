@@ -316,15 +316,43 @@ form label {
   background-color: var(--bgc);
 }
 
+/* landing page */
+.landing-container {
+  padding: 100px var(--ps-main);
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media only screen and (max-width: 500px) {
+  .landing-container {
+    grid-template-columns: 1fr;
+    padding: 50px 8%;
+  }
+}
+.landing-container h1 {
+  font-weight: 500;
+}
+
 /* login / reg / password reset */
+.login-page {
+  min-height: 100vh;
+}
 .login-card {
-  max-width: 350px;
-  width: 100vh;
-  padding: 50px 50px;
+  box-sizing: border-box;
+  width: 450px;
+  flex: 1;
+  padding: 40px 40px;
   text-align: left;
   margin: 0 auto;
   border: 1px solid var(--bc);
 }
+
+@media only screen and (max-width: 500px) {
+  .login-card {
+    width: 95vw;
+  }
+}
+
 .login-card input {
   width: 100%;
   box-sizing: border-box;
@@ -333,6 +361,9 @@ form label {
   box-sizing: border-box;
   width: 100%;
 }
+.login-card h3 {
+  font-weight: 500;
+}
 .action-link {
   display: inline;
   color: var(--color-mint);
@@ -340,6 +371,9 @@ form label {
 }
 .action-link:hover {
   text-decoration: underline;
+}
+.login-spacer {
+  height: 100px;
 }
 
 /* settings */
@@ -454,6 +488,11 @@ form label {
   object-fit: cover;
 }
 
+/* session page */
+.live-activity-table .clear-btn-secondary {
+  border-color: transparent;
+}
+
 /* tables */
 table {
   border-collapse: collapse;
@@ -543,6 +582,19 @@ table tbody tr:last-child {
 .club-icon {
   border-radius: 5px;
 }
+.club-icon-medium {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid transparent;
+}
+.club-icon-medium:hover {
+  border-color: var(--tint-color);
+  box-shadow: var(--box-shadow-dark);
+}
 .user-icon-default {
   display: inline-flex;
   justify-content: center;
@@ -627,6 +679,9 @@ table tbody tr:last-child {
 .d-inline{
   display: inline;
 }
+.bs-bb {
+  box-sizing: border-box;
+}
 /* margins */
 .ps-small {
   padding-left: var(--ps-small);
@@ -642,6 +697,9 @@ table tbody tr:last-child {
 }
 
 /*  Buttons: 4 main types */
+button i, button img {
+  margin-right: 10px;
+}
 .solid-btn,
 .clear-btn,
 .solid-btn-secondary,
@@ -649,13 +707,12 @@ table tbody tr:last-child {
 .clear-btn-cancel {
   cursor: pointer;
   display: inline-flex;
-  gap: 5px;
   justify-content: center;
   align-items: center;
-  padding: 15px 25px;
+  padding: 10px 25px;
   background-color: var(--tint-color);
   color: var(--bgc-light);
-  font-size: 16px;
+  font-size: 17px;
   border: 1px solid transparent;
   border-radius: 5px;
 }

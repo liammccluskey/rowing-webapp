@@ -41,9 +41,9 @@ export default function Login() {
     }
 
     return (
-        <div style={{ height: '100vh'}}>
+        <div className='login-page'>
             <SignHeader />
-            <br /><br />
+            <br />
             <div className='float-container login-card'>
                 <form onSubmit={handleSubmit}>
                     <h3>Sign in to your account</h3>
@@ -76,6 +76,8 @@ export default function Login() {
                 <p style={{marginRight: 10}}>Don't have an account?</p>
                 <p className='action-link' onClick={handleClickSignUp}>Sign up</p>
             </div>
+
+            <div className='login-spacer'></div>
         </div>
         
     );

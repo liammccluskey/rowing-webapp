@@ -51,7 +51,7 @@ export default function UserInfoCard(props) {
     }
 
     return (
-        <div style={{...props.style}}>
+        <div style={{...props.style}} className='bs-bb'>
             {loading ? <Loading /> :
             <div className='float-container' >
                 <div className='d-flex jc-flex-start ai-center' 
@@ -98,7 +98,7 @@ export default function UserInfoCard(props) {
                     <CustomBar 
                         height='115px' 
                         labelFreq={10}
-                        maxLabelLength={1}
+                        maxLabelLength={2}
                         data={{
                             labels: Array(moment().daysInMonth()).fill(0).map((l, i) => i + 1),
                             label: 'Meters',

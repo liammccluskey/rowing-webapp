@@ -32,7 +32,7 @@ export default function PasswordReset() {
     return (
         <div style={{ height: '100vh'}}>
             <SignHeader />
-            <br /><br />
+            <br />
             <div className='float-container login-card'>
                 <form onSubmit={handleSubmit}>
                     <h3>Reset your password</h3>
@@ -54,6 +54,7 @@ export default function PasswordReset() {
                 <p style={{marginRight: 10}}>Don't have an account?</p>
                 <p className='action-link' onClick={handleClickSignUp}>Sign up</p>
             </div>
+            <div className='login-spacer'></div>
         </div>
         
     );

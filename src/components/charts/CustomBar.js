@@ -59,7 +59,7 @@ export default function CustomBar(props) {
                                 drawBorder: false
                             },
                             ticks: {
-                                autoSkip: true,
+                                autoSkip: false,
                                 fontColor: getComputedStyle(document.documentElement)
                                 .getPropertyValue('--color-secondary'),
                                 maxRotation: 0,

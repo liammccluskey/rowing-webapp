@@ -1,5 +1,5 @@
 import './App.css'
-import React from "react"
+import React, {useEffect} from "react"
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import Landing from "./components/Landing"
 import Login from "./components/Login"
@@ -26,6 +26,9 @@ import Athlete from './components/athlete/Athlete'
 import Following from './components/athlete/Following'
 
 function App() {
+  useEffect(() => {
+    document.title = 'ergsync'
+  })
   return (
     <div className="App">
       <Router>

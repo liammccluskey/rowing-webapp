@@ -22,8 +22,8 @@ export default function LandingHeader() {
                 {process.env.REACT_APP_COMPANY_NAME}
             </h3>
             <div className='d-flex jc-center ai-center'>
-                <button onClick={handleClickSignIn}style={{marginRight: 20}} className='clear-btn'>Log In</button>
-                <button onClick={handleClickSignUp} className='solid-btn'>Sign Up</button>
+                <button onClick={handleClickSignIn}style={{marginRight: 20}} className='clear-btn fw-m'>Log In</button>
+                <button onClick={handleClickSignUp} className='solid-btn fw-m'>Sign Up</button>
             </div>
         </div>
 

@@ -64,12 +64,12 @@ export default function Dashboard() {
             <br />
             <div 
                 className='main-container d-flex jc-flex-start ai-flex-start'
-                style={{gap: '75px', padding: '0px 50px', marginBottom: '100px'}}
+                style={{ padding: '0px 50px', marginBottom: '100px'}}
             >
-                <div hidden={false}>
-                    <UserInfoCard style={{width:'300px', height: 'auto'}}/>
+                <div hidden={false} style={{marginRight: 60}}>
+                    <UserInfoCard style={{width: 300, height: 'auto'}}/>
                     <br />
-                    <ClubsInfoCard clubs={myClubs} style={{width:'300px', height: 'auto'}}/>
+                    <ClubsInfoCard clubs={myClubs} style={{width: 300, height: 'auto'}}/>
                 </div>
                 <div style={{ flex: 1}} >
                     <div>
