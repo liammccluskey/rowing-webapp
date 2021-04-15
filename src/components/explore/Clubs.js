@@ -34,11 +34,11 @@ export default function Clubs() {
 
     async function handleJoinClub(club) {
         try {
-            await api.post('/clubmemberships', {club: club._id, user: thisUser._id})
+            await api.post('/clubmemberships', {club: club._id, user: thisUser._id, role: 0})
             setMessage({title: `Joined "${club.name}"`, isError: false, timestamp: moment() })
             history.push(`/clubs/${club.customURL}/general`)
         } catch(error) {
-            setMessage({title: `Error joining "${club.name}"`, isError: true, timestamp: moment() })
+            setMessage({title: `Error joining "${club.name}. ${error.message}"`, isError: true, timestamp: moment() })
         }
     }
 

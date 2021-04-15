@@ -218,6 +218,8 @@ select, select:active, select:focus
   border-radius: 5px;
   padding: 11px 10px;
   outline: none;
+  font-size: 14px;
+  -webkit-appearance: none;
 }
 input:focus, input:active,
 textarea:active, textarea:focus,
@@ -267,6 +269,7 @@ form label {
   font-weight: 400;
   font-size: 15px;
   text-decoration: none;
+  margin-right: 20px;
 }
 .header-link:hover,
 .link-active {
@@ -628,6 +631,16 @@ table tbody tr:last-child {
   margin-right: 10px;
 }
 
+/* random margins */
+.mr-10 {
+  margin-right: 10px;
+}
+.mr-20 {
+  margin-right: 20px;
+}
+.mr-30 {
+  margin-right: 30px;
+}
 
 /* display flex */
 .d-flex {
@@ -717,7 +730,8 @@ button i, button img {
   border-radius: 5px;
 }
 .clear-btn,
-.clear-btn-secondary {
+.clear-btn-secondary,
+.clear-btn-cancel {
   background-color: var(--bgc-hover);
   background-color: transparent;
   color: var(--tint-color);
@@ -726,7 +740,8 @@ button i, button img {
 }
 .solid-btn-secondary,
 .clear-btn-secondary,
-.error-btn-secondary {
+.error-btn-secondary,
+.clear-btn-cancel {
   padding: 8px 20px;
   font-size: 14px;
 }

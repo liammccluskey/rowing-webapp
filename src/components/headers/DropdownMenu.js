@@ -14,10 +14,9 @@ export default function DropdownMenu(props) {
     const itemPadding = '12px 25px'
     const itemStyle = {
         cursor: 'pointer', 
-        padding: itemPadding,
-        gap: '15px'
+        padding: itemPadding
     }
-    const iconStyle={ fontSize: '20px' , color: 'var(--color)'}
+    const iconStyle={ fontSize: '20px' , color: 'var(--color)', marginRight: 15}
 
     const tabs = [
         {title: 'Profile', iconName: 'person', path: `/athletes/${thisUser._id}`},
@@ -66,8 +65,8 @@ export default function DropdownMenu(props) {
                 <div style={{padding: itemPadding, borderBottom: border}} onClick={() => setIsDarkMode(curr => !curr)}
                     className='d-flex jc-space-between ai-center'
                 >
-                    <div className='d-flex jc-flex-start ai-center' style={{gap: '15px'}}>
-                    <i className="bi bi-moon" style={iconStyle}/>
+                    <div className='d-flex jc-flex-start ai-center'>
+                        <i className="bi bi-moon" style={iconStyle}/>
                         <p>Night Mode</p>
                     </div>
                     <label className="switch">

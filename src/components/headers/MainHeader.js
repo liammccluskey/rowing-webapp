@@ -36,7 +36,7 @@ export default function MainHeader(props) {
                     
                 </div>
             </div>
-            <div className='d-flex jc-flex-end ai-center' style={{gap: 30}}>
+            <div className='d-flex jc-flex-end ai-center'>
                 <Link className={`${activeClass('dashboard') } header-link`} to='/dashboard' >
                     Dashboard
                 </Link>
@@ -47,9 +47,9 @@ export default function MainHeader(props) {
                     Explore
                 </Link>
                 <div className='d-flex jc-center ai-center onhover-bc' onClick={() => setHideMenu(false)}
-                    style={{gap: 10, cursor: 'pointer', padding: '5px 5px'}} 
+                    style={{cursor: 'pointer', padding: '5px 5px'}} 
                 >
-                    <img src={currentUser.photoURL}height={30} width={30} style={{margin: 0, borderRadius: '50%'}} />
+                    <img src={currentUser.photoURL} className='user-icon' />
                     <i className='bi bi-chevron-down' />
                 </div>
             </div>

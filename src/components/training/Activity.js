@@ -142,8 +142,8 @@ export default function Activity() {
                 <br /><br />
                 <h3>Workout Filter</h3>
                 <br />
-                <div className='d-flex jc-flex-start ai-center' style={{gap: '15px'}}>
-                    <div className='d-inline-flex jc-flex-start ai-center'
+                <div className='d-flex jc-flex-start ai-center'>
+                    <div className='d-inline-flex jc-flex-start ai-center mr-20'
                         style={{
                             gap: '0px',
                             border: '1px solid var(--bc)',
@@ -176,8 +176,8 @@ export default function Activity() {
                     <br />
                     <h4 style={{fontWeight: 500}}>Edit Workout Filter</h4>
                     <br />
-                    <div className='d-flex jc-flex-start ai-flex-start' style={{gap: 20}}>
-                        <label>
+                    <div className='d-flex jc-flex-start ai-flex-start' >
+                        <label className='mr-20'>
                             Sort By <br />
                             <select value={selectedSortParam} onChange={(e) => setSelectedSortParam(e.target.value)}>
                                 {sortParams.map((param, idx) => (
@@ -185,7 +185,7 @@ export default function Activity() {
                                 ))}
                             </select>
                         </label>
-                        <label>
+                        <label className='mr-20'>
                             Order <br />
                             <select ref={sortOrderRef}>
                                 <option value='-' defaultValue={true}>{sortParams[selectedSortParam].description.desc}</option>
@@ -195,21 +195,22 @@ export default function Activity() {
                     </div>
                     <br />
                     {filters.map((filter, idx) => (
-                        <label key={idx}>
+                        <label key={idx} >
                             {filter.title} <br />
-                            <div className='d-flex jc-flex-start ai-center' style={{gap: 15, marginBottom: 15}}>
-                                <select ref={filter.comparatorRef}>
+                            <div className='d-flex jc-flex-start ai-center' style={{ marginBottom: 15}}>
+                                <select ref={filter.comparatorRef} className='mr-20'>
                                     {comparators.map(comparator => (
                                         <option value={comparator.value}>{comparator.title}</option>
                                     ))}
                                 </select>
-                                <input ref={filter.valueRef}/>
+                                <input ref={filter.valueRef} className='mr-10'/>
                                 {filter.unit}
                             </div>
                             
                         </label>
 
                     ))}
+                    <br />
                     <div className='d-flex jc-space-between ai-center'>
                         <button type='submit' className='solid-btn-secondary'>
                             <i className='bi bi-search' style={{fontSize: 18}} />

@@ -185,13 +185,10 @@ export default function Statistics() {
                     <div id='general' style={{gridColumn: '1/4'}}>
                         <div id='general-header' className='d-flex jc-space-between ai-center'>
                             <h3 >General</h3>
-                            <div 
-                                className='d-flex jc-flex-end ai-center'
-                                style={{gap: '40px'}}
-                            >
+                            <div className='d-flex jc-flex-end ai-center' >
                                 {['Week', 'Month', 'Year'].map((item, idx) => (
                                     <h5 
-                                        key={idx}
+                                        key={idx} style={{marginLeft: 30}}
                                         className={idx === timeframe1 ? 'menu-option-active' : 'menu-option'}
                                         onClick={() => setTimeframe1(idx)}
                                     >
@@ -270,13 +267,10 @@ export default function Statistics() {
                     <div id='progress' style={{gridColumn: '1/4'}}>
                         <div id='progress-header' className='d-flex jc-space-between ai-center'>
                             <h3>Analysis</h3>
-                            <div 
-                                className='d-flex jc-flex-end ai-center'
-                                style={{gap: '40px'}}
-                            >
+                            <div className='d-flex jc-flex-end ai-center' >
                                 {['Week', 'Month', 'Year'].map((item, idx) => (
                                     <h5 
-                                        key={idx}
+                                        key={idx} style={{marginLeft: 30}}
                                         className={idx === timeframe2 ? 'menu-option-active' : 'menu-option'}
                                         onClick={() => setTimeframe2(idx)}
                                     >
@@ -287,16 +281,17 @@ export default function Statistics() {
                         </div>
                         <br />
                         <div style={{padding: '20px 20px'}} className='float-container'>
-                            <div className='d-flex jc-flex-start ai-center' style={{gap: '15px'}}>
-                                <div className='d-inline-flex jc-flex-start ai-center'
+                            <div className='d-flex jc-flex-start ai-center'>
+                                <div className='d-inline-flex jc-flex-start ai-center mr-20'
                                     style={{
-                                        gap: '0px',
                                         border: '1px solid var(--bc)',
                                         borderRadius: '5px',
                                         overflow: 'hidden'
                                     }}
                                 >
-                                    <h4 style={{backgroundColor: 'var(--bgc-hover)', padding: '7px 10px', color: 'var(--tint-color)'}}>
+                                    <h4 style={{backgroundColor: 'var(--bgc-hover)', padding: '7px 10px', color: 'var(--tint-color)'}}
+                                        className='mr-10'
+                                    >
                                         Workout filter
                                     </h4>
                                     <p style={{padding: '7px 10px', whiteSpace: 'pre'}}>
@@ -325,15 +320,14 @@ export default function Statistics() {
                                 <br />
                                 <div 
                                     className='d-inline-flex jc-flex-start ai-center'
-                                    style={{ gap: '10px' }}
                                 >
-                                    <p>Distance</p>
-                                    <select ref={distanceComparatorRef}>
+                                    <p className='mr-10'>Distance</p>
+                                    <select ref={distanceComparatorRef} className='mr-20'>
                                         <option value='<='>Less than</option>
                                         <option value='='>Equal to</option>
                                         <option value='>='>Greater than</option>
                                     </select>
-                                    <input 
+                                    <input className='mr-10'
                                         value={distanceFilter}
                                         onChange={(e) => setDistanceFilter(e.target.value)}
                                         type='number' required/>
@@ -341,7 +335,7 @@ export default function Statistics() {
                                 </div>
                                 <br />
                                 <br />
-                                <div className='d-flex jc-space-between ai-center' style={{gap: '10px', marginTop: '10px'}}>
+                                <div className='d-flex jc-space-between' style={{ marginTop: '10px'}}>
                                     <button type='submit' className='solid-btn-secondary'>
                                         <i className='bi bi-search' style={{fontSize: 18}} />
                                         Search
