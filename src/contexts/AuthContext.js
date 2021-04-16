@@ -31,7 +31,7 @@ export function AuthProvider({ children }) {
     function continueWithGoogle() {
     // Description: Sign (In \ Up) with google pop up
         const provider = new firebase.auth.GoogleAuthProvider()
-        return auth.signInWithPopup(provider)
+        return auth.signInWithRedirect(provider)
     }
 
     function signIn(email, password) {
