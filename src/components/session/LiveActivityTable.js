@@ -143,7 +143,7 @@ export default function LiveActivityTable(props) {
                     {activityInProgress ?
                         activityInProgress.workoutItemIndex === props.workoutItemIndex &&
                             <button
-                                className='clear-btn-secondary'
+                                className='clear-btn-cancel'
                                 style={{margin: '0px 10px'}}
                                 onClick={handleClickFinish}
                             >
@@ -152,7 +152,7 @@ export default function LiveActivityTable(props) {
                         :
                         !didCompleteActivity && (hideInstructions ? 
                             <button
-                                className='clear-btn-secondary' 
+                                className='clear-btn-cancel' 
                                 style={{margin: '0px 10px'}}
                                 onClick={() => setHideInstructions(false)}
                             >
@@ -160,7 +160,7 @@ export default function LiveActivityTable(props) {
                             </button> 
                             :
                             <button
-                                className='clear-btn-secondary'
+                                className='clear-btn-cancel' 
                                 style={{margin: '0px 10px'}}
                                 onClick={() => setHideInstructions(true)}
                             >

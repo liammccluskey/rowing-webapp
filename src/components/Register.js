@@ -30,8 +30,8 @@ export default function Register() {
     async function handleContinueWithGoogle() {
         try {
             await continueWithGoogle()
-        } catch (e) {
-            window.alert(e.message)
+        } catch (error) {
+            setMessage({title: error.message, isError: true, timestamp: moment()})
         }
     }
 
@@ -40,7 +40,7 @@ export default function Register() {
     }
 
     return (
-        <div>
+        <div className='login-page'>
             <SignHeader />
             <br />
             <div className='float-container login-card'>

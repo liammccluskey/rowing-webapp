@@ -78,16 +78,13 @@ export function AuthProvider({ children }) {
     // Description: Register authState Listener on mount
         const unsubscribe = auth.onAuthStateChanged( async (user) => {
             setCurrentUser(user)
-            console.log(window.location.pathname)
             if (user) {
                 await __fetchThisUser(user)
                 const currentPath = window.location.pathname
                 if (currentPath.includes('login') || currentPath.includes('register')) {
                     history.push('/dashboard')
-                    console.log('did push dashboard')
                 }
             }
-            console.log('did set loading false')
             setLoading(false)
         })
         return unsubscribe
