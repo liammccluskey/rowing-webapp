@@ -15,6 +15,7 @@ import Statistics from './components/training/Statistics'
 import Activity from './components/training/Activity'
 
 import Clubs from './components/explore/Clubs'
+import Athletes from './components/explore/Athletes'
 
 import Settings from './components/settings/Settings'
 
@@ -48,6 +49,7 @@ function App() {
                 <PrivateRoute path='/settings' component={Settings} />
 
                 <PrivateRoute path='/explore/clubs' component={Clubs} />
+                <PrivateRoute path='/explore/athletes' component={Athletes} />
 
                 <PrivateRoute path='/club-create' component={CreateClub} />
                 <PrivateRoute path='/clubs/:clubURL/general' component={Club} />

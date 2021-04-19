@@ -50,7 +50,6 @@ export default function Settings() {
             await firebase.auth().sendPasswordResetEmail(currentUser.email)
             setMessage({title: 'Check your email for a reset password link', isError: false, timestamp: moment()})
         } catch (error) {
-            console.log(error)
             setMessage({title: error.message, isError: true, timestamp: moment()})
         }
     }

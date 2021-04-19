@@ -4,7 +4,8 @@ import SubHeader from '../headers/SubHeader'
 
 export default function ExploreHeader(props) {
     const items = [
-        {title: 'Clubs', path: '/clubs'}
+        {title: 'Clubs', path: '/clubs'},
+        {title: 'Athletes', path: '/athletes'}
     ]
 
     return (

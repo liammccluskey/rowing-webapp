@@ -37,6 +37,7 @@ export function ThemeProvider({children}) {
         '--bgc-hover',
         '--bgc-light',
         '--bgc-settings',
+        '--bgc-input',
         '--bc',
         '--bc-tr',
         '--color',

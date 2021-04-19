@@ -28,7 +28,7 @@ export default function SubHeader(props) {
                     {props.children}
                 </div>
             </div>
-            <div className='d-flex jc-flex-start' style={{gap: 25}}>
+            <div className='d-flex jc-flex-start'>
                 {props.items && props.items.map( (item, idx) => (
                     <Link key={idx} className={`${activeClass(item.path)} header-link`}
                         to={props.path + item.path}

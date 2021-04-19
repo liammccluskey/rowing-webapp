@@ -1,17 +1,49 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Markazi+Text&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap');
+
+.c2screen-meta {
+    border: 10px solid rgb(54, 54, 56);
+    border-color: var(--bc);
+    border-radius: 5px;
+    overflow: hidden;
+}
+.c2screen-meta button {
+    box-sizing: border-box;
+    height: 30px;
+    border-radius: 15px;
+    padding: 0px 10px;
+    font-size: 13px;
+    font-weight: 700;
+    background-color: rgb(84, 87, 89);
+    background-color: var(--bgc);
+    color: var(--color-header);
+    border: 1px solid #575a5d;
+}
+.c2screen-meta button:hover {
+    filter: brightness(125%);
+}
+
+.screen-outer {
+    background-color: rgb(54, 54, 56);
+    background-color: var(--bc);
+    text-align: left;
+    padding-left: 5px;
+    padding-bottom: 10px;
+}
 
 .c2screen {
-    background-color: #748f79; /* old style */
     background-color: rgba(161, 205, 224, 0.8); /* blue pm5 */
+    background-color: #608279; /* old style */
+
+    background-color: #b7dff1;
     text-align: center;
 }
 
 
 .c2screen h5 {
     vertical-align: middle;
-    font-family: 'Markazi Text', serif;
-    color: #211a3d;
+    font-family: 'Titillium Web', sans-serif;
+    color: rgb(30,42,39);
 }
 
 .c2screen .big, .c2screen .medium, 
@@ -20,21 +52,21 @@
 }
 
 .c2screen .big {
-    font-size: 63px;
-    font-weight: bold;
-    letter-spacing: 4px;
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: 2px;
 }
 
 .c2screen .medium {
-    font-size: 45px;
-    font-weight: bold;
-    letter-spacing: 3px;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 2px;
 }
 
 .c2screen .small {
     display: inline;
-    font-size: 18px;
-    font-weight: bold;
-    margin-left: 7px;
+    font-size: 15px;
+    font-weight: 400;
+    margin-left: 2px;
     letter-spacing: 1px;
 }

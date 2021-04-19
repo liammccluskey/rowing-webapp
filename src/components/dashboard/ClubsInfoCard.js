@@ -19,7 +19,6 @@ export default function ClubsInfoCard(props) {
                 {props.clubs && props.clubs.map((club, idx) => (
                     <img key={idx} src={club.iconURL} className='club-icon-medium' onClick={() => handleClickClub(club)} />
                 ))}
-                <img src={currentUser.photoURL} className='club-icon-medium' />
             </div>
            <br />
             <button 

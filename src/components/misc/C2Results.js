@@ -6,7 +6,7 @@ import './c2screen.css'
 
 
 
-export default function C2Screen(props) {
+export default function C2Results(props) {
     const [activity, setActivity] = useState(props.activity)
 
     const thinBorder='1px solid #211a3d'
@@ -19,7 +19,7 @@ export default function C2Screen(props) {
 
     return (
         <div style={props.style} className='c2screen-meta'>
-            <div className='screen-outer d-flex jc-space-between ai-center'>
+            <div className='screen-outer d-flex jc-space-between ai-center' style={{display: 'none'}}>
                 <h4>
                     {activity.user.displayName}
                 </h4>
@@ -30,8 +30,8 @@ export default function C2Screen(props) {
                 <h5 style={{gridColumn: '1/3', borderRight: border}} className='medium'>
                     {moment.duration(activity.elapsedTime, 'seconds').format('hh:mm:ss')}
                 </h5>
-                <h5 className='medium d-inline'>
-                    {activity.strokeRate}<h5 className='small d-inline'>s/m</h5>
+                <h5 className='medium'>
+                    {activity.strokeRate}<h5 className='small'>s/m</h5>
                 </h5>
                 <h5 className='big' style={{gridColumn: '1/4', borderBottom: border, borderTop: border}}>
                     {moment.duration(activity.currentPace, 'seconds').format('hh:mm:ss')} 

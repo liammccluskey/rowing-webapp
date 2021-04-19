@@ -10,7 +10,7 @@ const api = axios.create({
 })
 
 export default function LiveActivityTable(props) {
-    const {currentUser} = useAuth()
+    const {currentUser, thisUser} = useAuth()
 
     const [hideSelf, setHideSelf] = useState(true)
     const [hideInstructions, setHideInstructions] = useState(true)
@@ -39,6 +39,22 @@ export default function LiveActivityTable(props) {
             )
         }
         */
+        const completedIDs = new Set()
+        const activeIDs = new Set()
+
+        props.activities.forEach(ac => {
+            if (ac.user._id === thisUser._id && ac.isCompleted) {
+                setDidCompleteActivity(true)
+            }
+            if (ac.isCompleted) {completedIDs.add(ac.user._id)}
+            else {activeIDs.add(ac.user._id)}
+        })
+
+        setUsersActiveCount(activeIDs.size)
+        setUsersCompletedCount(completedIDs.size)
+
+
+        /*
         const completedUIDs = new Set()
         const activeUIDs = new Set()
         props.activities.forEach(ac => {
@@ -53,6 +69,7 @@ export default function LiveActivityTable(props) {
         })
         setUsersCompletedCount(completedUIDs.size)
         setUsersActiveCount(activeUIDs.size)
+        */
     }, [props.activities])
 
     useEffect(() => {
@@ -99,10 +116,9 @@ export default function LiveActivityTable(props) {
             }, 1*1000);
         } else {
             const activity = {
-                uid: currentUser.uid,
-                name: currentUser.displayName,
+                user: thisUser._id,
                 workoutItemIndex: props.workoutItemIndex,
-                sessionID: props.session._id
+                session: props.session._id
             }
             try {
                 const res = await api.post('/activities', activity)
@@ -116,6 +132,24 @@ export default function LiveActivityTable(props) {
             setHideSelf(false)
             setHideInstructions(true)
         }
+        /* remove this */
+        const activity = {
+            user: thisUser._id,
+            workoutItemIndex: props.workoutItemIndex,
+            session: props.session._id
+        }
+        try {
+            const res = await api.post('/activities', activity)
+            handleClickActivity(res.data._id)
+            props.setActivityInProgress(res.data)
+            props.fetchActivities()
+        } catch (error) {
+            console.log(error)
+        }
+
+        setHideSelf(false)
+        setHideInstructions(true)
+
         setStartDisabled(false)
     }
 

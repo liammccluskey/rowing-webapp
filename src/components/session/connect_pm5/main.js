@@ -29,8 +29,7 @@ export let cbDisconnected = function() {
 };
 
 export let cbMessage = function(m) {
-    console.log(m.data)
-
+    
     /* iterate data elements and create / update value */
     for (let k in m.data) {
         if (m.data.hasOwnProperty(k)) {

@@ -211,7 +211,7 @@ export default function Activity() {
 
                     ))}
                     <br />
-                    <div className='d-flex jc-space-between ai-center'>
+                    <div className='d-flex jc-space-between'>
                         <button type='submit' className='solid-btn-secondary'>
                             <i className='bi bi-search' style={{fontSize: 18}} />
                             Search

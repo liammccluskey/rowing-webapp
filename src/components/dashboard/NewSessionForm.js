@@ -154,7 +154,7 @@ export default function NewSessionForm(props) {
                     </div>   
                 </div>
                 <br />
-                <div className='d-flex jc-space-between ai-center'>
+                <div className='d-flex jc-space-between'>
                     <button  className='solid-btn-secondary' type='submit'>Create</button>
                     <button type='button' onClick={()=>props.setShowSessionForm(false)} className='clear-btn-cancel'>Close</button>
                 </div>

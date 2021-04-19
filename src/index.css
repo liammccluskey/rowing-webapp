@@ -28,6 +28,11 @@ button {
   cursor: pointer;
   font-weight: 500;
 }
+button:disabled,
+button:disabled:hover {
+  filter: brightness(60%);
+  cursor: not-allowed;
+}
 h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   color: var(--color-header);
@@ -85,6 +90,7 @@ html {
 
   --bgc-nav-d: var(--bgc-light-d); 
   --bgc-settings-d: black;    
+  --bgc-input-d: #202327;           /* twitter */
 
 
   --bc-d: rgb(33,36,39);
@@ -108,12 +114,14 @@ html {
   --bgc-hover-l: rgb(245,247,249);
   --bgc-nav-l: var(--bgc-light-l);
   --bgc-settings-l: white;
+  --bgc-input-l: rgb(235, 238, 240); /* twitter */
   --bc-l: rgb(220, 227, 231);
   --bc-tr-l: rgb(241,242,242);
   --color-l: rgb(60,64,67);
   --color-header-l: rgb(60,64,67);
   --color-secondary-l: rgba(120,124,126,255);
   --color-tertiary-l: rgb(102,102,102);
+
   --box-shadow-l: 0 0 15px rgba(0,0,0,0.055);
   --box-shadow-dark-l: 0 0 20px rgba(0,0,0, 0.15);
   --float-border-l: none;
@@ -125,6 +133,7 @@ html {
   --bgc-light: var(--bgc-light-l);
   --bgc-hover: var(--bgc-hover-l);
   --bgc-settings: var(--bgc-settings-l);
+  --bgc-input: var(--bgc-input-l);
   --bc: var(--bc-l);
   --bc-tr: var(--bc-tr-l);
   --color: var(--color-l);
@@ -204,6 +213,9 @@ html {
 .search-bar:hover {
   border-color: var(--tint-color);
 }
+.search-bar input {
+  background-color: transparent;
+}
 
 
 
@@ -211,21 +223,20 @@ input, input:active, input:focus,
 textarea, textarea:active, textarea:focus,
 select, select:active, select:focus
  {
-  background-color: var(--bgc-hover);
-  background-color: transparent;
   color: var(--color);
-  border: 1px solid var(--bc);
+  border: 1px solid transparent;
   border-radius: 5px;
   padding: 11px 10px;
   outline: none;
   font-size: 14px;
-  -webkit-appearance: none;
+  background-color: var(--bgc-input);
 }
 input:focus, input:active,
 textarea:active, textarea:focus,
 select:active, select:focus
 {
   border-color: var(--tint-color);
+  background-color: transparent;
   transition: 0.2s;
 }
 form label {
@@ -260,6 +271,7 @@ form label {
   padding-left: var(--ps-nav);
   color: var(--color);
   border-bottom: 1px solid var(--bc);
+  z-index: 1;
 }
 .sub-link-active {
   border-bottom: 2px solid var(--tint-color);
@@ -269,7 +281,7 @@ form label {
   font-weight: 400;
   font-size: 15px;
   text-decoration: none;
-  margin-right: 20px;
+  margin-right: 25px;
 }
 .header-link:hover,
 .link-active {
@@ -317,6 +329,11 @@ form label {
   border-radius: 5px;
   border: 1px solid var(--bc);
   background-color: var(--bgc);
+}
+.trans-container {
+  border-radius: 5px;
+  border: 1px solid var(--bc);
+  padding: 10px 10px;
 }
 
 /* landing page */
@@ -369,7 +386,7 @@ form label {
 }
 .action-link {
   display: inline;
-  color: var(--color-mint);
+  color: var(--tint-color);
   cursor: pointer;
 }
 .action-link:hover {
@@ -446,13 +463,43 @@ form label {
   border-bottom: 1px solid var(--bc);
 }
 
+/* activity card */
+.activity-card {
+  padding: 20px 20px;
+}
+.activity-card .metrics-info div{
+  margin-right: 30px;
+  border-right: 1px solid var(--bc);
+  padding-right: 30px;
+}
+.activity-card .metrics-info div:last-child {
+  border-right: none;
+  padding-right: 0px;
+  margin-right: 20px;
+}
+.activity-card .metrics-info p {
+  color: var(--color-secondary);
+  margin-bottom: 3px;
+}
+.activity-card .comment-icons i{
+  border-radius: 5px;
+  padding: 6px 10px;
+  background-color: var(--bgc);
+  font-size: 17px;
+  border: 1px solid var(--bc);
+  cursor: pointer;
+}
+.activity-card .comment-icons i:hover {
+  background-color: var(--tint-color-translucent);
+}
+
 /* club page */
 .banner-image {
   width: 100%;
   display: block;
   object-fit: cover;
   object-position: center;
-  max-height: 135px;
+  max-height: 105px;
 }
 
 /* create club page */
@@ -641,6 +688,21 @@ table tbody tr:last-child {
 .mr-30 {
   margin-right: 30px;
 }
+.mb-2 {
+  margin-bottom: 2px;
+}
+.mb-5 {
+  margin-bottom: 5px;
+}
+.mb-10 {
+  margin-bottom: 10px;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}
 
 /* display flex */
 .d-flex {
@@ -679,6 +741,9 @@ table tbody tr:last-child {
 }
 .ai-flex-end {
   align-items: flex-end;
+}
+.fw-wrap {
+  flex-wrap: wrap;
 }
 
 
@@ -968,4 +1033,7 @@ input:checked + .slider:before {
 }
 .fw-l {
   font-weight: 700;
+}
+.w-100 {
+  width: 100%;
 }

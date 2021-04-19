@@ -30,7 +30,7 @@ export default function PasswordReset() {
     }
 
     return (
-        <div style={{ height: '100vh'}}>
+        <div  className='login-page'>
             <SignHeader />
             <br />
             <div className='float-container login-card'>
@@ -57,5 +57,5 @@ export default function PasswordReset() {
             <div className='login-spacer'></div>
         </div>
         
-    );
+    )
 }

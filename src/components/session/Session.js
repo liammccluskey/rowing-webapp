@@ -93,7 +93,7 @@ export default function Session(props) {
             setActivities(res.data)
             for (let i = 0; i < res.data.length; i++) {
                 for (let j = 0; j < res.data[i].length; j++) {
-                    if (res.data[i][j].uid === currentUser.uid && !res.data[i][j].isCompleted) {
+                    if (res.data[i][j].user._id === thisUser._id && !res.data[i][j].isCompleted) {
                         setActivityInProgress(res.data[i][j])
                         return
                         // Assume there is only one? -> potential bug

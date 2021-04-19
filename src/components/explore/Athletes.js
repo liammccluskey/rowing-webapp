@@ -13,7 +13,7 @@ const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
 })
 
-export default function Clubs() {
+export default function Athletes() {
     const {currentUser, thisUser} = useAuth()
     const {setMessage} = useMessage()
     const [results, setResults] = useState(null)
@@ -21,18 +21,17 @@ export default function Clubs() {
     const history = useHistory()
 
     const searchRef = useRef()
-    const [submittedSearch, setSubmittedSearch] = useState(null)    // club name
+    const [submittedSearch, setSubmittedSearch] = useState(null)    // athlete name
     const [currPage, setCurrPage] = useState(1)
 
-    function handleCreateClub() {
-        history.push('/club-create')
+    function handleClickUser(user) {
+        history.push(`/athletes/${user._id}`)
     }
 
-    function handleClickClub(club) {
-        history.push(`/clubs/${club.customURL}/general`)
-    }
-
-    async function handleJoinClub(club) {
+    async function handleClickFollowUser(user) {
+        /* needs fixing */
+        return
+        /*
         try {
             await api.post('/clubmemberships', {club: club._id, user: thisUser._id, role: 0})
             setMessage({title: `Joined "${club.name}"`, isError: false, timestamp: moment() })
@@ -40,6 +39,7 @@ export default function Clubs() {
         } catch(error) {
             setMessage({title: `Error joining "${club.name}. ${error.message}"`, isError: true, timestamp: moment() })
         }
+        */
     }
 
     async function handleSubmitSearch(e) {
@@ -47,48 +47,48 @@ export default function Clubs() {
         if ( !searchRef.current.value) {return}
 
         setSubmittedSearch(searchRef.current.value)
-        await searchClubs(searchRef.current.value, 1)
+        await searchUsers(searchRef.current.value, 1)
         setCurrPage(1)
     }
 
     async function onClickPrevious() {
-        await searchClubs(submittedSearch, currPage - 1)
+        await searchUsers(submittedSearch, currPage - 1)
         setCurrPage( curr => curr - 1 )
     }
 
     async function onClickNext() {
-        await searchClubs(submittedSearch, currPage + 1)
+        await searchUsers(submittedSearch, currPage + 1)
         setCurrPage( curr => curr + 1 )
     }
 
-    async function searchClubs(clubName, pageNum) {
+    async function searchUsers(displayName, pageNum) {
         setLoading(true)
         setResults(null)
+
         try {
-            const res = await api.get(`/clubs/search?name=${clubName}&page=${pageNum}&pagesize=15`)
+            const res = await api.get(`/users/search?displayName=${displayName}&page=${pageNum}&pagesize=15`)
             setResults(res.data)
-            setSubmittedSearch(clubName)
+            setSubmittedSearch(displayName)
         } catch (error) {
             console.log(error)
         }
         setLoading(false)
+        
     }
 
     return (
     <div>
         <MainHeader />
-        <ExploreHeader subPath='/clubs' />
+        <ExploreHeader subPath='/athletes' />
         <div className='main-container'>
             <br /><br />
             <div className='d-flex jc-space-between ai-center'>
                 <form onSubmit={handleSubmitSearch}>
                     <div className='search-bar' style={{backgroundColor: 'var(--bgc-light)'}}>
                         <i className='bi bi-search' />
-                        <input ref={searchRef} type='text' placeholder='Find a club by name' style={{borderColor: 'transparent', width: 250}} /> 
+                        <input ref={searchRef} type='text' placeholder='Find an athlete by name' style={{borderColor: 'transparent', width: 250}} /> 
                     </div>
                 </form>
-                
-                <button onClick={handleCreateClub}className='solid-btn-secondary'>Create a Club</button>
             </div>
             <br />
             <div className='float-container'>
@@ -100,32 +100,27 @@ export default function Clubs() {
                         </tr>
                     </thead>
                     <tbody>
-                        {(submittedSearch && results && !loading) && results.clubs.map((club, index) => 
-                            <tr key={index} onClick={() => handleClickClub(club)} style={{cursor: 'pointer'}}>
+                        {(submittedSearch && results && !loading) && results.users.map((user, index) => 
+                            <tr key={index} onClick={() => handleClickUser(user)} style={{cursor: 'pointer'}}>
                                 <td >
                                     <div className='d-flex jc-flex-start ai-center'>
-                                        <img 
-                                            src={club.iconURL}
-                                            height='50px' width='50px' 
-                                            style={{ borderRadius: '5px', marginRight: 10}}
-                                        />
-                                        <h4 className='page-link'>{club.name}</h4>
+                                        <img src={user.iconURL} className='user-icon'/>
+                                        <h4 className='page-link'>{user.displayName}</h4>
                                     </div>
-                                    
                                 </td>
                                 <td style={{textAlign: 'right'}}>
-                                    <button onClick={() => handleJoinClub(club)} className='clear-btn-secondary'>Join</button>
+                                    <button onClick={() => handleClickFollowUser(user)} className='clear-btn-secondary'>Follow</button>
                                 </td>
                             </tr>
                         )}
                     </tbody>
                 </table>
-                {( (submittedSearch && !loading && !results.clubs.length) || !submittedSearch ) &&
+                {( (submittedSearch && !loading && !results.users.length) || !submittedSearch ) &&
                     <div style={{textAlign: 'center', fontSize: 17, color: 'var(--color-secondary)', padding: '50px 20px'}}>
                     {(submittedSearch && !loading) ? 
-                        !results.clubs.length && `We couldn't find any clubs matching the name "${submittedSearch}"`
+                        !results.users.length && `We couldn't find any athletes matching the name "${submittedSearch}"`
                         :
-                        'Use the search bar above to find clubs'
+                        'Use the search bar above to find athletes'
                     }
                     </div>
                 }
