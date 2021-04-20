@@ -105,7 +105,7 @@ export default function ResultsTable(props) {
                                 }}
                                 onClick={() => handleClickActivity(ac._id)}
                             >
-                                <td>{ac.name}</td>
+                                <td>{ac.user.displayName}</td>
                                 <td>{moment.duration(ac.averagePace, 'seconds').format('hh:mm:ss')}</td>
                                 <td>{ac.distance.toFixed()}</td>
                                 <td>{ac.strokeRate}</td>

@@ -9,9 +9,9 @@ import './c2screen.css'
 export default function C2Screen(props) {
     const [activity, setActivity] = useState(props.activity)
 
-    const thinBorder='1px solid #211a3d'
-    const border='2px solid #211a3d'
-    const thickBorder='5px solid #211a3d'
+    const thinBorder='1px solid #0e1e18'
+    const border='2px solid #0e1e18'
+    const thickBorder='5px solid #0e1e18'
 
     useEffect(() => {
         setActivity(props.activity)

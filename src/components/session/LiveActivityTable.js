@@ -132,23 +132,6 @@ export default function LiveActivityTable(props) {
             setHideSelf(false)
             setHideInstructions(true)
         }
-        /* remove this */
-        const activity = {
-            user: thisUser._id,
-            workoutItemIndex: props.workoutItemIndex,
-            session: props.session._id
-        }
-        try {
-            const res = await api.post('/activities', activity)
-            handleClickActivity(res.data._id)
-            props.setActivityInProgress(res.data)
-            props.fetchActivities()
-        } catch (error) {
-            console.log(error)
-        }
-
-        setHideSelf(false)
-        setHideInstructions(true)
 
         setStartDisabled(false)
     }
@@ -327,7 +310,7 @@ export default function LiveActivityTable(props) {
                                     }}
                                     onClick={() => handleClickActivity(ac._id)}
                                 >
-                                    <td>{ac.name}</td>
+                                    <td>{ac.user.displayName}</td>
                                     <td>{moment.duration(ac.currentPace, 'seconds').format('hh:mm:ss')}</td>
                                     <td>{moment.duration(ac.averagePace, 'seconds').format('hh:mm:ss')}</td>
                                     <td>{ac.distance.toFixed()}</td>

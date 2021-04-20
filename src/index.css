@@ -466,11 +466,13 @@ form label {
 /* activity card */
 .activity-card {
   padding: 20px 20px;
+  margin-bottom: 30px;
 }
 .activity-card .metrics-info div{
-  margin-right: 30px;
+  margin-right: 20px;
   border-right: 1px solid var(--bc);
-  padding-right: 30px;
+  border-right: none;
+  padding-right: 20px;
 }
 .activity-card .metrics-info div:last-child {
   border-right: none;
@@ -480,6 +482,9 @@ form label {
 .activity-card .metrics-info p {
   color: var(--color-secondary);
   margin-bottom: 3px;
+}
+.activity-card .metrics-info h3 {
+  color: var(--tint-color);
 }
 .activity-card .comment-icons i{
   border-radius: 5px;
@@ -492,6 +497,18 @@ form label {
 .activity-card .comment-icons i:hover {
   background-color: var(--tint-color-translucent);
 }
+.activity-card .icon-btn-small {
+  border-radius: 5px;
+  padding: 2px 4px;
+  background-color: var(--bgc);
+  font-size: 14px;
+  border: 1px solid var(--bc);
+  cursor: pointer;
+  color: var(--color-secondary);
+}
+.activity-card .icon-btn-small:hover {
+  background-color: var(--tint-color-translucent);
+}
 
 /* club page */
 .banner-image {
@@ -499,7 +516,7 @@ form label {
   display: block;
   object-fit: cover;
   object-position: center;
-  max-height: 105px;
+  max-height: 160px;
 }
 
 /* create club page */

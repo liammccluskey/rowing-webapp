@@ -53,7 +53,7 @@ export default function Following() {
 
     return (
         <div>
-            <MainHeader />
+            <MainHeader style={{position: 'sticky', top: 0, zIndex: 1000}}/>
             {(!loading && !user) && <h2 style={{paddingTop: 40}}>We couldn't find an athlete at that link</h2>}
             {(!loading && user) &&
             <div>

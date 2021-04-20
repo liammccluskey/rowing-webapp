@@ -65,7 +65,7 @@ export default function ClubHeader(props) {
     }
 
     return (
-        <div style={{position: 'sticky', top: 0}}>
+        <div>
             <Confirmation title='Confirm' message='Are you sure you want to leave this club?' 
                 handleClickConfirm={handleClickConfirmLeave} hidden={confirmationHidden} setHidden={setConfirmationHidden}
             />

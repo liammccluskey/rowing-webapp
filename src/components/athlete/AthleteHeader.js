@@ -91,7 +91,7 @@ export default function AthleteHeader(props) {
     }
 
     return (
-        <div style={{position: 'sticky', top: 0}}>
+        <div>
             <img className='banner-image' src={user.bannerURL ? user.bannerURL : src} />
             <SubHeader 
                 title={user.displayName}

@@ -29,7 +29,7 @@ export default function MainHeader(props) {
                         {process.env.REACT_APP_COMPANY_NAME}
                     </h3>
                     
-                    <div className='d-inline-flex jc-flex-start ai-center search-bar'>
+                    <div className='d-inline-flex jc-flex-start ai-center search-bar' style={{display: 'none'}}>
                         <i className='bi bi-search' style={{color: 'var(--color-secondary)'}} />
                         <input placeholder='Search' style={{width: '300px', borderColor: 'transparent'}} type='text'/>
                     </div>

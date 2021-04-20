@@ -60,7 +60,7 @@ export default function Members() {
 
     return (
         <div>
-            <MainHeader />
+            <MainHeader style={{position: 'sticky', top: 0, zIndex: 1000}}/>
             {loading ? <Loading /> : !club ? <h2 style={{paddingTop: 40}}>We couldn't find a club at that link</h2> :
             <div >
                 <ClubHeader title={club.name} subPath='/members' 

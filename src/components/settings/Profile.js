@@ -57,6 +57,7 @@ export default function Profile() {
             await api.patch(`/users/${thisUser._id}/iconURL`, {iconURL: resURL})
             setProfilePhotoURL(resURL)
             setMessage({title: 'Changes saved', isError: false, timestamp: moment()})
+            fetchThisUser()
         } catch(error) {
             setMessage({title: error.message, isError: true, timestamp: moment()})
         }
