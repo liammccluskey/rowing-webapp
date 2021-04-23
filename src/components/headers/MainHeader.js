@@ -6,7 +6,7 @@ import DropdownMenu from './DropdownMenu'
 
 export default function MainHeader(props) {
     const {isDarkMode, setIsDarkMode} = useTheme()
-    const {currentUser} = useAuth()
+    const {currentUser, thisUser} = useAuth()
     const [path, setPath] = useState('')
     const history = useHistory()
 
@@ -28,12 +28,10 @@ export default function MainHeader(props) {
                     >
                         {process.env.REACT_APP_COMPANY_NAME}
                     </h3>
-                    
                     <div className='d-inline-flex jc-flex-start ai-center search-bar' style={{display: 'none'}}>
                         <i className='bi bi-search' style={{color: 'var(--color-secondary)'}} />
                         <input placeholder='Search' style={{width: '300px', borderColor: 'transparent'}} type='text'/>
                     </div>
-                    
                 </div>
             </div>
             <div className='d-flex jc-flex-end ai-center'>
@@ -49,8 +47,15 @@ export default function MainHeader(props) {
                 <div className='d-flex jc-center ai-center onhover-bc' onClick={() => setHideMenu(false)}
                     style={{cursor: 'pointer', padding: '5px 5px'}} 
                 >
-                    <img src={currentUser.photoURL} className='user-icon' />
-                    <i className='bi bi-chevron-down' />
+                    {thisUser.iconURL ? 
+                        <img src={currentUser.photoURL} className='user-icon' style={{marginRight: 10}} />
+                        :
+                        <div className='user-icon-default'>
+                            <i className='bi bi-person' />
+                        </div>
+                    }
+                    
+                    <i className='bi bi-chevron-down' style={{fontSize: 13}} />
                 </div>
             </div>
             <DropdownMenu hideSelf={hideMenu} setHideSelf={setHideMenu} />

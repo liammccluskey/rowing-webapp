@@ -57,10 +57,13 @@ export default function UserInfoCard(props) {
                 <div className='d-flex jc-flex-start ai-center' 
                     style={{borderBottom: '1px solid var(--bc)', padding: '10px 10px'}}
                 > 
-                    <img height='30px' width='30px' 
-                        src={currentUser.photoURL} 
-                        style={{borderRadius: '50%', marginRight: '10px'}}
-                    />
+                    {thisUser.iconURL ? 
+                        <img src={currentUser.photoURL} className='user-icon' style={{marginRight: 8}} />
+                        :
+                        <div className='user-icon-default'>
+                            <i className='bi bi-person' />
+                        </div>
+                    }
                     <h4 className='page-link' onClick={handleClickName}>{currentUser.displayName}</h4>
                 </div>
                 <div style={style}>

@@ -32,16 +32,14 @@
 }
 
 .c2screen {
-
-    background-image: url(https://firebasestorage.googleapis.com/v0/b/rowing-a06ba.appspot.com/o/Misc%2Fconcept2-background.png?alt=media&token=59df1ce2-55de-41c1-8f63-00ed2842aa89);
-
     background-color: #608279; /* old style */
 
-    background-color: rgba(161, 205, 224, 0.8); /* blue pm5 */
+    background-color: rgb(183, 223, 241);
 
-    background-color: #b7dff1;
+    background-color: rgba(161, 205, 224); /* blue pm5 */
+
     text-align: center;
-    filter: brightness(120%);
+    filter: brightness(105%);
 }
 
 

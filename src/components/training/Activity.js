@@ -260,7 +260,7 @@ export default function Activity() {
                                 <td className='page-link' onClick={() => history.push(`/sessions/${ac.sessionID}`)}>
                                     {ac.session.title}
                                 </td>
-                                <td>{ac.title}</td>
+                                <td>{ac.session.workoutItems[ac.workoutItemIndex]}</td>
                                 <td>{ac.distance.toLocaleString()}</td>
                                 <td style={{letterSpacing: 1}}>{moment.duration(ac.elapsedTime, 'seconds').format('hh:mm:ss')}</td>
                                 <td>{ac.workoutType}</td>

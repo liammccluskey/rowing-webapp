@@ -4,12 +4,7 @@ import C2Results from '../misc/C2Results'
 import moment from 'moment'
 import { useAuth } from '../../contexts/AuthContext'
 import { useMessage } from '../../contexts/MessageContext'
-import axios from 'axios'
 import CommentSection from './CommentSection'
-
-const api = axios.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL
-})
 
 export default function ActivityCard(props) {
     const { thisUser } = useAuth()

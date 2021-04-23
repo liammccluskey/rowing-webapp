@@ -15,15 +15,14 @@ export function useTheme() {
 export function ThemeProvider({children}) {
     const {currentUser, thisUser, fetchThisUser} = useAuth()
 
-    const [isDarkMode, setIsDarkMode] = useState(thisUser ? thisUser.usesDarkMode : false)
-    const [tintColor, setTintColor] = useState(1)   // mint default
+    const [isDarkMode, setIsDarkMode] = useState(thisUser ? thisUser.colorTheme === '1' : false)
+    const [tintColor, setTintColor] = useState( thisUser ? thisUser.tintColor  : 0)
 
     const tintColors = [
-        {name: 'Soft Blue', extension: 'strava'},    // default
-        {name: 'Mint', extension: 'mint'},
+        {name: 'Mint', extension: 'mint'},   // default 
+        {name: 'Soft Blue', extension: 'strava'},
         {name: 'Purple', extension: 'discord'},
-        {name: 'Sharp Blue', extension: 'rh-blue'},
-        {name: 'Twitter Blue', extension: 'twitter-blue'}
+        {name: 'Light Blue', extension: 'twitter-blue'}
     ]
 
     const value = {
@@ -59,9 +58,7 @@ export function ThemeProvider({children}) {
 
         async function updateData() {
             try {
-                await api.patch(`/users/${thisUser._id}/color-theme`, {
-                    usesDarkMode: isDarkMode
-                })
+                await api.patch(`/users/${thisUser._id}/colorTheme`, {colorTheme: isDarkMode ? 1 : 0})
             } catch (error) {
                 console.log(error)
             }
@@ -75,6 +72,15 @@ export function ThemeProvider({children}) {
 
         root.style.setProperty('--tint-color', `var(--color-${extension})`)
         root.style.setProperty('--tint-color-translucent', `var(--color-translucent-${extension})`)
+
+        async function updateData() {
+            try {
+                await api.patch(`/users/${thisUser._id}/tintColor`, {tintColor: tintColor})
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        if (thisUser) { updateData() }
     }, [tintColor])
 
     return (

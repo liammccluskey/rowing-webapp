@@ -2,10 +2,12 @@ import React, {useState, useEffect} from 'react'
 import MainHeader from '../headers/MainHeader'
 import SubHeader from '../headers/SubHeader'
 import ClubHeader from './ClubHeader'
+import SessionCard from '../feed/SessionCard'
 import Loading from '../misc/Loading'
 import {useAuth} from '../../contexts/AuthContext'
-import {useParams, useLocation} from 'react-router-dom'
+import {useParams } from 'react-router-dom'
 import axios from 'axios'
+import moment from 'moment'
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
@@ -20,6 +22,9 @@ export default function Club(props) {
     const [club, setClub] = useState()
     const [loading, setLoading] = useState(true)
 
+    const [sessions, setSessions] = useState([])
+    const [loadingSessions, setLoadingSessions] = useState(true)
+
     useEffect( () => {
         fetchData()
     }, [clubURL])
@@ -29,6 +34,7 @@ export default function Club(props) {
             const res = await api.get(`/clubs/customURL/${clubURL}`)
             setClub(res.data)
             await __fetchMembers(res.data._id)
+            await fetchSessions(res.data._id)
         } catch(error) {
             console.log(error)
         }
@@ -51,19 +57,34 @@ export default function Club(props) {
         __fetchMembers(club._id)
     }
 
+    async function fetchSessions(clubID) {
+        try {
+            const res = await api.get(`/sessions/feed/club/${clubID}`)
+            setSessions(res.data)
+        } catch (error) { console.log(error) }
+        setLoadingSessions(false)
+    }
+
     return (
         <div>
-            <MainHeader />
+            <MainHeader style={{position: 'sticky', top: 0, zIndex: 1000}}/>
             {loading ? <Loading /> : !club ? <h2 style={{paddingTop: 40}}>We couldn't find a club at that link</h2> :
             <div>
                 <ClubHeader title={club.name} subPath='/general' 
                     fetchData={fetchMembers} 
                     club={club} members={members} membership={membership}
                 />
-                <div className='main-container' style={{height: '100vh'}}>
-                    <br /><br />
-                    <p>{club.description}</p>
+                <br /><br />
+                <div className='main-container' style={{minHeight: '100vh', display: 'grid', gridTemplateColumns: '2fr 1fr'}}>
+                    <div>
+                        <h3>Recent Sessions</h3>
+                        <br />
+                        {( !loadingSessions && sessions.length > 0) &&
+                            sessions.map( (session, idx) => session.club && <SessionCard session={session} parentID={session._id} />)
+                        }
 
+                    </div>
+                    
                 </div>
             </div>
             }

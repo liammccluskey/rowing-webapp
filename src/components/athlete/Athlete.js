@@ -6,7 +6,10 @@ import MainHeader from '../headers/MainHeader'
 import AthleteHeader from './AthleteHeader'
 import ActivityCard from '../feed/ActivityCard'
 import Loading from '../misc/Loading'
+import Pending from '../misc/Pending'
 import axios from 'axios'
+
+import ClubIcon from '../icons/ClubIcon'
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
@@ -59,10 +62,6 @@ export default function Athlete() {
         fetchClubs()
     }, [userID])
 
-    function handleClickClub(club) {
-        history.push(`/clubs/${club.customURL}/general`)
-    }
-
     return (
         <div>
             <MainHeader style={{position: 'sticky', top: 0, zIndex: 1000}} />
@@ -71,9 +70,7 @@ export default function Athlete() {
             <div>
                 <AthleteHeader user={user} subPath='/' />
                 <br /><br />
-                <div className='main-container' style={{
-                    display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 50
-                }}>
+                <div className='main-container' style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 50 }}>
                     <div>
                         <h3>Recent Activities</h3>
                         <br />
@@ -86,18 +83,14 @@ export default function Athlete() {
                                     {user.displayName} has no recent activities
                                 </p>
                             </div>
-                           
                         }
                     </div>
                     <div>
                         <h3>Clubs</h3>
                         <br />
                         <div className='float-container d-flex jc-flex-start ai-flex-start fw-wrap'>
-                            {clubs.map( (club, idx) => (
-                                <img src={club.iconURL} className='club-icon-medium' style={{margin: 15}} 
-                                    onClick={() => handleClickClub(club)}
-                                />
-                            ))}
+                            {loadingClubs && <div className='loading-message'><Pending />Loading clubs...</div>}
+                            {clubs.map( (club, idx) => <ClubIcon club={club} key={idx} style={{margin: 15}} />)}
                             {(!loadingClubs && !loadingUser && !clubs.length) &&
                                 <p className='c-cs' style={{padding: '20px 20px'}}>
                                     {user.displayName} does not belong to any clubs
@@ -107,7 +100,6 @@ export default function Athlete() {
                     </div>
                     
                 </div>
-                <div style={{height: 200}} />
             </div>
             }
             

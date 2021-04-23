@@ -2,25 +2,21 @@ import React from 'react'
 import Loading from '../misc/Loading'
 import {useHistory} from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
+import ClubIcon from '../icons/ClubIcon'
 
 export default function ClubsInfoCard(props) {
-    const history = useHistory()
     const {currentUser} = useAuth()
-
-    function handleClickClub(club) {
-        history.push(`/clubs/${club.customURL}/general`)
-    }
+    const history = useHistory()
 
     return (
-        <div style={{...props.style, padding: '20px 20px'}} className='float-container bs-bb' >
-            <h3>Your Clubs</h3>
-            <br />
-            <div className='ai-center' style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 30}}>
-                {props.clubs && props.clubs.map((club, idx) => (
-                    <img key={idx} src={club.iconURL} className='club-icon-medium' onClick={() => handleClickClub(club)} />
-                ))}
+        <div style={{...props.style, padding: '20px 0px'}} className='float-container bs-bb' >
+            <h3 style={{padding: '0px 20px'}}>Your Clubs</h3>
+            <div className='d-flex jc-flex-start ai-flex-start fw-wrap'>
+                {props.clubs && props.clubs.map( (club, idx) => 
+                    <ClubIcon club={club} key={idx} style={{margin: '20px 20px'}} />
+                )}
             </div>
-           <br />
+            <br />
             <button 
                 style={{display: 'block', margin: '0px auto'}} 
                 className='clear-btn-secondary'

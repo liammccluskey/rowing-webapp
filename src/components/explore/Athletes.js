@@ -28,20 +28,6 @@ export default function Athletes() {
         history.push(`/athletes/${user._id}`)
     }
 
-    async function handleClickFollowUser(user) {
-        /* needs fixing */
-        return
-        /*
-        try {
-            await api.post('/clubmemberships', {club: club._id, user: thisUser._id, role: 0})
-            setMessage({title: `Joined "${club.name}"`, isError: false, timestamp: moment() })
-            history.push(`/clubs/${club.customURL}/general`)
-        } catch(error) {
-            setMessage({title: `Error joining "${club.name}. ${error.message}"`, isError: true, timestamp: moment() })
-        }
-        */
-    }
-
     async function handleSubmitSearch(e) {
         e.preventDefault()
         if ( !searchRef.current.value) {return}
@@ -96,7 +82,6 @@ export default function Athletes() {
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,9 +92,6 @@ export default function Athletes() {
                                         <img src={user.iconURL} className='user-icon'/>
                                         <h4 className='page-link'>{user.displayName}</h4>
                                     </div>
-                                </td>
-                                <td style={{textAlign: 'right'}}>
-                                    <button onClick={() => handleClickFollowUser(user)} className='clear-btn-secondary'>Follow</button>
                                 </td>
                             </tr>
                         )}

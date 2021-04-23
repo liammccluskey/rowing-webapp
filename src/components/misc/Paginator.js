@@ -13,14 +13,12 @@ export default function Paginator(props) {
     const itemStyle={
         border: '1px solid var(--tint-color)',
         borderRadius: 3,
-        padding: '10px 10px',
         textAlign: 'center',
-        color: 'var(--tint-color)'
     }
 
     const arrowStyle= {
-        fontWeight: 700,
-        fontSize: 20
+        fontSize: 20,
+        padding: '8px 15px',
     }
 
     function onClickPrevious() {
@@ -34,20 +32,16 @@ export default function Paginator(props) {
     }
 
     return (
-        <div className='d-flex jc-center' style={{gap: 15, display: props.resultsCount === 0 && 'none'}}>
-            <button className='clear-btn-secondary' onClick={onClickPrevious} disabled={currPage === 1}>
-                <i className='bi bi-arrow-left' style={arrowStyle}/>
-            </button>
-            
-            <div style={{...itemStyle, width: 100}} className='d-flex jc-space-around ai-center'>
-                <h4>{currPage}</h4>
-                <h5>of</h5>
-                <h4>{pageCount}</h4>
+        <div className='d-flex jc-center ai-center' style={{ display: props.resultsCount === 0 && 'none'}}>
+           
+            <div style={itemStyle} className='d-flex jc-space-around ai-center'>
+                <i className='bi bi-chevron-left paginator-button mr-20' style={arrowStyle} onClick={onClickPrevious}/>
+                <h4 className='mr-20'>{currPage}</h4>
+                <h5 className='mr-20'>of</h5>
+                <h4 className='mr-20'>{pageCount}</h4>
+                <i className='bi bi-chevron-right paginator-button' style={arrowStyle} onClick={onClickNext}/>
             </div>
 
-            <button className='clear-btn-secondary' onClick={onClickNext} disabled={currPage === pageCount}>
-                <i className='bi bi-arrow-right' style={arrowStyle}/>
-            </button>
         </div>
     )
 }

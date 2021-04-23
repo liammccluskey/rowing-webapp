@@ -7,6 +7,7 @@ import NewSessionForm from './NewSessionForm'
 import { useAuth } from "../../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
 import Loading from '../misc/Loading'
+import ActivityCard from '../feed/ActivityCard'
 import axios from "axios"
 import moment from 'moment'
 

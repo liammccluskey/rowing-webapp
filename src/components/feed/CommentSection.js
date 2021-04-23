@@ -1,9 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { useHistory } from 'react-router-dom'
-import C2Results from '../misc/C2Results'
+import ReplySection from './ReplySection'
+import Comment from './Comment'
 import moment from 'moment'
 import { useAuth } from '../../contexts/AuthContext'
 import { useMessage } from '../../contexts/MessageContext'
+import { formatNumber, formatUnit } from '../../scripts/Numbers'
 import axios from 'axios'
 
 const api = axios.create({
@@ -54,7 +56,6 @@ export default function CommentSection(props) {
     }
 
     function handleClickUser(user) {
-        if (user._id === thisUser._id) { return }
         history.push(`/athletes/${user._id}`)
     }
 
@@ -88,8 +89,8 @@ export default function CommentSection(props) {
         }
     }
 
-    function handleClickComment() {
-        setCommentsHidden((false))
+    async function handleClickComment() {
+        await setCommentsHidden((false))
         commentRef.current.focus()
     }
 
@@ -107,60 +108,38 @@ export default function CommentSection(props) {
         }
     }
 
-    async function handleDeleteComment(comment) {
-        if (!window.confirm('Are you sure you want to delete this message?')) { return }
-        try {
-            await api.delete(`/comments?user=${thisUser._id}&comment=${comment._id}`)
-            setMessage({title: 'Your comment was deleted', isError: false, timestamp: moment()})
-            fetchComments()
-        } catch (error) {
-            setMessage({title: `Error deleting comment. ${error.message}`, isError: true, timestamp: moment()})
-        }
-    }
-
     return (
         <div>
-            <div className='d-flex jc-space-between ai-center mb-10'>
+            <div className='d-flex jc-space-between ai-center '>
                 <div className='d-flex jc-flex-start ai-center comment-icons'>
-                    <i className='bi bi-hand-thumbs-up mr-10' onClick={handleClickLike}/>
-                    <p className='c-cs mr-20'>{likes} likes</p>
-                    <i className='bi bi-chat-square-text mr-10' onClick={handleClickComment}/>
-                    <p className='c-cs mr-20'>{comments.length} comments</p>
+                    <div className='d-flex jc-center ai-center mr-20' onClick={handleClickLike}>
+                        <i className='bi bi-hand-thumbs-up-fill' style={{color: didLike && 'var(--tint-color)'}}/>
+                        <h5 className=' mr-3' style={{color: didLike && 'var(--tint-color)'}}>{formatNumber(likes)}</h5>
+                        <h5 style={{color: didLike && 'var(--tint-color)'}}>{formatUnit('like', likes)}</h5>
+                    </div>
+                    <div className='d-flex jc-center ai-center' onClick={handleClickComment}>
+                        <i className='bi bi-chat-square-fill'/>
+                        <h5 className='mr-3 lc-1'>{formatNumber(comments.length)}</h5>
+                        <h5>{formatUnit('comment', comments.length)}</h5>
+                    </div> 
                 </div>
                 <h5 className='c-tc fw-s action-link' onClick={() => setCommentsHidden(curr => !curr)}>
                     {commentsHidden ? 'Show comments' : 'Hide comments'}
                 </h5>
-               
             </div>
-            
             <div style={{display: commentsHidden && 'none'}}>
-                <div style={{borderTop: '1px solid var(--bc)'}}>
-                    {comments.map( (comment, idx) => (
-                        <div key={idx} className='d-flex jc-flex-start' style={{padding: 10}}>
-                            {comment.user.iconURL && <img src={comment.user.iconURL} className='user-icon' />}
-                            {!comment.user.iconURL && 
-                                <div className='user-icon-default'>
-                                    <i className='bi bi-person' />
-                                </div>
-                            }
-                            <div>
-                                <div className='d-inline-flex jc-flex-start ai-center mb-5'>
-                                    <p className='fw-l mr-10 page-link' onClick={() => handleClickUser(comment.user)}>
-                                        {comment.user.displayName}
-                                    </p>
-                                    <p className='c-cs mr-10'>{moment(comment.createdAt).fromNow()}</p>
-                                    <i className='bi bi-trash icon-btn-small' style={{display: thisUser._id !== comment.user._id && 'none' }} 
-                                        onClick={() => handleDeleteComment(comment)}
-                                    />
-                                </div>
-                                <p style={{whiteSpace: 'normal'}}>{comment.message}</p>
-                            </div>
-                        
-                        </div>
-                    ))}
+                <div style={{borderTop: '1px solid var(--bc)', marginTop: 5, paddingTop: 5}}>
+                    {comments.map( (comment, idx) => 
+                        <Comment key={idx} style={{padding: '5px 10px'}}
+                            parentID={props.parentID}
+                            isReply={false}
+                            comment={comment}
+                            fetchData={fetchComments}
+                        />
+                    )}
                 </div>
-                <div className='d-flex jc-flex-start ai-flex-start' style={{ padding: 10, paddingRight: 30 }} >
-                    {thisUser.iconURL && <img src={thisUser.iconURL} className='user-icon' />}
+                <div className='d-flex jc-flex-start ai-flex-start' style={{ padding: 10 }} >
+                    {thisUser.iconURL && <img src={thisUser.iconURL} className='user-icon-small' />}
                     {!thisUser.iconURL && 
                         <div className='user-icon-default'>
                             <i className='bi bi-person' />
@@ -168,12 +147,12 @@ export default function CommentSection(props) {
                     }
                     <div className='w-100'>
                         <div className='d-inline-flex jc-flex-start ai-center'>
-                            <p className='fw-l mr-10 mb-5'>{thisUser.displayName}</p>
+                            <p className='fw-m mr-10 mb-5'>{thisUser.displayName}</p>
                         </div>
                         <form onSubmit={handleSubmitComment}>
                             <textarea ref={commentRef} value={comment} onChange={e => setComment(e.target.value)} required={true}
                                 placeholder='Write a comment' rows={2} style={{resize: 'vertical', width: '100%', minHeight: 35}}
-                                className='mb-5'
+                                className='mb-5 bs-bb'
                                 maxLength={500}
                             />
                             <button className='solid-btn-secondary' type='submit' disabled={comment.length === 0}>Comment</button>
@@ -184,4 +163,3 @@ export default function CommentSection(props) {
         </div>
     )
 }
-

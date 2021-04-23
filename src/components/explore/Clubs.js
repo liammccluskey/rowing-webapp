@@ -31,17 +31,7 @@ export default function Clubs() {
     function handleClickClub(club) {
         history.push(`/clubs/${club.customURL}/general`)
     }
-
-    async function handleJoinClub(club) {
-        try {
-            await api.post('/clubmemberships', {club: club._id, user: thisUser._id, role: 0})
-            setMessage({title: `Joined "${club.name}"`, isError: false, timestamp: moment() })
-            history.push(`/clubs/${club.customURL}/general`)
-        } catch(error) {
-            setMessage({title: `Error joining "${club.name}. ${error.message}"`, isError: true, timestamp: moment() })
-        }
-    }
-
+    
     async function handleSubmitSearch(e) {
         e.preventDefault()
         if ( !searchRef.current.value) {return}
@@ -96,7 +86,6 @@ export default function Clubs() {
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -104,17 +93,10 @@ export default function Clubs() {
                             <tr key={index} onClick={() => handleClickClub(club)} style={{cursor: 'pointer'}}>
                                 <td >
                                     <div className='d-flex jc-flex-start ai-center'>
-                                        <img 
-                                            src={club.iconURL}
-                                            height='50px' width='50px' 
-                                            style={{ borderRadius: '5px', marginRight: 10}}
-                                        />
+                                        <img src={club.iconURL} className='club-icon-medium mr-10'/>
                                         <h4 className='page-link'>{club.name}</h4>
                                     </div>
                                     
-                                </td>
-                                <td style={{textAlign: 'right'}}>
-                                    <button onClick={() => handleJoinClub(club)} className='clear-btn-secondary'>Join</button>
                                 </td>
                             </tr>
                         )}

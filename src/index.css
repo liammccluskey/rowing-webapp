@@ -45,6 +45,7 @@ h3 {
 }
 h6 {
   color: var(--color-secondary);
+  font-size: 12px;
 }
 p, td, th {
   font-weight: 300;
@@ -98,8 +99,8 @@ html {
   --bc-d: rgba(48,54,58,255);         /* robinhood */
 
   --bc-tr-d: rgba(22,22,23,255);
-  --color-d: rgb(205,205,205);
-  --color-header-d: rgb(215,215,215);
+  --color-d: rgb(215,215,215);
+  --color-header-d: rgb(245,245,245);
   --color-secondary-d: rgb(147, 151, 156);
   --color-tertiary-d: rgba(110,115,120,255);
   --box-shadow-d: none;
@@ -120,6 +121,7 @@ html {
   --color-l: rgb(60,64,67);
   --color-header-l: rgb(60,64,67);
   --color-secondary-l: rgba(120,124,126,255);
+  --color-secondary-l: rgba(135,138,140,255);
   --color-tertiary-l: rgb(102,102,102);
 
   --box-shadow-l: 0 0 15px rgba(0,0,0,0.055);
@@ -298,6 +300,13 @@ form label {
   color: var(--page-link-color);
 }
 
+.column-scrollable-grid {
+  overscroll-behavior: auto;
+}
+.column-scrollable-grid .scrollable-grid-column {
+  max-height: 100vh;
+  overflow: scroll;
+}
 .main-container {
   text-align: left;
   margin: 0px auto;
@@ -465,7 +474,7 @@ form label {
 
 /* activity card */
 .activity-card {
-  padding: 20px 20px;
+  padding: 15px 15px;
   margin-bottom: 30px;
 }
 .activity-card .metrics-info div{
@@ -486,18 +495,47 @@ form label {
 .activity-card .metrics-info h3 {
   color: var(--tint-color);
 }
-.activity-card .comment-icons i{
+/* comment section */
+.comment-icons div {
+  padding: 5px;
   border-radius: 5px;
-  padding: 6px 10px;
-  background-color: var(--bgc);
-  font-size: 17px;
-  border: 1px solid var(--bc);
   cursor: pointer;
 }
-.activity-card .comment-icons i:hover {
-  background-color: var(--tint-color-translucent);
+.comment-icons div:hover,
+.reply-icons div:hover {
+  background-color: var(--bgc-hover);
 }
-.activity-card .icon-btn-small {
+.comment-icons i {
+  margin-right: 6px;
+  color: var(--color-secondary);
+  font-size: 14px;
+}
+.comment-icons h5 {
+  color: var(--color-secondary);
+  font-weight: 500;
+}
+.reply-icons {
+  margin-left: -4px;
+}
+.reply-icons div {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.reply-icons i{
+  margin-right: 6px;
+  color: var(--color-secondary);
+  font-size: 11px;
+}
+.reply-icons h5 {
+  color: var(--color-secondary);
+  font-weight: 500;
+}
+
+.icon-btn-small {
   border-radius: 5px;
   padding: 2px 4px;
   background-color: var(--bgc);
@@ -505,8 +543,9 @@ form label {
   border: 1px solid var(--bc);
   cursor: pointer;
   color: var(--color-secondary);
+  display: none;
 }
-.activity-card .icon-btn-small:hover {
+.icon-btn-small:hover {
   background-color: var(--tint-color-translucent);
 }
 
@@ -635,8 +674,52 @@ table tbody tr:last-child {
   font-weight: 500;
 }
 
+/* tooltip */
+
+.tooltip {
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.tooltip:hover .tooltip-text {
+  opacity: 85%;
+  transition: opacity 0.3s;
+}
+.tooltip .tooltip-text *{
+  color: var(--color-header-d);
+}
+.tooltip .tooltip-text {
+  opacity: 0%;
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 10px;
+  height: 30px;
+  margin-top: -34px;
+  border-radius: 5px;
+  background-color: var(--bgc-light-d);
+  border: 1px solid var(--bc-d);
+  position: absolute;
+  pointer-events: none;
+}
+
+/* loading message */
+.loading-message {
+  padding: 15px 10px;
+  color: var(--tint-color);
+  font-size: 15px;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 7px;
+}
+.loading-message * {
+  margin-right: 10px;
+}
+
 /* icons */
-.user-icon,
+.user-icon, .user-icon-small,
 .club-icon {
   display: inline;
   height: 35px;
@@ -676,7 +759,7 @@ table tbody tr:last-child {
 }
 .user-icon-small {
   display: inline;
-  height: 30px; width: 30px;
+  height: 25px; width: 25px;
   border-radius: 50%;
   margin-right: 10px;
   object-fit: cover;
@@ -686,16 +769,28 @@ table tbody tr:last-child {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
   border-radius: 50%;
   background-color: var(--tint-color-translucent);
   color: var(--tint-color);
-  font-size: 17px;
+  font-size: 15px;
   margin-right: 10px;
 }
 
 /* random margins */
+.mr-2 {
+  margin-right: 2px;
+}
+.mr-3 {
+  margin-right: 3px;
+}
+.mr-5 {
+  margin-right: 5px;
+}
+.mr-7 {
+  margin-right: 7px;
+}
 .mr-10 {
   margin-right: 10px;
 }
@@ -710,6 +805,9 @@ table tbody tr:last-child {
 }
 .mb-5 {
   margin-bottom: 5px;
+}
+.mb-7 {
+  margin-bottom: 7px;
 }
 .mb-10 {
   margin-bottom: 10px;
@@ -794,6 +892,9 @@ table tbody tr:last-child {
 /*  Buttons: 4 main types */
 button i, button img {
   margin-right: 10px;
+}
+button:last-child {
+  margin-right: none;
 }
 .solid-btn,
 .clear-btn,
@@ -883,6 +984,14 @@ button i, button img {
 .error-btn-secondary:hover {
   transition: 0.3s;
   background-color: var(--color-translucent-red);
+}
+.paginator-button {
+  color: var(--tint-color);
+  background-color: transparent;
+  cursor: pointer;
+}
+.paginator-button:hover {
+  background-color: var(--tint-color-translucent);
 }
 
 /* small icons */
@@ -1041,6 +1150,9 @@ input:checked + .slider:before {
 }
 .c-cs {
   color: var(--color-secondary);
+}
+.c-ct {
+  color: var(--color-tertiary);
 }
 .fw-s {
   font-weight: 400;
