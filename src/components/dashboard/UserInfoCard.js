@@ -20,7 +20,7 @@ export default function UserInfoCard(props) {
     const [loading, setLoading] = useState(true)
 
     const style={
-        padding: '20px 20px'
+        margin: '20px 20px'
     }
     const statsValueStyle = {
         letterSpacing: '1px',
@@ -68,7 +68,7 @@ export default function UserInfoCard(props) {
                 </div>
                 <div style={style}>
                     <div
-                        className='d-flex jc-space-between ai-center'
+                        className='d-flex jc-space-between ai-center mb-3'
                     >
                         <h5 style={timeframeStyle}>This Week</h5>
                         <h4 style={statsValueStyle}>
@@ -91,7 +91,7 @@ export default function UserInfoCard(props) {
                 
                 <div style={{...style}} >
                     <div
-                        className='d-flex jc-space-between ai-center'
+                        className='d-flex jc-space-between ai-center mb-3'
                     >
                         <h5 style={timeframeStyle}>This Month</h5>
                         <h4 style={statsValueStyle}>
@@ -114,7 +114,7 @@ export default function UserInfoCard(props) {
                 
                 <div style={{...style}} >
                     <div
-                        className='d-flex jc-space-between ai-center'
+                        className='d-flex jc-space-between ai-center mb-3' 
                     >
                         <h5 style={timeframeStyle}>This Year</h5>
                         <h4 style={statsValueStyle}>

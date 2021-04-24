@@ -65,7 +65,7 @@ export default function Dashboard() {
             <br />
             <div 
                 className='main-container d-flex jc-flex-start ai-flex-start'
-                style={{ padding: '0px 50px', marginBottom: '100px'}}
+                style={{ padding: '0px var(--ps-small)', marginBottom: '100px'}}
             >
                 <div hidden={false} style={{marginRight: 60}}>
                     <UserInfoCard style={{width: 300, height: 'auto'}}/>
@@ -124,7 +124,7 @@ export default function Dashboard() {
                                 </tbody>
                             </table>
                             {!todaySessions.length && 
-                                <p style={{textAlign: 'center', padding: '15px 0px', color: 'var(--color-secondary)' }}>
+                                <p style={{textAlign: 'center', padding: 15, color: 'var(--color-secondary)' }}>
                                     You have no workouts scheduled for today
                                 </p>
                             }

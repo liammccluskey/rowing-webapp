@@ -32,13 +32,7 @@ export default function LiveActivityTable(props) {
 
     useEffect(() => {
         setActivities(props.activities.filter(ac => !ac.isCompleted))
-        /*
-        if (!didCompleteActivity) {
-            setDidCompleteActivity(
-                props.activities.filter(ac => ac.uid === currentUser.uid && ac.isCompleted).length > 0
-            )
-        }
-        */
+        
         const completedIDs = new Set()
         const activeIDs = new Set()
 
@@ -53,23 +47,6 @@ export default function LiveActivityTable(props) {
         setUsersActiveCount(activeIDs.size)
         setUsersCompletedCount(completedIDs.size)
 
-
-        /*
-        const completedUIDs = new Set()
-        const activeUIDs = new Set()
-        props.activities.forEach(ac => {
-            if ( ac.uid === currentUser.uid && ac.isCompleted ) {
-                setDidCompleteActivity(true)
-            }
-            if ( ac.isCompleted ) {
-                completedUIDs.add( ac.uid )
-            } else {
-                activeUIDs.add( ac.uid )
-            }
-        })
-        setUsersCompletedCount(completedUIDs.size)
-        setUsersActiveCount(activeUIDs.size)
-        */
     }, [props.activities])
 
     useEffect(() => {
@@ -306,7 +283,7 @@ export default function LiveActivityTable(props) {
                                 <tr 
                                     key={index} 
                                     style={{
-                                        borderLeft: ac.uid == currentUser.uid ? '3px solid var(--tint-color)' : 'none'
+                                        borderLeft: ac.user._id == thisUser._id ? '3px solid var(--tint-color)' : 'none'
                                     }}
                                     onClick={() => handleClickActivity(ac._id)}
                                 >
