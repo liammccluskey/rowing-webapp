@@ -15,7 +15,7 @@ export function useTheme() {
 export function ThemeProvider({children}) {
     const {currentUser, thisUser, fetchThisUser} = useAuth()
 
-    const [isDarkMode, setIsDarkMode] = useState(thisUser ? thisUser.colorTheme === '1' : false)
+    const [isDarkMode, setIsDarkMode] = useState(thisUser ? thisUser.colorTheme === 1 : false)
     const [tintColor, setTintColor] = useState( thisUser ? thisUser.tintColor  : 0)
 
     const tintColors = [

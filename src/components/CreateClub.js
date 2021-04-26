@@ -22,6 +22,7 @@ export default function CreateClub() {
     const [name, setName] = useState('')
     const [customURL, setCustomURL] = useState('')
     const [description, setDescription] = useState('')
+    const [isPrivate, setIsPrivate] = useState(false)
 
     const [URLIsAvailable, setURLIsAvailable] = useState(false)
 
@@ -63,7 +64,8 @@ export default function CreateClub() {
             customURL: customURL,
             description: description,
             iconURL: iconURL,
-            bannerURL: bannerURL
+            bannerURL: bannerURL,
+            isPrivate: isPrivate
         }
 
         try {
@@ -176,6 +178,12 @@ export default function CreateClub() {
                             }
                         </label>
                         <br /><br />
+                        <label>
+                            Privacy <br />
+                            <input type='checkbox' checked={isPrivate} onChange={e => setIsPrivate(e.target.checked)} className='mr-10'/>
+                            <p className='d-inline mr-5'>Make your club invite only</p>
+                            <i className={`bi bi-${isPrivate ? 'lock' : 'unlock'}-fill c-cs`} style={{fontSize: 20}}/>
+                        </label>
                     </form>
                     <br />
                     <div className='d-flex jc-center ai-center'>

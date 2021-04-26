@@ -1,10 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import MainHeader from '../headers/MainHeader'
 import ClubHeader from './ClubHeader'
+import AdminCard from './AdminCard'
+import PendingMemberCard from './PendingMemberCard'
+import MemberCard from './MemberCard'
 import {useParams, useHistory} from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
+import {useMessage} from '../../contexts/MessageContext'
 import Loading from '../misc/Loading'
 import axios from 'axios'
+import moment from 'moment'
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL
@@ -14,22 +19,20 @@ export default function Members() {
     const {clubURL} = useParams()
     const history = useHistory()
     const {thisUser} = useAuth()
+    const {setMessage} = useMessage()
 
     const [club, setClub] = useState()
     const [membership, setMembership] = useState()
-    const [members, setMembers] = useState()
+
+    const [members, setMembers] = useState([])
     const [admins, setAdmins] = useState([])
+    const [pendingMembers, setPendingMembers] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         fetchData()
     }, [clubURL])
 
-    useEffect(() => {
-        fetchMembers()
-    }, [club])
-
-    
     async function fetchData() {
         try {
             const res = await api.get(`/clubs/customURL/${clubURL}`)
@@ -44,6 +47,7 @@ export default function Members() {
     async function __fetchMembers(clubID) {
         try {
             let res = await api.get(`/clubmemberships/club/${clubID}`)
+            setPendingMembers(res.data.filter(m => m.role === -1))
             setMembers(res.data.filter(m => m.role === 0))
             setAdmins(res.data.filter(m => m.role > 0))
             res = await api.get(`/clubmemberships/ismember?user=${thisUser._id}&club=${clubID}`)
@@ -57,6 +61,66 @@ export default function Members() {
         if (!club) {return}
         __fetchMembers(club._id)
     }
+    
+    async function handleClickMakeOwner(userID) {
+        try {
+            const res = await api.patch('/clubmemberships/transferOwnership', {fromUser: thisUser._id, toUser: userID, club: club._id})
+            setMessage({title: res.data.message, isError: false, timestamp: moment()})
+            fetchMembers()
+        } catch (error) {
+            setMessage({title: error.response.data.message, isError: true, timestamp: moment()})
+        }
+    }
+
+    async function handleClickMakeAdmin(userID) {
+        try {
+            const res = await api.patch('/clubmemberships/makeAdmin', {requestingUser: thisUser._id, user: userID, club: club._id})
+            setMessage({title: res.data.message, isError: false, timestamp: moment()})
+            fetchMembers()
+        } catch (error) {
+            setMessage({title: error.response.data.message, isError: true, timestamp: moment()})
+        }
+    }
+
+    async function handleClickRevokeAdmin(userID) {
+        try {
+            const res = await api.patch('/clubmemberships/revokeAdmin', {requestingUser: thisUser._id, user: userID, club: club._id})
+            setMessage({title: res.data.message, isError: false, timestamp: moment()})
+            fetchMembers()
+        } catch (error) {
+            setMessage({title: error.response.data.message, isError: true, timestamp: moment()})
+        }
+    }
+
+    async function handleClickRemove(userID) {
+        try {
+            const res = await api.delete(`/clubmemberships/revokeMembership?requestingUser=${thisUser._id}&user=${userID}&club=${club._id}`)
+            setMessage({title: res.data.message, isError: false, timestamp: moment()})
+            fetchMembers()
+        } catch (error) {
+            setMessage({title: error.response.data.message, isError: true, timestamp: moment()})
+        }
+    }
+
+    async function handleClickAcceptRequest(userID) {
+        try {
+            const res = await api.patch('/clubmemberships/makeMember', {requestingUser: thisUser._id, user: userID, club: club._id})
+            setMessage({title: res.data.message, isError: false, timestamp: moment()})
+            fetchMembers()
+        } catch (error) {
+            setMessage({title: error.response.data.message, isError: true, timestamp: moment()})
+        }
+    }
+
+    function handleClickDeclineRequest(userID) {
+        handleClickRemove(userID)
+    }
+
+    const membershipActions = {
+        handleClickMakeOwner, handleClickMakeAdmin,
+        handleClickRevokeAdmin, handleClickRemove,
+        handleClickAcceptRequest, handleClickDeclineRequest
+    }
 
     return (
         <div>
@@ -64,7 +128,7 @@ export default function Members() {
             {loading ? <Loading /> : !club ? <h2 style={{paddingTop: 40}}>We couldn't find a club at that link</h2> :
             <div >
                 <ClubHeader title={club.name} subPath='/members' 
-                    fetchData={fetchData} 
+                    fetchData={fetchMembers} 
                     club={club} members={members} membership={membership}
                 /> 
                 <div className='main-container' style={{paddingBottom: 200}}>
@@ -72,66 +136,32 @@ export default function Members() {
                     <h3>Admins</h3>
                     <br />
                     <div className='float-container'>
-                        <table style={{width: '100%'}}>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {admins.map((admin, idx) => (
-                                    <tr key={idx}>
-                                        <td className='d-flex ai-center'> 
-                                            {admin.iconURL ? 
-                                                <img className='user-icon d-inline' src={admin.iconURL} />
-                                                :
-                                                <div className='user-icon-default'>
-                                                    <i className='bi bi-person' />
-                                                </div>
-                                            }
-                                            <h4 className='page-link d-inline' onClick={() => history.push(`/athletes/${admin._id}`)}>
-                                                {admin.displayName}
-                                            </h4>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        {admins.map((admin, idx) => 
+                            <AdminCard myMembership={membership} member={admin} membershipActions={membershipActions}/>
+                        )}
                     </div>
                     <br /><br />
+                    <div style={{display: (membership.role <= 0 || pendingMembers.length === 0) && 'none' }}>
+                        <h3>Pending Requests to Join</h3>
+                        <br />
+                        <div className='float-container'>
+                            {pendingMembers.map((member, idx) => 
+                                <PendingMemberCard myMembership={membership} member={member} membershipActions={membershipActions} />
+                            )}
+                        </div>
+                        <br /><br />
+                    </div>
                     <h3>Members</h3>
                     <br />
                     <div className='float-container'>
-                        <table style={{width: '100%'}}>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {members.map((member, idx) => (
-                                    <tr key={idx}>
-                                        <td className='d-flex ai-center'>
-                                            {member.iconURL ? 
-                                                <img className='user-icon d-inline' src={member.iconURL} />
-                                                :
-                                                <div className='user-icon-default'>
-                                                    <i className='bi bi-person' />
-                                                </div> 
-                                            }
-                                            <h4 className='page-link d-inline' onClick={() => history.push(`/athletes/${member.uid}`)}>
-                                                {member.displayName}
-                                            </h4>
-                                        </td>
-                                        
-                                        
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        {(members && !members.length) && 
-                            <h4 className='c-cs' style={{padding: '20px 15px'}}>{`${club.name} currently has no members`}</h4>
+                        {! members.length > 0 && 
+                            <div className='float-container' style={{padding: 20}}>
+                                <p className='c-cs'>This club has no members</p>
+                            </div>
                         }
+                        {members.map((member, idx) => 
+                            <MemberCard myMembership={membership} member={member} membershipActions={membershipActions} />
+                        )}
                     </div>
                 </div>
             </div>

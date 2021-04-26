@@ -48,7 +48,7 @@ export default function MainHeader(props) {
                     style={{cursor: 'pointer', padding: '5px 5px'}} 
                 >
                     {thisUser.iconURL ? 
-                        <img src={currentUser.photoURL} className='user-icon' style={{marginRight: 10}} />
+                        <img src={thisUser.iconURL} className='user-icon' style={{marginRight: 10}} />
                         :
                         <div className='user-icon-default'>
                             <i className='bi bi-person' />

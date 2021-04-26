@@ -558,6 +558,21 @@ form label {
   max-height: 160px;
 }
 
+/* club members page */
+.member-card {
+  padding: 10px 20px;
+}
+.member-card:hover {
+  background-color: var(--bgc-hover);
+}
+.member-card .action-buttons {
+  visibility: hidden;
+  flex-wrap: wrap;
+}
+.member-card:hover .action-buttons {
+  visibility: visible;
+}
+
 /* create club page */
 .icon-image-input {
   cursor: pointer;
@@ -616,13 +631,10 @@ th {
   border-bottom: 1px solid var(--bc);
   color: var(--color-tertiary);
   font-weight: 500;
-  /* spotify inspired */
   font-weight: 400;
-  text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 12px;
 }
-
 
 .th-sortable{
   cursor: pointer;

@@ -1,11 +1,8 @@
 import React from 'react'
-import Loading from '../misc/Loading'
 import {useHistory} from 'react-router-dom'
-import {useAuth} from '../../contexts/AuthContext'
 import ClubIcon from '../icons/ClubIcon'
 
 export default function ClubsInfoCard(props) {
-    const {currentUser} = useAuth()
     const history = useHistory()
 
     return (

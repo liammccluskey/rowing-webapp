@@ -62,15 +62,13 @@ export default function DropdownMenu(props) {
                     
                 </div>
 
-                <div style={{padding: itemPadding, borderBottom: border}} onClick={() => setIsDarkMode(curr => !curr)}
-                    className='d-flex jc-space-between ai-center'
-                >
+                <div style={{padding: itemPadding, borderBottom: border}} className='d-flex jc-space-between ai-center' >
                     <div className='d-flex jc-flex-start ai-center'>
                         <i className="bi bi-moon" style={iconStyle}/>
                         <p>Night Mode</p>
                     </div>
                     <label className="switch">
-                        <input type="checkbox" checked={isDarkMode} onChange={() => setIsDarkMode(curr => !curr)} />
+                        <input type="checkbox" checked={isDarkMode} onChange={() => setIsDarkMode(curr => !curr)}/>
                         <span className="slider round"></span>
                     </label>
                 

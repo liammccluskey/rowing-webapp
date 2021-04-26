@@ -27,8 +27,9 @@ export default function ReplySection(props) {
             <div className='d-flex jc-flex-start ai-center' onClick={handleClickViewReplies}
                 style={{display: replies.length === 0 && 'none', marginBottom: replies.length === 0 ? 0: 10}}
             >
-                <h5 className='action-link fw-m'>
-                    {repliesHidden ? 'View':'Hide'} {formatNumber(replies.length)} {formatUnit('reply', replies.length)}
+                <h5 className='action-link fw-s'>
+                    {repliesHidden ? 'View':'Hide'} {formatUnit('reply', replies.length)} ( {formatNumber(replies.length)} )
+                    <i className={`bi bi-chevron-${repliesHidden ? 'down' : 'up'}`} style={{marginLeft: 5}} />
                 </h5>
             </div>
             <div style={{display: repliesHidden && 'none'}}>

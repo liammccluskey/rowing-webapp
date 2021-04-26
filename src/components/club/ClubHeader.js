@@ -20,7 +20,6 @@ export default function ClubHeader(props) {
 
     const [club, setClub] = useState(props.club)
     const [membership, setMembership] = useState(props.membership)
-    const [isMember, setIsMember] = useState()
 
     const [confirmationHidden, setConfirmationHidden] = useState(true)
 
@@ -37,10 +36,10 @@ export default function ClubHeader(props) {
     async function handleClickJoin() {
         async function joinClub() {
             try {
-                await api.post(`/clubmemberships`, {club: club._id, user: thisUser._id, role: 0})
-                setMessage({title: `Successfully joined  "${club.name}"`, isError: false, timestamp: moment() })
+                const res = await api.post(`/clubmemberships`, {club: club._id, user: thisUser._id, role: 0})
+                setMessage({title: res.data.message, isError: false, timestamp: moment() })
             } catch(error) {
-                setMessage({title: `Error joining "${club.name}". ${error.message}`, isError: true, timestamp: moment() })
+                setMessage({title: `Error joining ${club.name}. ${error.response.data.message}`, isError: true, timestamp: moment() })
                 console.log(error)
             }
         }
@@ -51,23 +50,23 @@ export default function ClubHeader(props) {
     async function handleClickConfirmLeave() {
         async function leaveClub() {
             try {
-                const url = `/clubmemberships?club=${club._id}&user=${thisUser._id}`
+                const url = `/clubmemberships/leave?club=${club._id}&user=${thisUser._id}`
                 console.log(url)
-                await api.delete(url)
-                setMessage({title: `Successfully left  "${club.name}"`, isError: false, timestamp: moment() })
+                const res = await api.delete(url)
+                setMessage({title: res.data.message, isError: false, timestamp: moment() })
             } catch(error) {
-                setMessage({title: `Error leaving "${club.name}". ${error.message}`, isError: true, timestamp: moment()})
+                setMessage({title: `Error leaving ${club.name}. ${error.response.data.message}`, isError: true, timestamp: moment()})
             }
         }
         await leaveClub()
         props.fetchData()
-
     }
 
     return (
         <div>
-            <Confirmation title='Confirm' message='Are you sure you want to leave this club?' 
-                handleClickConfirm={handleClickConfirmLeave} hidden={confirmationHidden} setHidden={setConfirmationHidden}
+            <Confirmation title='Confirm' handleClickConfirm={handleClickConfirmLeave} 
+                hidden={confirmationHidden} setHidden={setConfirmationHidden}
+                message={`Are you sure you want to ${membership.role === -1 ? 'cancel your request to join this club?':'leave this club?'}`}
             />
             <img className='banner-image' src={club.bannerURL ? club.bannerURL : srcBanner} />
             <SubHeader
@@ -78,9 +77,13 @@ export default function ClubHeader(props) {
                 iconURL={props.club.iconURL}
             >
                 {membership.isMember ? 
-                    <button className='clear-btn-secondary' onClick={() => setConfirmationHidden(false)}>Leave</button>
+                    <button className='clear-btn-secondary' onClick={() => setConfirmationHidden(false)}>
+                        {membership.role === -1 ? 'Cancel join request' : 'Leave'}
+                    </button>
                     :
-                    <button className='solid-btn-secondary' onClick={handleClickJoin}>Join</button>
+                    <button className='solid-btn-secondary' onClick={handleClickJoin}>
+                        {club.isPrivate ? 'Request to join' : 'Join'}
+                    </button>
                 }
             </SubHeader>
         </div>

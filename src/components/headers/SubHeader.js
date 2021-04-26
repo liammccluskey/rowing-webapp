@@ -18,7 +18,7 @@ export default function SubHeader(props) {
                         <img height={60} width={60} src={props.iconURL} 
                             style={{
                                 border: '0px solid var(--bc)', borderRadius: '5px',
-                                marginRight: 10
+                                marginRight: 10, objectPosition: 'center', objectFit: 'cover'
                             }} 
                         />
                     }
