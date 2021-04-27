@@ -43,6 +43,7 @@ export function ThemeProvider({children}) {
         '--color-header',
         '--color-secondary',
         '--color-tertiary',
+        '--color-yellow-text',
         '--box-shadow',
         '--box-shadow-dark',
         '--float-border'

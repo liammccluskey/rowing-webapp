@@ -20,6 +20,7 @@ import Athletes from './components/explore/Athletes'
 import Settings from './components/settings/Settings'
 
 import CreateClub from './components/CreateClub'
+import EditClub from './components/club/EditClub'
 import Club from './components/club/Club'
 import Members from './components/club/Members'
 
@@ -52,6 +53,7 @@ function App() {
                 <PrivateRoute path='/explore/athletes' component={Athletes} />
 
                 <PrivateRoute path='/club-create' component={CreateClub} />
+                <PrivateRoute path='/clubs/:clubURL/edit' component={EditClub} />
                 <PrivateRoute path='/clubs/:clubURL/general' component={Club} />
                 <PrivateRoute path='/clubs/:clubURL/members' component={Members} />
 

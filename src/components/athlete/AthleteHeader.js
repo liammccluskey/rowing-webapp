@@ -3,6 +3,7 @@ import SubHeader from '../headers/SubHeader'
 import {useAuth} from '../../contexts/AuthContext'
 import {useMessage} from '../../contexts/MessageContext'
 import {useHistory, useParams} from 'react-router-dom'
+import {formatNumber} from '../../scripts/Numbers'
 import Confirmation from '../misc/Confirmation'
 import axios from 'axios'
 import moment from 'moment'
@@ -103,11 +104,11 @@ export default function AthleteHeader(props) {
                 {!loadingSummary &&
                     <div className='d-flex jc-center ai-center' style={{marginRight: 40}}>
                         <div style={{marginRight: 20, textAlign: 'center'}}>
-                            <h3>{followSummary.followees.toLocaleString()}</h3>
+                            <h3>{formatNumber(followSummary.followees)}</h3>
                             <h5 className='page-link c-cs' onClick={routeToFollowing}>Following</h5>
                         </div>
                         <div style={{textAlign: 'center'}}>
-                            <h3>{followSummary.followers.toLocaleString()}</h3>
+                            <h3>{formatNumber(followSummary.followers)}</h3>
                             <h5 className='page-link c-cs' onClick={routeToFollowing}>Followers</h5>
                         </div>
                     </div>

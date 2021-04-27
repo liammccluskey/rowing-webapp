@@ -70,7 +70,7 @@ export default function Athlete() {
             <div>
                 <AthleteHeader user={user} subPath='/' />
                 <br /><br />
-                <div className='main-container' style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 50 }}>
+                <div className='main-container' style={{display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 50}}>
                     <div>
                         <h3>Recent Activities</h3>
                         <br />
@@ -86,18 +86,26 @@ export default function Athlete() {
                         }
                     </div>
                     <div>
-                        <h3>Clubs</h3>
-                        <br />
-                        <div className='float-container d-flex jc-flex-start ai-flex-start fw-wrap'>
-                            {loadingClubs && <div className='loading-message'><Pending />Loading clubs...</div>}
-                            {clubs.map( (club, idx) => <ClubIcon club={club} key={idx} style={{margin: 15}} />)}
-                            {(!loadingClubs && !loadingUser && !clubs.length) &&
-                                <p className='c-cs' style={{padding: '20px 20px'}}>
-                                    {user.displayName} does not belong to any clubs
-                                </p>
-                            }
+                        <div>
+                            <h3>Clubs</h3>
+                            <br />
+                            <div className='float-container d-flex jc-flex-start ai-flex-start fw-wrap'>
+                                {loadingClubs && 
+                                    <div className='loading-message'><Pending />Loading clubs...</div>
+                                }
+                                {clubs.map( (club, idx) => 
+                                    <ClubIcon club={club} key={idx} style={{margin: 15}} />
+                                )}
+                                {(!loadingClubs && !loadingUser && !clubs.length) &&
+                                    <p className='c-cs' style={{padding: '20px 20px'}}>
+                                        {user.displayName} does not belong to any clubs
+                                    </p>
+                                }
+                            </div>
                         </div>
                     </div>
+
+                    <div style={{height: 500}}></div>
                     
                 </div>
             </div>

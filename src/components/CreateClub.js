@@ -70,7 +70,7 @@ export default function CreateClub() {
 
         try {
             const res = await api.post('/clubs', clubData)
-            await api.post('/clubmemberships', {user: thisUser._id, club: res.data._id, role: 2})
+            await api.post('/clubmemberships', {user: thisUser._id, club: res.data._id})
             setMessage({title: 'Club created', isError: false, timestamp: moment()})
             history.push(`/clubs/${customURL}/general`)
         } catch (error) {
