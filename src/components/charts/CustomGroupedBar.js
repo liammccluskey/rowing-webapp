@@ -8,7 +8,7 @@ import {useTheme} from '../../contexts/ThemeContext'
     - width -> fill width of container
 */
 
-export default function CustomBar(props) {
+export default function CustomGroupedBar(props) {
     const [data, setData] = useState(props.data)
     const {isDarkMode} = useTheme()
     const [localTheme, setLocalTheme] = useState(isDarkMode)
@@ -28,21 +28,20 @@ export default function CustomBar(props) {
             <Bar
                 data={{
                     labels: data.labels,
-                    datasets: [
-                        {
-                            label: data.label,
-                            data: data.dataset,
-                            backgroundColor: getComputedStyle(document.documentElement)
-                                .getPropertyValue(data.backgroundColor),
-                            borderWidth: 1,
-                            borderColor: getComputedStyle(document.documentElement)
-                                .getPropertyValue(data.borderColor),
-                            hoverBackgroundColor: getComputedStyle(document.documentElement)
-                                .getPropertyValue(data.borderColor),
-                            hoverBorderColor: getComputedStyle(document.documentElement)
-                            .getPropertyValue(data.borderColor)
-                        }
-                    ]
+                    datasets: data.datasets.map((set, idx) => ({
+                        label: set.label,
+                        data: set.data,
+                        borderWidth: 1,
+                        backgroundColor: getComputedStyle(document.documentElement)
+                        .getPropertyValue(set.backgroundColor),
+                        borderColor: getComputedStyle(document.documentElement)
+                            .getPropertyValue(set.borderColor),
+                        hoverBackgroundColor: getComputedStyle(document.documentElement)
+                            .getPropertyValue(set.borderColor),
+                        hoverBorderColor: getComputedStyle(document.documentElement)
+                        .getPropertyValue(set.borderColor)
+
+                    }))
                 }}
                 options={{
                     maintainAspectRatio: false,

@@ -155,7 +155,7 @@ export default function Members() {
                     <br />
                     <div className='float-container'>
                         {! members.length > 0 && 
-                            <div className='float-container' style={{padding: 20}}>
+                            <div style={{padding: 20}}>
                                 <p className='c-cs'>This club has no members</p>
                             </div>
                         }

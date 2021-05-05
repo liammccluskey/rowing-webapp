@@ -32,7 +32,7 @@ export default function DropdownMenu(props) {
             style={{
                 height: '100vh', width: '100vw', position: 'absolute',
                 top: '0px', right: '0px',
-                zIndex: 10
+                zIndex: 11
             }} 
             
         >
@@ -47,7 +47,7 @@ export default function DropdownMenu(props) {
                 }}
             >
                 <div style={{padding: '20px 25px', borderBottom: border }}>
-                    <h4 style={{fontWeight: '500'}}>{currentUser.displayName}</h4>   
+                    <h4 className='fw-s'>{currentUser.displayName}</h4>   
                 </div>
 
                 <div style={{borderBottom: border}}>
@@ -56,7 +56,7 @@ export default function DropdownMenu(props) {
                             onClick={() => history.push(tab.path)}
                         >
                             <i className={`bi bi-${tab.iconName}`} style={iconStyle} />
-                            <p>{tab.title}</p>
+                            <p className='fw-s'>{tab.title}</p>
                         </div>
                     ))}
                     
@@ -65,7 +65,7 @@ export default function DropdownMenu(props) {
                 <div style={{padding: itemPadding, borderBottom: border}} className='d-flex jc-space-between ai-center' >
                     <div className='d-flex jc-flex-start ai-center'>
                         <i className="bi bi-moon" style={iconStyle}/>
-                        <p>Night Mode</p>
+                        <p className='fw-s'>Night Mode</p>
                     </div>
                     <label className="switch">
                         <input type="checkbox" checked={isDarkMode} onChange={() => setIsDarkMode(curr => !curr)}/>
@@ -77,10 +77,8 @@ export default function DropdownMenu(props) {
                     onClick={signOut}
                 >
                     <i className="bi bi-box-arrow-right" style={iconStyle}/>
-                    <p >Log Out</p>
+                    <p className='fw-s'>Log Out</p>
                 </div>
-                
-                
             </div>
         </div>
         

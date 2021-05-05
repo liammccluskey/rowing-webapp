@@ -19,7 +19,7 @@ export default function SessionCard(props) {
             <div className='d-flex jc-flex-start ai-flex-start mb-10'>
                 { props.session.club && <img src={props.session.club.iconURL} className='club-icon' />}
                 <div>
-                    <p className='fw-l mb-2' > {props.session.club.name} </p>
+                    <p className='fw-m mb-2' > {props.session.club.name} </p>
                     <p className='c-cs mb-10'>{moment(props.session.startAt).format('LLL')}</p>
             
                     <h3 className='fw-m page-link' onClick={() => handleClickSession(props.session)}>

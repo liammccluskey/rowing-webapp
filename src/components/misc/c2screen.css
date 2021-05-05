@@ -32,14 +32,12 @@
 }
 
 .c2screen {
-    background-color: #608279; /* old style */
 
+    background-color: #608279; /* old style */
     background-color: rgb(183, 223, 241);
 
     background-color: rgba(161, 205, 224); /* blue pm5 */
-
     text-align: center;
-    filter: brightness(105%);
 }
 
 
@@ -55,13 +53,13 @@
 }
 
 .c2screen .big {
-    font-size: 40px;
+    font-size: 38px;
     font-weight: 600;
     letter-spacing: 2px;
 }
 
 .c2screen .medium {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 600;
     letter-spacing: 2px;
 }

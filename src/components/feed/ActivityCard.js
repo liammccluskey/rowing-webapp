@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import { useHistory } from 'react-router-dom'
 import C2Results from '../misc/C2Results'
+import C2SCreen from '../misc/C2Screen'
 import moment from 'moment'
 import { useAuth } from '../../contexts/AuthContext'
 import { useMessage } from '../../contexts/MessageContext'
 import CommentSection from './CommentSection'
+import C2Screen from '../misc/C2Screen'
 
+const src = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Ftextures.world%2Fmetal%2F20-brushed-metal-background-textures%2F&psig=AOvVaw3lAZ6wscWKffUDma_pV1SR&ust=1620156231759000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCOCyxLiervACFQAAAAAdAAAAABAD'
+const srcGradient = 'http://textures.world/wp-content/uploads/2018/10/Aluminum-Brushed-Metal-Seamless-Background-Textures-1-copy-1.jpg'
 export default function ActivityCard(props) {
     const { thisUser } = useAuth()
     const { setMessage } = useMessage()
@@ -16,7 +20,6 @@ export default function ActivityCard(props) {
     }
 
     function handleClickUser(user) {
-        if (user._id === thisUser._id) {return}
         history.push(`/athletes/${user._id}`)
     }
 
@@ -34,11 +37,11 @@ export default function ActivityCard(props) {
                     </div>
                 }
                 <div>
-                    <p className='fw-l mb-2 page-link' onClick={() => handleClickUser(props.activity.user)}>
+                    <p className='fw-m mb-2 page-link' onClick={() => handleClickUser(props.activity.user)}>
                         {props.activity.user.displayName}
                     </p>
                     <p className='c-cs mb-2'>{moment(props.activity.createdAt).format('LLL')}</p>
-                    <p className='page-link mb-20' onClick={() => handleClickSession(props.activity.session)}>
+                    <p className='c-cs page-link mb-20' onClick={() => handleClickSession(props.activity.session)}>
                         {props.activity.session.title}
                     </p>
                     <h3 className='fw-m page-link' onClick={() => handleClickActivity(props.activity)}>
@@ -47,7 +50,7 @@ export default function ActivityCard(props) {
                     
                 </div>
             </div>
-            <div className='d-flex jc-center' >
+            <div className='d-flex jc-center'>
                 <C2Results activity={props.activity} style={{width: 230}} />
             </div>
             <br />

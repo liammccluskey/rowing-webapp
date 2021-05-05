@@ -84,6 +84,8 @@ export default function CustomLine(props) {
                             distribution: 'series',
                             ticks: {
                                 fontColor: colorSecondary,
+                                fontFamily: getComputedStyle(document.documentElement)
+                                .getPropertyValue('--font-family'),
                                 source: 'data'
                             }
                         }],
@@ -95,6 +97,8 @@ export default function CustomLine(props) {
                             },
                             ticks: {
                                 fontColor: colorSecondary,
+                                fontFamily: getComputedStyle(document.documentElement)
+                                .getPropertyValue('--font-family'),
                                 callback: function (value, index, values) {
                                     if (index === 0 || index === values.length - 1 || index === Math.floor(values.length/2)) {
                                         return moment.duration(value, 'seconds').format('mm:ss')

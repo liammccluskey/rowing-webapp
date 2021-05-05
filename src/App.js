@@ -11,8 +11,10 @@ import { MessageProvider } from './contexts/MessageContext'
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './components/dashboard/Dashboard'
 import Session from "./components/session/Session"
+
 import Statistics from './components/training/Statistics'
 import Activity from './components/training/Activity'
+import Calendar from './components/training/Calendar'
 
 import Clubs from './components/explore/Clubs'
 import Athletes from './components/explore/Athletes'
@@ -46,6 +48,7 @@ function App() {
 
                 <PrivateRoute path='/training/statistics' component={Statistics} />
                 <PrivateRoute path='/training/activity' component={Activity} />
+                <PrivateRoute path='/training/calendar' component={Calendar} />
 
                 <PrivateRoute path='/settings' component={Settings} />
 

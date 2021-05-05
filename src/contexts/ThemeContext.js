@@ -19,10 +19,10 @@ export function ThemeProvider({children}) {
     const [tintColor, setTintColor] = useState( thisUser ? thisUser.tintColor  : 0)
 
     const tintColors = [
-        {name: 'Mint', extension: 'mint'},   // default 
-        {name: 'Soft Blue', extension: 'strava'},
+        {name: 'Default Blue', extension: 'default'},   // default 
+        {name: 'Green', extension: 'green'},
         {name: 'Purple', extension: 'discord'},
-        {name: 'Light Blue', extension: 'twitter-blue'}
+        {name: 'Mint', extension: 'mint'}
     ]
 
     const value = {

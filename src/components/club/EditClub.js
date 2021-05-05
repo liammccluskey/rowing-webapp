@@ -20,7 +20,6 @@ const srcBannerDefault = 'https://styles.redditmedia.com/t5_2qljq/styles/bannerB
 export default function EditClub() {
     const {setMessage} = useMessage()
     const {thisUser} = useAuth()
-    const {isDarkMode} = useTheme()
     const {clubURL} = useParams()
     const history = useHistory()
 
@@ -48,7 +47,7 @@ export default function EditClub() {
         width: '400px'
     }
 
-    const colorYellow =  isDarkMode ? 'var(--color-yellow)' : 'var(--color-yellow-text)'
+    const colorYellow = 'var(--color-yellow-text)'
 
     useEffect(() => {
         async function fetchData() {
@@ -81,7 +80,7 @@ export default function EditClub() {
         setDescriptionModified(description !== club.description)
         setIsPrivateModified(isPrivate !== club.isPrivate)
         setIconURLModified(iconURL !== club.iconURL)
-        setBannerURLModified(bannerURL!==club.bannerURL || (!club.bannerURL && bannerURL !== srcBannerDefault))
+        setBannerURLModified(bannerURL!==club.bannerURL)
     }, [name, description, isPrivate, iconURL, bannerURL])
 
     useEffect(() => {
@@ -160,7 +159,7 @@ export default function EditClub() {
         <div>
             <MainHeader />
             <SubHeader title='Edit Club' />
-            <br />
+            <br /><br />
             {loading ? <Loading /> : (!loading && !club) ? <h4>We couldn't find a club at that link</h4> :
             <div className='main-container' style={{marginBottom: 100}}>
                 <div className='float-container'>
@@ -169,7 +168,7 @@ export default function EditClub() {
                             backgroundColor: 'var(--color-translucent-yellow)', 
                             padding: hasModifications ? 15 : 0, display: !hasModifications && 'none'}}  
                     >
-                        <h4 style={{color: isDarkMode ? 'var(--color-yellow)' : 'var(--color-yellow-text)'}}>
+                        <h4 style={{color:colorYellow}}>
                             Club Information Modified
                         </h4>
                         <div>
@@ -205,7 +204,9 @@ export default function EditClub() {
                                 <i className='bi bi-upload' style={{position: 'absolute'}} />
                             </div>
                         </label>
-                        <button className='clear-btn-secondary' style={{float: 'right'}} onClick={handleClickUseDefaultBanner} type='button'>
+                        <button className='clear-btn-secondary' style={{float: 'right', marginTop: 5}} type='button'
+                            onClick={handleClickUseDefaultBanner} 
+                        >
                             Use default banner
                         </button>
                         <br /><br />

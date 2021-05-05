@@ -170,7 +170,7 @@ export default function Activity() {
                         padding: '0px 20px', 
                         marginTop: hideFilterForm ? 0 : 20,
                         opacity: hideFilterForm ? 0: 100,
-                        height: hideFilterForm ? 0 : 400, transition: 'all ease 0.4s',
+                        height: hideFilterForm ? 0 : 425, transition: 'all ease 0.4s',
                     }} 
                 >
                     <br />
@@ -257,7 +257,7 @@ export default function Activity() {
                         {(!loading && results.count > 0) && results.activities.map((ac, idx) => (
                             <tr key={idx}>
                                 <td>{moment(ac.createdAt).format('ll')}</td>
-                                <td className='page-link' onClick={() => history.push(`/sessions/${ac.sessionID}`)}>
+                                <td className='page-link' onClick={() => history.push(`/sessions/${ac.session._id}`)}>
                                     {ac.session.title}
                                 </td>
                                 <td>{ac.session.workoutItems[ac.workoutItemIndex]}</td>

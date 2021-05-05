@@ -4,7 +4,8 @@ import SubHeader from '../headers/SubHeader'
 export default function TrainingHeader(props) {
     const items = [
         {title: 'Statistics', path: '/statistics'},
-        {title: 'Activity', path: '/activity'}
+        {title: 'Activity', path: '/activity'},
+        {title: 'Calendar', path: '/calendar'}
     ]
 
     return (

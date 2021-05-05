@@ -23,8 +23,9 @@ export default function MainHeader(props) {
         <div className="d-flex jc-space-between ai-center main-header" style={{...props.style}}>
             <div>
                 <div className='d-flex jc-flex-start ai-center'> 
-                    <h3 onClick={() => history.push('/dashboard')} className='logo-text'
-                        style={{marginRight: 60}}
+                    <img src='/images/logo-0.png' height={35} width={35} className='mr-10' style={{borderRadius: '50%'}} />
+                    <h3 onClick={() => history.push('/dashboard')} className='logo-text' 
+                        style={{marginRight: 40}}
                     >
                         {process.env.REACT_APP_COMPANY_NAME}
                     </h3>

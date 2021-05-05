@@ -25,6 +25,9 @@ export default function Dashboard() {
 
     const [showSessionForm, setShowSessionForm] = useState(false)
 
+    const [activities, setActivities] = useState([])
+    const [loadingActivities, setLoadingActivities] = useState(true)
+
     useEffect(() => {
         async function fetchData() {
             await fetchClubs()
@@ -32,6 +35,8 @@ export default function Dashboard() {
             setLoading(false)
         }
         fetchData()
+
+        fetchFeed()
     }, [])
 
     async function fetchClubs() {
@@ -58,28 +63,47 @@ export default function Dashboard() {
         history.push(`/sessions/${session._id}`)
     }
 
+    function handleClickCalendar() {
+        history.push(`/training/calendar`)
+    }
+
+    async function fetchFeed() {
+        try {
+            const res = await api.get(`/activities/search?user=${thisUser._id}&page=1&sortby=-createdAt&pagesize=15`)
+            setActivities(res.data.activities)
+        } catch (error) {
+            console.log(error.response.data.message)
+        }
+        setLoadingActivities(false)
+    }
+
     return (
         <div>
-            <MainHeader style={{position: 'sticky', top: '0'}} />
-            <br />
-            <br />
-            <div 
-                className='main-container d-flex jc-flex-start ai-flex-start'
-                style={{ padding: '0px var(--ps-small)', marginBottom: '100px'}}
+            <MainHeader style={{position: 'sticky', top: 0}} />
+            <br /><br />
+            <div className='main-container'
+                style={{  display: 'grid', gridTemplateColumns: '1fr 4fr', gap: 75, padding: '0px 75px',
+            }}
             >
-                <div hidden={false} style={{marginRight: 60}}>
-                    <UserInfoCard style={{width: 300, height: 'auto'}}/>
-                    <br />
-                    <ClubsInfoCard clubs={myClubs} style={{width: 300, height: 'auto'}}/>
+                <div>
+                    <UserInfoCard style={{width: 300}} />
+                    <br /><br />
+                    <ClubsInfoCard clubs={myClubs} style={{width: 300}} />
                 </div>
-                <div style={{ flex: 1}} >
+                
+                <div>
                     <div>
                         <div className='d-flex jc-space-between ai-center'>
-
-                            <h3 style={{fontWeight: '400'}}>Today's Workouts</h3>
-                            <button className='clear-btn-secondary' onClick={() => setShowSessionForm(true)}>
-                                <div>Add Workout</div>
-                            </button>
+                            <h3>Today's Workouts</h3>
+                            <div>
+                                <button className='clear-btn-secondary mr-20' onClick={handleClickCalendar}>
+                                    View Calendar
+                                </button>
+                                <button className='solid-btn-secondary' onClick={() => setShowSessionForm(true)}>
+                                    New Workout
+                                </button>
+                            </div>
+                            
                         </div>
                         <br />
                         <NewSessionForm 
@@ -124,7 +148,7 @@ export default function Dashboard() {
                                 </tbody>
                             </table>
                             {!todaySessions.length && 
-                                <p style={{textAlign: 'center', padding: 15, color: 'var(--color-secondary)' }}>
+                                <p className='c-cs fw-xs' style={{textAlign: 'center', padding: 15}}>
                                     You have no workouts scheduled for today
                                 </p>
                             }
@@ -132,12 +156,12 @@ export default function Dashboard() {
                     </div>
 
                     <br /><br /><br />
-
-                    <h3 >Training Calendar</h3>
-                    <Calendar />
+                    <h3>Activity Feed</h3>
+                    <br />
+                    {(!loadingActivities && activities.length > 0) && activities.map(ac => 
+                        <ActivityCard activity={ac} />
+                    )}
                 </div>
-                
-                
             </div>
         </div>
         

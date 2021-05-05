@@ -95,9 +95,7 @@ export default function Comment(props) {
                             <h6 className='c-cs'>{moment(comment.createdAt).fromNow()}</h6>
                         </div>
                     }
-                    {comment.removed ? 
-                        <p className='mb-5'>[comment deleted]</p>
-                        :
+                    {!comment.removed && 
                         <p className='mb-5'>{comment.message}</p>
                     }
                     

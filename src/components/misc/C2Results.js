@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import moment from 'moment'
 import 'moment-duration-format'
-import './c2screen.css'
+import './c2screenresults.css'
 
 
 
@@ -18,15 +18,9 @@ export default function C2Results(props) {
     }, [props.activity])
 
     return (
-        <div style={props.style} className='c2screen-meta'>
-            <div className='screen-outer d-flex jc-space-between ai-center' style={{display: 'none'}}>
-                <h4>
-                    {activity.user.displayName}
-                </h4>
-                <button onClick={props.handleClickClose}>Close</button>
-            </div>
-
-            <div className='c2screen' style={{ display: 'grid',  gridTemplateColumns: 'repeat(3, 1fr)'}}>
+        <div style={props.style} className='c2screen-results-meta'>
+            <h5 className='screen-title fw-xl' style={{fontSize: 14}}>View Detail</h5>
+            <div className='c2screen-results' style={{ display: 'grid',  gridTemplateColumns: 'repeat(3, 1fr)'}}>
                 <h5 style={{gridColumn: '1/3', borderRight: border}} className='medium'>
                     {moment.duration(activity.elapsedTime, 'seconds').format('hh:mm:ss')}
                 </h5>

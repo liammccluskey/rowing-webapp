@@ -22,12 +22,7 @@ export default function Confirmation(props) {
     }
 
     return (
-        <div  className='d-flex jc-center ai-center'
-            style={{
-                height: '100vh', width: '100vw', position: 'fixed', top: 0, left: 0,
-                backdropFilter: 'blur(3px)', display: hidden && 'none',
-                zIndex: 21
-            }}
+        <div  className='d-flex jc-center ai-center fullscreen-blur' style={{ display: hidden && 'none'}}
             hidden={hidden}
         >
             <div className='float-container'
@@ -48,8 +43,8 @@ export default function Confirmation(props) {
                 <div style={{...sectionStyle}}>
                     <h4>{props.message}</h4>
                     <br />
-                    <div className='d-flex jc-flex-end ai-center'>
-                        <button className='clear-btn-secondary' onClick={() => props.setHidden(true)}>Cancel</button>
+                    <div className='d-flex jc-flex-end'>
+                        <button className='clear-btn-cancel' onClick={() => props.setHidden(true)}>Cancel</button>
                         <button style={{marginLeft: 15}} className='solid-btn-secondary'
                             onClick={handleClickConfirm}
                         >Yes</button>

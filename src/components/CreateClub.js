@@ -118,7 +118,7 @@ export default function CreateClub() {
         <div>
             <MainHeader />
             <SubHeader title='Create a Club' />
-            <br />
+            <br /><br />
             <div className='main-container'>
                 <div className='float-container' style={{padding: '30px 30px', marginBottom: 100}}>
                     <form className='create-club' id='form-create-club' onSubmit={handleSubmit}>

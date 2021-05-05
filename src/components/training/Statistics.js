@@ -82,7 +82,7 @@ export default function Statistics() {
     const metrics = {
         0: { key: 'meters', label: 'meters', unit: 'm', graphTitle: 'Meters rowed', formatted: () => aggregate(0).toLocaleString()},
         1: { key: 'time', label: 'seconds', unit: '', graphTitle: 'Hours rowed', 
-            formatted: () => moment.duration(Math.round(aggregate(1)), 'seconds').format('h [hour]  m [min]')
+            formatted: () => moment.duration(Math.round(aggregate(1)), 'seconds').format('h [hrs]  m [mins]')
         },
         2: { key: 'calories', label: 'calories', unit: 'cal', graphTitle: 'Calories burned', formatted: () => aggregate(2).toLocaleString()}
     }
@@ -114,7 +114,7 @@ export default function Statistics() {
                 }
                 return labels
             },
-            labelFreq: 3
+            labelFreq: 5
         },
         2: { key: 'year',
             labels: () => {
@@ -224,18 +224,17 @@ export default function Statistics() {
                                                 {metric.key}
                                         </p>
                                        
-                                        <h3 style={{ margin: '6px 0px' }} >
-                                            {metric.formatted()} 
-                                            <small style={{marginLeft: '5px'}}> {metric.unit}</small>
+                                        <h3 style={{ margin: '6px 0px' }} className='fw-s'>
+                                            {metric.formatted()} {metric.unit}
                                         </h3>
                                         {delta(metricID) >= 0 ? 
-                                            <h4 style={{color: 'var(--color-success)', display: 'inline'}}>
+                                            <h5 style={{color: 'var(--color-green)', display: 'inline'}}>
                                                 {`+ ${delta(metricID)}%`}
-                                            </h4>
+                                            </h5>
                                             :
-                                            <h4 style={{color: 'var(--color-error)', display: 'inline'}}>
+                                            <h5 style={{color: 'var(--color-error)', display: 'inline'}}>
                                                 {`- ${Math.abs(delta(metricID))}%`}
-                                            </h4>
+                                            </h5>
                                         }
                                         <h5 style={{color: 'var(--color-tertiary)', display: 'inline', marginLeft: '10px', marginTop: '7px'}}>
                                             from last {timeframes[timeframe1].key}
@@ -244,8 +243,7 @@ export default function Statistics() {
                                 ))}
                             </div>
                             <br />
-                            <br />
-                            <h4 style={{color: 'var(--color)', fontWeight: '500'}}>
+                            <h4 className='fw-m'>
                                 {metrics[selectedMetric].graphTitle}
                             </h4>
                             <br />
@@ -294,7 +292,7 @@ export default function Statistics() {
                                     >
                                         Workout filter
                                     </h4>
-                                    <p style={{padding: '7px 10px', whiteSpace: 'pre'}}>
+                                    <p style={{padding: '7px 10px', whiteSpace: 'pre'}} className='fw-s'>
                                         {prevQuery.metric + '   ' + prevQuery.comparator + '   ' + prevQuery.value.toLocaleString() + ' m'}
                                     </p>
                                 </div>
@@ -348,7 +346,7 @@ export default function Statistics() {
                             </form>
                             <br />
 
-                            <h4 style={{fontWeight: '500'}} >Workout Pace Trend</h4>
+                            <h4 className='fw-m'>Workout Pace Trend</h4>
                             <br />
                             <CustomLine 
                                 height='200px' 

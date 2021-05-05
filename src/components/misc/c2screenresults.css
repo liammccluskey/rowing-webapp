@@ -1,0 +1,79 @@
+
+
+@import url('https://db.onlinewebfonts.com/c/86041161c247e3d1d46098d98e60b108?family=VerdanaProW01-Bold');
+
+:root {
+
+    --background-color: #608279; /* old style */
+    --background-color: rgb(183, 223, 241);
+
+
+
+    --c2-bgc: rgba(161, 205, 234); /* blue pm5 */;
+
+    --c2-bgc: #95ac9e;  /* old style */
+
+    --c2-bgc: #8fc4c0;
+
+    --c2-bc: rgb(54, 54, 56);
+
+
+    --c2-number-font: "VerdanaProW01-Bold";
+    --c2-number-font: Verdana, sans-serif;
+
+    --c2-fc: rgb(30,42,39);
+    --c2-fc: rgb(35, 47, 44);
+
+    --c2-fc-dark: rgb(15, 24, 21);
+}
+
+.c2screen-results-meta {
+    border: 14px solid var(--c2-bc);
+    border-color: var(--bc);
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: var(--c2-bgc);
+    padding: 8px;
+}
+
+.c2screen-results-meta h5 {
+    font-family: var(--c2-number-font);
+    color: var(--c2-fc);
+}
+.c2screen-results-meta .screen-title {
+    color: var(--c2-fc-dark);
+}
+
+.c2screen-results {
+    background-color: var(--c2-bgc);
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.c2screen-results .big, .c2screen-results .medium, 
+.c2screen-results .small {
+    padding: 6px 0px ;
+}
+
+.c2screen-results .big {
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0px;
+}
+
+.c2screen-results .medium {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0px;
+}
+
+.c2screen-results .small {
+    display: inline;
+    font-size: 13px;
+    font-weight: 400;
+    margin-left: 2px;
+    letter-spacing: 0px;
+}
