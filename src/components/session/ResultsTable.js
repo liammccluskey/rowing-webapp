@@ -83,7 +83,7 @@ export default function ResultsTable(props) {
                                     className={sortedKey === col.key ? 'th-sortable th-selected' : 'th-sortable'}
                                 >
                                     {col.title}
-                                    <div className={!sortAscending && 'rotate-180'} style={{display: 'inline-block', marginLeft: '8px'}}>
+                                    <div className={!sortAscending ? 'rotate-180':''} style={{display: 'inline-block', marginLeft: '8px'}}>
                                         <i className='bi bi-triangle-fill' 
                                             style={{
                                                 fontSize: '10px', color: 'var(--tint-color)',

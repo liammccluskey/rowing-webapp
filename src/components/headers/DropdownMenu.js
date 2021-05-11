@@ -5,7 +5,7 @@ import {useAuth} from '../../contexts/AuthContext'
 
 export default function DropdownMenu(props) {
     const {currentUser, thisUser, signOut} = useAuth()
-    const {isDarkMode, setIsDarkMode} = useTheme()
+    const {isDarkMode, setIsDarkMode, tintColor, tintColors, setTintColor} = useTheme()
     const history = useHistory()
 
     const [hideSelf, setHideSelf] = useState(props.hideSelf)
@@ -62,7 +62,7 @@ export default function DropdownMenu(props) {
                     
                 </div>
 
-                <div style={{padding: itemPadding, borderBottom: border}} className='d-flex jc-space-between ai-center' >
+                <div style={{padding: itemPadding}} className='d-flex jc-space-between ai-center' >
                     <div className='d-flex jc-flex-start ai-center'>
                         <i className="bi bi-moon" style={iconStyle}/>
                         <p className='fw-s'>Night Mode</p>
@@ -72,6 +72,24 @@ export default function DropdownMenu(props) {
                         <span className="slider round"></span>
                     </label>
                 
+                </div>
+                <div style={{padding: itemPadding, borderBottom: border}} className='d-flex jc-space-between ai-center'>
+                    <div className='d-flex jc-flex-start ai-center'>
+                        <i className='bi bi-palette' style={iconStyle} />
+                        <p className='fw-s'>Tint Color</p>
+                    </div>
+                    
+                    <div className='d-flex jc-flex-end ai-center'>
+                        {tintColors.map( (tc, idx) => 
+                            <div key={idx} className='tooltip ml-10' onClick={() => setTintColor(idx)}
+                                style={{height: 14, width: 14, borderRadius: 5, backgroundColor: `var(--color-${tc.extension})`}} 
+                            >
+                                <div className='tooltip-text'>
+                                    <h6>{tc.name}</h6>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div className='d-flex jc-flex-start ai-center' style={{...itemStyle}}
                     onClick={signOut}

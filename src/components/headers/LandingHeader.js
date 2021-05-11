@@ -16,11 +16,14 @@ export default function LandingHeader() {
 
     return (
         <div className='landing-header d-flex jc-space-between ai-center'>
-            <h3 style={{marginRight: 10}} className='logo-text'
-                onClick={() => history.push('/')}
-            >
-                {process.env.REACT_APP_COMPANY_NAME}
-            </h3>
+            <div className='d-flex jc-flex-start ai-center' onClick={() => history.push('/')} style={{cursor: 'pointer'}}> 
+                <img src='/images/logo-0.png' height={35} width={35} className='mr-10' style={{borderRadius: '50%'}} />
+                <h3 className='logo-text' 
+                    style={{marginRight: 40}}
+                >
+                    {process.env.REACT_APP_COMPANY_NAME}
+                </h3>
+            </div>
             <div className='d-flex jc-center ai-center'>
                 <button onClick={handleClickSignIn}style={{marginRight: 20}} className='clear-btn fw-m'>Log In</button>
                 <button onClick={handleClickSignUp} className='solid-btn fw-m'>Sign Up</button>

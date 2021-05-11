@@ -14,6 +14,7 @@ export default function TrainingHeader(props) {
             path='/training'
             items = {items}
             subPath={props.subPath}
+            style={props.style}
         />
     )
 }

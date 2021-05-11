@@ -41,10 +41,10 @@ export default function ActivityCard(props) {
                         {props.activity.user.displayName}
                     </p>
                     <p className='c-cs mb-2'>{moment(props.activity.createdAt).format('LLL')}</p>
-                    <p className='c-cs page-link mb-20' onClick={() => handleClickSession(props.activity.session)}>
+                    <p className='c-cs page-link mb-10' onClick={() => handleClickSession(props.activity.session)}>
                         {props.activity.session.title}
                     </p>
-                    <h3 className='fw-m page-link' onClick={() => handleClickActivity(props.activity)}>
+                    <h3 className='page-link' onClick={() => handleClickActivity(props.activity)}>
                         {props.activity.session.workoutItems[props.activity.workoutItemIndex]}
                     </h3>
                     

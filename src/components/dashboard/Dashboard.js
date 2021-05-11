@@ -1,6 +1,5 @@
 import React, { useEffect, useState} from "react"
 import MainHeader from "../headers/MainHeader"
-import Calendar from './Calendar'
 import UserInfoCard from './UserInfoCard'
 import ClubsInfoCard from './ClubsInfoCard'
 import NewSessionForm from './NewSessionForm'
@@ -158,8 +157,11 @@ export default function Dashboard() {
                     <br /><br /><br />
                     <h3>Activity Feed</h3>
                     <br />
-                    {(!loadingActivities && activities.length > 0) && activities.map(ac => 
-                        <ActivityCard activity={ac} />
+                    {(!loadingActivities && activities.length > 0) && activities.map( (ac, idx) => 
+                        <div key={idx}>
+                            <ActivityCard activity={ac} />
+                        </div>
+                        
                     )}
                 </div>
             </div>

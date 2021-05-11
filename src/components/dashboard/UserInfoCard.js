@@ -184,7 +184,7 @@ export default function UserInfoCard(props) {
                                     <p className='c-cs' style={{padding: 15}}>You have no {followType}</p>
                                 }
                                 {follows[followType].map((user, idx) => (
-                                    <div className='clickable-container d-flex jc-space-between ai-center'>
+                                    <div key={idx} className='clickable-container d-flex jc-space-between ai-center'>
                                         <div className='d-flex ai-center'>
                                             {user.iconURL ? 
                                                 <img src={user.iconURL} className='user-icon-small mr-20'/>

@@ -29,9 +29,10 @@ import Members from './components/club/Members'
 import Athlete from './components/athlete/Athlete'
 import Following from './components/athlete/Following'
 
+
 function App() {
   useEffect(() => {
-    document.title = 'ergsync'
+    document.title = 'Ergsync'
   })
   return (
     <div className="App">
@@ -65,11 +66,13 @@ function App() {
 
 
                 <PrivateRoute path='/sessions/:sessionID' component={Session} />
+
               </Switch>
             </MessageProvider>
           </ThemeProvider>
         </AuthProvider>
       </Router>
+      
     </div>
   );
 }

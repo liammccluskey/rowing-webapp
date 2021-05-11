@@ -192,7 +192,7 @@ export default function LiveActivityTable(props) {
                         borderLeft: '1px solid var(--bc)',
                         textAlign: 'center',
                     }}>
-                        <i className='bi bi-check-square' 
+                        <i className='bi bi-check-circle' 
                             style={{fontSize: '25px', color: 'var(--tint-color)', opacity: !didCompleteActivity && 0}} 
                         />
                     </div>

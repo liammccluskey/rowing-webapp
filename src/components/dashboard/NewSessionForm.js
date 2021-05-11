@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {useAuth} from '../../contexts/AuthContext'
 import {useMessage} from '../../contexts/MessageContext'
 import axios from 'axios'
@@ -24,6 +24,12 @@ export default function NewSessionForm(props) {
     ])
     const [visibleItems, setVisibleItems] = useState(2)
     const [sessionItems, setSessionItems] = useState( Array(maxItems).fill('') )
+
+    useEffect(() => {
+        setTimeout(() => {
+            document.getElementById('date-picker').valueAsDate = new Date()
+        }, 0.5*1000);
+    }, [])
 
 
     async function handleCreateSession(e) {
@@ -77,7 +83,7 @@ export default function NewSessionForm(props) {
     }
 
     return (
-        <div className='bgc-container'
+        <div className='float-container'
             style={{
                 pointerEvents: props.showSessionForm ? 'auto' : 'none',
                 opacity: props.showSessionForm ? '100%':'0%',
@@ -94,11 +100,11 @@ export default function NewSessionForm(props) {
                         <div className='d-flex jc-flex-start ai-center'>
                             <label style={{marginRight:'20px'}}>
                                 Date <br />
-                                <input ref={sessionDateRef} type='date' required/>
+                                <input ref={sessionDateRef} id='date-picker' type='date' required/>
                             </label>
                             <label>
                                 Start Time <br />
-                                <input ref={sessionTimeRef} type='time' required/>
+                                <input ref={sessionTimeRef} id='time-picker' type='time' required/>
                             </label>
                         </div> <br />
                         <label>

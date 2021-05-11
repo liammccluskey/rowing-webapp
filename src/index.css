@@ -1,13 +1,13 @@
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
-
 @import url('https://css.gg/moon.css');
 @import url('https://css.gg/sun.css');
 
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css");
 
-/* test fonts */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap');
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap'); /* duolingoesque */
+
+@import url('//db.onlinewebfonts.com/c/0fadaa21fcac88ceee0bb8da992c221b?family=SalesforceSans-Regular'); /* heroku */
 
 
 
@@ -16,9 +16,9 @@
   margin: 0px 0px;
   padding: 0px 0px;
   
-  font-family: "DM Sans", sans-serif;
   font-family: 'Nunito';
-  
+
+  font-family: 'SalesforceSans-Regular';
   
 }
 
@@ -46,7 +46,6 @@ h4 {
 }
 h3 {
   font-size: 19px;
-  font-weight: 600;
 }
 h5 {
   font-size: 13px;
@@ -86,7 +85,7 @@ html {
   --tint-color: var(--color-twitter-blue);
   --tint-color-translucent: var(--color-translucent-twitter-blue);
 
-  --font-family: 'Nunito';
+  --font-family: 'SalesforceSans-Regular';
 
 
   /* dark mode */
@@ -101,16 +100,12 @@ html {
 
   --bgc-nav-d: var(--bgc-light-d); 
   --bgc-settings-d: black;    
-  --bgc-input-d: #202327;           /* twitter */
+  --bgc-input-d: rgb(35, 38, 42);  
 
-
-  --bc-d: rgb(33,36,39);
-  --bc-d: rgba(48,54,60,255);         /* github */
   --bc-d: rgba(48,54,58,255);         /* robinhood */
-
   --bc-tr-d: rgba(22,22,23,255);
-  --color-d: rgb(215,215,215);
-  --color-header-d: rgb(245,245,245);
+  --color-d: rgb(205,205,205);
+  --color-header-d: rgb(235, 235, 235);
   --color-secondary-d: rgb(147, 151, 156);
   --color-tertiary-d: rgb(121, 124, 125);
   --color-yellow-text-d: var(--color-yellow);
@@ -127,7 +122,7 @@ html {
   --bgc-hover-l: rgb(245,247,249);
   --bgc-nav-l: var(--bgc-light-l);
   --bgc-settings-l: white;
-  --bgc-input-l: rgb(235, 238, 240); /* twitter */
+  --bgc-input-l: rgb(225, 228, 232); /* twitter */
   --bc-l: rgb(220, 227, 231);
   --bc-l: rgb(215, 222, 226);
   --bc-tr-l: rgb(241,242,242);
@@ -141,6 +136,7 @@ html {
   --box-shadow-l: 0 0 15px rgba(0,0,0,0.055);
   --box-shadow-dark-l: 0 0 20px rgba(0,0,0, 0.15);
   --float-border-l: none;
+
   
 
   /* dynamic color scheme */
@@ -162,8 +158,17 @@ html {
   --float-border: var(--float-border-l);
 
   /* standard colors */
+
+  --color-red: rgb(253, 80, 0);
+  --color-translucent-red: rgba(253, 80, 0, 0.2);
+
+  --color-red: #f04747;
+  --color-translucent-red: rgba(240, 71, 71, 0.2);
+
   --color-error: #ea374d;
   --color-error: rgb(253, 80, 0); /* robinhood */
+
+  --color-error: var(--color-red);
 
   --color-success: #0f8a25;
   --color-success: rgb(23, 169, 86);
@@ -182,8 +187,6 @@ html {
   --color-green: rgb(23, 169, 86);
   --color-translucent-green: rgba(23, 169, 86, 0.2);
 
-  --color-red: rgb(253, 80, 0);
-  --color-translucent-red: rgba(253, 80, 0, 0.2);
 
   --color-yellow: rgb(254, 221, 74);
   --color-translucent-yellow: rgba(254, 221, 74, 0.3);
@@ -216,6 +219,8 @@ html {
   --color-default: #5a9ff6;
   --color-translucent-default: rgba(90, 159, 246, 0.2);
 
+  --color-light-gray: #d7d9e8;
+
 
   /* misc global */
   --ps-nav: 200px;
@@ -227,7 +232,7 @@ html {
   --ps-main: 12%;
   --ps-small: 3%;
 
-  --container-border-radius: 9px;
+  --container-border-radius: 10px;
 
 }
 
@@ -455,7 +460,7 @@ form label {
 
 /* settings */
 .settings-page {
-  background-color: var(--bgc-settings);
+  background-color: var(--bgc-light);
   min-height: 100vh;
   padding-top: 50px;
 }
@@ -504,9 +509,10 @@ form label {
   color: var(--color-secondary);
 }
 .settings-edit-container {
-  background-color: var(--bgc-light);
+  background-color: var(--bgc-settings);
   border-radius: 5px;
   box-shadow: var(--box-shadow-dark);
+  border: var(--float-border);
   padding: 0px 15px;
   overflow: hidden;
 }
@@ -583,6 +589,77 @@ form label {
   font-weight: 400;
 }
 
+/* chat */
+.chat-container {
+  text-align: left;
+  box-sizing: border-box;
+}
+.chat-header {
+  box-sizing: border-box;
+  background-color: var(--bgc-light);
+  padding: 12px 20px;
+  position: absolute;
+  width: 100%;
+  border-bottom: 1px solid var(--bc);
+  border-top: 1px solid var(--bc);
+}
+.messages-container {
+  overflow: scroll;
+  box-sizing: border-box;
+  padding-bottom: 60px;
+}
+.message-text-container {
+  padding: 12px 10px;
+  overflow-wrap: break-word;
+  line-height: 1.6;
+}
+.message-input-container {
+  background-color: var(--bgc-input);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: -20px;
+  display: block;
+  margin-right: 15px; margin-left: 15px;
+}
+.icon-tab-option,
+.icon-tab-option-selected {
+  cursor: pointer;
+  color: var(--color-secondary);
+  margin-left: 18px;
+  border-radius: 10px;
+  font-size: 18px;
+}
+.icon-tab-option:hover,
+.icon-tab-option-selected {
+  color: var(--tint-color);
+}
+.self-chat-message {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-right: 10px;
+  padding-left: 20%;
+  margin-bottom: 15px;
+}
+.notself-chat-message {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-right: 20%;
+  padding-left: 0px;
+  margin-bottom: 15px;
+}
+.self-chat-message .message-text-container {
+  background-color: var(--tint-color-translucent);
+  border-color: var(--tint-color-translucent);
+  color: var(--color);
+}
+.notself-chat-message .message-text-container {
+  background-color: var(--bgc-light);
+  color: var(--color);
+}
+
+
 /* club page */
 .banner-image {
   width: 100%;
@@ -646,9 +723,10 @@ form label {
 }
 
 /* edit club page */
-.modified-label {
+.modified-label,
+.yellow-message {
   padding: 3px 10px;
-  font-weight: 500;
+  font-weight: 400;
   border-radius: 7px;
   display: inline;
   margin-left: 7px;
@@ -741,6 +819,7 @@ table tbody tr:last-child {
   display: inline-flex;
   justify-content: center;
   align-items: flex-start;
+  cursor: pointer;
 }
 .tooltip:hover .tooltip-text {
   opacity: 85%;
@@ -862,6 +941,30 @@ table tbody tr:last-child {
   margin-right: 20px;
 }
 .mr-30 {
+  margin-right: 30px;
+}
+.ml-2 {
+  margin-right: 2px;
+}
+.ml-3 {
+  margin-right: 3px;
+}
+.ml-5 {
+  margin-right: 5px;
+}
+.ml-7 {
+  margin-right: 7px;
+}
+.ml-10 {
+  margin-right: 10px;
+}
+.ml-15 {
+  margin-right: 15px;
+}
+.ml-20 {
+  margin-right: 20px;
+}
+.ml-30 {
   margin-right: 30px;
 }
 .mb-2 {
@@ -1051,6 +1154,7 @@ button:last-child {
   filter: brightness(80%);
 }
 .icon-btn {
+  cursor: pointer;
   text-align: center;
   background-color: transparent;
   color: var(--tint-color);
@@ -1090,7 +1194,7 @@ button:last-child {
 }
 
 .error-btn-secondary {
-  color: var(--color-error);
+  color: var(--color-red);
   background-color: transparent;
   border: 1px solid var(--color-red);
   border-radius: 5px;

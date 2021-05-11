@@ -24,24 +24,25 @@ export default function C2Results(props) {
                 <h5 style={{gridColumn: '1/3', borderRight: border}} className='medium'>
                     {moment.duration(activity.elapsedTime, 'seconds').format('hh:mm:ss')}
                 </h5>
+
                 <h5 className='medium'>
-                    {activity.strokeRate}<h5 className='small'>s/m</h5>
+                    {activity.strokeRate}<small className='small'>s/m</small>
                 </h5>
-                <h5 className='big' style={{gridColumn: '1/4', borderBottom: border, borderTop: border}}>
-                    {moment.duration(activity.currentPace, 'seconds').format('hh:mm:ss')} 
-                    <h5 className='small' style={{display: 'inline'}}>
-                        /500m 
-                    </h5>
+
+                <h5 className='big d-inline' style={{gridColumn: '1/4', borderBottom: border, borderTop: border}}>
+                    {moment.duration(activity.currentPace, 'seconds').format('hh:mm:ss')}
+                    <small className='small'> ave / 500m </small>
                 </h5>
+
                 <h5 className='medium' style={{gridColumn: '1/3', borderRight: border}}>
-                    {activity.distance.toFixed()}<h5 className='small' style={{display: 'inline'}}>m</h5>
+                    {activity.distance.toFixed()} <small className='small'>m</small>
                 </h5>
-                <h5 className='medium' style={{gridColumn: '1/4', borderTop: thickBorder}}>
+
+                <h5 className='medium d-inline' className='medium' style={{gridColumn: '1/4', borderTop: thickBorder}}>
                     {moment.duration(activity.averagePace, 'seconds').format('hh:mm:ss')}
-                    <h5 className='small' style={{display: 'inline'}}>
-                        ave /500m
-                    </h5>
+                    <small className='small'> ave /500m </small>
                 </h5>
+                    
             </div>
         </div>
     )

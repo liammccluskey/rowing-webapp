@@ -22,7 +22,7 @@ export default function SessionCard(props) {
                     <p className='fw-m mb-2' > {props.session.club.name} </p>
                     <p className='c-cs mb-10'>{moment(props.session.startAt).format('LLL')}</p>
             
-                    <h3 className='fw-m page-link' onClick={() => handleClickSession(props.session)}>
+                    <h3 className=' page-link' onClick={() => handleClickSession(props.session)}>
                         {props.session.title}
                     </h3>
                 </div>

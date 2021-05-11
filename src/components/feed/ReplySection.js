@@ -33,14 +33,17 @@ export default function ReplySection(props) {
                 </h5>
             </div>
             <div style={{display: repliesHidden && 'none'}}>
-                {replies.map( (reply, idx) => (
-                    <Comment style={{padding: '5px 0px'}}
-                        parentID={props.comment._id} 
-                        comment={reply} 
-                        fetchData={props.fetchData} 
-                        isReply={true}
-                    />
-                ))}
+                {replies.map( (reply, idx) => 
+                    <div key={idx}>
+                        <Comment style={{padding: '5px 0px'}}
+                            parentID={props.comment._id} 
+                            comment={reply} 
+                            fetchData={props.fetchData} 
+                            isReply={true}
+                        />
+                    </div>
+                    
+                )}
             </div>
         </div>
     )
