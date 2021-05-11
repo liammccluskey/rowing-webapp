@@ -7,7 +7,8 @@
 /* fonts */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap'); /* duolingoesque */
 
-@import url('//db.onlinewebfonts.com/c/0fadaa21fcac88ceee0bb8da992c221b?family=SalesforceSans-Regular'); /* heroku */
+
+@import url('https://db.onlinewebfonts.com/c/0fadaa21fcac88ceee0bb8da992c221b?family=SalesforceSans-Regular'); /* heroku */
 
 
 
@@ -16,10 +17,8 @@
   margin: 0px 0px;
   padding: 0px 0px;
   
-  font-family: 'Nunito';
-
   font-family: 'SalesforceSans-Regular';
-  
+  font-family: 'Nunito';
 }
 
 body {
