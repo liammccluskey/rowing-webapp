@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import C2Screen from '../misc/C2Screen'
+import C2Results from '../misc/C2Results'
 import {useAuth} from '../../contexts/AuthContext'
+import {useMessage} from '../../contexts/MessageContext'
 import axios from 'axios'
 import moment from 'moment'
 import 'moment-duration-format'
@@ -11,6 +13,7 @@ const api = axios.create({
 
 export default function LiveActivityTable(props) {
     const {currentUser, thisUser} = useAuth()
+    const {setMessage} = useMessage()
 
     const [hideSelf, setHideSelf] = useState(true)
     const [hideInstructions, setHideInstructions] = useState(true)
@@ -23,7 +26,6 @@ export default function LiveActivityTable(props) {
     const [startDisabled, setStartDisabled] = useState(false)
 
     const [selectedActivityIDs, setSelectedActivityIDs] = useState(new Set())
-    const [showErgConnectionError, setShowErgConnectionError] = useState(false)
     const [didCompleteActivity, setDidCompleteActivity] = useState(false)
 
     const [usersCompletedCount, setUsersCompletedCount] = useState(0)
@@ -86,11 +88,7 @@ export default function LiveActivityTable(props) {
             // present error message to user ?
         }
         else if (! ergConnected) {
-            setShowErgConnectionError(true)
-            
-            setTimeout(() => {
-                setShowErgConnectionError(false)
-            }, 1*1000);
+            setMessage({title: 'Connect your ergometer before starting a workout.', isError: true, timestamp: moment()})
         } else {
             const activity = {
                 user: thisUser._id,
@@ -109,7 +107,6 @@ export default function LiveActivityTable(props) {
             setHideSelf(false)
             setHideInstructions(true)
         }
-
         setStartDisabled(false)
     }
 
@@ -124,42 +121,29 @@ export default function LiveActivityTable(props) {
         setSelectedActivityIDs( new Set(selectedActivityIDs) )
     }
 
+    function handleClickConfigureWorkout() {
+        setMessage({title: "We're working on this. Please set up this workout on your machine manually.", isError: false, timestamp: moment()})
+    }
+
     return (
         <div style={{marginBottom: hideSelf ? 0 : 30}} className='live-activity-table'>
             <div className='d-flex jc-space-between ai-center'>
-                <div className='d-flex jc-flex-start ai-center' style={{gap: 10, minHeight: '55px'}} >
-                    <button className='arrow-btn' onClick={() => setHideSelf(curr => !curr)}>
-                        <i className={`bi bi-chevron-${hideSelf ? 'right' : 'down'}`} style={{color: 'var(--color)'}} />
-                    </button>
-                    <h4 onClick={() => setHideSelf(curr => !curr)}>{props.activityTitle}</h4>
+                <div className='d-flex jc-flex-start ai-center clickable-container-np' 
+                    style={{ minHeight: '55px', padding: '0px 5px', cursor: 'pointer'}} 
+                    onClick={() => setHideSelf(curr => !curr)}
+                >
+                    <i className={`bi bi-chevron-${hideSelf ? 'right' : 'down'} icon-btn-circle c-cs mr-10`}/>
+                    <h4>{props.activityTitle}</h4>
                 </div>
                 <div className='d-flex jc-flex-end ai-center'>
                     {activityInProgress ?
                         activityInProgress.workoutItemIndex === props.workoutItemIndex &&
-                            <button
-                                className='clear-btn-cancel'
-                                style={{margin: '0px 10px'}}
-                                onClick={handleClickFinish}
-                            >
-                                Finish
-                            </button>
+                            <button className='clear-btn-cancel mr-10' onClick={handleClickFinish}> Finish </button>
                         :
                         !didCompleteActivity && (hideInstructions ? 
-                            <button
-                                className='clear-btn-cancel' 
-                                style={{margin: '0px 10px'}}
-                                onClick={() => setHideInstructions(false)}
-                            >
-                                Begin
-                            </button> 
+                            <button className='clear-btn-cancel mr-10' onClick={() => setHideInstructions(false)} > Begin </button> 
                             :
-                            <button
-                                className='clear-btn-cancel' 
-                                style={{margin: '0px 10px'}}
-                                onClick={() => setHideInstructions(true)}
-                            >
-                                Cancel
-                            </button>
+                            <button className='clear-btn-cancel mr-10' onClick={() => setHideInstructions(true)} > Cancel </button>
                         )
                     }
                     <div 
@@ -187,76 +171,53 @@ export default function LiveActivityTable(props) {
                         </div>
                     </div>
                     
-                    <div className='d-flex ai-center jc-center' style={{
-                        height: '40px', width: '125px',
-                        borderLeft: '1px solid var(--bc)',
-                        textAlign: 'center',
-                    }}>
-                        <i className='bi bi-check-circle' 
-                            style={{fontSize: '25px', color: 'var(--tint-color)', opacity: !didCompleteActivity && 0}} 
+                    <div className='d-flex ai-center jc-center tooltip' style={{ height: 40, width: 125, borderLeft: '1px solid var(--bc)'}}>
+
+                        <div className='tooltip-text'><h6>
+                            {didCompleteActivity ? 'Activity complete' : 'Activity incomplete'}
+                        </h6></div>
+                        <i className={didCompleteActivity ? 'bi bi-check-circle' : 'bi bi-exclamation-triangle'}
+                            style={{fontSize: 25, color: didCompleteActivity ? 'var(--color-success)':'var(--color-yellow-text'}} 
                         />
                     </div>
                 </div>
             </div>
-            <div style={{padding: '0px 35px', paddingTop: !hideSelf && 20}}>
-                <div style={{ display: hideInstructions && 'none',color: 'var(--color-secondary)'}}>
-                    
-                    <h3 style={{ 
-                            marginRight: '30px',
-                            backgroundColor: showErgConnectionError && 'var(--color-error)',
-                            color: showErgConnectionError && 'var(--bgc-light)',
-                            borderColor: showErgConnectionError && 'transparent',
-                            transition: 'background-color 0.2s' 
-                        }} 
-                        className='number-item'
-                    >
-                        1
-                    </h3>
-                    Connect ergometer: 
-                    <p style={{
-                        color: ergConnected ? 'var(--color-success)' : 'var(--color-error)',
-                        display: 'inline', fontSize: '16px',
-                        marginLeft: '10px'
-                    }}>
-                        {ergConnected ? ' Connected' : ' Not Connected'}
-                    </p><br />
-                    {ergConnected ? 
-                        <button 
-                            onClick={props.handleClickConnect}
-                            style={{marginLeft: '65px', marginTop: '15px'}} className='clear-btn-secondary'
+            <div style={{margin: '0px 20px', borderLeft: '2px solid var(--bc)'}}>
+                <div style={{ display: hideInstructions && 'none', padding: '10px 25px', marginBottom: 20 }} className='c-cs'>
+                    <h4 className='c-cs'>Activity Intsructions</h4>
+                    <br />
+                    <div style={{padding: '0px 20px'}}>
+                        <div className='d-flex jc-flex-start ai-center'>
+                            <h4 className='number-item mr-30'>1</h4>
+                            <button onClick={props.handleClickConnect} className='clear-btn-secondary mr-10'>
+                                {ergConnected ? 'Reconnect' : 'Connect Ergometer'}
+                            </button> 
+                            <p style={{ color: ergConnected ? 'var(--color-success)' : 'var(--color-error)'}}>
+                                {ergConnected ? ' Connected' : ' Not Connected'}
+                            </p>
+                        </div>
+                        
+                        <br />
+                        <div className='d-flex jc-flex-start ai-center'>
+                            <h4 className='number-item mr-30'>2</h4>
+                            <button onClick={handleClickConfigureWorkout} className='clear-btn-secondary mr-10'> 
+                                Push workout to my erg
+                            </button>
+                        </div>
+                        
+                        <br />
+                        <button onClick={handleClickStartWorkout} className='solid-btn-secondary'
+                            style={{display: 'block'}}
+                            disabled={startDisabled}
                         >
-                            Reconnect
-                        </button> 
-                        :
-                        <button 
-                            onClick={props.handleClickConnect} 
-                            style={{marginLeft: '65px', marginTop: '15px'}} className='clear-btn-secondary'
-                        >
-                            Connect
+                            Start Workout
                         </button>
-                    }
-                    <br /><br />
-                    <h3 style={{ marginRight: '30px' }} className='number-item'>2</h3>
-                    
-                    Configure workout: 
-                    <p style={{display: 'inline', fontSize: '16px', marginLeft: '20px', color: 'var(--color)'}}>
-                        {props.activityTitle}
-                    </p>
-                    <br /><br />
-                    <button 
-                        style={{margin: '10px auto', display: 'block'}}
-                        className='solid-btn-secondary'
-                        onClick={handleClickStartWorkout}
-                        disabled={startDisabled}
-                    >
-                        Start Workout
-                    </button>
+                    </div>
                 </div >
                     
                 <div className='d-flex jc-space-around ai-flex-start' 
                     style={{display: hideSelf ? 'none' : 'flex', flexWrap: 'wrap'}}
                 >
-                    
                     {activities.filter(ac => selectedActivityIDs.has(ac._id)).map(ac =>(
                         <C2Screen 
                             activity={ac} 
@@ -266,8 +227,8 @@ export default function LiveActivityTable(props) {
                     ))} 
                 </div>
 
-                <div style={{display: hideSelf ? 'none': 'block'}} className='bgc-container'>
-                    <table className='data-table' style={{width: '100%'}}>
+                <div style={{display: hideSelf ? 'none': 'block'}}>
+                    <table className='data-table workout-table' style={{width: '100%'}}>
                         <thead >
                             <tr>
                                 <th>Name</th>
@@ -280,12 +241,8 @@ export default function LiveActivityTable(props) {
                         </thead>
                         <tbody>
                             {activities.map((ac, index) => (
-                                <tr 
-                                    key={index} 
-                                    style={{
-                                        borderLeft: ac.user._id == thisUser._id ? '3px solid var(--tint-color)' : 'none'
-                                    }}
-                                    onClick={() => handleClickActivity(ac._id)}
+                                <tr key={index} onClick={() => handleClickActivity(ac._id)}
+                                    style={{ borderLeft: ac.user._id == thisUser._id ? '3px solid var(--tint-color)' : 'none' }} 
                                 >
                                     <td>{ac.user.displayName}</td>
                                     <td>{moment.duration(ac.currentPace, 'seconds').format('hh:mm:ss')}</td>
@@ -295,13 +252,12 @@ export default function LiveActivityTable(props) {
                                     <td>{moment.duration(ac.elapsedTime, 'seconds').format('hh:mm:ss')}</td>
                                 </tr>
                             ))}
-                            {!activities.length &&
-                                <tr>
-                                    <td>No activities in progress</td>
-                                </tr>
-                            }
+                            
                         </tbody>
                     </table>
+                    {!activities.length &&
+                        <p className='empty-table-message'>No activities in progress</p>
+                    }
                 </div>
                 
             </div>

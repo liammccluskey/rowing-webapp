@@ -7,9 +7,8 @@
 /* fonts */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap'); /* duolingoesque */
 
-
+/*
 @import url('https://db.onlinewebfonts.com/c/0fadaa21fcac88ceee0bb8da992c221b?family=SalesforceSans-Regular'); /* heroku */
-
 
 
 /*global config & reset*/
@@ -84,13 +83,11 @@ html {
   --tint-color: var(--color-twitter-blue);
   --tint-color-translucent: var(--color-translucent-twitter-blue);
 
-  --font-family: 'SalesforceSans-Regular';
+  --font-family: 'Nunito';
 
 
   /* dark mode */
   --bgc-d: black;
-
-
   --bgc-light-d: rgb(20,21,23);
   --bgc-light-d: rgb(21,24,28);     /* twitter */
 
@@ -111,6 +108,7 @@ html {
   --box-shadow-d: none;
   --box-shadow-dark-d: none;
   --float-border-d: 1px solid var(--bc);
+
 
 
 
@@ -457,6 +455,16 @@ form label {
   height: 100px;
 }
 
+/* session page */
+.workout-table tbody {
+  background-color: var(--bgc);
+}
+.empty-table-message {
+  padding: 15px 20px;
+  color: var(--color-secondary); background-color: var(--bgc);
+  text-align: center;
+}
+
 /* settings */
 .settings-page {
   background-color: var(--bgc-light);
@@ -595,20 +603,45 @@ form label {
 }
 .chat-header {
   box-sizing: border-box;
+  height: 45px;
   background-color: var(--bgc-light);
-  padding: 12px 20px;
-  position: absolute;
+  padding: 12px 20px; padding-left: 10px;
   width: 100%;
   border-bottom: 1px solid var(--bc);
   border-top: 1px solid var(--bc);
 }
+.chat-header .toggle-menu-icon {
+  padding: 0px 3px;
+  color: var(--color-secondary); font-size: 20px;
+  cursor: pointer;
+}
+.chat-header .toggle-menu-icon:hover {
+  background-color: var(--bgc-hover);
+}
+.channels-container {
+  box-sizing: border-box;
+  position: absolute; width: 100%;
+  padding: 15px 25px; padding-bottom: 30px;
+  border-bottom: 1px solid var(--bc);
+  background-color: var(--bgc);
+}
+.channel-option {
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+.channel-option:hover {
+  background-color: var(--tint-color);
+  color: white;
+}
 .messages-container {
   overflow: scroll;
   box-sizing: border-box;
+  padding-top: 15px;
   padding-bottom: 60px;
 }
 .message-text-container {
-  padding: 12px 10px;
+  padding: 10px 10px;
   overflow-wrap: break-word;
   line-height: 1.6;
 }
@@ -1062,11 +1095,11 @@ table tbody tr:last-child {
 }
 
 /*  Buttons: 4 main types */
-button i, button img {
+.solid-btn i, .solid-btn img,
+.clear-btn i, .clear-btn img,
+.solid-btn-secondary i, .solid-btn-secondary img,
+.clear-btn-secondary i, .clear-btn-secondary img {
   margin-right: 10px;
-}
-button:last-child {
-  margin-right: none;
 }
 .solid-btn,
 .clear-btn,
@@ -1175,21 +1208,10 @@ button:last-child {
   align-items: center;
   font-size: 18px;
   color: var(--color-secondary);
+  border: none;
 }
 .icon-btn-circle:hover {
   background-color: var(--bgc-hover);
-}
-
-.arrow-btn {
-  background-color: transparent;
-  border: none;
-  margin: 0px 0px;
-  border-radius: 5px;
-  padding: 10px 10px;
-}
-.arrow-btn:hover {
-  transition: 0.3s;
-  background-color: var(--tint-color-translucent);
 }
 
 .error-btn-secondary {
@@ -1251,11 +1273,9 @@ button:last-child {
 
 /* valid for h3 */
 .number-item {
-  display: inline-block;
-  font-weight: 400;
-  text-align: center;
-  padding: 3px 3px;
-  width: 25px;
+  display: inline-flex;
+  justify-content: center; align-items: center;
+  padding: 3px 9px;
   color: var(--color-secondary);
   border: 1px dashed var(--color-secondary);
   border-radius: 5px;

@@ -45,7 +45,7 @@ export function MessageProvider({children}) {
     return (
         <MessageContext.Provider value={value}>
             {children}
-            <div style={{position: 'fixed', left: '50%', marginLeft: -messageWidth/2, bottom: 100, width: messageWidth}}>
+            <div style={{position: 'fixed', left: '50%', marginLeft: -messageWidth/2, bottom: 100, width: messageWidth, textAlign: 'left'}}>
                 {messages !== null && messages.map((message, idx) => (
                     <div key={idx} className='d-flex jc-flex-start float-container' 
                         style={{

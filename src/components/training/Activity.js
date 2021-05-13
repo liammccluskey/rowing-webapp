@@ -158,13 +158,12 @@ export default function Activity() {
                             {submittedQueryString}
                         </p>
                     </div>
-                    <div className='clear-btn-secondary' style={{padding: '4px 8px'}}
-                        onClick={() => setHideFilterForm(false)}
-                    >
-                        <i className="bi bi-pencil" style={{fontSize: '25px'}}/>
+                    <div className='clear-btn-secondary' onClick={() => setHideFilterForm(false)}>
+                        <i className="bi bi-pencil"/>
+                        Edit filter
                     </div>
                 </div>
-                <form onSubmit={handleSubmitForm} className='bgc-container'
+                <form onSubmit={handleSubmitForm} className='float-container'
                     style={{ 
                         overflow: 'hidden', transform: 'scale(1)',
                         padding: '0px 20px', 

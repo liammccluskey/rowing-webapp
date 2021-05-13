@@ -279,7 +279,7 @@ export default function Statistics() {
                         </div>
                         <br />
                         <div style={{padding: '20px 20px'}} className='float-container'>
-                            <div className='d-flex jc-flex-start ai-center'>
+                            <div className='d-flex jc-flex-start'>
                                 <div className='d-inline-flex jc-flex-start ai-center mr-20'
                                     style={{
                                         border: '1px solid var(--bc)',
@@ -296,10 +296,9 @@ export default function Statistics() {
                                         {prevQuery.metric + '   ' + prevQuery.comparator + '   ' + prevQuery.value.toLocaleString() + ' m'}
                                     </p>
                                 </div>
-                                <div className='clear-btn-secondary' style={{padding: '4px 8px'}}
-                                    onClick={() => setHideFilterForm(false)}
-                                >
-                                   <i className="bi bi-pencil" style={{fontSize: '25px'}}/>
+                                <div className='clear-btn-secondary' onClick={() => setHideFilterForm(false)} >
+                                   <i className="bi bi-pencil"/>
+                                   Edit filter
                                 </div>
                             </div>
                             <form onSubmit={handleSubmit}

@@ -144,7 +144,7 @@ export default function Session(props) {
             <div className='main-container' style={{ padding: 0}} >
                 <div className='d-flex jc-flex-start ai-flex-start' >
                     <div style={{
-                        width: 350, height: 'calc(100vh - var(--main-nav-height) - 1px', position: 'sticky',
+                        width: 350, minWidth: 300, height: 'calc(100vh - var(--main-nav-height) - 1px', position: 'sticky',
                         top: 'calc(var(--main-nav-height) + 1px)',
                         backgroundColor: 'var(--bgc-light)', borderRight: '1px solid var(--bc)'}}
                     >
@@ -162,7 +162,7 @@ export default function Session(props) {
                         <br />
                         <div className='  float-container' style={{padding: '10px 10px'}}>
                             {session.workoutItems.map((item, i) => (
-                                <div>
+                                <div key={i}>
                                     <LiveActivityTable 
                                         activities={activities[i]}
                                         activityInProgress={activityInProgress}
@@ -184,7 +184,7 @@ export default function Session(props) {
                         <br />
                         <div className='  float-container' style={{padding: '10px 10px'}}>
                             {session.workoutItems.map((item, i) => (
-                                <div>
+                                <div key={i}>
                                     <ResultsTable 
                                         activities={activities[i]} 
                                         activityTitle={item} 
@@ -192,7 +192,7 @@ export default function Session(props) {
                                 </div>
                             ))}
                         </div>
-                        <div style={{height: 300}} />
+                        <div style={{height: 200}} />
                     </div>
                 </div>
             </div>

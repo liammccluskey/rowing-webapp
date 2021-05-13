@@ -56,31 +56,25 @@ export default function ResultsTable(props) {
     return (
         <div style={{marginBottom: hideSelf ? 0 : 30}}>
             <div className='d-flex jc-space-between ai-center'>
-                <div 
-                    className='d-flex jc-flex-start ai-center' 
-                    style={{gap: '20px', minHeight: '55px'}}
+                <div className='d-flex jc-flex-start ai-center clickable-container-np' 
+                    style={{ minHeight: '55px', padding: '0px 5px', cursor: 'pointer'}} 
+                    onClick={() => setHideSelf(curr => !curr)}
                 >
-                    <button className='arrow-btn' onClick={() => setHideSelf(curr => !curr)}>
-                        <i className={`bi bi-chevron-${hideSelf ? 'right' : 'down'}`} style={{color: 'var(--color)'}} />
-                    </button>
-                    <h4 onClick={() => setHideSelf(curr => !curr)}>{props.activityTitle}</h4>
+                    <i className={`bi bi-chevron-${hideSelf ? 'right' : 'down'} icon-btn-circle c-cs mr-10`}/>
+                    <h4>{props.activityTitle}</h4>
                 </div>
             </div>
 
-            <div style={{
-                display: hideSelf ? 'none': 'block',
-                margin: '0px 35px', marginTop: !hideSelf && 20
-            }} className='bgc-container'>
-                <table className='data-table' style={{width: '100%'}}>
+            <div style={{display: hideSelf && 'none', margin: '0px 20px', borderLeft: '2px solid var(--bc)'}}>
+                <table className='data-table workout-table' style={{width: '100%'}}>
                     <thead>
                         <tr>
                             {tableColumns.map((col, idx) => (
-                                <th 
+                                <th key={idx} className={sortedKey === col.key ? 'th-sortable th-selected' : 'th-sortable'}
                                     onClick={() => {
                                         setSortedKey(col.key)
                                         setSortAscending(curr => !curr)
                                     }}
-                                    className={sortedKey === col.key ? 'th-sortable th-selected' : 'th-sortable'}
                                 >
                                     {col.title}
                                     <div className={!sortAscending ? 'rotate-180':''} style={{display: 'inline-block', marginLeft: '8px'}}>
@@ -98,12 +92,8 @@ export default function ResultsTable(props) {
                     </thead>
                     <tbody>
                         {activities.map((ac, index) => (
-                            <tr 
-                                key={index} 
-                                style={{
-                                    borderLeft: ac.uid == currentUser.uid ? '3px solid var(--tint-color)' : 'none'
-                                }}
-                                onClick={() => handleClickActivity(ac._id)}
+                            <tr key={index} onClick={() => handleClickActivity(ac._id)}
+                                style={{ borderLeft: ac.uid == currentUser.uid ? '3px solid var(--tint-color)' : 'none' }}
                             >
                                 <td>{ac.user.displayName}</td>
                                 <td>{moment.duration(ac.averagePace, 'seconds').format('hh:mm:ss')}</td>
@@ -112,13 +102,12 @@ export default function ResultsTable(props) {
                                 <td>{moment.duration(ac.elapsedTime, 'seconds').format('hh:mm:ss')}</td>
                             </tr>
                         ))}
-                        {!activities.length &&
-                            <tr>
-                                <td>No completed activities</td>
-                            </tr>
-                        }
                     </tbody>
+                    
                 </table>
+                {!activities.length &&
+                    <p className='empty-table-message'>No completed activities</p>
+                }
             </div>
         </div>
         

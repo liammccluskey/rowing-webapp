@@ -105,7 +105,7 @@ export default function Athlete() {
                         </div>
                     </div>
 
-                    <div style={{height: 500}}></div>
+                    <div style={{height: 100}}></div>
                     
                 </div>
             </div>
