@@ -5,11 +5,11 @@ import {useAuth} from '../../contexts/AuthContext'
 import {useMessage} from '../../contexts/MessageContext'
 
 
+
 export default function Chat(props) {
     const {thisUser} = useAuth()
-    const {setMessage} = useMessage()
 
-    const socket = io(process.env.REACT_APP_API_BASE_URL,  { transports : ['websocket'] })
+    const socket = useRef()
 
     const [selectedChannel, setSelectedChannel] = useState('main')
     const [channels, setChannels] = useState({ 
@@ -31,16 +31,16 @@ export default function Chat(props) {
     const messagesHeight = `calc(${props.height} - 45px)`
 
     useEffect(() => {
-        socket.disconnect()
-        socket.on('connect', () => {
+
+        socket.current = io(process.env.REACT_APP_API_BASE_URL,  { transports : ['websocket'] })
+        socket.current.on('connect', () => {
             joinMainRoom()
-            setMessage({title: 'connected socket', isError: false, timestamp: moment()})
         })
-        socket.on('update_room_members', data => {
+        socket.current.on('update_room_members', data => {
             setUsers(data)
             scrollToBottom()
         })
-        socket.on('receive_message', data => {
+        socket.current.on('receive_message', data => {
             let canAccessMessage = false
             if (data.channelKey === 'main') {
                 canAccessMessage = true
@@ -63,8 +63,10 @@ export default function Chat(props) {
             scrollToBottom()
         })
 
-        socket.connect()
-        return () => socket.disconnect()
+        socket.current.connect()
+        return () => {
+            socket.current.disconnect()
+        }
     }, [])
 
     useEffect(() => {
@@ -86,10 +88,11 @@ export default function Chat(props) {
             },
             room: props.roomID,
         }
-        socket.emit('join_room', data)
+        socket.current.emit('join_room', data)
     }
 
     function handleSubmitMessage(e) {
+        e.preventDefault()
         function sendMessage() {
             const data = {
                 sender: {
@@ -103,7 +106,7 @@ export default function Chat(props) {
                 message: chatMessage,
                 timestamp: moment().toDate(),
             }
-            socket.emit('send_message', data)
+            socket.current.emit('send_message', data)
         }
         e.preventDefault()
         if (!chatMessage.length) { return }
