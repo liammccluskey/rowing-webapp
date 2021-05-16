@@ -101,8 +101,10 @@ export default function Profile() {
                             <input type='text' value={displayName} onChange={e => setDisplayName(e.target.value)} required/>
                         </div>
                         <br /><br />
-                        <div className='d-flex jc-flex-end' style={{gap: 20}}>
-                            <button type='button' className='clear-btn-secondary' onClick={() => setIsEditingName(false)}>Cancel</button>
+                        <div className='d-flex jc-flex-end' >
+                            <button type='button' className='clear-btn-secondary mr-20' onClick={() => setIsEditingName(false)}>
+                                Cancel
+                            </button>
                             <button type='submit' className='solid-btn-secondary'>Save</button>
                         </div>
                     </form>
@@ -127,8 +129,10 @@ export default function Profile() {
                             <input type='file' accept='image/*' onChange={e => setPhotoFile(e.target.files[0])} required/>
                         </div>
                         <br /><br />
-                        <div className='d-flex jc-flex-end' style={{gap: 20}}>
-                            <button type='button' className='clear-btn-secondary' onClick={() => setIsEditingPhoto(false)}>Cancel</button>
+                        <div className='d-flex jc-flex-end'>
+                            <button type='button' className='clear-btn-secondary mr-20' onClick={() => setIsEditingPhoto(false)}>
+                                Cancel
+                            </button>
                             <button type='submit' className='solid-btn-secondary'>Save</button>
                         </div>
                     </form>
@@ -153,8 +157,10 @@ export default function Profile() {
                             <input type='file' accept='image/*' onChange={e => setBannerFile(e.target.files[0])} required/>
                         </div>
                         <br /><br />
-                        <div className='d-flex jc-flex-end' style={{gap: 20}}>
-                            <button type='button' className='clear-btn-secondary' onClick={() => setIsEditingBanner(false)}>Cancel</button>
+                        <div className='d-flex jc-flex-end' >
+                            <button type='button' className='clear-btn-secondary mr-20' onClick={() => setIsEditingBanner(false)}>
+                                Cancel
+                            </button>
                             <button type='submit' className='solid-btn-secondary'>Save</button>
                         </div>
                     </form>

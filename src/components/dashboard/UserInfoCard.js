@@ -147,7 +147,7 @@ export default function UserInfoCard(props) {
                 <div className='d-flex jc-space-between ai-center mb-15'>
                     <h3>{thisUser.trainingPartner ? 'Meters Compared' : 'Your Meters'}</h3>
                     <div className='tooltip'>
-                        <i className='bi bi-three-dots-vertical icon-btn-circle' onClick={handleClickMenu}/>
+                        <i className='bi bi-three-dots icon-btn-circle' onClick={handleClickMenu}/>
                         <div className='tooltip-text'>
                             <p>Pick a Training partner</p>
                         </div>

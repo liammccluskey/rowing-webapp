@@ -45,8 +45,8 @@ export default function MainHeader(props) {
                 <Link className={`${activeClass('explore') } header-link`} to='/explore/clubs' >
                     Explore
                 </Link>
-                <div className='d-flex jc-center ai-center onhover-bc' onClick={() => setHideMenu(false)}
-                    style={{cursor: 'pointer', padding: '5px 5px'}} 
+                <div className='d-flex jc-center ai-center' onClick={() => setHideMenu(false)}
+                    style={{cursor: 'pointer'}} 
                 >
                     {thisUser.iconURL ? 
                         <img src={thisUser.iconURL} className='user-icon' style={{marginRight: 10}} />
@@ -55,8 +55,6 @@ export default function MainHeader(props) {
                             <i className='bi bi-person' />
                         </div>
                     }
-                    
-                    <i className='bi bi-chevron-down' style={{fontSize: 13}} />
                 </div>
             </div>
             <DropdownMenu hideSelf={hideMenu} setHideSelf={setHideMenu} />

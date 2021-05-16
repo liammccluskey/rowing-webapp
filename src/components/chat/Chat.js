@@ -4,22 +4,22 @@ import moment from 'moment'
 import {useAuth} from '../../contexts/AuthContext'
 import {useMessage} from '../../contexts/MessageContext'
 
-const socket = io(process.env.REACT_APP_API_BASE_URL,  { transports : ['websocket'] })
 
 export default function Chat(props) {
     const {thisUser} = useAuth()
     const {setMessage} = useMessage()
 
-    const [selectedChannel, setSelectedChannel] = useState(props.roomID)
+    const socket = io(process.env.REACT_APP_API_BASE_URL,  { transports : ['websocket'] })
+
+    const [selectedChannel, setSelectedChannel] = useState('main')
     const [channels, setChannels] = useState({ 
-        [props.roomID] : {roomID: props.roomID, name: 'Group Chat', isDirect: false}
+        main : {name: 'Group Chat', isDirect: false, channelKey: 'main', recipient: 'everyone', hasUnreadMessages: false}
     })
-    const channelsRef = useRef()
-    channelsRef.current = channels
     
     const [messages, setMessages] = useState([ {
             sender: { displayName: 'Team Ergsync', iconURL: '/images/logo-0.png' },
-            message: 'Please note that chat messages are not saved.', room: props.roomID,
+            message: 'Please note that chat messages are not saved.',
+            room: props.roomID, channelKey: 'main',
             timestamp: moment().toDate()
     } ])
     const [users, setUsers] = useState([])
@@ -31,9 +31,9 @@ export default function Chat(props) {
     const messagesHeight = `calc(${props.height} - 45px)`
 
     useEffect(() => {
-        if (!socket.connected) {socket.connect()}
+        socket.disconnect()
         socket.on('connect', () => {
-            joinChannels()
+            joinMainRoom()
             setMessage({title: 'connected socket', isError: false, timestamp: moment()})
         })
         socket.on('update_room_members', data => {
@@ -41,27 +41,50 @@ export default function Chat(props) {
             scrollToBottom()
         })
         socket.on('receive_message', data => {
-            setMessages(curr => [...curr, data])
+            let canAccessMessage = false
+            if (data.channelKey === 'main') {
+                canAccessMessage = true
+                setMessages(curr => [...curr, data])
+            } else if ( [data.sender._id, data.recipient._id].includes(thisUser._id) ) {
+                canAccessMessage = true
+                setMessages(curr => [...curr, data])
+                const notSelf = data.sender._id === thisUser._id ? 
+                    data.recipient : data.sender
+                setChannels(curr => ({
+                    ...curr, 
+                    [data.channelKey] : {
+                        name: notSelf.displayName,
+                        isDirect: true,
+                        channelKey: data.channelKey,
+                        recipient: notSelf, hasUnreadMessages: true
+                    }
+                }))
+            }
             scrollToBottom()
         })
 
+        socket.connect()
         return () => socket.disconnect()
     }, [])
 
-    function joinChannels() {
-        for (const roomID in channelsRef.current) {
-            joinRoomWithID(roomID)
-        }
-    }
+    useEffect(() => {
+        setChannels(curr => ({
+            ...curr, 
+            [selectedChannel]: {
+                ...curr[selectedChannel],
+                hasUnreadMessages: false
+            }
+        }))
+    }, [selectedChannel, channelsHidden])
 
-    function joinRoomWithID(roomID) {
+    function joinMainRoom() {
         const data = {
             user: {
                 displayName: thisUser.displayName,
                 iconURL: thisUser.iconURL,
                 _id: thisUser._id
             },
-            room: roomID,
+            room: props.roomID,
         }
         socket.emit('join_room', data)
     }
@@ -72,27 +95,20 @@ export default function Chat(props) {
                 sender: {
                     displayName: thisUser.displayName,
                     iconURL: thisUser.iconURL,
-                    _id: thisUser._id 
+                    _id: thisUser._id
                 },
-                room: channels[selectedChannel].roomID,
+                recipient: channels[selectedChannel].recipient,
+                room: props.roomID,
+                channelKey: selectedChannel,
                 message: chatMessage,
-                timestamp: moment().toDate()
+                timestamp: moment().toDate(),
             }
-            if (channels[selectedChannel].isDirect) {
-                data.recipient = channels[selectedChannel].recipient
-            }
-            try {
-                const eventName = channels[selectedChannel].isDirect ? 'send_direct_message' : 'send_message'
-                socket.emit(eventName, data)
-            } catch (error) {
-                console.log(error)
-            }
+            socket.emit('send_message', data)
         }
         e.preventDefault()
         if (!chatMessage.length) { return }
         sendMessage()
         setChatMessage('')
-
     }
 
     function scrollToBottom() {
@@ -101,20 +117,66 @@ export default function Chat(props) {
         container.scrollTop = container.scrollHeight
     }
 
-    function handleClickChannel(isMainChannel, channel) {
-        const roomID = isMainChannel ? props.roomID : channel.roomID
-        setSelectedChannel(roomID)
+    function handleClickChannel( isMainChannel, channel) {
+        setSelectedChannel(isMainChannel ? 'main': channel.channelKey)
         setChannelsHidden(true)
+        setSelectedTab(0)
     }
 
     function handleClickNewDirectMessage() {
+        setChannelsHidden(true)
+        setSelectedTab(1)
+    }
 
+    async function handleClickDirectMessage(recipient) {
+        const channelKey = [thisUser._id, recipient._id].sort().join('')
+        if (!channels.hasOwnProperty(channelKey)) {
+            await setChannels(curr => ({
+                ...curr, 
+                [ channelKey ] : {
+                    name: recipient.displayName,
+                    isDirect: true,
+                    channelKey: channelKey,
+                    recipient: recipient
+                }
+            }))
+        }
+        setSelectedChannel(channelKey)
+        setSelectedTab(0)
     }
 
     return (
         <div className='chat-container'>
+            <div className='channels-wrapper' style={{width: channelsHidden && 0}}>
+                <div className='channels-container' style={{height: props.height}}>
+                    <div className='d-flex jc-space-between ai-center mb-10'>
+                        <h4 className='fw-m'>Channels</h4>
+                        <i className='bi bi-x icon-btn-circle' onClick={() => setChannelsHidden(true)} />
+                    </div>
+                    <div style={{paddingLeft: 0}}>
+                        <h6 className='tt-u fw-m mb-5'>main chat</h6>
+                        <div className='channel-option' onClick={() => handleClickChannel(true)}>
+                            <p>Group Chat</p>
+                            {channels.main.hasUnreadMessages && <i className='bi bi-envelope-fill' />}
+                        </div>
+                        <br />
+                        <h6 className='tt-u fw-m mb-5'>direct messages</h6>
+                        <div className='channel-option' onClick={handleClickNewDirectMessage}>
+                            <p className='fw-m'>+ New direct message</p>
+                        </div>
+                        {Object.values(channels).filter(c => c.isDirect).map( (channel, idx) => 
+                            <div key={idx} className='channel-option' onClick={() => handleClickChannel(false, channel)}>
+                                <p>{channel.name}</p>
+                                {channel.hasUnreadMessages && <i className='bi bi-envelope-fill' />}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
             <div className='chat-header d-flex jc-space-between ai-center'>
-                <div className='d-flex jc-flex-start ai-center' onClick={() => setChannelsHidden(curr => !curr)} style={{cursor: 'pointer'}}>
+                <div className='d-flex jc-flex-start ai-center' 
+                    onClick={() => setChannelsHidden(curr => !curr)} style={{cursor: 'pointer'}}
+                >
                     <i className='bi bi-list mr-5 toggle-menu-icon'/>
                     {channels[selectedChannel].isDirect ?
                         <div className='d-flex jc-flex-start ai-center'>
@@ -126,9 +188,9 @@ export default function Chat(props) {
                     }
                 </div>
                 <div className='d-flex jc-flex-end ai-center'>
-                    {!channels[selectedChannel].isDirect && 
-                    [{title: 'Chat', icon: 'chat-square-dots-fill'}, {title: 'Members', icon: 'people-fill'}].map( (tab, idx) => 
-                        <div className={`icon-tab-option${selectedTab === idx ? '-selected':''} tooltip`} 
+                    {!channels[selectedChannel].isDirect &&
+                    [{title: 'Chat', icon: 'chat-square-dots-fill'}, {title: 'Members', icon: 'people-fill'}].map( (tab, idx) =>
+                        <div className={`icon-tab-option${selectedTab === idx ? '-selected':''} tooltip`}
                             onClick={() => setSelectedTab(idx)} key={idx}
                         >
                             <i className='bi bi-chat-square-dots-fill' className={`bi bi-${tab.icon}`}/>
@@ -137,36 +199,11 @@ export default function Chat(props) {
                     )}
                 </div>
             </div>
-            <div style={{display: channelsHidden && 'none'}}>
-                <div className='channels-container'>
-                    <div className='d-flex jc-space-between ai-center mb-10'>
-                        <h4 className='fw-m'>Channels</h4>
-                        <i className='bi bi-x icon-btn-circle' onClick={() => setChannelsHidden(true)} />
-                    </div>
-                    <div style={{paddingLeft: 10}}>
-                        <h6 className='tt-u fw-m mb-5'>main chat</h6>
-                        <div className='channel-option' onClick={() => handleClickChannel(true)}>
-                            <p>Group Chat</p>
-                        </div>
-                        <br />
-                        <h6 className='tt-u fw-m mb-5'>direct messages</h6>
-                        <div className='channel-option' onClick={handleClickNewDirectMessage}>
-                            <p>+ New direct message</p>
-                        </div>
-                        {Object.values(channels).filter(c => c.isDirect).map( (channel, idx) => 
-                            <div key={idx} className='channel-option' onClick={() => handleClickChannel(false, channel)}>
-                                <p>{channel.name}</p>
-                            </div>
-                        )}
-                    </div>
-                    
-                </div>
-            </div>
             
             {selectedTab === 0 ? 
                 <div>
                     <div className='messages-container' id='messages-container' style={{height: messagesHeight}} >
-                        {messages.filter(m => m.room === channels[selectedChannel].roomID).map( (m, idx) =>
+                        {messages.filter(m => m.channelKey === selectedChannel).map( (m, idx) =>
                             <div key={idx} className={m.sender._id === thisUser._id ? 'self-chat-message' : 'notself-chat-message'}>
                                 { (m.sender._id !== thisUser._id && true ) && 
                                     <img src={m.sender.iconURL} className='user-icon-small' style={{margin: 10, marginTop: 0}} />
@@ -196,9 +233,20 @@ export default function Chat(props) {
                 :
                 <div style={{height: messagesHeight, overflow: 'scroll', padding: '10px 20px'}}>
                     {users.map( (u, idx) => 
-                        <div key={idx} className='d-flex jc-flex-start ai-center' style={{margin: 10}}>
-                            <img src={u.iconURL} className='user-icon-small mr-10' />
-                            <p>{u.displayName}</p>
+                        <div key={idx} className='d-flex jc-space-between ai-center' style={{margin: '10px 0px'}}>
+                            <div className='d-flex jc-flex-start ai-center'>
+                                <img src={u.iconURL} className='user-icon-small mr-10' />
+                                <p>{u.displayName}</p>
+                            </div>
+                            {u._id !== thisUser._id &&
+                                <div className='tooltip' onClick={() => handleClickDirectMessage(u)}>
+                                    <i className='bi bi-chat-right-text icon-btn-circle' />
+                                    <div className='tooltip-text'>
+                                        <h5>Message {u.displayName} privately</h5>
+                                    </div>
+                                </div> 
+                            }
+                            
                         </div>
                     )}
                 </div>

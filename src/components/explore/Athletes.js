@@ -98,7 +98,7 @@ export default function Athletes() {
                     </tbody>
                 </table>
                 {( (submittedSearch && !loading && !results.users.length) || !submittedSearch ) &&
-                    <div style={{textAlign: 'center', fontSize: 17, color: 'var(--color-secondary)', padding: '50px 20px'}}>
+                    <div className='search-message'>
                     {(submittedSearch && !loading) ? 
                         !results.users.length && `We couldn't find any athletes matching the name "${submittedSearch}"`
                         :

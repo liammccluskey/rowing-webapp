@@ -93,6 +93,9 @@ export default function CustomLine(props) {
                             display: true,
                             gridLines: {
                                 display: true,
+                                color: getComputedStyle(document.documentElement)
+                                .getPropertyValue('--bgc-hover'),
+                                zeroLineWidth: 0,
                                 borderDash: [10, 5]
                             },
                             ticks: {

@@ -4,6 +4,7 @@ import MainHeader from '../headers/MainHeader'
 import TrainingHeader from './TrainingHeader'
 import Paginator from '../misc/Paginator'
 import Loading from '../misc/Loading'
+import Pending from '../misc/Pending'
 import {useAuth} from '../../contexts/AuthContext'
 import axios from 'axios'
 import moment from 'moment'
@@ -27,6 +28,7 @@ export default function Activity() {
 
     const [submittedQuery, setSubmittedQuery] = useState(null)
     const [submittedQueryString, setSubmittedQueryString] = useState(null)
+    const [submittedQueryStringReadable, setSubmittedQueryStringReadable] = useState(null)
     const [selectedSortParam, setSelectedSortParam] = useState(0)
     const sortOrderRef = useRef()
     const sortParams = [
@@ -56,7 +58,7 @@ export default function Activity() {
 
     const tableColumns = [
         {title: 'Date', key: 'createdAt'},
-        {title: 'Session Title', key: 'sessionID'}, // fix this
+        {title: 'Session Title', key: 'session.title'}, // fix this
         {title: 'Activity Title', key: 'title'},
         {title: 'Distance', key: 'distance'},
         {title: 'Time', key: 'elapsedTime'},
@@ -84,6 +86,9 @@ export default function Activity() {
             )
         }
         const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
+        const readableQuery = Object.keys(query)
+        .filter(key => key !== 'pagesize' && key !== 'page')
+        .map(key => key + ' = ' + query[key]).join(', ')
 
         try {
             const res = await api.get(`/activities/search?user=${thisUser._id}&${queryString}`)
@@ -94,6 +99,7 @@ export default function Activity() {
             setCurrPage(page)
             setSubmittedQuery(query)
             setSubmittedQueryString(queryString)
+            setSubmittedQueryStringReadable(readableQuery)
         } catch (error) {
             console.log(error)
         }
@@ -155,7 +161,7 @@ export default function Activity() {
                             Showing results for
                         </p>
                         <p style={{padding: '7px 10px', whiteSpace: 'pre'}}>
-                            {submittedQueryString}
+                            {submittedQueryStringReadable}
                         </p>
                     </div>
                     <div className='clear-btn-secondary' onClick={() => setHideFilterForm(false)}>
@@ -173,7 +179,7 @@ export default function Activity() {
                     }} 
                 >
                     <br />
-                    <h4 style={{fontWeight: 500}}>Edit Workout Filter</h4>
+                    <h4 >Edit Workout Filter</h4>
                     <br />
                     <div className='d-flex jc-flex-start ai-flex-start' >
                         <label className='mr-20'>
@@ -198,8 +204,8 @@ export default function Activity() {
                             {filter.title} <br />
                             <div className='d-flex jc-flex-start ai-center' style={{ marginBottom: 15}}>
                                 <select ref={filter.comparatorRef} className='mr-20'>
-                                    {comparators.map(comparator => (
-                                        <option value={comparator.value}>{comparator.title}</option>
+                                    {comparators.map( (comparator, idx) => (
+                                        <option key={idx} value={comparator.value}>{comparator.title}</option>
                                     ))}
                                 </select>
                                 <input ref={filter.valueRef} className='mr-10'/>
@@ -229,14 +235,12 @@ export default function Activity() {
                     <table style={{width: '100%'}}>
                         <thead>
                             <tr>
-                                
-                                {tableColumns.map(col => (
-                                    <th 
+                                {tableColumns.map( (col, idx) => (
+                                    <th key={idx} className={sortedKey === col.key ? 'th-sortable th-selected' : 'th-sortable'}
                                         onClick={() => {
                                             setSortedKey(col.key)
                                             setSortAscending(curr => !curr)
                                         }}
-                                        className={sortedKey === col.key ? 'th-sortable th-selected' : 'th-sortable'}
                                     >
                                         {col.title}
                                         <div className={!sortAscending ? 'rotate-180' : ''} style={{display: 'inline-block', marginLeft: '8px'}}>
@@ -268,11 +272,11 @@ export default function Activity() {
                         </tbody>
                     </table>
                     {( (submittedQuery && !loading && !results.activities.length) &&
-                        <div style={{textAlign: 'center', fontSize: 17, color: 'var(--color-secondary)', padding: '50px 0px'}}>
+                        <div className='search-message'>
                             We couldn't find any activities matching those filters
                         </div>
                     )}
-                    {loading && <Loading />}
+                    {loading && <div className='loading-message'><Pending /><p>Loading Results...</p></div>}
                 </div>
 
                 <br />

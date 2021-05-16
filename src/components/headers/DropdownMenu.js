@@ -67,10 +67,13 @@ export default function DropdownMenu(props) {
                         <i className="bi bi-moon" style={iconStyle}/>
                         <p className='fw-s'>Night Mode</p>
                     </div>
-                    <label className="switch">
-                        <input type="checkbox" checked={isDarkMode} onChange={() => setIsDarkMode(curr => !curr)}/>
-                        <span className="slider round"></span>
-                    </label>
+                    <div className='onhover-bgchover' style={{cursor: 'pointer'}} onClick={() => setIsDarkMode(curr => !curr)}>
+                        <label className="switch" style={{pointerEvents: 'none'}}>
+                            <input type="checkbox" checked={isDarkMode} onChange={() => ({})}/>
+                            <span className="slider round"></span>
+                        </label>
+                    </div>
+                    
                 
                 </div>
                 <div style={{padding: itemPadding, borderBottom: border}} className='d-flex jc-space-between ai-center'>

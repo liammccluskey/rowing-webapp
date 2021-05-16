@@ -30,8 +30,8 @@ export default function Preferences() {
             <div className='settings-list'>
                 <div className='editable-settings-row' onClick={() => setEditingTheme(true)} style={{display: editingTheme&&'none'}}>
                     <p>Color Theme</p>
-                    <div className='d-flex jc-flex-end ai-center' style={{gap: 10}}>
-                        <i className={`bi bi-${isDarkMode ? 'moon' : 'sun'}`} style={{fontSize: 20}} />
+                    <div className='d-flex jc-flex-end ai-center'>
+                        <i className={`bi bi-${isDarkMode ? 'moon' : 'sun'} mr-10`} style={{fontSize: 20}} />
                         <p>{isDarkMode ? 'Dark' : 'Light'}</p>
                     </div>
                 </div>
@@ -56,8 +56,8 @@ export default function Preferences() {
                 </div>
                 <div className='editable-settings-row' onClick={() => setEditingTint(true)} style={{display: editingTint&&'none'}}>
                     <p>Tint Color</p>
-                    <div className='d-flex jc-flex-end ai-center' style={{gap: 10}}>
-                        <div style={{
+                    <div className='d-flex jc-flex-end ai-center'>
+                        <div className='mr-10' style={{
                                 borderRadius: '50%', height: 18, width: 18,
                                 backgroundColor: `var(--color-${tintColors[tintColor].extension}`
                             }}

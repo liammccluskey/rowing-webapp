@@ -123,8 +123,10 @@ export default function Settings() {
                                     <input value={email} onChange={(e) => setEmail(e.target.value)} type='email' required />
                                 </div>
                                 <br /><br />
-                                <div className='d-flex jc-flex-end' style={{gap: 20}}>
-                                    <button type='button' className='clear-btn-secondary' onClick={() => setEditingEmail(false)}>Cancel</button>
+                                <div className='d-flex jc-flex-end'>
+                                    <button type='button' className='clear-btn-secondary mr-20' onClick={() => setEditingEmail(false)}>
+                                        Cancel
+                                    </button>
                                     <button type='submit' className='solid-btn-secondary'>Save</button>
                                 </div>
                             </form>

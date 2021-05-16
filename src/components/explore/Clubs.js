@@ -103,7 +103,7 @@ export default function Clubs() {
                     </tbody>
                 </table>
                 {( (submittedSearch && !loading && !results.clubs.length) || !submittedSearch ) &&
-                    <div style={{textAlign: 'center', fontSize: 17, color: 'var(--color-secondary)', padding: '50px 20px'}}>
+                    <div className='search-message'>
                     {(submittedSearch && !loading) ? 
                         !results.clubs.length && `We couldn't find any clubs matching the name "${submittedSearch}"`
                         :

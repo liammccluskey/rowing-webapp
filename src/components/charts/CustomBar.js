@@ -56,7 +56,7 @@ export default function CustomBar(props) {
                         xAxes: [{
                             gridLines: {
                                 display: false,
-                                drawBorder: false
+                                drawBorder: false,
                             },
                             ticks: {
                                 autoSkip: false,
@@ -80,9 +80,18 @@ export default function CustomBar(props) {
                         }],
                         yAxes: [{
                             gridLines: {
-                                display: false
+                                drawTicks: false,
+                                display: true,
+                                drawBorder: false, 
+                                color: getComputedStyle(document.documentElement)
+                                .getPropertyValue('--bc-chart'),
+                                zeroLineWidth: 0,
+                                
                             },
-                            ticks: {
+                            ticks: { 
+                                suggestedMin: 0,
+                                fontFamily: getComputedStyle(document.documentElement)
+                                .getPropertyValue('--font-family'),
                                 display: props.showYTicks,
                                 fontColor: getComputedStyle(document.documentElement)
                                 .getPropertyValue('--color-secondary'),

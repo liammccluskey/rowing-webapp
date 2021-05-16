@@ -126,7 +126,7 @@ export default function Club(props) {
                                         <h3>{formatNumber(members.length)}</h3>
                                         <h5 className='page-link c-cs' onClick={routeToMembers}>{formatUnit('Member', members.length)}</h5>
                                     </div>
-                                    <div style={{textAlign: 'center'}}>
+                                    <div style={{textAlign: 'center', display: 'none'}}>
                                         <h3>{formatNumber(12345)}</h3>
                                         <h5 className='page-link c-cs' onClick={routeToMembers}>Sessions</h5>
                                     </div>

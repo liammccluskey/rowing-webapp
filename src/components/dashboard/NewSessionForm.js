@@ -25,12 +25,6 @@ export default function NewSessionForm(props) {
     const [visibleItems, setVisibleItems] = useState(2)
     const [sessionItems, setSessionItems] = useState( Array(maxItems).fill('') )
 
-    useEffect(() => {
-        setTimeout(() => {
-            document.getElementById('date-picker').valueAsDate = new Date()
-        }, 0.5*1000);
-    }, [])
-
 
     async function handleCreateSession(e) {
         e.preventDefault()

@@ -60,11 +60,21 @@ export function MessageProvider({children}) {
                                 backgroundColor: message.isError ? 'var(--color-error)' : 'var(--tint-color)',
                                 cursor: 'pointer'
                             }}
-                            className='d-flex ai-center jc-center onhover-bright'
+                            className='d-flex ai-center jc-center onhover-dark'
                         >
                             <i className='bi bi-x' style={{fontSize: 30, color: 'white'}} />
                         </div>
-                        <h4 style={{padding: '10px 10px'}}>{message.title}</h4>
+                        <div style={{padding: '10px 10px'}}>
+                            {message.isError &&
+                                <div className='d-flex jc-flex-start ai-center mb-5'>
+                                    <i className='bi bi-exclamation-circle mr-10' style={{color: 'var(--color-error)', fontSize: 15}} />
+                                    <h4 style={{color: 'var(--color-error)'}}>
+                                        Something went wrong
+                                    </h4>
+                                </div>
+                            }
+                            <h4>{message.title}</h4>
+                        </div>
                     </div>
                 ))}
             </div>
