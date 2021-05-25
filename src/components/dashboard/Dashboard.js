@@ -2,11 +2,13 @@ import React, { useEffect, useState} from "react"
 import MainHeader from "../headers/MainHeader"
 import UserInfoCard from './UserInfoCard'
 import ClubsInfoCard from './ClubsInfoCard'
+import SocialInfoCard from './SocialInfoCard'
 import NewSessionForm from './NewSessionForm'
 import { useAuth } from "../../contexts/AuthContext"
 import { useHistory } from "react-router-dom"
 import Loading from '../misc/Loading'
 import ActivityCard from '../feed/ActivityCard'
+import FeedLoader from '../feed/FeedLoader'
 import axios from "axios"
 import moment from 'moment'
 
@@ -26,6 +28,7 @@ export default function Dashboard() {
 
     const [activities, setActivities] = useState([])
     const [loadingActivities, setLoadingActivities] = useState(true)
+    const [canLoadMoreActivities, setCanLoadMoreActivities] = useState(true)
 
     useEffect(() => {
         async function fetchData() {
@@ -67,13 +70,23 @@ export default function Dashboard() {
     }
 
     async function fetchFeed() {
+        setLoadingActivities(true)
+        const pageSize = 5
+        const currentPage = Math.ceil(activities.length / pageSize)
         try {
-            const res = await api.get(`/activities/search?user=${thisUser._id}&page=1&sortby=-createdAt&pagesize=15`)
-            setActivities(res.data.activities)
+            const url = `/feed/dashboard?user=${thisUser._id}&page=${currentPage + 1}&pagesize=${pageSize}`
+            const res = await api.get(url)
+            setActivities(curr => [...curr, ...res.data])
+            setCanLoadMoreActivities(res.data.length >= pageSize)
         } catch (error) {
             console.log(error.response.data.message)
         }
         setLoadingActivities(false)
+    }
+
+    function handleClickLoadMoreActivities() {
+        if (loadingActivities || !canLoadMoreActivities) {return}
+        fetchFeed()
     }
 
     return (
@@ -88,6 +101,9 @@ export default function Dashboard() {
                     <UserInfoCard style={{width: 300}} />
                     <br /><br />
                     <ClubsInfoCard clubs={myClubs} style={{width: 300}} />
+                    <br /><br />
+                    <SocialInfoCard style={{width: 300}} />
+                    <br /><br />
                 </div>
                 
                 <div>
@@ -155,14 +171,31 @@ export default function Dashboard() {
                     </div>
 
                     <br /><br /><br />
-                    <h3>Activity Feed</h3>
+                    <div className='d-flex jc-flex-start ai-center'>
+                        <h3 className='mr-10'>Activity Feed</h3>
+                        <div className='tooltip'>
+                            <i className='bi bi-question-circle icon-btn-circle' />  
+                            <div className='tooltip-text'>
+                                <h5>See your recent activities, and activities of athletes you follow</h5>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
                     <br />
-                    {(!loadingActivities && activities.length > 0) && activities.map( (ac, idx) => 
+                    {activities.map( (ac, idx) => 
                         <div key={idx}>
                             <ActivityCard activity={ac} />
                         </div>
-                        
                     )}
+                    <FeedLoader 
+                        pluralUnit='activities' 
+                        canLoadMore={canLoadMoreActivities}
+                        loading={loadingActivities}
+                        handleClickLoadMore={handleClickLoadMoreActivities}
+                        feedEndMessage='No more activities to show'
+                    />
+                    <div style={{height: 100}}></div>
                 </div>
             </div>
         </div>

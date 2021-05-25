@@ -58,12 +58,7 @@ export default function UserInfoCard(props) {
                 console.log(error)
             } 
             setLoading(false)
-            /*
-            setStats(curr => ({aggregate: {...curr.aggregate, weekMeters: 13443543}, plottable: {...curr.plottable, weekMeters: [1, 5, 10, 2, 7, 9, 4], 
-                yearMeters: [1, 5, 10, 2, 7, 9, 4,10, 2, 7, 9, 4],
-                monthMeters: [1, 5, 10, 2, 7, 9, 4,10, 2, 7, 9, 4,1, 5, 10, 2, 7, 9, 4,10, 2, 7, 9, 4,1, 5, 10, 2, 7, 9, 4,10, 2, 7, 9, 4]
-            }}))
-            */
+            
         }
         async function fetchFollowing() {
             try {

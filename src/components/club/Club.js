@@ -3,6 +3,7 @@ import MainHeader from '../headers/MainHeader'
 import SubHeader from '../headers/SubHeader'
 import ClubHeader from './ClubHeader'
 import SessionCard from '../feed/SessionCard'
+import FeedLoader from '../feed/FeedLoader'
 import Loading from '../misc/Loading'
 import {useAuth} from '../../contexts/AuthContext'
 import {useMessage} from '../../contexts/MessageContext'
@@ -26,6 +27,11 @@ export default function Club(props) {
     const [club, setClub] = useState()
     const [loading, setLoading] = useState(true)
 
+
+    const [heatmapData, setHeatmapData] = useState()
+    const [loadingHeatmap, setLoadingHeatmap] = useState(true)
+
+    const [canLoadMoreSessions, setCanLoadMoreSessions] = useState(false)
     const [sessions, setSessions] = useState([])
     const [loadingSessions, setLoadingSessions] = useState(true)
 
@@ -69,11 +75,23 @@ export default function Club(props) {
     }
 
     async function fetchSessions(clubID) {
+        setLoadingSessions(true)
+        const pageSize = 5
+        const currentPage = Math.ceil(sessions.length / pageSize)
         try {
-            const res = await api.get(`/sessions/feed/club/${clubID}`)
-            setSessions(res.data)
-        } catch (error) { console.log(error) }
+            const url = `/feed/club-profile?club=${clubID}&page=${currentPage + 1}&pagesize=${pageSize}`
+            const res = await api.get(url)
+            setSessions(curr => [...curr, ...res.data])
+            setCanLoadMoreSessions(res.data.length >= pageSize)
+        } catch (error) {
+            console.log(error.response.data.message)
+        }
         setLoadingSessions(false)
+    }
+
+    function handleClickLoadMoreSessions() {
+        if (!club || loadingSessions || !canLoadMoreSessions) {return}
+        fetchSessions(club._id)
     }
 
     function routeToMembers() {
@@ -100,11 +118,21 @@ export default function Club(props) {
                 <br /><br />
                 <div className='main-container' style={{display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 50}}>
                     <div>
+                        
                         <h3>Recent Sessions</h3>
                         <br />
-                        {( !loadingSessions && sessions.length > 0) &&
-                            sessions.map( (session, idx) => session.club && <SessionCard session={session} parentID={session._id} />)
-                        }
+                        {sessions.map( (session, idx) => session.club && 
+                            <div key={idx}>
+                                <SessionCard session={session} parentID={session._id} />
+                            </div>
+                        )}
+                        <FeedLoader
+                            pluralUnit='sessions'
+                            canLoadMore={canLoadMoreSessions}
+                            loading={loadingSessions}
+                            handleClickLoadMore={handleClickLoadMoreSessions}
+                            feedEndMessage={`${club.name} has no more sessions`}
+                        />
 
                     </div>
                     <div style={{ position: 'sticky', top: 'calc(var(--main-nav-height) + 20px)'}}>

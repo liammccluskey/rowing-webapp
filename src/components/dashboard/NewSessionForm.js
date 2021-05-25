@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {useAuth} from '../../contexts/AuthContext'
 import {useMessage} from '../../contexts/MessageContext'
+import DatePicker from '../misc/DatePicker'
 import axios from 'axios'
 import moment from 'moment'
 
@@ -12,9 +13,9 @@ export default function NewSessionForm(props) {
     const {thisUser} = useAuth()
     const {setMessage} = useMessage()
     const sessionTitleRef = useRef()
-    const sessionDateRef = useRef()
-    const sessionTimeRef = useRef()
     const sessionPrivacyRef = useRef()
+
+    const [sessionMoment, setSessionMoment] = useState(moment())
 
     // workout items
     const maxItems = 4
@@ -28,12 +29,10 @@ export default function NewSessionForm(props) {
 
     async function handleCreateSession(e) {
         e.preventDefault()
-        console.log('did create session')
-        const startAt = new Date(`${sessionDateRef.current.value}T${sessionTimeRef.current.value}`)
         const sessionData = {
             title: sessionTitleRef.current.value,
             hostUser: thisUser._id,
-            startAt: startAt,
+            startAt: sessionMoment.toDate(),
             isAccessibleByLink: sessionPrivacyRef.current.value === 'link',
             club: ['link', 'self'].includes(sessionPrivacyRef.current.value) ? undefined : sessionPrivacyRef.current.value,
             workoutItems: sessionItems.filter((item, i) => i < visibleItems)
@@ -79,28 +78,24 @@ export default function NewSessionForm(props) {
     return (
         <div className='float-container'
             style={{
-                pointerEvents: props.showSessionForm ? 'auto' : 'none',
-                opacity: props.showSessionForm ? '100%':'0%',
-                height: props.showSessionForm ? 'auto': '0px',
+                display: !props.showSessionForm && 'none',
                 marginBottom: props.showSessionForm ? '40px' : '0px',
                 padding: '0px 30px',
                 }}
         >
             <br />
-            <h4 style={{ textAlign: 'left', marginBottom: '40px', fontWeight: '500'}}>Create a Workout</h4>
+            <h3 style={{ textAlign: 'left', marginBottom: '40px', fontWeight: '500'}}>Create a Workout</h3>
             <form onSubmit={handleCreateSession}>
-                <div className='d-flex jc-flex-start' style={{gap: '40px'}}>
-                    <div style={{flex: 1}}>
+                <div className='d-flex jc-flex-start'>
+                    <div style={{flex: 1, marginRight: 30}}>
                         <div className='d-flex jc-flex-start ai-center'>
-                            <label style={{marginRight:'20px'}}>
-                                Date <br />
-                                <input ref={sessionDateRef} id='date-picker' type='date' required/>
-                            </label>
-                            <label>
-                                Start Time <br />
-                                <input ref={sessionTimeRef} id='time-picker' type='time' required/>
-                            </label>
-                        </div> <br />
+                            
+                        </div> 
+                        <label style={{marginRight:'20px'}}>
+                            Start at<br />
+                            <DatePicker initMoment={sessionMoment} setMoment={setSessionMoment}/>
+                        </label>
+                        <br />
                         <label>
                             Title <br />
                             <input type='text' ref={sessionTitleRef} required/>
@@ -124,7 +119,7 @@ export default function NewSessionForm(props) {
                         <div >
                             {Array(maxItems).fill(null).map((item, i) => (
                                 <div key={i} className='d-flex jc-space-between ai-center' 
-                                    style={{display: hideItems[i] ? 'none' : 'flex', gap: '10px'}}
+                                    style={{display: hideItems[i] ? 'none' : 'flex'}}
                                 >
                                     <input 
                                         required={i < visibleItems}
@@ -132,7 +127,7 @@ export default function NewSessionForm(props) {
                                         value={sessionItems[i]} 
                                         onChange={e => handleItemChange(e, i)} 
                                         type='text'
-                                        style={{display: 'block', flex: 1,  marginBottom: '5px'}}
+                                        style={{display: 'block', flex: 1,  marginBottom: '5px', marginRight: 10}}
                                     />
                                     <button 
                                         type='button' className='icon-btn' 

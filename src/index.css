@@ -28,7 +28,7 @@ button:disabled:hover {
   filter: brightness(60%);
   cursor: not-allowed;
 }
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .h7 {
   font-weight: 400;
   color: var(--color-header);
 }
@@ -44,6 +44,9 @@ h5 {
 h6 {
   color: var(--color-secondary);
   font-size: 12px;
+}
+.h7 {
+  font-size: 10px;
 }
 p, td, th {
   font-weight: 400;
@@ -90,7 +93,7 @@ html {
 
   --bgc-nav-d: var(--bgc-light-d); 
   --bgc-settings-d: black;    
-  --bgc-input-d: rgb(35, 38, 42);  
+  --bgc-input-d: rgb(38, 41, 45);  
 
   --bc-d: rgba(48,54,58,255);         /* robinhood */
   --bc-chart-d: var(--bgc-hover-d);
@@ -102,6 +105,7 @@ html {
   --box-shadow-d: none;
   --box-shadow-dark-d: none;
   --float-border-d: 1px solid var(--bc);
+
 
 
 
@@ -178,7 +182,7 @@ html {
 
   --color-green: rgb(14, 137, 37);
   --color-translucent-green: rgb(14, 137, 37, 0.2);
-  --color-green: rgb(23, 169, 86);
+  --color-green: #17a956;
   --color-translucent-green: rgba(23, 169, 86, 0.2);
 
 
@@ -186,10 +190,11 @@ html {
   --color-translucent-yellow: rgba(254, 221, 74, 0.3);
   --color-yellow-text: #85681d;
 
-  --color-discord: rgb(114, 136, 217);
+  --color-discord: #7288d9;
+  --colro-discord: #607de4;
   --color-translucent-discord: rgb(114, 137, 218, 0.25);
 
-  --color-purple: rgb(84, 105, 212);
+  --color-purple: #5469d4;
   --color-translucent-purple: rgb(84, 105, 212, 0.2);
 
   --color-apple-blue: rgb(38, 135, 250);
@@ -1350,6 +1355,19 @@ table tbody tr:last-child {
 .onhover-bgc-hover:hover {
   background-color: var(--bgc-hover);
 }
+.onhover-bgc-tc:hover {
+  background-color: var(--tint-color);
+}
+.onhover-bgc-tct:hover {
+  background-color: var(--tint-color-translucent);
+}
+
+.onhover-c-tc:hover {
+  color: var(--tint-color);
+}
+.onhover-c-w:hover {
+  color: var(--color-header-d) !important;
+}
 
 .onhover-bc {
   border: 1px solid transparent;
@@ -1357,6 +1375,15 @@ table tbody tr:last-child {
 }
 .onhover-bc:hover {
   border-color: var(--bc);
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 
@@ -1422,6 +1449,26 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+/* ios style toggle switch */
+.toggle-control {
+  border-radius: 5px;
+  background-color: var(--bgc-input);
+  border: 1px solid var(--bc);
+  display: inline-flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.toggle-option, 
+.toggle-option-selected {
+  color: var(--color-secondary);
+  padding: 8px 15px;
+  cursor: pointer;
+}
+.toggle-option-selected {
+  color: white;
+  background-color: var(--tint-color);
 }
 
 /* random */

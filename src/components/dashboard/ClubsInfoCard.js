@@ -14,6 +14,12 @@ export default function ClubsInfoCard(props) {
                     <ClubIcon club={club} key={idx} style={{margin: '10px 10px'}} />
                 )}
             </div>
+            {props.clubs.length === 0 &&
+                <div style={{textAlign: 'center'}}>
+                    <h5 className='c-cs'>You do not belong to any clubs</h5>
+                </div>
+            }
+            
             <br />
             <div className='d-flex jc-center'>
                 <button className='clear-btn-secondary' style={{flex: 1}} onClick={() => history.push('/explore/clubs')}>

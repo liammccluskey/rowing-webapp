@@ -1,0 +1,79 @@
+/*
+    **** REQUIRED :root vars ****
+    --bgc-input
+    --tint-color
+    --tint-color-translucent
+    --bc    //border-color
+    --box-shadow
+
+
+    **** REQUIRED classes ****
+    .float-container
+    .d-flex ...
+
+    .toggle-control
+    .toggle-option
+    .toggle-option-selected
+
+*/
+/* Date input field */
+.date-input,
+.date-input-focus {
+    background-color: var(--bgc-input);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    overflow: hidden;
+}
+.date-input-focus {
+    border-color: var(--tint-color);
+    background-color: transparent;
+}
+.date-input i,
+.date-input-focus i {
+    color: var(--tint-color);
+    font-size: 20px;
+    padding: 5px 15px;
+    background-color: var(--tint-color-translucent);
+}
+
+/* Date/Time picker */
+.date-picker {
+    position: absolute;
+    margin-top: 10px;
+    border: 1px solid var(--bc);
+    box-shadow: var(--box-shadow);
+    overflow: visible;
+}
+.time-input,
+.time-input-focus {
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    background-color: var(--bgc-input);
+}
+.time-input-focus {
+    border-color: var(--tint-color);
+    background-color: transparent;
+}
+.time-input .input-value,
+.time-input-focus .input-value {
+    padding: 6px 8px;
+    width: 50px; text-align: center;
+}
+.time-picker {
+    background-color: var(--bgc);
+    width: 64px;
+    position: absolute;
+    border: 1px solid var(--bc);
+    box-shadow: var(--box-shadow);
+}
+.time-picker .time-picker-option {
+    text-align: center;
+    display: block;
+    cursor: pointer;
+}
+.time-picker .time-picker-option:hover {
+    background-color: var(--tint-color-translucent);
+    color: var(--tint-color);
+}
