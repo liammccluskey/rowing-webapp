@@ -1,5 +1,4 @@
 import react, {useState, useEffect} from 'react'
-import Pending from '../misc/Pending'
 
 export default function FeedLoader(props) {
     const [loading, setLoading] = useState(props.loading)
@@ -14,7 +13,6 @@ export default function FeedLoader(props) {
         <div className='d-flex' style={{margin: '20px 0px', ...props.style}}>
             {canLoadMore ? 
             <button className='clear-btn' style={{flex: 1}} onClick={props.handleClickLoadMore}>
-                {loading && <Pending style={{marginRight: 20}} /> }
                 {loading ? `Loading more ${props.pluralUnit}` : `Load more ${props.pluralUnit}`}
             </button>
             :

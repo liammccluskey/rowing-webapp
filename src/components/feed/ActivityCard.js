@@ -50,7 +50,7 @@ export default function ActivityCard(props) {
                     
                 </div>
             </div>
-            <div className='d-flex jc-center'>
+            <div className='d-flex jc-center' >
                 <C2Results activity={props.activity} style={{width: 230}} />
             </div>
             <br />

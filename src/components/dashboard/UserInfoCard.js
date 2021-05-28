@@ -174,7 +174,7 @@ export default function UserInfoCard(props) {
                         <br />
                         {loadingFollows ? <div className='loading-message'><Pending />Loading followers...</div>
                             :
-                            <div className='float-container' style={{height: 200, overflow: 'scroll'}}>
+                            <div className='trans-container' style={{height: 200, overflow: 'scroll', padding: 0}}>
                                 {follows[followType].length === 0 &&
                                     <p className='c-cs' style={{padding: 15}}>You have no {followType}</p>
                                 }

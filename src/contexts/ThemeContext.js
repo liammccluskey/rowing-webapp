@@ -17,6 +17,7 @@ export function ThemeProvider({children}) {
 
     const [isDarkMode, setIsDarkMode] = useState(thisUser ? thisUser.colorTheme === 1 : false)
     const [tintColor, setTintColor] = useState( thisUser ? thisUser.tintColor  : 0)
+    const [themeColor, setThemeColor] = useState( (thisUser && thisUser.themeColor) ? thisUser.themeColor : 0 )
 
     const tintColors = [
         {name: 'Default Blue', extension: 'default'},   // default 
@@ -25,9 +26,16 @@ export function ThemeProvider({children}) {
         {name: 'Mint', extension: 'mint'}
     ]
 
+    const themeColors = [
+        {name: 'Light Mode', extension: 'l', iconName: 'sun'},
+        {name: 'Dark Mode', extension: 'd', iconName: 'moon'},
+        {name: 'Blue Mode', extension: 'b', iconName: 'water'}
+    ]
+
     const value = {
         isDarkMode, setIsDarkMode,
-        tintColor, setTintColor, tintColors
+        tintColor, setTintColor, tintColors,
+        themeColor, setThemeColor, themeColors
     }
 
     const cssVars = [
@@ -51,22 +59,21 @@ export function ThemeProvider({children}) {
     ]
 
     useEffect(() => {
-        let extension = isDarkMode ? '-d' : '-l'
+        let extension = themeColors[themeColor].extension
         let root = document.documentElement
-
         cssVars.forEach(name => {
-            root.style.setProperty(name, `var(${name}${extension})`)
+            root.style.setProperty(name, `var(${name}-${extension})`)
         })
 
         async function updateData() {
             try {
-                await api.patch(`/users/${thisUser._id}/colorTheme`, {colorTheme: isDarkMode ? 1 : 0})
+                await api.patch(`/users/${thisUser._id}/themeColor`, {themeColor: themeColor})
             } catch (error) {
                 console.log(error)
             }
         }
         if (thisUser) {updateData()}
-    }, [isDarkMode])
+    }, [themeColor])
 
     useEffect(() => {
         const extension = tintColors[tintColor].extension

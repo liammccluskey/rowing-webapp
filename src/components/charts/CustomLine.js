@@ -5,9 +5,9 @@ import moment from 'moment'
 
 export default function CustomLine(props) {
     const [data, setData] = useState(props.data)
-    const {isDarkMode, setIsDarkMode} = useTheme()
+    const {themeColor} = useTheme()
 
-    const [localTheme, setLocalTheme] = useState(isDarkMode)
+    const [localTheme, setLocalTheme] = useState(themeColor)
 
     const borderColor = getComputedStyle(document.documentElement)
     .getPropertyValue(data.borderColor)
@@ -28,8 +28,8 @@ export default function CustomLine(props) {
 
     // Force rerenders on color theme change
     useEffect(() => {
-        setLocalTheme(isDarkMode)
-    }, [isDarkMode])
+        setLocalTheme(themeColor)
+    }, [themeColor])
 
     return (
         <div style={{height: props.height}}>
@@ -94,7 +94,7 @@ export default function CustomLine(props) {
                             gridLines: {
                                 display: true,
                                 color: getComputedStyle(document.documentElement)
-                                .getPropertyValue('--bgc-hover'),
+                                .getPropertyValue('--bc-chart'),
                                 zeroLineWidth: 0,
                                 borderDash: [10, 5]
                             },

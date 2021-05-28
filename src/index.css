@@ -4,13 +4,16 @@
 /* fonts */
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap'); /* duolingoesque */
 
+/* test fonts */
+
+
 /*global config & reset*/
 * {
   margin: 0px 0px;
   padding: 0px 0px;
   
-  font-family: 'SalesforceSans-Regular';
   font-family: 'Nunito Sans', sans-serif;
+
 }
 
 body {
@@ -84,17 +87,12 @@ html {
 
   /* dark mode */
   --bgc-d: black;
-  --bgc-light-d: rgb(20,21,23);
   --bgc-light-d: rgb(21,24,28);     /* twitter */
   --bgc-semilight-d: rgb(15, 17, 19);
-
-  --bgc-hover-d: rgb(22, 27, 33);   /* robinhood */
   --bgc-hover-d: rgb(249,252,255, 0.08);
-
   --bgc-nav-d: var(--bgc-light-d); 
   --bgc-settings-d: black;    
   --bgc-input-d: rgb(38, 41, 45);  
-
   --bc-d: rgba(48,54,58,255);         /* robinhood */
   --bc-chart-d: var(--bgc-hover-d);
   --color-d: rgb(205,205,205);
@@ -106,13 +104,30 @@ html {
   --box-shadow-dark-d: none;
   --float-border-d: 1px solid var(--bc);
 
-
-
+  
+  /* blues mode */
+  --bgc-b: #0e2439;
+  --bgc-light-b: #1f364d;
+  --bgc-semilight-b: #182e43;
+  --bgc-hover-b: rgb(249,252,255, 0.08);
+  --bgc-nav-b: var(--bgc-semilight-b); 
+  --bgc-settings-b: var(--bgc-b);
+  --bgc-input-b: #284059;
+  --bc-b: #325070;
+  --bc-chart-b: #182e45;
+  --color-b: rgb(225,225,225);
+  --color-header-b: rgb(245, 245, 245);
+  --color-tertiary-b: #63809c;
+  --color-secondary-b: #9cb3c9;
+  --color-yellow-text-b: var(--color-yellow);
+  --box-shadow-b: none;
+  --box-shadow-dark-b: none;
+  --float-border-b: none;
 
 
   /*light mode*/
   --bgc-l: rgb(247, 249, 250);
-  --bgc-l: rgb(243, 246, 249);
+  --bgc-l: rgb(244, 246, 248);
   --bgc-light-l: white;/* firebase */
   --bgc-hover-l: rgb(245,247,249);
   --bgc-semilight-l: rgb(248, 250, 252);
@@ -124,15 +139,17 @@ html {
   --bc-l: rgb(215, 222, 226);
   --bc-chart-l: rgb(230, 230, 230);
   --color-l: rgb(60,64,67);
-  --color-header-l: rgb(60,64,67);
+  --color-header-l: rgb(30, 34, 37);
   --color-secondary-l: rgba(120,124,126,255);
   --color-secondary-l: rgba(135,138,140,255);
   --color-tertiary-l: rgb(102,102,102);
   --color-yellow-text-l: #85681d;
 
-  --box-shadow-l: 0 0 15px rgba(0,0,0,0.055);
+  --box-shadow-l: 0 0 20px rgba(0,0,0,0.05);
   --box-shadow-dark-l: 0 0 20px rgba(0,0,0, 0.15);
-  --float-border-l: none;
+  --float-border-l: 1px solid var(--bc);
+  
+
 
   
 
@@ -234,6 +251,13 @@ html {
 
   --container-border-radius: 5px;
 
+  /* Nunito Sans */
+  --fw-xxs: 200;
+  --fw-xs: 300;
+  --fw-s: 400;
+  --fw-m: 600;
+  --fw-l: 700;
+  --fw-xl: 800;
 }
 
 
@@ -297,6 +321,7 @@ form label {
   padding: 0px var(--ps-small);
   box-shadow: var(--box-shadow);
   top: 0px;
+
 }
 .landing-header {
   background-color: var(--bgc-nav);
@@ -369,15 +394,11 @@ form label {
 
 .float-container {
   border-radius: var(--container-border-radius);
-  box-shadow: var(--box-shadow);
+  box-shadow: none;
   border: var(--float-border);
-  border: none;
   padding: none;
   overflow: hidden;
   background-color: var(--bgc-light);
-
-  box-shadow: none;
-  border: 1px solid var(--bc);
 }
 
 .bgc-container {
@@ -414,6 +435,9 @@ form label {
 }
 .landing-container h1 {
   font-weight: 500;
+}
+.landing-page .solid-btn-secondary,
+.landing-page .solid-btn {
 }
 
 /* login / reg / password reset */
@@ -457,6 +481,19 @@ form label {
 }
 .login-spacer {
   height: 100px;
+}
+
+/* dashbaord */
+
+/* dropdown menu */
+.dropdown-menu-section-title {
+  padding: 10px 20px;
+  text-transform: uppercase;
+  font-weight: var(--fw-m);
+  color: var(--color-secondary);
+}
+.dropdown-menu p {
+  color: var(--color-header);
 }
 
 
@@ -601,7 +638,7 @@ form label {
 .chat-header {
   box-sizing: border-box;
   height: 45px;
-  background-color: var(--bgc-light);
+  background-color: var(--bgc-nav);
   padding: 12px 20px; padding-left: 10px;
   width: 100%;
   border-bottom: 1px solid var(--bc);
@@ -653,12 +690,13 @@ form label {
   box-sizing: border-box;
   padding-top: 15px;
   padding-bottom: 60px;
-  background-color: var(--bgc-light);
+  background-color: var(--bgc-nav);
 }
 .message-text-container {
   padding: 10px 10px;
   overflow-wrap: break-word;
   line-height: 1.6;
+  border: 1px solid var(--bc);
 }
 .message-input-container {
   background-color: var(--bgc-input);
@@ -802,7 +840,7 @@ form label {
   margin-bottom: 10px;
 }
 .session-page .workout-menu {
-  background-color: var(--bgc-light);
+  background-color: var(--bgc-nav);
   border-right: 1px solid var(--bc);
 }
 .workout-table tbody {
@@ -1046,28 +1084,28 @@ table tbody tr:last-child {
   margin-right: 30px;
 }
 .ml-2 {
-  margin-right: 2px;
+  margin-left: 2px;
 }
 .ml-3 {
-  margin-right: 3px;
+  margin-left: 3px;
 }
 .ml-5 {
-  margin-right: 5px;
+  margin-left: 5px;
 }
 .ml-7 {
-  margin-right: 7px;
+  margin-left: 7px;
 }
 .ml-10 {
-  margin-right: 10px;
+  margin-left: 10px;
 }
 .ml-15 {
-  margin-right: 15px;
+  margin-left: 15px;
 }
 .ml-20 {
-  margin-right: 20px;
+  margin-left: 20px;
 }
 .ml-30 {
-  margin-right: 30px;
+  margin-left: 30px;
 }
 .mb-2 {
   margin-bottom: 2px;

@@ -21,17 +21,17 @@ export default function YearHeatmap(props) {
     const [calendarDays, setCalendarDays] = useState([])
     const [monthStarts, setMonthStarts] = useState([])
 
-    const {isDarkMode, tintColor} = useTheme()
+    const {themeColor, tintColor} = useTheme()
     const [colors, setColors] = useState( () => getPalette() )
     useEffect(() => {
         setTimeout(() => { // cssVar lags tintColor change
             setColors( () => getPalette() )
         }, 0.01*1000);
-    }, [isDarkMode, tintColor]) 
+    }, [themeColor, tintColor]) 
 
     function getPalette() {
         const tc = getComputedStyle(document.documentElement).getPropertyValue('--tint-color')
-        const palette = generate(tc, {theme: isDarkMode ? 'dark' : 'default'})
+        const palette = generate(tc, {theme: themeColor > 0 ? 'dark' : 'default'})
             .filter( (c, idx) => idx!== 0 && idx % 2 === 0)
         return ['var(--bgc-light)', ...palette ]
     }
@@ -76,7 +76,7 @@ export default function YearHeatmap(props) {
 
     function getValue(dayMoment) {
         const dayIndex = dayMoment.dayOfYear()
-        //return Math.floor(Math.random() * 5)
+        return Math.floor(Math.random() * 5)
         return data.hasOwnProperty(dayIndex) ? data[dayIndex] : 0
     }
 
@@ -122,7 +122,7 @@ export default function YearHeatmap(props) {
                             backgroundColor: getColor(day),
                             gridRow: 2 + day.day(), gridColumn: 2 + day.diff(moment().startOf('year').startOf('week'), 'weeks'),
 
-                            margin: 0, height: 13,  borderRadius: 0, maxWidth: 30, border: 'none', margin: 1,
+                            margin: 0, height: 13,  borderRadius: 0, maxWidth: 30, border: 'none', margin: 0,
                             minWidth: 5,
                             borderLeft: border, borderTop: border
                         }}

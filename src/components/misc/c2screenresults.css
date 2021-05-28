@@ -1,6 +1,7 @@
 
-
+/*
 @import url('https://db.onlinewebfonts.com/c/86041161c247e3d1d46098d98e60b108?family=VerdanaProW01-Bold');
+*/
 
 :root {
 
@@ -17,9 +18,8 @@
 
     --c2-bc: rgb(54, 54, 56);
 
-
-    --c2-number-font: "VerdanaProW01-Bold";
     --c2-number-font: Verdana, sans-serif;
+
 
     --c2-fc: rgb(30,42,39);
     --c2-fc: rgb(35, 47, 44);

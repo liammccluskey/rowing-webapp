@@ -49,7 +49,7 @@ export default function MainHeader(props) {
                     style={{cursor: 'pointer'}} 
                 >
                     {thisUser.iconURL ? 
-                        <img src={thisUser.iconURL} className='user-icon' style={{marginRight: 10}} />
+                        <img src={thisUser.iconURL} className='user-icon' style={{margin: 0}} />
                         :
                         <div className='user-icon-default'>
                             <i className='bi bi-person' />

@@ -10,8 +10,8 @@ import {useTheme} from '../../contexts/ThemeContext'
 
 export default function CustomGroupedBar(props) {
     const [data, setData] = useState(props.data)
-    const {isDarkMode} = useTheme()
-    const [localTheme, setLocalTheme] = useState(isDarkMode)
+    const {themeColor} = useTheme()
+    const [localTheme, setLocalTheme] = useState(themeColor)
 
     useEffect(() => {
         setData(props.data)
@@ -20,8 +20,8 @@ export default function CustomGroupedBar(props) {
 
     // Force rerenders on color theme change
     useEffect(() => {
-        setLocalTheme(isDarkMode)
-    }, [isDarkMode])
+        setLocalTheme(themeColor)
+    }, [themeColor])
 
     return (
         <div style={{height: props.height}}>

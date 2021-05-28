@@ -94,10 +94,10 @@ export default function Dashboard() {
             <MainHeader style={{position: 'sticky', top: 0}} />
             <br /><br />
             <div className='main-container'
-                style={{  display: 'grid', gridTemplateColumns: '1fr 4fr', gap: 75, padding: '0px 75px',
+                style={{  display: 'grid', gridTemplateColumns: '1fr 4fr', gap: 75, padding: '0px 75px'
             }}
             >
-                <div>
+                <div style={{gridColumn: 1}} >
                     <UserInfoCard style={{width: 300}} />
                     <br /><br />
                     <ClubsInfoCard clubs={myClubs} style={{width: 300}} />
@@ -106,7 +106,7 @@ export default function Dashboard() {
                     <br /><br />
                 </div>
                 
-                <div>
+                <div style={{gridColumn: '2/3', gridRow: 1}}>
                     <div>
                         <div className='d-flex jc-space-between ai-center'>
                             <h3>Today's Workouts</h3>

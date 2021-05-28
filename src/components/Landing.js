@@ -10,16 +10,17 @@ export default function Landing() {
     }
 
     return (
-        <div style={{minHeight: '200vh'}}>
+        <div style={{minHeight: '200vh'}} className='landing-page'>
             <LandingHeader />
             <div className='landing-container'>
                 <div>
-                    <h1>Ergsync helps you train better</h1>
+                    <h1>The ultimate training platform for rowers</h1>
                     <br /><br />
                     <h3 className='c-cs fw-xs'>
-                        Improve the quality of your training with Ergsync.
                         Whether you row on your own or in a club, we're committed to
-                        helping you become a better rower.
+                        helping you become a better rower. With Ergsync you can join 
+                        live group workouts, easily track your progress over time, 
+                        and join a growing community of other rowers. 
 
                     </h3>
                     <br /><br /><br />
@@ -30,10 +31,6 @@ export default function Landing() {
                 </div>
                
                 
-            </div>
-            <div className='main-container'>
-                <br /><br />
-                <h1 className='fw-m'></h1>
             </div>
         </div>
     );
