@@ -111,7 +111,7 @@ html {
   --bgc-semilight-b: #182e43;
   --bgc-hover-b: rgb(249,252,255, 0.08);
   --bgc-nav-b: var(--bgc-semilight-b); 
-  --bgc-settings-b: var(--bgc-b);
+  --bgc-settings-b: var(--bgc-light-b);
   --bgc-input-b: #284059;
   --bc-b: #325070;
   --bc-chart-b: #182e45;
@@ -499,7 +499,7 @@ form label {
 
 /* settings */
 .settings-page {
-  background-color: var(--bgc-light);
+  background-color: var(--bgc-nav);
   min-height: 100vh;
   padding-top: 50px;
 }
@@ -552,6 +552,7 @@ form label {
   border-radius: 5px;
   box-shadow: var(--box-shadow-dark);
   border: var(--float-border);
+  border: 1px solid var(--bc);
   padding: 0px 15px;
   overflow: hidden;
 }

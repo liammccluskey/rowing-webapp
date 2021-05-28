@@ -5,14 +5,14 @@ import {useMessage} from '../../contexts/MessageContext'
 import moment from 'moment'
 
 export default function Preferences() {
-    const {isDarkMode, setIsDarkMode, tintColor, setTintColor, tintColors} = useTheme()
+    const {themeColor, setThemeColor, themeColors, tintColor, setTintColor, tintColors} = useTheme()
     const {setMessage} = useMessage()
 
     const [editingTheme, setEditingTheme] = useState(false)
     const [editingTint, setEditingTint] = useState(false)
 
     function handleThemeChange(e) {
-        setIsDarkMode(e.target.value === 'dark')
+        setThemeColor(e.target.value)
         setMessage({title: 'Changes saved', isError: false, timestamp: moment()})
         setEditingTheme(false)
     }
@@ -31,8 +31,8 @@ export default function Preferences() {
                 <div className='editable-settings-row' onClick={() => setEditingTheme(true)} style={{display: editingTheme&&'none'}}>
                     <p>Color Theme</p>
                     <div className='d-flex jc-flex-end ai-center'>
-                        <i className={`bi bi-${isDarkMode ? 'moon' : 'sun'} mr-10`} style={{fontSize: 20}} />
-                        <p>{isDarkMode ? 'Dark' : 'Light'}</p>
+                        <i className={`bi bi-${themeColors[themeColor].iconName} mr-10`} style={{fontSize: 20}} />
+                        <p>{themeColors[themeColor].name}</p>
                     </div>
                 </div>
                 <div className='settings-edit-container' hidden={!editingTheme} style={{ marginBottom: editingTheme && 15}}>
@@ -43,9 +43,10 @@ export default function Preferences() {
                     <br />
                     <div className='d-flex jc-space-between ai-center'>
                         <p>Color Theme</p>
-                        <select value={isDarkMode ? 'dark' : 'light'} onChange={handleThemeChange}>
-                            <option value='light'>Light</option>
-                            <option value='dark'>Dark</option>
+                        <select value={themeColor} onChange={handleThemeChange}>
+                            {themeColors.map( (tc, idx) => 
+                            <option value={idx} key={idx}>{tc.name}</option>
+                            )}
                         </select>
                     </div>
                     <br /><br />
