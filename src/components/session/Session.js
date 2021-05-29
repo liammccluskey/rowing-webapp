@@ -1,7 +1,5 @@
 import React, {useEffect, useState, useCallback} from "react"
 import MainHeader from "../headers/MainHeader"
-import SubHeader from '../headers/SubHeader'
-import MembersInfoCard from './MembersInfoCard'
 import SessionInfoCard from './SessionInfoCard'
 import LiveActivityTable from './LiveActivityTable'
 import ResultsTable from './ResultsTable'
@@ -58,18 +56,23 @@ export default function Session(props) {
     }, [])
 
     useEffect(() => {
-        const refreshRate = 20 // seconds
+        const activityRefreshRate = 7 * 1000
+        const sessionRefreshRate = 60 * 1000
+
         async function fetchData() {
             await fetchSession()
             await fetchActivities()
             setLoading(false)
         }
         fetchData()
-        const interval = setInterval(() => {
-            fetchData()
-        }, refreshRate*1000);
 
-        return () => clearInterval(interval)
+        const activityInterval = setInterval(() => fetchActivities(), activityRefreshRate)
+        const sessionInterval = setInterval(() => fetchSession(), sessionRefreshRate)
+
+        return () => {
+            clearInterval(activityInterval)
+            clearInterval(sessionInterval)
+        }
     }, [])
 
     async function fetchSession() {
@@ -84,6 +87,7 @@ export default function Session(props) {
     async function fetchActivities() {
         try {
             const res = await api.get(`/sessions/${sessionID}/activities`)
+            
             setActivities(res.data)
             for (let i = 0; i < res.data.length; i++) {
                 for (let j = 0; j < res.data[i].length; j++) {
@@ -130,12 +134,6 @@ export default function Session(props) {
             pm5.doConnect()
         }
     }
-/*
-
-                        <div style={{display: 'none'}}>
-                            <iframe src="https://discord.com/widget?id=841373626519257118&theme=dark" width="350" height='550' allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-                        </div>
-*/
 
     return (
         <div>

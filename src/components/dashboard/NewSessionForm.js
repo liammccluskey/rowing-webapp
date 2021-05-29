@@ -81,10 +81,17 @@ export default function NewSessionForm(props) {
                 display: !props.showSessionForm && 'none',
                 marginBottom: props.showSessionForm ? '40px' : '0px',
                 padding: '0px 30px',
-                }}
+            }}
         >
             <br />
-            <h3 style={{ textAlign: 'left', marginBottom: '40px', fontWeight: '500'}}>Create a Workout</h3>
+            <h3 style={{ textAlign: 'left'}}>Create a Workout</h3>
+            <div className='trans-container' style={{margin: '20px 0px', borderLeft: 'none', borderRight: 'none', borderRadius: 0}}>
+                <div className='d-flex jc-flex-start ai-center mb-10'>
+                    <i className='bi bi-info-circle mr-10 c-cs' />
+                    <h4 className='c-cs fw-m'>Please Note</h4>
+                </div>
+                <p className='c-cs'>At this time, we do not support interval workouts.</p>
+            </div>
             <form onSubmit={handleCreateSession}>
                 <div className='d-flex jc-flex-start'>
                     <div style={{flex: 1, marginRight: 30}}>

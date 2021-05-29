@@ -124,7 +124,6 @@ html {
   --box-shadow-dark-b: none;
   --float-border-b: none;
 
-
   /*light mode*/
   --bgc-l: rgb(247, 249, 250);
   --bgc-l: rgb(244, 246, 248);
@@ -140,18 +139,16 @@ html {
   --bc-chart-l: rgb(230, 230, 230);
   --color-l: rgb(60,64,67);
   --color-header-l: rgb(30, 34, 37);
+  --color-header-l: rgb(10, 12, 14);
   --color-secondary-l: rgba(120,124,126,255);
   --color-secondary-l: rgba(135,138,140,255);
   --color-tertiary-l: rgb(102,102,102);
   --color-yellow-text-l: #85681d;
 
   --box-shadow-l: 0 0 20px rgba(0,0,0,0.05);
+  /* --box-shadow-l: 0px 1px 4px 0px rgba(0,0,0,0.2);  */
   --box-shadow-dark-l: 0 0 20px rgba(0,0,0, 0.15);
   --float-border-l: 1px solid var(--bc);
-  
-
-
-  
 
   /* dynamic color scheme */
   --bgc-nav: var(--bgc-nav-l);
@@ -330,6 +327,8 @@ form label {
   box-shadow: var(--box-shadow);
   top: 0px;
   position: sticky;
+  height: var(--main-nav-height);
+  box-sizing: border-box;
 }
 .sub-header {
   background-color: var(--bgc-nav);
@@ -422,15 +421,19 @@ form label {
 
 /* landing page */
 .landing-container {
-  padding: 100px var(--ps-main);
+  padding: 75px 100px;
   text-align: left;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
+  gap: 30px;
 }
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 950px) {
   .landing-container {
     grid-template-columns: 1fr;
     padding: 50px 8%;
+  }
+  .landing-page div {
+    grid-column: 1;
   }
 }
 .landing-container h1 {
@@ -1544,6 +1547,12 @@ input:checked + .slider:before {
 }
 .c-ct {
   color: var(--color-tertiary);
+}
+.c-c {
+  color: var(--color);
+}
+.c-yt {
+  color: var(--color-yellow-text);
 }
 .fw-xxs {
   font-weight: 200;
