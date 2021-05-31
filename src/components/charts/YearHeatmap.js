@@ -76,7 +76,7 @@ export default function YearHeatmap(props) {
 
     function getValue(dayMoment) {
         const dayIndex = dayMoment.dayOfYear()
-        return Math.floor(Math.random() * 5)
+        //return Math.floor(Math.random() * 5)
         return data.hasOwnProperty(dayIndex) ? data[dayIndex] : 0
     }
 
