@@ -111,7 +111,7 @@ html {
   --bgc-semilight-b: #182e43;
   --bgc-hover-b: rgb(249,252,255, 0.08);
   --bgc-nav-b: var(--bgc-semilight-b); 
-  --bgc-settings-b: var(--bgc-light-b);
+  --bgc-settings-b: var(--bgc-b);
   --bgc-input-b: #284059;
   --bc-b: #325070;
   --bc-chart-b: #182e45;
@@ -232,8 +232,7 @@ html {
   --color-default: #5a9ff6;
   --color-translucent-default: rgba(90, 159, 246, 0.2);
 
-
-  --color-light-gray: #d7d9e8;
+  --color-landing-gray: #6f787d;
 
 
   /* misc global */
@@ -325,6 +324,7 @@ form label {
   color: var(--color);
   padding: 10px var(--ps-small);
   box-shadow: var(--box-shadow);
+  box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
   top: 0px;
   position: sticky;
   height: var(--main-nav-height);
@@ -420,15 +420,28 @@ form label {
 }
 
 /* landing page */
-.landing-container {
+.landing-page {
+}
+.landing-container-12,
+.landing-container-11{
   padding: 75px 100px;
   text-align: left;
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 30px;
+  margin: none;
+  border-bottom: 1px solid black;
 }
+.landing-container-12 {
+  grid-template-columns: 1fr 2fr;
+}
+.landing-container-11 {
+  grid-template-columns: 1fr 1fr;
+}
+
 @media only screen and (max-width: 950px) {
-  .landing-container {
+  .landing-container-12,
+  .landing-container-11 {
     grid-template-columns: 1fr;
     padding: 50px 8%;
   }
@@ -436,11 +449,37 @@ form label {
     grid-column: 1;
   }
 }
-.landing-container h1 {
-  font-weight: 500;
-}
 .landing-page .solid-btn-secondary,
 .landing-page .solid-btn {
+  font-weight: var(--fw-l);
+}
+.landing-page .c-cs {
+  color: var(--color-landing-gray);
+}
+.landing-tab-option,
+.landing-tab-option-selected {
+  color: var(--color-landing-gray);
+  font-weight: var(--fw-m);
+  cursor: pointer;
+}
+.landing-tab-option-selected {
+  color: var(--color-header);
+}
+.landing-tab-option:hover {
+  color: var(--tint-color);
+}
+.landing-hero-section {
+  background-color: white;
+}
+.landing-how-section{
+  background-color: #f0ebe7;
+  background-color: var(--tint-color-translucent);
+}
+.landing-how-section * {
+  border-color: black !important;
+}
+.landing-questions-section {
+  background-color: white;
 }
 
 /* login / reg / password reset */
@@ -1227,7 +1266,6 @@ table tbody tr:last-child {
   color: var(--bgc-light);
   font-size: 17px;
   border-radius: 5px;
-
   color: var(--bgc-settings);
   border: 1px solid var(--tint-color);
   border-radius: 5px;
@@ -1574,6 +1612,15 @@ input:checked + .slider:before {
 }
 .w-100 {
   width: 100%;
+}
+.ta-l {
+  text-align: left;
+}
+.ta-r {
+  text-align: right;
+}
+.ta-c {
+  text-align: center;
 }
 
 

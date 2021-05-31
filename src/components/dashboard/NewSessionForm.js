@@ -85,7 +85,7 @@ export default function NewSessionForm(props) {
         >
             <br />
             <h3 style={{ textAlign: 'left'}}>Create a Workout</h3>
-            <div className='trans-container' style={{margin: '20px 0px', borderLeft: 'none', borderRight: 'none', borderRadius: 0}}>
+            <div className='trans-container' style={{margin: '20px 0px', borderLeft: 'none', borderRight: 'none', borderRadius: 0, padding: '15px 30px'}}>
                 <div className='d-flex jc-flex-start ai-center mb-10'>
                     <i className='bi bi-info-circle mr-10 c-cs' />
                     <h4 className='c-cs fw-m'>Please Note</h4>
