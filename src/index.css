@@ -743,6 +743,7 @@ form label {
   overflow-wrap: break-word;
   line-height: 1.6;
   border: 1px solid var(--bc);
+  box-shadow: none;
 }
 .message-input-container {
   background-color: var(--bgc-input);
