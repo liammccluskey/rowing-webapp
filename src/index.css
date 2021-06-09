@@ -6,14 +6,12 @@
 
 /* test fonts */
 
-
 /*global config & reset*/
 * {
   margin: 0px 0px;
   padding: 0px 0px;
   
   font-family: 'Nunito Sans', sans-serif;
-
 }
 
 body {
@@ -34,6 +32,7 @@ button:disabled:hover {
 h1, h2, h3, h4, h5, h6, .h7 {
   font-weight: 400;
   color: var(--color-header);
+
 }
 h4 {
   font-size: 16px;
@@ -145,10 +144,12 @@ html {
   --color-tertiary-l: rgb(102,102,102);
   --color-yellow-text-l: #85681d;
 
-  --box-shadow-l: 0 0 20px rgba(0,0,0,0.05);
-  /* --box-shadow-l: 0px 1px 4px 0px rgba(0,0,0,0.2);  */
-  --box-shadow-dark-l: 0 0 20px rgba(0,0,0, 0.15);
   --float-border-l: 1px solid var(--bc);
+
+  --box-shadow-l: 0px 1px 4px 0px rgba(0,0,0,0.2);
+  --box-shadow-l: 0 0 20px rgba(0,0,0,0.05);
+  --float-border-l: none;
+
 
   /* dynamic color scheme */
   --bgc-nav: var(--bgc-nav-l);
@@ -398,6 +399,8 @@ form label {
   padding: none;
   overflow: hidden;
   background-color: var(--bgc-light);
+
+  box-shadow: var(--box-shadow);
 }
 
 .bgc-container {
@@ -991,14 +994,14 @@ table tbody tr:last-child {
   cursor: pointer;
 }
 .tooltip:hover .tooltip-text {
-  opacity: 100%;
-  transition: opacity 0.3s;
+  visibility: visible;
 }
 .tooltip .tooltip-text *{
   color: var(--color-header);
 }
 .tooltip .tooltip-text {
-  opacity: 0%;
+  /*opacity: 0%;*/
+  visibility: hidden;
   box-sizing: border-box;
   display: inline-flex;
   justify-content: center;
@@ -1275,10 +1278,10 @@ table tbody tr:last-child {
 .clear-btn-cancel {
   background-color: transparent;
   color: var(--tint-color);
-  border: 1px solid var(--tint-color-translucent);
   border: 1px solid var(--tint-color);
 
   border: 1px solid var(--bc);
+  background-color: var(--bgc-light);
 }
 .solid-btn-secondary,
 .clear-btn-secondary,

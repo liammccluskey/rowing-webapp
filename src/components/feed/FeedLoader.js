@@ -10,7 +10,7 @@ export default function FeedLoader(props) {
     }, [props] )
  
     return (
-        <div className='d-flex' style={{margin: '20px 0px', ...props.style}}>
+        <div className='d-flex' style={{margin: '0px 0px', ...props.style}}>
             {canLoadMore ? 
             <button className='clear-btn' style={{flex: 1}} onClick={props.handleClickLoadMore}>
                 {loading ? `Loading more ${props.pluralUnit}` : `Load more ${props.pluralUnit}`}

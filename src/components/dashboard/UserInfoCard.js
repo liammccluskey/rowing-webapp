@@ -39,6 +39,7 @@ export default function UserInfoCard(props) {
         borderColor: '--tint-color',
         label: thisUser.displayName
     }
+    
     const partnerGraphStyle = {
         backgroundColor: '--color-translucent-purple',
         borderColor: '--color-purple',
@@ -54,6 +55,7 @@ export default function UserInfoCard(props) {
                     const res = await api.get(`/users/${thisUser.trainingPartner._id}/statistics`)
                     setPartnerStats(res.data)
                 }
+
             } catch (error) {
                 console.log(error)
             } 
