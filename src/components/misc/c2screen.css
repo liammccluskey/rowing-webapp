@@ -51,76 +51,17 @@
     letter-spacing: 0px;
 }
 
-/*
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap');
 
-.c2screen-meta {
-    border: 10px solid rgb(54, 54, 56);
-    border-color: var(--bc);
-    border-radius: 5px;
-    overflow: hidden;
+.c2screen-meta .close-button {
+    background-color: var(--c2-bgc);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    border-radius: 2px;
+    border: 1px solid black;
+    height: 20px; width: 25px;
 }
-.c2screen-meta button {
-    box-sizing: border-box;
-    height: 30px;
-    border-radius: 15px;
-    padding: 0px 10px;
-    font-size: 13px;
-    font-weight: 700;
-    background-color: rgb(84, 87, 89);
-    background-color: var(--bgc);
-    color: var(--color-header);
-    border: 1px solid #575a5d;
+.c2screen-meta .close-button:hover {
+    filter: brightness(75%);
 }
-.c2screen-meta button:hover {
-    filter: brightness(125%);
-}
-
-.screen-outer {
-    background-color: rgb(54, 54, 56);
-    background-color: var(--bc);
-    text-align: left;
-    padding-left: 5px;
-    padding-bottom: 10px;
-}
-
-.c2screen {
-
-    background-color: rgb(183, 223, 241);
-
-    background-color: rgba(161, 205, 224);
-    text-align: center;
-}
-
-
-.c2screen h5 {
-    vertical-align: middle;
-    font-family: 'Titillium Web', sans-serif;
-    color: rgb(30,42,39);
-}
-
-.c2screen .big, .c2screen .medium, 
-.c2screen .small {
-    padding: 0px 0px ;
-}
-
-.c2screen .big {
-    font-size: 38px;
-    font-weight: 600;
-    letter-spacing: 2px;
-}
-
-.c2screen .medium {
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: 2px;
-}
-
-.c2screen .small {
-    display: inline;
-    font-size: 15px;
-    font-weight: 400;
-    margin-left: 2px;
-    letter-spacing: 1px;
-}
-*/

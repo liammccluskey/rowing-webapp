@@ -237,7 +237,7 @@ export default function Statistics() {
                             </div>
                         </div>
                     </div>
-                    <div id='progress' style={{gridColumn: '1/4'}}>
+                    <div id='progress' style={{gridColumn: '1/4', paddingTop: 30}}>
                         <div id='progress-header' className='d-flex jc-space-between ai-center'>
                             <h3>Analysis</h3>
                             <div className='d-flex jc-flex-end ai-center' >
@@ -294,14 +294,16 @@ export default function Statistics() {
                                 </div>
                                 <br />
                                 <br />
-                                <div className='d-flex jc-space-between ai-center' style={{ marginTop: '10px'}}>
-                                    <button type='submit' className='solid-btn-secondary mr-20'>
-                                        <i className='bi bi-search' style={{fontSize: 18}} />
-                                        Search
-                                    </button>
-
-                                    {loadingSearch && <Pending /> }
-                                    {loadingSearch && <p className='c-tc'>Loading results...</p>}
+                                <div className='d-flex jc-space-between ai-center' style={{ marginTop: 10}}>
+                                    <div className='d-flex jc-flex-start ai-center'>
+                                        <button type='submit' className='solid-btn-secondary mr-20'>
+                                            <i className='bi bi-search' style={{fontSize: 18}} />
+                                            Search
+                                        </button>
+                                        {loadingSearch && <Pending style={{marginRight: 10}} /> }
+                                        {loadingSearch && <p className='c-tc'>Loading results...</p>}
+                                    </div>
+                                    
                                     <button onClick={() => setHideFilterForm(true)}type='button' className='clear-btn-cancel'>
                                         Cancel
                                     </button>

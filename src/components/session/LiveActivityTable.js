@@ -221,7 +221,7 @@ export default function LiveActivityTable(props) {
                     {activities.filter(ac => selectedActivityIDs.has(ac._id)).map(ac =>(
                         <C2Screen 
                             activity={ac} 
-                            style={{height: 'auto', width: '275px', margin: '15px 10px'}} 
+                            style={{height: 'auto', width: 230, margin: '15px 10px'}} 
                             handleClickClose={() => removeSelectedActivity(ac._id)}
                         />
                     ))} 

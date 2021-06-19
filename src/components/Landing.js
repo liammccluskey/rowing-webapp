@@ -3,12 +3,9 @@ import LandingHeader from "./headers/LandingHeader";
 import { useHistory } from 'react-router-dom'
 import {useTheme} from '../contexts/ThemeContext'
 
-const src_dashboard = 'https://firebasestorage.googleapis.com/v0/b/rowing-a06ba.appspot.com/o/landing%2Fdashboard_page.png?alt=media&token=11d6adb2-1f37-41c1-9b7a-ec75b9d44129'
-const src_session = 'https://firebasestorage.googleapis.com/v0/b/rowing-a06ba.appspot.com/o/landing%2Fsession_page.png?alt=media&token=4ddffe42-46f8-4894-b3f7-c4c0e0286c97'
-const src_statistics = 'https://firebasestorage.googleapis.com/v0/b/rowing-a06ba.appspot.com/o/landing%2Fstats_page.png?alt=media&token=677c4680-1e32-4f0f-9c15-9df73ec3a4b0'
-const src_club_profile = ''
-const src_subreddit = 'https://firebasestorage.googleapis.com/v0/b/rowing-a06ba.appspot.com/o/landing%2Fsubreddit_page.png?alt=media&token=5860433e-803f-4b49-a0dc-f54b083b0312'
-
+const src_dashboard = 'https://firebasestorage.googleapis.com/v0/b/rowing-a06ba.appspot.com/o/landing%2Fpage_dashboard.png?alt=media&token=4d67f572-a683-480f-8dd6-18014b18a8d7'
+const src_session = 'https://firebasestorage.googleapis.com/v0/b/rowing-a06ba.appspot.com/o/landing%2Fpage_live_workout.png?alt=media&token=70323e96-b111-4025-a627-a0332b13cbd6'
+const src_statistics = 'https://firebasestorage.googleapis.com/v0/b/rowing-a06ba.appspot.com/o/landing%2Fpage_athlete_stats.png?alt=media&token=9a2336dc-9f1b-4d63-81f0-b772f71620a4'
 
 export default function Landing() {
     const history = useHistory()
@@ -66,7 +63,7 @@ export default function Landing() {
                     </h3>
                 </div>
                 <div></div>
-                <div className='trans-container' style={{height: 300, padding: 30}}>
+                <div className='trans-container' style={{height: 275, padding: 30}}>
                     <h2 className='fw-l'>For Athletes</h2>
                     <br />
                     <h3 style={{lineHeight: '150%'}}>
@@ -75,7 +72,7 @@ export default function Landing() {
                         group workout, and row online with your teammates in realtime. 
                     </h3>
                 </div>
-                <div className='trans-container' style={{height: 300, padding: 30}}>
+                <div className='trans-container' style={{height: 275, padding: 30}}>
                     <h2 className='fw-l'>For Coaches</h2>
                     <br />
                     <h3 style={{lineHeight: '150%'}}>

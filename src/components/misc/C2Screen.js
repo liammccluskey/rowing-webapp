@@ -16,7 +16,13 @@ export default function C2Screen(props) {
 
     return (
         <div style={props.style} className='c2screen-meta'>
-            <h5 className='screen-title fw-xl' style={{fontSize: 14}}>View Detail</h5>
+            <div className='d-flex jc-space-between ai-center'>
+                <h5 className='screen-title fw-xl' style={{fontSize: 14}}>{props.activity.user.displayName}</h5>
+                <button className='close-button'>
+                    <i className='bi bi-x' />
+                </button>
+            </div>
+            
             <div className='c2screen' style={{ display: 'grid',  gridTemplateColumns: 'repeat(3, 1fr)'}}>
                 <h5 style={{gridColumn: '1/3', borderRight: border}} className='medium'>
                     {moment.duration(activity.elapsedTime, 'seconds').format('hh:mm:ss')}
