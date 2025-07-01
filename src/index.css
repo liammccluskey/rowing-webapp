@@ -400,7 +400,6 @@ form label {
   padding: none;
   overflow: hidden;
   background-color: var(--bgc-light);
-
   box-shadow: var(--box-shadow);
 }
 

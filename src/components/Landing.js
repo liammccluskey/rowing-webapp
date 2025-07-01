@@ -20,7 +20,8 @@ export default function Landing() {
 
     useEffect(() => {
         setThemeColor(0) // light mode
-        setTintColor(3)
+        setTintColor(2)
+        console.log('landing')
     }, [])
 
     function handleClickSignUp() {

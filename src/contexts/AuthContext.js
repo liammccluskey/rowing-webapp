@@ -31,7 +31,7 @@ export function AuthProvider({ children }) {
     function continueWithGoogle() {
     // Description: Sign (In \ Up) with google pop up
         const provider = new firebase.auth.GoogleAuthProvider()
-        return auth.signInWithRedirect(provider)
+        return auth.signInWithPopup(provider)
     }
 
     function signIn(email, password) {
@@ -78,6 +78,7 @@ export function AuthProvider({ children }) {
     // Description: Register authState Listener on mount
         const unsubscribe = auth.onAuthStateChanged( async (user) => {
             setCurrentUser(user)
+            console.log(user || 'no user')
             if (user) {
                 await __fetchThisUser(user)
                 const currentPath = window.location.pathname
