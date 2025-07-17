@@ -89,12 +89,8 @@ export default function Landing() {
                     <h1 className='fw-l mb-10' style={{color: 'black'}}>Questions?</h1>
                     <h3 className='c-cs mb-30'>We're here to help</h3>
                     <h3 className='mb-30'>
-                        If you have any questions or suggestions for improvement, feel free to post
-                        them on our subreddit
+                        If you have any questions or suggestions for improvement, feel free to send them to <strong>liammail100@gmail.com</strong>
                     </h3>
-                    <button className='solid-btn' onClick={() => window.open('https://www.reddit.com/r/Ergsync/')}>
-                        r / Ergsync
-                    </button>
                 </div>
 
             </div>

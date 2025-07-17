@@ -41,7 +41,7 @@ export default function DropdownMenu(props) {
                     backgroundColor: 'var(--bgc-hover)', zIndex: 20,
                     padding: '0px 0px', textAlign: 'left',
                     backgroundColor: 'var(--bgc-light)', 
-                    border: isDarkMode ? '1px solid var(--bc)' : 'none',
+                    border: '1px solid var(--bc)',
                     boxShadow: 'var(--box-shadow-dark)'
                 }}
             >

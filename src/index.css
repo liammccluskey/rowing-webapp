@@ -148,7 +148,7 @@ html {
   --float-border-l: 1px solid var(--bc);
 
   --box-shadow-l: 0px 1px 4px 0px rgba(0,0,0,0.2);
-  --box-shadow-l: 0 0 20px rgba(0,0,0,0.05);
+  --box-shadow-dark-l: 0 0 20px rgba(0,0,0,0.05);
   --float-border-l: none;
 
 
